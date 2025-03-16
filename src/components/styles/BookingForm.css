@@ -1,0 +1,66 @@
+/* src/components/BookingForm.css */
+.booking-form {
+  background-color: #f0f0f0;
+  padding: 20px; /* Reduced padding for smaller screens */
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin: 10px;
+  text-align: left;
+  flex: 1 1 150px; /* Allow items to grow/shrink, set a base width */
+  min-width: 150px; /* Prevent items from becoming too narrow */
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 0.9em; /* Smaller font for smaller screens */
+}
+
+.form-group input,
+.form-group select {
+  width: 100%; /* Make inputs and selects full width of their container */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em; /* Adjusted font size */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.check-button {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em; /* Adjusted font size */
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%; /* Full width button on smaller screens */
+  max-width: 300px; /* Limit button width on larger screens */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .form-group {
+    flex-basis: 100%; /* Stack form groups vertically on small screens */
+  }
+}
+
+/* Media query for very small screens */
+@media (max-width: 350px) {
+    .form-group input, .form-group select, .check-button {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+}
