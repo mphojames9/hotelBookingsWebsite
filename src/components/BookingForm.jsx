@@ -1,17 +1,33 @@
 // src/components/BookingForm.jsx
 import './styles/BookingForm.css';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function BookingForm() {
+  const [checkinDate, setCheckinDate] = useState(null);
+  const [checkoutDate, setCheckoutDate] = useState(null);
+
   return (
     <section className="booking-form">
       <div className="form-container">
         <div className="form-group">
           <label htmlFor="checkin">CHECK-IN</label>
-          <input type="date" id="checkin" />
+          <DatePicker
+            selected={checkinDate}
+            onChange={(date) => setCheckinDate(date)}
+            placeholderText="Select Check-in Date"
+            className="date-picker"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="checkout">CHECK-OUT</label>
-          <input type="date" id="checkout" />
+          <DatePicker
+            selected={checkoutDate}
+            onChange={(date) => setCheckoutDate(date)}
+            placeholderText="Select Check-out Date"
+            className="date-picker"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="rooms">ROOMS</label>

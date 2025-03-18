@@ -5,8 +5,8 @@ function Hero() {
   return (
     <section className="hero">
       <div className="hero-content">
-        <h1>ENJOY YOUR WONDERFUL HOLIDAYS WITH A GREAT LUXURY EXPERIENCE</h1>
-        <h2>Most Relaxing Place</h2>
+        <p>ENJOY YOUR WONDERFUL HOLIDAYS WITH A GREAT LUXURY EXPERIENCE!</p>
+        <h1>Most Relaxing Place</h1>
         <div className="buttons">
           <button className="tour-button">TAKE A TOUR</button>
           <button className="learn-button">LEARN MORE</button>

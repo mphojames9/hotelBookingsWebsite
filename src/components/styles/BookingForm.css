@@ -1,8 +1,13 @@
 /* src/components/BookingForm.css */
 .booking-form {
-  background-color: #f0f0f0;
-  padding: 20px; /* Reduced padding for smaller screens */
+  background-color: #222222;
+  padding: 20px;
   text-align: center;
+  color: whitesmoke;
+  margin-top: -30px;
+  max-width: max-content;
+  margin: -90px auto;
+  width: 80%;
 }
 
 .form-container {
@@ -16,51 +21,54 @@
 .form-group {
   margin: 10px;
   text-align: left;
-  flex: 1 1 150px; /* Allow items to grow/shrink, set a base width */
-  min-width: 150px; /* Prevent items from becoming too narrow */
+  flex: 1 1 150px;
+  min-width: 150px;
 }
 
 .form-group label {
   display: block;
   font-weight: 500;
   margin-bottom: 5px;
-  font-size: 0.9em; /* Smaller font for smaller screens */
+  font-size: 0.9em;
 }
 
 .form-group input,
-.form-group select {
-  width: 100%; /* Make inputs and selects full width of their container */
+.form-group select,
+.date-picker {
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   border-radius: 5px;
-  font-size: 1em; /* Adjusted font size */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-size: 1em;
+  box-sizing: border-box;
+  background-color: black;
+  color: whitesmoke;
 }
 
 .check-button {
   padding: 12px 24px;
-  background-color: #007bff;
+  background-color: #c5a880;
   color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em; /* Adjusted font size */
+  border: 1px solid #c5a880;
+  font-size: 1em;
   cursor: pointer;
   margin-top: 20px;
-  width: 100%; /* Full width button on smaller screens */
-  max-width: 300px; /* Limit button width on larger screens */
+  width: 100%;
+  max-width: 300px;
 }
 
-/* Media query for smaller screens */
 @media (max-width: 600px) {
   .form-group {
-    flex-basis: 100%; /* Stack form groups vertically on small screens */
+    flex-basis: 100%;
   }
 }
 
-/* Media query for very small screens */
 @media (max-width: 350px) {
-    .form-group input, .form-group select, .check-button {
-        font-size: 0.9em;
-        padding: 8px;
-    }
+  .form-group input,
+  .form-group select,
+  .check-button,
+  .date-picker {
+    font-size: 0.9em;
+    padding: 8px;
+  }
 }

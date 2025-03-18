@@ -3,44 +3,54 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px; /* Reduced padding for smaller screens */
+  padding: 15px 20px;
   margin: 0 auto;
-  background-color: #525252;
-  color: white;
+  background-color: #333;
+  color: whitesmoke;
 }
 
 .logo {
-  font-size: 22px; /* Slightly smaller font for smaller screens */
+  font-size: 22px;
   font-weight: bold;
-  color: #333;
+  color: whitesmoke;
 }
 
 .logo span {
-  font-size: 12px; /* Smaller font for smaller screens */
+  font-size: 12px;
   display: block;
   font-weight: normal;
 }
 
-
-
-@media (min-width:769px){
+@media (min-width: 769px) {
   .nav {
-    display: none; /* hidden by default, animation will control this */
+    display: none;
+    margin-right: 10%;
+  }
+
+  .nav a {
+    padding: 10px;
+  }
+
+  .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: whitesmoke;
+    margin-left: 10%;
   }
 }
 
-@media (max-width:768px){
+@media (max-width: 768px) {
   .nav {
-    display: none; /* hidden by default, animation will control this */
+    display: none;
   }
 }
 
 .nav a {
-  margin-left: 15px; /* Reduced margin for smaller screens */
+  margin-left: 15px;
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  font-size: 14px; /* Smaller font for smaller screens */
+  color: whitesmoke;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .nav a:hover {
@@ -51,17 +61,17 @@
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 28px; /* Slightly smaller hamburger */
-  height: 18px; /* Slightly smaller hamburger */
+  width: 28px;
+  height: 18px;
   background: transparent;
   border: none;
   cursor: pointer;
 }
 
 .hamburger .bar {
-  height: 2.5px; /* Slightly thinner bars */
+  height: 2.5px;
   width: 100%;
-  background-color: #333;
+  background-color: whitesmoke;
 }
 
 @media (max-width: 768px) {
@@ -69,12 +79,12 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 55px; /* Adjusted top position based on header height */
+    top: 55px;
     left: 0;
     width: 100%;
-    background-color: #fff;
+    background-color: #333; /* Background color for the nav */
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
 
@@ -83,8 +93,15 @@
   }
 
   .nav a {
-    margin: 12px 0; /* Reduced margin for smaller screens */
+    margin: 12px 0;
     display: block;
+    background-color: #333; /* Background color for nav links */
+    color: whitesmoke; /* Text color for nav links */
+    padding: 10px 0;
+  }
+
+  .nav a:hover{
+    background-color: #555;
   }
 
   .hamburger {
@@ -92,14 +109,14 @@
   }
 }
 
-@media (max-width: 480px){
-    .logo{
-        font-size: 18px;
-    }
-    .logo span{
-        font-size: 10px;
-    }
-    .nav a{
-        font-size: 12px;
-    }
+@media (max-width: 480px) {
+  .logo {
+    font-size: 18px;
+  }
+  .logo span {
+    font-size: 10px;
+  }
+  .nav a {
+    font-size: 12px;
+  }
 }
