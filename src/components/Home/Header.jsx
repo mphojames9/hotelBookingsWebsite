@@ -1,4 +1,4 @@
-import './styles/Header.css';
+import './Header.css';
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 

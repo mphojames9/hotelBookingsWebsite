@@ -1,7 +1,7 @@
 // src/App.jsx
-import Header from './components/Header';
-import Hero from './components/Hero';
-import BookingForm from './components/BookingForm';
+import Header from './components/Home/Header';
+import Hero from './components/Home/Hero';
+import BookingForm from './components/Home/BookingForm';
 import './App.css';
 
 function App() {

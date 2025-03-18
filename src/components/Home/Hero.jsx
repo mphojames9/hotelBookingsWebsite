@@ -1,5 +1,5 @@
 // src/components/Hero.jsx
-import './styles/Hero.css';
+import './Hero.css';
 
 function Hero() {
   return (
