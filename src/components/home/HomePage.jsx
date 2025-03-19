@@ -75,7 +75,7 @@ function Home() {
     <div className="combined-app">
       <header className="header">
         <div className="logo">
-          Demo<span>Hotel Booking</span>
+          Matli<span>Hotel Booking</span>
         </div>
         <nav ref={navRef} className={`nav ${isNavOpen ? 'active' : ''}`}>
           <Link to="/hotel-bookings" onClick={() => screenWidth < 769 && setIsNavOpen(false)}>
