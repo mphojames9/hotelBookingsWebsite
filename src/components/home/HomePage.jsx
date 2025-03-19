@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-free/css/all.css';
-
+import './Home.css';
+import Image1 from '../assets/card-icon-1.jpeg';
+import Image2 from '../assets/card-icon-2.jpeg';
+import Pillow from '../assets/pillow.jpeg';
+import Star from '../assets/star.jpeg';
 function Home() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isNavOpen, setIsNavOpen] = useState(screenWidth >= 769);
@@ -124,7 +128,7 @@ function Home() {
               onChange={(date) => setCheckinDate(date)}
               placeholderText="Check-in Date"
               className="date-picker"
-              calendarIcon={<FontAwesomeIcon icon={faCalendarAlt} style={{width:'1em', height:'1em', color:'white'}} />}
+              calendarIcon={<FontAwesomeIcon icon={faCalendarAlt} style={{ width: '1em', height: '1em', color: 'white' }} />}
             />
           </div>
           <div className="form-group">
@@ -154,7 +158,48 @@ function Home() {
           <button className="check-button">CHECK AVAILABILITY</button>
         </div>
       </section>
+
+      <section className="unwind-section">
+        <div className="container">
+          <div className="left-section">
+            <div className="card">
+              <div className="card-content">
+                <div className="card-content-text">
+                  <img src={Pillow} alt="" className="pillowIcon" />
+                <h3 className="card-title">Cozy Room</h3>
+                <p className="card-text">Far far away, behind the word mountains, far from the countries Vokalia</p>
+                </div>
+                <div className="card-icon">
+                  <img src= {Image1} alt="Cozy Room Icon" />
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-content main">
+              <div className="card-icon">
+                  <img src= {Image2} alt="Cozy Room Icon" />
+                </div>
+                <div className="card-content-text">
+                  <img src={Star} alt="" className="pillowIcon" />
+                <h3 className="card-title">Special Rooms</h3>
+                <p className="card-text">Far far away, behind the word mountains, far from the countries Vokalia</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="right-section">
+            <div className="about-us">
+              <h2 className="about-title">ABOUT US</h2>
+              <h1 className="agency-title">Unwind A Hotel<br />Booking Agency</h1>
+              <p className="about-text">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+              <button className="book-button">BOOK YOUR ROOM NOW</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
+
+
   );
 }
 

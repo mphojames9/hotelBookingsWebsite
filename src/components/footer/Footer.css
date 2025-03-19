@@ -1,0 +1,88 @@
+/* src/components/Footer.css */
+.footer {
+    background-color: #1a1a1a;
+    color: #d1d1d1;
+    padding: 50px 20px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .footer-section {
+    width: 100%;
+    margin-bottom: 40px; 
+  }
+  
+  .logo-section .logo {
+    font-size: 32px; 
+    margin-bottom: 10px;
+    font-weight: bold; 
+  }
+  
+  .logo-section .sub-logo {
+    font-size: 16px; 
+    color: #a0a0a0;
+    margin-bottom: 20px;
+  }
+  
+  .logo-section .description {
+    font-size: 15px; 
+    line-height: 1.7;
+    margin-bottom: 30px;
+  }
+  
+  .social-icons {
+    display: flex;
+  }
+  
+  .social-icon {
+    color: #d1d1d1;
+    font-size: 22px; 
+    margin-right: 20px; 
+    text-decoration: none;
+  }
+  
+  .section-title {
+    font-size: 20px; 
+    margin-bottom: 20px;
+    font-weight: 600; 
+  }
+  
+  .section-list,
+  .contact-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .section-list li,
+  .contact-list li {
+    font-size: 16px; 
+    margin-bottom: 12px; 
+    display: flex;
+    align-items: center;
+  }
+  
+  .section-list li::before {
+    content: '>';
+    margin-right: 8px;
+    color: #e4b46c;
+  }
+  
+  .contact-list .contact-icon {
+    margin-right: 12px; 
+    color: #e4b46c;
+    font-size: 18px; 
+  }
+  
+
+  @media (min-width: 768px) {
+    .footer-section {
+      width: 24%;
+      margin-bottom: 0;
+    }
+  }

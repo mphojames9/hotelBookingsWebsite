@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Nunito", Arial, sans-serif';
     font-family: outfit;
+    background-color: #f7f7f7af;
   }
 
   /* Header components and navigationg bar stylling */
@@ -176,6 +183,10 @@ body {
     border-radius: 0;
     border: 1px #c5a880 solid;
     transition: 300ms;
+    font-size: 0.8em;
+    min-width: 150px;
+    font-weight: 700;
+    letter-spacing: 3px;
   }
   
   @media (min-width:541px) {
@@ -266,6 +277,7 @@ body {
     max-width: max-content;
     margin: -90px auto;
     width: 80%;
+    z-index: 100;
   }
   
   .form-container {
@@ -313,6 +325,18 @@ body {
     margin-top: 20px;
     width: 100%;
     max-width: 300px;
+    transition: 200ms;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .check-button:hover {
+    transform: scale(1.02);
+    background-color: #e4b46c;
+  }
+
+  .check-button:active {
+    transform: scale(0.98);
   }
   
   @media (max-width: 600px) {
