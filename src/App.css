@@ -5,3 +5,326 @@ body {
     font-family: 'Nunito", Arial, sans-serif';
     font-family: outfit;
   }
+
+  /* Header components and navigationg bar stylling */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin: 0 auto;
+    background-color: #333;
+    color: whitesmoke;
+  }
+  
+  .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: whitesmoke;
+  }
+  
+  .logo span {
+    font-size: 12px;
+    display: block;
+    font-weight: normal;
+    letter-spacing: 5px;
+  }
+  
+  @media (min-width: 769px) {
+    .nav {
+      display: none;
+      margin-right: 10%;
+    }
+  
+    .nav a {
+      padding: 10px;
+    }
+  
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: whitesmoke;
+      margin-left: 10%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+    }
+  }
+  
+  .nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: whitesmoke;
+    font-weight: 600;
+    transition: 300ms;
+    font-size: 14px;
+  }
+  
+  .nav a:hover {
+    color: #e4b46c;
+  }
+  
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .hamburger .bar {
+    height: 2.5px;
+    width: 100%;
+    background-color: whitesmoke;
+  }
+  
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 55px;
+      left: 0;
+      width: 100%;
+      background-color: #333; /* Background color for the nav */
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+  
+    .nav.active {
+      display: flex;
+    }
+  
+    .nav a {
+      margin: 12px 0;
+      display: block;
+      background-color: #333; /* Background color for nav links */
+      color: whitesmoke; /* Text color for nav links */
+      padding: 10px 0;
+    }
+  
+    .nav a:hover{
+      background-color: #555;
+    }
+  
+    .hamburger {
+      display: flex;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .logo {
+      font-size: 18px;
+    }
+    .logo span {
+      font-size: 10px;
+    }
+    .nav a {
+      font-size: 12px;
+    }
+  }
+
+  /* Hero section stylling */
+  .hero {
+    background-image: url("/src/components/assets/homeHero.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 90vh; /* Increased height for better coverage */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    padding: 20px; /* Added padding for smaller screens */
+    box-sizing: border-box; /* Include padding in height and width */
+  }
+  
+  .hero-content {
+    padding: 30px; /* Adjusted padding for smaller screens */
+    border-radius: 10px;
+    max-width: 90%; /* Limit width for better readability on smaller screens */
+  }
+  
+  .hero h1 {
+    font-size: 3rem; /* Using rem for relative font sizes */
+    margin-bottom: 15px; /* Adjusted margin */
+    line-height: 1.2; /* Improved line height for readability */
+  }
+  
+  .hero p {
+    font-size: 1.8rem; /* Using rem for relative font sizes */
+    margin-bottom: 25px; /* Adjusted margin */
+  }
+  
+  .buttons button {
+    padding: 10px 20px; /* Adjusted padding for smaller screens */
+    margin: 5px; /* Adjusted margin for smaller screens */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem; /* Using rem for relative font sizes */
+    cursor: pointer;
+    border-radius: 0;
+    border: 1px #c5a880 solid;
+    transition: 300ms;
+  }
+  
+  @media (min-width:541px) {
+    .tour-button, .learn-button {
+      height: 60px;
+      font-weight: 700;
+    }
+  }
+  
+  .tour-button {
+    background-color: #c5a880;
+    color: #fff;
+  }
+  
+  .learn-button {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+  }
+  
+  .tour-button:hover, .learn-button:hover {
+    background-color: #e4b46c;
+    transform: scale(1.05);
+  }
+  
+  .tour-button:active, .learn-button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 3rem;
+    }
+  
+    .hero p {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero {
+      padding: 0;
+      height: 65vh;
+    }
+  
+    .hero h1 {
+      font-size: 2rem;
+    }
+  
+    .hero p {
+      font-size: 1rem;
+    }
+  
+    .buttons {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .buttons button {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      height: 50px;
+    }
+  
+    .hero-content {
+      width: 100%;
+      padding: 0;
+    }
+  }
+  
+  @media (max-width:350px){
+      .hero h1{
+          font-size: 1.4rem;
+      }
+      .hero h2{
+          font-size: 1.1rem;
+      }
+  }
+
+  /* Bookings stylling */
+  .booking-form {
+    background-color: #222222;
+    padding: 20px;
+    text-align: center;
+    color: whitesmoke;
+    margin-top: -30px;
+    max-width: max-content;
+    margin: -90px auto;
+    width: 80%;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    margin: 10px;
+    text-align: left;
+    flex: 1 1 150px;
+    min-width: 150px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .date-picker {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: black;
+    color: whitesmoke;
+  }
+  
+  .check-button {
+    padding: 12px 24px;
+    background-color: #c5a880;
+    color: #fff;
+    border: 1px solid #c5a880;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  @media (max-width: 600px) {
+    .form-group {
+      flex-basis: 100%;
+    }
+  }
+  
+  @media (max-width: 350px) {
+    .form-group input,
+    .form-group select,
+    .check-button,
+    .date-picker {
+      font-size: 0.9em;
+      padding: 8px;
+    }
+  }
+
