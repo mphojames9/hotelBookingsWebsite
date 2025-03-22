@@ -233,6 +233,14 @@ function Home() {
         </div>
       </section>
 
+      <section>
+        <div className="hero-section">
+          <div className="hero-section__content">
+            <h1 className="hero-section__title">Find the Best Hotel in Your Next Vacation</h1>
+            <button className="hero-section__button">BOOK NOW</button>
+          </div>
+        </div>
+      </section>
     </div>
 
 
