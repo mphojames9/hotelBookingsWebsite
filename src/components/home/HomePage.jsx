@@ -11,6 +11,14 @@ import Image1 from '../assets/card-icon-1.jpeg';
 import Image2 from '../assets/card-icon-2.jpeg';
 import Pillow from '../assets/pillow.jpeg';
 import Star from '../assets/star.jpeg';
+import Wifi from '../assets/Icons/wifi.jpg';
+import bh from '../assets/Icons/swim.jpg';
+import Booking from '../assets/Icons/booking.jpg';
+import Health from '../assets/Icons/h&s.jpg';
+import Resturant from '../assets/Icons/res.jpg';
+import Swim from '../assets/Icons/swim.jpg';
+
+
 function Home() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isNavOpen, setIsNavOpen] = useState(screenWidth >= 769);
@@ -74,6 +82,16 @@ function Home() {
       }
     }
   }, [isNavOpen]);
+
+  //Services section script
+  const services = [
+    { id: 1, name: 'Free Wifi', icon: `${Wifi}` },
+    { id: 2, name: 'Easy Booking', icon: `${Booking}` },
+    { id: 3, name: 'Restaurant', icon: `${Resturant}` },
+    { id: 4, name: 'Swimming Pool', icon: `${Swim}` },
+    { id: 5, name: 'Beauty & Health', icon: `${Health}` },
+    { id: 6, name: 'Help & Support', icon: `${bh}` },
+  ];
 
   return (
     <div className="combined-app">
@@ -166,23 +184,23 @@ function Home() {
               <div className="card-content">
                 <div className="card-content-text">
                   <img src={Pillow} alt="" className="pillowIcon" />
-                <h3 className="card-title">Cozy Room</h3>
-                <p className="card-text">Far far away, behind the word mountains, far from the countries Vokalia</p>
+                  <h3 className="card-title">Cozy Room</h3>
+                  <p className="card-text">Far far away, behind the word mountains, far from the countries Vokalia</p>
                 </div>
                 <div className="card-icon">
-                  <img src= {Image1} alt="Cozy Room Icon" />
+                  <img src={Image1} alt="Cozy Room Icon" />
                 </div>
               </div>
             </div>
             <div className="card">
               <div className="card-content main">
-              <div className="card-icon">
-                  <img src= {Image2} alt="Cozy Room Icon" />
+                <div className="card-icon">
+                  <img src={Image2} alt="Cozy Room Icon" />
                 </div>
                 <div className="card-content-text">
                   <img src={Star} alt="" className="pillowIcon" />
-                <h3 className="card-title">Special Rooms</h3>
-                <p className="card-text">Far far away, behind the word mountains, far from the countries Vokalia</p>
+                  <h3 className="card-title">Special Rooms</h3>
+                  <p className="card-text">Far far away, behind the word mountains, far from the countries Vokalia</p>
                 </div>
               </div>
             </div>
@@ -190,13 +208,31 @@ function Home() {
           <div className="right-section">
             <div className="about-us">
               <h2 className="about-title">ABOUT US</h2>
-              <h1 className="agency-title">Unwind A Hotel<br />Booking Agency</h1>
+              <h1 className="agency-title">Matli A Hotel<br />Booking Agency</h1>
               <p className="about-text">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
               <button className="book-button">BOOK YOUR ROOM NOW</button>
             </div>
           </div>
         </div>
       </section>
+
+      <section className="services-section">
+        <div className="service-container">
+          <h2 className="service-title">MATLI SERVICES</h2>
+          <h1 className="main-title">Explore Our Hotel Services</h1>
+          <div className="services-list">
+            {services.map((service) => (
+              <div key={service.id} className="service-item">
+                <div className="service-icon">
+                  <img src={service.icon} alt={`${service.name} Icon`} />
+                </div>
+                <p className="service-name">{service.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
 
 

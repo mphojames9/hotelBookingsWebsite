@@ -22,12 +22,14 @@
     font-size: 32px; 
     margin-bottom: 10px;
     font-weight: bold; 
+    margin-left: 0;
   }
   
   .logo-section .sub-logo {
     font-size: 16px; 
     color: #a0a0a0;
     margin-bottom: 20px;
+    letter-spacing: 3px;
   }
   
   .logo-section .description {
@@ -38,6 +40,7 @@
   
   .social-icons {
     display: flex;
+    justify-content: center;
   }
   
   .social-icon {
@@ -45,11 +48,17 @@
     font-size: 22px; 
     margin-right: 20px; 
     text-decoration: none;
+    transition: 250ms;
+  }
+
+  .social-icon:hover {
+    color: #e4b46c;
+    margin-top: -2px;
   }
   
   .section-title {
     font-size: 20px; 
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-weight: 600; 
   }
   
@@ -68,13 +77,13 @@
   }
   
   .section-list li::before {
-    content: '>';
+    content: '.';
     margin-right: 8px;
     color: #e4b46c;
   }
   
   .contact-list .contact-icon {
-    margin-right: 12px; 
+    margin-right: 18px; 
     color: #e4b46c;
     font-size: 18px; 
   }

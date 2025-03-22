@@ -8,7 +8,7 @@ function Footer() {
       <div className="container">
         <div className="footer-section">
           <div className="logo-section">
-            <h2 className="logo">Unwind</h2>
+            <h2 className="logo">Matli</h2>
             <p className="sub-logo">HOTEL BOOKING</p>
             <p className="description">
               A small river named Duden flows by their place and supplies it with the necessary regelialia.
@@ -27,10 +27,6 @@ function Footer() {
             <li>Easy Booking</li>
             <li>Restaurant</li>
             <li>Swimming Pool</li>
-          </ul>
-        </div>
-        <div className="footer-section">
-          <ul className="section-list">
             <li>Beauty & Health</li>
             <li> 60" Flatscreen TV</li>
             <li> Cold Aircondition</li>
@@ -51,11 +47,11 @@ function Footer() {
           <ul className="contact-list">
             <li>
               <FaMapMarkerAlt className="contact-icon" />
-              203 Fake St. Mountain View, San Francisco, California, USA
+              203 Fake St. Mountain View, Cape Town, SOUTH AFRICA
             </li>
             <li>
               <FaPhoneAlt className="contact-icon" />
-              +2 392 3979 210
+              +27 21 3979 210
             </li>
             <li>
               <FaEnvelope className="contact-icon" />
@@ -67,5 +63,4 @@ function Footer() {
     </footer>
   );
 }
-
 export default Footer;
