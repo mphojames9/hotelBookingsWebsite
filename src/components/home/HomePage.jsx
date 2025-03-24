@@ -117,6 +117,30 @@ function Home() {
       image: '/family-room.jpg',
     },
   ];
+  const cardRefs = useRef([]);
+  cardRefs.current = rooms.map((_, i) => cardRefs.current[i] || useRef());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 } // Trigger when 20% of the element is visible
+    );
+
+    cardRefs.current.forEach((ref) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="combined-app">
