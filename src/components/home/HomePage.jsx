@@ -93,6 +93,31 @@ function Home() {
     { id: 6, name: 'Help & Support', icon: `${bh}` },
   ];
 
+  //Home page rooms section script
+  const rooms = [
+    {
+      id: 1,
+      title: 'Suite Room',
+      description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
+      price: '$450 / NIGHT',
+      image: '/suite-room.jpg',
+    },
+    {
+      id: 2,
+      title: 'Deluxe Room',
+      description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
+      price: '$450 / NIGHT',
+      image: '/deluxe-room.jpg',
+    },
+    {
+      id: 3,
+      title: 'Family Room',
+      description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
+      price: '$450 / NIGHT',
+      image: '/family-room.jpg',
+    },
+  ];
+
   return (
     <div className="combined-app">
       <header className="header">
@@ -236,7 +261,10 @@ function Home() {
       <section>
         <div className="hero-section">
           <div className="hero-section__content">
-            <h1 className="hero-section__title">Find the Best Hotel in Your Next Vacation</h1>
+            <div className="hero-section__content__wrapper">
+            <p className="hero-section__title p">Find the Best Hotel for leaving</p>
+            <h1 className="hero-section__title h1">Find the Best Hotel in Your Next Vacation</h1>
+            </div>
             <button className="hero-section__button">BOOK NOW</button>
           </div>
         </div>
