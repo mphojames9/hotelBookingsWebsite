@@ -40,9 +40,34 @@
         <a href="#">Our Brands</a>
         <a href="#">Meetings &amp; Events</a>
       </nav>
+
+
     </div>
   </header>
   <section class="hero-wrap" aria-label="Hero banner">
+          <div class="nav-panels">
+
+  <div class="panel" data-panel="Find & Reserve">
+    Find & Reserve content goes here...
+  </div>
+
+  <div class="panel" data-panel="Special Offers">
+    Special Offers content goes here...
+  </div>
+
+  <div class="panel" data-panel="Vacations">
+    Vacations content goes here...
+  </div>
+
+  <div class="panel" data-panel="Our Brands">
+    Our Brands content goes here...
+  </div>
+
+  <div class="panel" data-panel="Meetings & Events">
+    Meetings & Events content goes here...
+  </div>
+
+</div>
     <!-- Use local screenshot first; fallback to Unsplash if missing -->
     <img class="hero-image" src="hero-quebec.png"
          alt="Scenic view of Quebec city"
@@ -576,13 +601,7 @@
 
 
 <script>
-/* ==========================================================================
-   Unified JS for:
-   - multiple carousels (.crs)
-   - each carousel: build dots, arrow scroll, active dot update
-   - hotel list internal small carousels (image slides)
-   - minimal sort placeholder & counters
-   ========================================================================== */
+
 
 (function(){
   /* ----------------------------
@@ -591,14 +610,6 @@
   function q(sel, root=document){ return root.querySelector(sel); }
   function qa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
 
-  /* ----------------------------
-     Carousel initialization
-     Data attributes:
-       - data-crs-id on .crs root (optional)
-       - .crs-track is the scroll container
-       - .crs-arrow with data-crs-action="left"/"right"
-       - .crs-dots is where we build dot elements
-     ---------------------------- */
   function initSingleCarousel(crsRoot){
     const track = crsRoot.querySelector('.crs-track');
     const leftBtn = crsRoot.querySelector('[data-crs-action="left"]');
@@ -685,11 +696,6 @@
   // init all carousels on page
   qa('.crs').forEach(initSingleCarousel);
 
-  /* ----------------------------
-     LISTINGS: image slides per hotel card
-     - parse data-slides attribute from <img>
-     - next/prev buttons navigate slides and update dots
-     ---------------------------- */
   qa('.list-item').forEach(listCard => {
     const img = q('img', listCard);
     if(!img) return;
@@ -714,10 +720,7 @@
     img.addEventListener('click', ()=> show(idx+1));
   });
 
-  /* ----------------------------
-     Card click: progressive enhancement for crs-card & list-item
-     - open placeholder alert with title
-     ---------------------------- */
+
   qa('.crs-card, .list-item').forEach(node=>{
     node.addEventListener('click', (e)=>{
       // find a title inside
@@ -727,9 +730,7 @@
     });
   });
 
-  /* ----------------------------
-     Small UX: sort select placeholder
-     ---------------------------- */
+
   const sortSel = q('#sortSelect');
   if(sortSel){
     sortSel.addEventListener('change', ()=>{
@@ -748,11 +749,26 @@
   if(shownRange) shownRange.textContent = '1-' + total;
   if(totalItems) totalItems.textContent = total;
 
-  /* ----------------------------
-     Accessibility niceties: focus outlines kept (already styled via default)
-     ---------------------------- */
-
 })();
+
+document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const panelName = this.textContent.trim();
+    const panels = document.querySelectorAll('.panel');
+
+    // Close any open panels
+    panels.forEach(p => p.classList.remove('active'));
+
+    // Open the correct panel
+    const target = document.querySelector(`.panel[data-panel="${panelName}"]`);
+    if (target) {
+      target.classList.add('active');
+    }
+  });
+});
+
 </script>
 
 </body>
