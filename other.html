@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Hotels</title>
 <link rel="stylesheet" href="./style.css">
-<style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </style>
 </head>
@@ -41,59 +41,128 @@
         <a href="#">Meetings &amp; Events</a>
       </nav>
 
+<div class="sub-nav" aria-hidden="true">
+  <div class="sub-nav__inner">
+
+    <!-- LEFT: list -->
+    <div class="sub-nav__list" role="navigation" aria-label="Sub Navigation List">
+      <ul class="sub-navigation-list" role="list">
+        <li class="list-item"><a href="/search/default.mi" class="list-item-link" data-target-panel="none">Find a Hotel</a></li>
+        <li class="list-item"><a href="https://homes-and-villas.marriott.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">Homes &amp; Villas <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item"><a href="/en/destinations.mi" class="list-item-link">Explore Destinations</a></li>
+        <li class="list-item"><a href="/hotel-search.mi" class="list-item-link">Hotel Locations</a></li>
+        <li class="list-item"><a href="/luxury" class="list-item-link">Luxury Travel</a></li>
+        <li class="list-item"><a href="https://www.ritzcarltonyachtcollection.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">The Ritz-Carlton Yacht Collection <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item"><a href="https://www.marriottvacationclub.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">Marriott Vacation Club <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item"><a href="/en-us/resorts" class="list-item-link">Resorts</a></li>
+        <li class="list-item"><a href="https://all-inclusive.marriott.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">All-Inclusive Vacations <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item"><a href="https://traveler.marriott.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">Travel Tips &amp; Ideas <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item"><a href="https://hotel-residences.marriott.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">Residences <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item"><a href="/en-us/dining.mi" class="list-item-link">Dine &amp; Drink</a></li>
+        <li class="list-item"><a href="/en-us/golf.mi" class="list-item-link">Golf</a></li>
+        <li class="list-item"><a href="/en-us/outdoors" class="list-item-link">Explore Outdoors</a></li>
+        <li class="list-item"><a href="https://travelinsurance.marriott.com/" class="list-item-link" target="_blank" rel="noopener noreferrer">Travel Insurance <span class="sr-only">Opens in a new tab</span></a></li>
+        <li class="list-item last"><a href="/programs/business-access-by-marriott-bonvoy.mi" class="list-item-link">Small &amp; Midsize Business Program</a></li>
+      </ul>
+    </div>
+
+    <div class="sub-nav__media" aria-hidden="false">
+      <div class="media-card">
+        <picture>
+          <!-- desktop -->
+          <source media="(min-width:992px)" srcset="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=2880&auto=format&fit=crop 2x">
+          <!-- tablet -->
+          <source media="(min-width:768px)" srcset="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1536&auto=format&fit=crop 2x">
+          <!-- mobile -->
+          <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=365&auto=format&fit=crop" alt="Vacation rental with pool and garden">
+        </picture>
+
+        <div class="media-content">
+          <h3 class="media-title">Vacation Rentals Curated by Us for You</h3>
+          <p class="media-desc">Spread out while you earn &amp; redeem points at Homes &amp; Villas by Marriott Bonvoy.</p>
+          <a class="media-cta" href="https://homes-and-villas.marriott.com/" target="_blank" rel="noopener noreferrer">Explore Homes</a>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- sub-nav__inner -->
+</div>
+
+
 
     </div>
   </header>
   <section class="hero-wrap" aria-label="Hero banner">
-          <div class="nav-panels">
 
-  <div class="panel" data-panel="Find & Reserve">
-    Find & Reserve content goes here...
-  </div>
-
-  <div class="panel" data-panel="Special Offers">
-    Special Offers content goes here...
-  </div>
-
-  <div class="panel" data-panel="Vacations">
-    Vacations content goes here...
-  </div>
-
-  <div class="panel" data-panel="Our Brands">
-    Our Brands content goes here...
-  </div>
-
-  <div class="panel" data-panel="Meetings & Events">
-    Meetings & Events content goes here...
-  </div>
-
-</div>
     <!-- Use local screenshot first; fallback to Unsplash if missing -->
     <img class="hero-image" src="hero-quebec.png"
          alt="Scenic view of Quebec city"
          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506765515384-028b60a970df?q=80&w=1400&auto=format&fit=crop'">
 
-    <!-- Search overlay -->
-    <div class="search-card" role="search" aria-label="Find hotels search">
-      <div class="search-col" style="min-width:260px">
-        <label class="search-label" for="destination">Destination</label>
-        <input id="destination" class="search-input" type="text" value="Quebec, Canada" />
+<div class="search-card" role="search" aria-label="Find hotels search">
+  <div class="search-col" style="min-width:260px">
+    <label class="search-label" for="destination">Destination</label>
+    <input id="destination" class="search-input" type="text" placeholder="City, hotel or address" aria-autocomplete="list" aria-haspopup="true" aria-label="Destination (use Google suggestions)">
+  </div>
+
+  <div class="search-col">
+    <label class="search-label" for="dates">Dates</label>
+    <input id="dates" class="search-input" type="text" placeholder="Select check-in — check-out" aria-label="Select dates" readonly>
+  </div>
+
+  <div class="search-col" style="position:relative;">
+    <label class="search-label" for="guests">Rooms &amp; Guests</label>
+    <input id="guests" class="search-input search-mini" type="text" value="1 room, 2 guests" aria-haspopup="true" aria-expanded="false" readonly>
+    <!-- guest panel -->
+    <div class="guest-panel" role="dialog" aria-modal="false" aria-label="Rooms and guests selector" id="guestPanel">
+      <div class="guest-row">
+        <div>
+          <div class="guest-label">Rooms</div>
+          <div class="guest-sub">Max 5 rooms</div>
+        </div>
+        <div class="counter" data-key="rooms">
+          <button type="button" class="dec" aria-label="Decrease rooms">−</button>
+          <span class="count">1</span>
+          <button type="button" class="inc" aria-label="Increase rooms">+</button>
+        </div>
       </div>
 
-      <div class="search-col">
-        <label class="search-label" for="dates">Dates</label>
-        <input id="dates" class="search-input" type="text" value="Thu, Dec 04 - Fri, Dec 05" />
+      <div class="guest-row">
+        <div>
+          <div class="guest-label">Adults</div>
+          <div class="guest-sub">Ages 13+</div>
+        </div>
+        <div class="counter" data-key="adults">
+          <button type="button" class="dec" aria-label="Decrease adults">−</button>
+          <span class="count">2</span>
+          <button type="button" class="inc" aria-label="Increase adults">+</button>
+        </div>
       </div>
 
-      <div class="search-col">
-        <label class="search-label" for="guests">Rooms &amp; Guests</label>
-        <input id="guests" class="search-input search-mini" type="text" value="1 room, 2 guests" />
+      <div class="guest-row">
+        <div>
+          <div class="guest-label">Children</div>
+          <div class="guest-sub">0–12 years</div>
+        </div>
+        <div class="counter" data-key="children">
+          <button type="button" class="dec" aria-label="Decrease children">−</button>
+          <span class="count">0</span>
+          <button type="button" class="inc" aria-label="Increase children">+</button>
+        </div>
       </div>
 
-      <div class="search-cta">
-        <button class="btn-primary" type="button" aria-label="Find Hotels">Find Hotels</button>
+      <div class="guest-actions">
+        <button type="button" class="btn-ghost" id="guestClear">Clear</button>
+        <button type="button" class="btn-apply" id="guestApply">Apply</button>
       </div>
     </div>
+  </div>
+
+  <div class="search-cta">
+    <button class="btn-primary" type="button" aria-label="Find Hotels" id="searchGo">Find Hotels</button>
+  </div>
+</div>
+
 
     <!-- hero dots -->
     <div class="hero-controls" aria-hidden="true">
@@ -598,6 +667,9 @@
       <div class="kv-muted" style="margin-top:20px;">© 1996 - 2025 Marriott International, Inc. All rights reserved.</div>
     </div>
   </footer>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Replace YOUR_GOOGLE_API_KEY_HERE with your key. Enable Places API. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY_HERE&libraries=places"></script>
 
 
 <script>
@@ -751,24 +823,371 @@
 
 })();
 
-document.querySelectorAll('.nav a').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
 
-    const panelName = this.textContent.trim();
-    const panels = document.querySelectorAll('.panel');
+(() => {
+  const topNav = document.querySelector('.nav');
+  const subNav = document.querySelector('.sub-nav');
+  const listRoot = subNav.querySelector('.sub-nav__list .sub-navigation-list');
+  const mediaPicture = subNav.querySelector('.media-card picture');
+  const mediaImg = subNav.querySelector('.media-card img');
+  const mediaTitle = subNav.querySelector('.media-title');
+  const mediaDesc = subNav.querySelector('.media-desc');
+  const mediaCta = subNav.querySelector('.media-cta');
 
-    // Close any open panels
-    panels.forEach(p => p.classList.remove('active'));
+  /* Data model: define per-top-link content (left list items + media) */
+  const menuData = {
+    "Find & Reserve": {
+      left: [
+        { label: "Find a Hotel", href: "/search/default.mi" },
+        { label: "Hotel Locations", href: "/hotel-search.mi" },
+        { label: "Resorts", href: "/en-us/resorts" },
+        { label: "Luxury Travel", href: "/luxury" },
+        { label: "Residences", href: "https://hotel-residences.marriott.com/", external: true },
+        { label: "Homes & Villas", href: "https://homes-and-villas.marriott.com/", external: true }
+      ],
+      media: {
+        title: "Find & Reserve",
+        desc: "Search hotels, resorts and Homes & Villas to book your stay.",
+        image: {
+          src: "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop",
+          srcsetDesktop: "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=2880&auto=format&fit=crop 2x",
+          srcsetTablet: "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1536&auto=format&fit=crop 2x"
+        },
+        cta: { label: "Search Hotels", href: "/search/default.mi" }
+      }
+    },
 
-    // Open the correct panel
-    const target = document.querySelector(`.panel[data-panel="${panelName}"]`);
-    if (target) {
-      target.classList.add('active');
+    "Special Offers": {
+      left: [
+        { label: "Popular Offers", href: "/offers" },
+        { label: "Packages", href: "/packages" },
+        { label: "Member Rates", href: "/member-rates" },
+        { label: "Advance Purchase", href: "/advance-purchase" },
+        { label: "Corporate Offers", href: "/corporate-offers" },
+        { label: "Seasonal Deals", href: "/seasonal" }
+      ],
+      media: {
+        title: "Popular Offers & Deals",
+        desc: "Limited-time savings across hotels and packages.",
+        image: {
+          src: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1200&auto=format&fit=crop",
+          srcsetDesktop: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=2880&auto=format&fit=crop 2x",
+          srcsetTablet: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1536&auto=format&fit=crop 2x"
+        },
+        cta: { label: "View Offers", href: "/offers" }
+      }
+    },
+
+    "Vacations": {
+      left: [
+        { label: "All-Inclusive Vacations", href: "https://all-inclusive.marriott.com/", external: true },
+        { label: "Hotels + Flight Packages", href: "/packages/flights" },
+        { label: "Homes & Villas", href: "https://homes-and-villas.marriott.com/", external: true },
+        { label: "Family Vacations", href: "/family" },
+        { label: "Romantic Getaways", href: "/romance" },
+        { label: "Beach Destinations", href: "/beach" }
+      ],
+      media: {
+        title: "All-Inclusive Vacations",
+        desc: "Your all-inclusive escape — rooms, dining and activities bundled.",
+        image: {
+          src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+          srcsetDesktop: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2880&auto=format&fit=crop 2x",
+          srcsetTablet: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1536&auto=format&fit=crop 2x"
+        },
+        cta: { label: "Explore Vacations", href: "/vacations" }
+      }
+    },
+
+    "Our Brands": {
+      left: [
+        { label: "Luxury Brands", href: "/brands/luxury" },
+        { label: "Premium Brands", href: "/brands/premium" },
+        { label: "Select Service", href: "/brands/select" },
+        { label: "Extended Stay", href: "/brands/extended" },
+        { label: "Boutique & Lifestyle", href: "/brands/lifestyle" },
+        { label: "All Brands", href: "/brands" }
+      ],
+      media: {
+        title: "Explore Our Brands",
+        desc: "Find the brand that fits your trip — luxury to select-service.",
+        image: {
+          src: "https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=1200&auto=format&fit=crop",
+          srcsetDesktop: "https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=2880&auto=format&fit=crop 2x",
+          srcsetTablet: "https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=1536&auto=format&fit=crop 2x"
+        },
+        cta: { label: "Browse Brands", href: "/brands" }
+      }
+    },
+
+    "Meetings & Events": {
+      left: [
+        { label: "Meetings & Events Overview", href: "/meetings" },
+        { label: "Group Sales", href: "/group-sales" },
+        { label: "Event Spaces", href: "/event-spaces" },
+        { label: "Catering & Menus", href: "/catering" },
+        { label: "Weddings", href: "/weddings" },
+        { label: "Request a Proposal", href: "/request-proposal" }
+      ],
+      media: {
+        title: "Meetings & Events",
+        desc: "Find venues, catering options and group services to make your event successful.",
+        image: {
+          src: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
+          srcsetDesktop: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2880&auto=format&fit=crop 2x",
+          srcsetTablet: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1536&auto=format&fit=crop 2x"
+        },
+        cta: { label: "Plan an Event", href: "/meetings" }
+      }
+    }
+  };
+
+  /* helper to build left list HTML */
+  function buildLeftList(items){
+    return items.map(it => {
+      const rel = it.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return `<li class="list-item"><a class="list-item-link" href="${it.href}"${rel}>${it.label}${it.external ? ' <span class="sr-only">Opens in a new tab</span>' : ''}</a></li>`;
+    }).join('');
+  }
+
+  /* helper to set media region */
+  function setMedia(media){
+    // replace picture sources if available (keeps responsive markup)
+    const srcsetDesktop = media.image.srcsetDesktop || media.image.src;
+    const srcsetTablet = media.image.srcsetTablet || media.image.src;
+    // Remove existing <source> nodes then re-add to ensure correct values
+    while (mediaPicture.firstChild) mediaPicture.removeChild(mediaPicture.firstChild);
+
+    const sDesktop = document.createElement('source');
+    sDesktop.media = "(min-width:992px)";
+    sDesktop.srcset = srcsetDesktop;
+    const sTablet = document.createElement('source');
+    sTablet.media = "(min-width:768px)";
+    sTablet.srcset = srcsetTablet;
+    const img = document.createElement('img');
+    img.src = media.image.src;
+    img.alt = media.title || media.desc || 'Promo';
+    // ensure media-card img uses your existing classes / styling
+    img.loading = "lazy";
+
+    mediaPicture.appendChild(sDesktop);
+    mediaPicture.appendChild(sTablet);
+    mediaPicture.appendChild(img);
+
+    mediaTitle.textContent = media.title;
+    mediaDesc.textContent = media.desc;
+    mediaCta.textContent = media.cta.label;
+    mediaCta.href = media.cta.href || '#';
+    if (media.cta.href && media.cta.href.startsWith('http')) {
+      mediaCta.target = '_blank';
+      mediaCta.rel = 'noopener noreferrer';
+    } else {
+      mediaCta.removeAttribute('target');
+      mediaCta.removeAttribute('rel');
+    }
+  }
+
+  /* open/close helpers */
+  function openMenuFor(label){
+    const key = Object.keys(menuData).find(k => k.toLowerCase() === label.toLowerCase());
+    if (!key) return;
+    const data = menuData[key];
+    // populate left list
+    listRoot.innerHTML = buildLeftList(data.left);
+    // populate media
+    setMedia(data.media);
+    // show sub-nav
+    subNav.setAttribute('aria-hidden', 'false');
+    // update aria-expanded on top-level links
+    Array.from(topNav.querySelectorAll('a')).forEach(a => {
+      const aLabel = a.textContent.trim();
+      a.setAttribute('aria-expanded', aLabel.toLowerCase() === key.toLowerCase() ? 'true' : 'false');
+    });
+  }
+
+  function closeMenu(){
+    subNav.setAttribute('aria-hidden', 'true');
+    Array.from(topNav.querySelectorAll('a')).forEach(a => a.setAttribute('aria-expanded', 'false'));
+  }
+
+  /* event handlers: click + keyboard */
+  topNav.addEventListener('click', (ev) => {
+    const link = ev.target.closest('a');
+    if (!link || !topNav.contains(link)) return;
+    ev.preventDefault();
+    openMenuFor(link.textContent.trim());
+  });
+
+  topNav.addEventListener('keydown', (ev) => {
+    // support Enter / Space when link focused
+    if ((ev.key === 'Enter' || ev.key === ' ') && document.activeElement.closest('.nav')) {
+      const focused = document.activeElement;
+      if (focused && focused.tagName === 'A') {
+        ev.preventDefault();
+        openMenuFor(focused.textContent.trim());
+      }
+    }
+    // allow Escape to close when nav focused
+    if (ev.key === 'Escape') closeMenu();
+  });
+
+  // open on focus/hover (optional): helpful for keyboard + mouse users
+  topNav.addEventListener('mouseover', (ev) => {
+    const link = ev.target.closest('a');
+    if (link && topNav.contains(link)) {
+      openMenuFor(link.textContent.trim());
     }
   });
+
+  // close on click outside
+  document.addEventListener('click', (ev) => {
+    if (!subNav.contains(ev.target) && !topNav.contains(ev.target)) {
+      closeMenu();
+    }
+  });
+
+  // close on Escape anywhere
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') closeMenu();
+  });
+
+  /* initialization: set aria-expanded default */
+  Array.from(topNav.querySelectorAll('a')).forEach(a => {
+    a.setAttribute('role', 'menuitem');
+    a.setAttribute('aria-expanded', 'false');
+    a.setAttribute('tabindex', '0');
+  });
+
+  // optional: open default panel (first link) on page load
+  // openMenuFor(topNav.querySelector('a').textContent.trim());
+})();
+
+flatpickr("#dates", {
+  mode: "range",
+  altInput: true,
+  altFormat: "D, M j",
+  dateFormat: "Y-m-d",
+
+  onOpen: function(selectedDates, dateStr, instance) {
+    instance.calendarContainer.classList.add("calendar-themed");
+  }
 });
 
+
+/* ===== Google Places Autocomplete for destination ===== */
+(function(){
+  const destInput = document.getElementById('destination');
+  if (window.google && google.maps && google.maps.places) {
+    const ac = new google.maps.places.Autocomplete(destInput, {
+      types: ['(cities)'], /* restrict to cities – change to [] for all */
+      fields: ['formatted_address','geometry','name','place_id']
+    });
+
+    ac.addListener('place_changed', () => {
+      const place = ac.getPlace();
+      // You can store place.geometry.location for mapping or search radius
+      destInput.dataset.placeId = place.place_id || '';
+    });
+  } else {
+    // Graceful fallback: allow free text search (server side)
+    destInput.placeholder += " — (autocomplete unavailable)";
+  }
+})();
+
+/* ===== Rooms & Guests logic ===== */
+(function() {
+  const guestsInput = document.getElementById('guests');
+  const panel = document.getElementById('guestPanel');
+  const counters = panel.querySelectorAll('.counter');
+  const state = { rooms:1, adults:2, children:0 };
+
+  function updateInput(){
+    guestsInput.value = `${state.rooms} room${state.rooms>1?'s':''}, ${state.adults} adult${state.adults>1?'s':''}${state.children?(', ' + state.children + ' child' + (state.children>1?'ren':'')) : ''}`;
+  }
+
+  counters.forEach(c => {
+    const key = c.dataset.key;
+    const dec = c.querySelector('.dec');
+    const inc = c.querySelector('.inc');
+    const countEl = c.querySelector('.count');
+
+    dec.addEventListener('click', (e) => {
+      e.preventDefault();
+      if(key === 'rooms') state[key] = Math.max(1, state[key]-1);
+      else state[key] = Math.max(0, state[key]-1);
+      countEl.textContent = state[key];
+      updateInput();
+    });
+
+    inc.addEventListener('click', (e) => {
+      e.preventDefault();
+      if(key === 'rooms') state[key] = Math.min(5, state[key]+1);       // limit rooms 5
+      else if(key === 'adults') state[key] = Math.min(10, state[key]+1);
+      else state[key] = Math.min(6, state[key]+1);
+      countEl.textContent = state[key];
+      updateInput();
+    });
+
+    // allow keyboard increment when focused
+    c.addEventListener('keydown', (ev) => {
+      if(ev.key === 'ArrowUp' || ev.key === '+') inc.click();
+      if(ev.key === 'ArrowDown' || ev.key === '-') dec.click();
+    });
+  });
+
+  document.getElementById('guestApply').addEventListener('click', (e) => {
+    e.preventDefault();
+    panel.style.display = 'none';
+    guestsInput.setAttribute('aria-expanded','false');
+  });
+
+  document.getElementById('guestClear').addEventListener('click', (e) => {
+    e.preventDefault();
+    state.rooms = 1; state.adults = 2; state.children = 0;
+    counters.forEach(c => c.querySelector('.count').textContent = state[c.dataset.key]);
+    updateInput();
+  });
+
+  // toggle panel
+  guestsInput.addEventListener('click', (e) => {
+    const isOpen = panel.style.display === 'block';
+    panel.style.display = isOpen ? 'none' : 'block';
+    guestsInput.setAttribute('aria-expanded', String(!isOpen));
+    // focus first control
+    if(!isOpen) panel.querySelector('.counter .dec').focus();
+  });
+
+  // close on outside click or Escape
+  document.addEventListener('click', (ev) => {
+    if(!panel.contains(ev.target) && ev.target !== guestsInput) {
+      panel.style.display = 'none';
+      guestsInput.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown', (ev) => {
+    if(ev.key === 'Escape') {
+      panel.style.display = 'none';
+      guestsInput.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // init counts on load
+  counters.forEach(c => c.querySelector('.count').textContent = state[c.dataset.key]);
+  updateInput();
+})();
+
+/* ===== Search button — minimal behavior stub ===== */
+document.getElementById('searchGo').addEventListener('click', (e) => {
+  // Collect values
+  const destination = document.getElementById('destination').value;
+  const placeId = document.getElementById('destination').dataset.placeId || '';
+  const dates = document.getElementById('dates').value;
+  const guests = document.getElementById('guests').value;
+
+  // You can now call your search endpoint with these parameters.
+  // For demo, show an accessible summary:
+  alert(`Search\nDestination: ${destination}\nDates: ${dates}\nGuests: ${guests}`);
+});
 </script>
 
 </body>
