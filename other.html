@@ -175,30 +175,56 @@
 <div class="container" role="main">
 
 
+<div class="welcome-sec">
 
-  <!-- ================= HERO / Intro ================= -->
-  <section class="sec" aria-labelledby="intro-title">
-    <div class="sec-head" style="align-items:flex-start;">
-      <h2 id="intro-title">Welcome to Quebec — Explore hotels, deals & experiences</h2>
-      <a class="sec-link" href="#" onclick="event.preventDefault()">View All Destinations →</a>
-    </div>
+    <!-- welcome-hero -->
+    <section class="welcome-hero" aria-labelledby="welcome-hero-title">
+      <span class="welcome-hero__eyebrow">Welcome to Quebec City Marriott Downtown</span>
+      <div class="welcome-hero__accent-bar" aria-hidden="true"></div>
 
-    <div style="display:flex; gap:20px; flex-wrap:wrap;">
-      <div style="flex:1 1 620px;">
-        <p class="kv-muted">
-          Quebec is a living museum of French-Canadian culture — cobblestone streets, historic architecture, and culinary delights.
-          Browse hotels with fitness centers, restaurants, family-friendly amenities and more.
-        </p>
-      </div>
+      <h1 id="welcome-hero-title" class="welcome-hero__title">
+        Discover downtown from our hotel in Old<br>Quebec City
+      </h1>
 
-      <div style="flex:0 0 260px; display:flex; justify-content:flex-end; align-items:center;">
-        <div style="text-align:right;">
-          <div style="font-weight:700;">1 NIGHT</div>
-          <div class="kv-muted">Thu, Dec 04 - Fri, Dec 05</div>
+      <p class="welcome-hero__lead">
+        Experience a luxury getaway at Quebec City Marriott Downtown. Located in one of the oldest cities in
+        Canada, our hotel in Quebec City Old Town is near local sites like the Quebec City Convention Centre...
+      </p>
+
+      <a class="welcome-hero__cta" href="#" aria-label="See more about Quebec City Marriott Downtown">See More</a>
+    </section>
+
+    <!-- INFO CARD -->
+    <div class="info-card-wrapper">
+      <article class="info-card" aria-labelledby="card-title" role="region">
+        <div class="info-card__icon" aria-hidden="true">
+          <div class="bullet">i</div>
         </div>
-      </div>
+
+        <div class="info-card__content">
+          <h3 id="card-title" class="info-card__title">Celebrate the Holidays at Quebec City Marriott</h3>
+
+          <p class="info-card__text">
+            Step into holiday magic in the heart of Old Quebec! Enjoy our German Christmas Market package
+            with 2 signature cocktails, 2 mulled wine coupons, 2 authentic German pretzels, and an exclusive promo code.
+            Explore the festive market just steps from your room and create unforgettable seasonal memories.
+          </p>
+
+          <div class="info-card__footer">
+            <a class="link-cta" href="#" aria-label="Learn more about the holiday package">
+              Learn More
+              <!-- small right arrow -->
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
     </div>
-  </section>
+
+  </div>
+  
 
   <!-- ================= CAROUSEL: Fitness Center Hotels (original first carousel) ================= -->
   <section class="sec" aria-labelledby="c1">
@@ -365,6 +391,45 @@
       <div class="crs-dots" data-crs-dots></div>
     </div>
   </section>
+<div class="cards-wrapper">
+  <!-- Original: image left, text right -->
+  <article class="holiday-card" aria-labelledby="title-1">
+    <div class="holiday-image">
+      <img src="https://images.unsplash.com/photo-1588195545874-7dc7d4d1a3f4?auto=format&fit=crop&w=1200&q=80" alt="Two people clinking champagne glasses at a festive table." />
+    </div>
+
+    <div class="holiday-content">
+      <p class="tag">CELEBRATE THE SEASON</p>
+      <h2 id="title-1">Holidays at Quebec City<br/>Marriott Downtown</h2>
+      <p class="description">
+        Step into the festive charm of Old Quebec, where lights, music, and tradition fill the air.
+        From cozy gatherings at the hotel to the city’s enchanting German Christmas Market, the season
+        brings warmth and wonder at every turn. Celebrate with us and discover the joy of winter in
+        one of Canada's most magical destinations.
+      </p>
+      <button class="explore-btn" type="button" aria-label="Explore Holidays at Quebec City Marriott Downtown">Explore</button>
+    </div>
+  </article>
+
+  <!-- Mirrored: image right, text left -->
+  <article class="holiday-card holiday-card--reverse" aria-labelledby="title-2">
+    <div class="holiday-image">
+      <img src="https://images.unsplash.com/photo-1546592638-7f6f4d4d3b8b?auto=format&fit=crop&w=1200&q=80" alt="Festive holiday dining with string lights in the background." />
+    </div>
+
+    <div class="holiday-content">
+      <p class="tag">CELEBRATE THE SEASON</p>
+      <h2 id="title-2">Holidays at Quebec City<br/>Marriott Downtown</h2>
+      <p class="description">
+        Step into the festive charm of Old Quebec, where lights, music, and tradition fill the air.
+        From cozy gatherings at the hotel to the city’s enchanting German Christmas Market, the season
+        brings warmth and wonder at every turn. Celebrate with us and discover the joy of winter in
+        one of Canada's most magical destinations.
+      </p>
+      <button class="explore-btn" type="button" aria-label="Explore Holidays at Quebec City Marriott Downtown">Explore</button>
+    </div>
+  </article>
+</div>
 
   <!-- ================= EXPERIENCES GRID (merged content from third fragment) ================= -->
   <section class="sec" aria-labelledby="exp">

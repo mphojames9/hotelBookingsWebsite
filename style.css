@@ -6,7 +6,6 @@
     /* Colors */
     --muted: #6f6f6f;
     --fg: #0b1221;
-    --accent: #0b1221;
     /* primary dark accent */
     --accent-2: #111827;
     /* for buttons and chips */
@@ -24,6 +23,14 @@
     /* Shadows */
     --shadow-lg: 0 18px 36px rgba(12, 12, 12, 0.12);
     --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+          --welcome-sec-max:1180px;
+      --accent:#a71c2b;        /* burgundy accent */
+      --accent-dark:#0b1221;   /* dark accent */
+      --card-border:#d6d6d6;
+      --radius:12px;
+      --container-pad:28px;
+      --h1-size:44px;
 }
 
 * {
@@ -140,6 +147,133 @@ body {
   margin: 0;
   font-size: 18px;            
   font-weight: 700;
+}
+
+.cards-wrapper{
+  max-width: calc(var(--card-max-width) + 40px);
+  margin: 0 auto;
+  display: grid;
+  gap: 48px;
+  padding: 20px;
+}
+
+/* Base card */
+.holiday-card{
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--pad);
+  max-width: var(--card-max-width);
+  margin: 0 auto;
+  background: transparent;
+}
+
+/* Reverse modifier: visually flip left/right */
+.holiday-card--reverse{
+  flex-direction: row-reverse;
+}
+
+/* Image block */
+.holiday-image{
+  flex: 0 0 var(--image-width);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.holiday-image img{
+  display: block;
+  width: 100%;
+  height: var(--image-height);
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+/* Content block */
+.holiday-content{
+  max-width: 540px;
+}
+
+/* Typographic details */
+.tag{
+  letter-spacing: 1.8px;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.holiday-content h2{
+  font-size: 30px;
+  margin: 0 0 18px 0;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.description{
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-size: 15px;
+}
+
+/* Button */
+.explore-btn{
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 6px 14px rgba(162,0,0,0.12);
+}
+
+.explore-btn:focus{
+  outline: 3px solid rgba(162,0,0,0.15);
+  outline-offset: 3px;
+}
+
+.explore-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 880px){
+  :root{
+    --gap: 20px;
+    --image-width: 100%;
+  }
+
+  .holiday-card,
+  .holiday-card--reverse{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .holiday-image{
+    width: 100%;
+  }
+
+  .holiday-image img{
+    width: 100%;
+    height: 260px;
+  }
+
+  .holiday-content{
+    width: 100%;
+    margin-top: 18px;
+  }
+}
+
+/* Small fine-tune for very narrow screens */
+@media (max-width: 420px){
+  .holiday-content h2{ font-size: 22px; }
+  .description{ font-size: 14px; }
+  .explore-btn{ padding: 10px 20px; font-size: 15px; }
 }
 
 .media-desc {
@@ -569,33 +703,189 @@ button {
     filter: contrast(1.02) saturate(0.98)
 }
 
-/* =========================
-   Sections, carousels, cards
-   ========================= */
-.sec {
-    margin: 34px 0
-}
 
-.sec-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-    flex-wrap: wrap
-}
 
-.sec-head h2 {
-    margin: 0;
-    font-size: 22px
-}
+    /* ========== welcome-sec container ========== */
+    .welcome-sec {
+      max-width:var(--welcome-sec-max);
+      margin:40px auto;
+      padding:0 var(--container-pad);
+    }
 
-.sec-link {
-    color: var(--muted);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 14px
-}
+    /* ========== welcome-hero ========== */
+    .welcome-hero {
+      text-align:center;
+      padding: 8px 0 40px 0;
+    }
+
+    .welcome-hero__eyebrow{
+      display:block;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    .welcome-hero__accent-bar {
+      width:56px;
+      height:4px;
+      margin: 8px auto 20px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+      border-radius:2px;
+      opacity:0.95;
+    }
+
+    .welcome-hero__title{
+      margin:0 auto 18px;
+      max-width:900px;
+      font-family: "Playfair Display", serif;
+      font-weight:700;
+      color:var(--accent-dark);
+      font-size: clamp(28px, 4vw, var(--h1-size));
+      line-height:1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .welcome-hero__lead{
+      margin:0 auto;
+      max-width:760px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .welcome-hero__cta{
+      display:inline-block;
+      margin-top:12px;
+      font-size:14px;
+      color:var(--accent-dark);
+      text-decoration:underline;
+    }
+
+    /* ========== Info Card ========== */
+    .info-card-wrapper{
+      margin-top:40px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .info-card{
+      width:100%;
+      max-width:1050px;
+      border-radius:var(--radius);
+      border:1px solid var(--card-border);
+      padding:26px;
+      box-shadow: 0 6px 18px rgba(11,18,33,0.04);
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.99));
+    }
+
+    /* icon column */
+    .info-card__icon {
+      flex: 0 0 44px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      margin-top:4px;
+    }
+
+    .bullet {
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      border:1px solid var(--card-border);
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:var(--accent-dark);
+      background:transparent;
+      font-size:14px;
+    }
+
+    /* content column */
+    .info-card__content{
+      flex:1 1 auto;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .info-card__title{
+      margin:0;
+      font-size:15px;
+      font-weight:700;
+      color:var(--accent-dark);
+    }
+
+    .info-card__text{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .info-card__footer{
+      margin-top:8px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .link-cta{
+      font-size:13px;
+      text-decoration:none;
+      font-weight:600;
+      color:var(--accent);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:transform .15s ease, opacity .15s ease;
+    }
+
+    .link-cta svg{transform:translateX(0); transition:transform .18s ease}
+
+    .link-cta:hover{
+      transform:translateX(4px);
+      opacity:0.95;
+    }
+
+    .link-cta:hover svg{transform:translateX(3px)}
+
+    /* subtle left border line (decor) for large screens */
+    @media(min-width:920px){
+      .info-card{
+        padding:30px 32px;
+      }
+      .info-card::before{
+        content:"";
+        position:absolute;
+      }
+    }
+
+    /* stacked on small screens */
+    @media(max-width:720px){
+      .welcome-sec { margin:22px auto; padding:0 18px }
+      .info-card{
+        flex-direction:row;
+        gap:14px;
+        padding:18px;
+      }
+      .welcome-hero{ padding-bottom:18px }
+      .welcome-hero__title{ font-size:28px }
+    }
+
+    /* very small screens — card becomes vertical if content is long */
+    @media(max-width:420px){
+      .info-card{ flex-direction:row; gap:12px }
+      .bullet{ width:34px; height:34px; font-size:13px }
+    }
+
+    /* accessibility focus styles */
+    a:focus{ outline: 3px solid rgba(167,28,43,0.14); outline-offset:3px; border-radius:6px; }
 
 .u-muted {
     color: var(--muted);
