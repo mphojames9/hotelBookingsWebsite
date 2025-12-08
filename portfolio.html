@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hero + Info Card — Modern Example</title>
+  <title>welcome-hero + Info Card — Modern Example</title>
 
   <!-- Google Fonts (swap if you like different fonts) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
   <style>
     /* ========== Theme variables & reset ========== */
     :root{
-      --page-max:1180px;
+      --welcome-sec-max:1180px;
       --gap:24px;
       --muted:#6f6f6f;
       --accent:#a71c2b;        /* burgundy accent */
@@ -35,20 +35,20 @@
       line-height:1.5;
     }
 
-    /* ========== page container ========== */
-    .page {
-      max-width:var(--page-max);
+    /* ========== welcome-sec container ========== */
+    .welcome-sec {
+      max-width:var(--welcome-sec-max);
       margin:40px auto;
       padding:0 var(--container-pad);
     }
 
-    /* ========== Hero ========== */
-    .hero {
+    /* ========== welcome-hero ========== */
+    .welcome-hero {
       text-align:center;
       padding: 8px 0 40px 0;
     }
 
-    .hero__eyebrow{
+    .welcome-hero__eyebrow{
       display:block;
       font-size:12px;
       letter-spacing:2px;
@@ -58,7 +58,7 @@
       font-weight:600;
     }
 
-    .hero__accent-bar {
+    .welcome-hero__accent-bar {
       width:56px;
       height:4px;
       margin: 8px auto 20px;
@@ -67,7 +67,7 @@
       opacity:0.95;
     }
 
-    .hero__title{
+    .welcome-hero__title{
       margin:0 auto 18px;
       max-width:900px;
       font-family: "Playfair Display", serif;
@@ -78,14 +78,14 @@
       letter-spacing: -0.02em;
     }
 
-    .hero__lead{
+    .welcome-hero__lead{
       margin:0 auto;
       max-width:760px;
       color:var(--muted);
       font-size:15px;
     }
 
-    .hero__cta{
+    .welcome-hero__cta{
       display:inline-block;
       margin-top:12px;
       font-size:14px;
@@ -198,14 +198,14 @@
 
     /* stacked on small screens */
     @media(max-width:720px){
-      .page { margin:22px auto; padding:0 18px }
+      .welcome-sec { margin:22px auto; padding:0 18px }
       .info-card{
         flex-direction:row;
         gap:14px;
         padding:18px;
       }
-      .hero{ padding-bottom:18px }
-      .hero__title{ font-size:28px }
+      .welcome-hero{ padding-bottom:18px }
+      .welcome-hero__title{ font-size:28px }
     }
 
     /* very small screens — card becomes vertical if content is long */
@@ -219,23 +219,23 @@
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="welcome-sec">
 
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <span class="hero__eyebrow">Welcome to Quebec City Marriott Downtown</span>
-      <div class="hero__accent-bar" aria-hidden="true"></div>
+    <!-- welcome-hero -->
+    <section class="welcome-hero" aria-labelledby="welcome-hero-title">
+      <span class="welcome-hero__eyebrow">Welcome to Quebec City Marriott Downtown</span>
+      <div class="welcome-hero__accent-bar" aria-hidden="true"></div>
 
-      <h1 id="hero-title" class="hero__title">
+      <h1 id="welcome-hero-title" class="welcome-hero__title">
         Discover downtown from our hotel in Old<br>Quebec City
       </h1>
 
-      <p class="hero__lead">
+      <p class="welcome-hero__lead">
         Experience a luxury getaway at Quebec City Marriott Downtown. Located in one of the oldest cities in
         Canada, our hotel in Quebec City Old Town is near local sites like the Quebec City Convention Centre...
       </p>
 
-      <a class="hero__cta" href="#" aria-label="See more about Quebec City Marriott Downtown">See More</a>
+      <a class="welcome-hero__cta" href="#" aria-label="See more about Quebec City Marriott Downtown">See More</a>
     </section>
 
     <!-- INFO CARD -->

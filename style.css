@@ -1375,3 +1375,232 @@ button {
         animation: none !important;
     }
 }
+
+/* ===== Extra tiny-screen fixes: <= 320px then hard rules for <= 280px ===== */
+@media (max-width: 320px) {
+  /* global */
+  html, body { font-size: 14px; }
+  body { padding: 8px 8px; }
+
+  /* top header: compress */
+  .hdr-bar { padding: 10px 6px; gap: 8px; }
+  .hdr-logo { width:44px; height:44px; font-size:16px; }
+  .hdr-title { font-size:16px; }
+  .hdr-sub { font-size:11px; }
+
+  /* brand row */
+  .topbar { padding: 8px; gap: 8px; }
+  .brand .logo { padding: 8px 10px; font-size:12px; }
+  .nav { gap:8px; font-size:12px; overflow:hidden; white-space:nowrap; }
+
+  /* hero image smaller */
+  .hero-image { height: 200px; object-position: center top; }
+
+  /* search card: always stacked and full width input */
+  .search-card {
+    position: static;
+    transform: none;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: unset;
+  }
+  .search-col { width: 100%; min-width: unset; }
+  .search-input { width: 100%; min-width: unset; padding: 8px 10px; font-size:14px; }
+  .search-cta { margin-left:0; width:100%; display:flex; justify-content:flex-end; }
+  .btn-primary { padding: 10px 14px; font-size:15px; }
+
+  /* guest panel, dropdowns */
+  .guest-panel, .guest-panel { right: 8px; left: 8px; width: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+
+  /* hero/hero controls */
+  .hero-controls { display:none; }
+
+  /* welcome hero */
+  .welcome-hero__title { font-size: 20px; line-height:1.15; }
+  .welcome-hero__lead { font-size: 13px; }
+
+  /* cards and holiday list */
+  .cards-wrapper { padding: 0; gap: 18px; }
+  .holiday-card, .holiday-card--reverse { flex-direction: column; gap: 12px; padding: 12px; }
+  .holiday-image img { height: 160px; object-fit:cover; }
+  .holiday-content h2 { font-size:18px; }
+  .description { font-size:13px; }
+
+  /* carousel reduced */
+  .crs-track { gap: 12px; padding-left: 0; }
+  .crs-card { min-width: 100%; width: 100%; height: 140px; }
+
+  /* exp-grid -> single column */
+  .exp-grid { grid-template-columns: 1fr; gap: 12px; }
+  .exp-card { padding: 14px; }
+
+  /* listings: stack & compress */
+  .list-item {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 10px;
+  }
+  .list-media { min-height: 140px; height: 140px; }
+  .list-body { font-size: 13px; }
+  .price-amount { font-size: 18px; }
+
+  /* footer */
+  .ftr { padding: 30px 10px; }
+
+  /* buttons */
+  .explore-btn, .book-btn { padding: 8px 12px; font-size:14px; }
+  .crs-arrow { display:none; } /* keep UI uncluttered */
+}
+
+/* ===== Aggressive compression for very small devices: 280px and below ===== */
+@media (max-width: 280px) {
+  html, body { font-size: 13px; }
+  body { padding: 6px 6px; }
+
+  /* header — hide secondary text to save space */
+  .hdr-sub, .brand .sub, .nav { display: none; }
+  .hdr-title { font-size: 16px; }
+
+  /* hero image — tiny */
+  .hero-image { height: 140px; }
+
+  /* search card => stacked compact */
+  .search-card { padding: 8px; gap: 6px; border-radius:10px; }
+  .search-label { font-size:11px; }
+  .search-input { padding: 8px 8px; font-size:13px; }
+
+  /* collapse info-card */
+  .info-card { padding: 12px; gap: 10px; }
+  .info-card__title { font-size: 14px; }
+  .info-card__text { font-size: 12px; }
+
+  /* holiday cards */
+  .holiday-image img { height: 120px; }
+  .holiday-content h2 { font-size: 16px; }
+  .description { font-size: 12px; margin-bottom: 12px; }
+
+  /* carousel & cards */
+  .crs-card { height: 120px; }
+  .crs-track { gap: 10px; }
+
+  /* experiences: stack tightly */
+  .exp-card { padding: 12px; }
+
+  /* listings */
+  .list-media { height: 120px; min-height: 120px; }
+  .list-title h3 { font-size: 15px; }
+  .kv-muted, .list-meta, .list-desc { font-size: 12px; }
+
+  /* make interactive targets comfortable but small */
+  .btn-primary, .book-btn, .explore-btn { padding: 8px 10px; font-size:13px; }
+  .counter button { width:30px; height:30px; }
+
+  /* avoid horizontal overflow by forcing all images to max-width */
+  img, picture, .crs-media, .hero-image { max-width: 100%; height: auto; object-fit: cover; }
+
+  /* ensure no element keeps a fixed min-width bigger than the viewport */
+  * { min-width: 0 !important; box-sizing: border-box; }
+}
+
+/* accessibility helper */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px,1px,1px,1px);
+  white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
+/* --- hamburger button --- */
+.nav-mobile-wrapper { position: relative; z-index: 40; }
+
+/* base button */
+.nav-toggle {
+  display: none; /* shown only on small screens below */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* hamburger icon lines */
+.hamburger { display:inline-block; width:28px; height:20px; position:relative; }
+.hamburger .bar {
+  display:block;
+  position:absolute;
+  left:0; right:0;
+  height:2px;
+  background-color:var(--accent-2, #111827);
+  border-radius:2px;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), opacity 200ms;
+}
+.hamburger .top { top:0; }
+.hamburger .mid { top:9px; }
+.hamburger .bot { bottom:0; }
+
+/* when open — animate into X */
+.nav-toggle[aria-expanded="true"] .hamburger .top  { transform: translateY(9px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .hamburger .mid  { opacity: 0; transform: scaleX(0.1); }
+.nav-toggle[aria-expanded="true"] .hamburger .bot  { transform: translateY(-9px) rotate(-45deg); }
+
+/* --- responsive nav styles --- */
+/* Desktop: show nav inline as before */
+@media (min-width: 769px) {
+  .nav-toggle { display: none !important; }
+  nav.nav { display: flex !important; flex-wrap:wrap; gap:12px; align-items:center; }
+  nav.nav a { tabindex: 0; }
+}
+
+/* Mobile: hide original nav, show button */
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; }
+  nav.nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 8px;
+    width: calc(100% - 16px);
+    max-width: 320px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    padding: 10px;
+    display: none; /* toggled by JS */
+    flex-direction: column;
+    gap: 6px;
+    transform-origin: top right;
+    transition: opacity 180ms ease, transform 180ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* visible menu state */
+  nav.nav[aria-hidden="false"] {
+    display: flex;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  nav.nav a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--accent-2, #111827);
+    font-weight: 600;
+    outline: none;
+  }
+  nav.nav a:focus,
+  nav.nav a:hover { background: rgba(0,0,0,0.04); }
+
+  /* keep layout compact on very tiny screens */
+  @media (max-width: 320px) {
+    nav.nav { right: 6px; left: 6px; width: auto; max-width: none; padding: 8px; }
+    .hamburger { width:24px; height:16px; }
+  }
+}
