@@ -8,6 +8,1681 @@
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
+:root {
+    --page-max: 1180px;
+    --max-w: 1180px;
+    --gap: 20px;
+
+    /* Colors */
+    --muted: #6f6f6f;
+    --fg: #0b1221;
+    /* primary dark accent */
+    --accent-2: #111827;
+    /* for buttons and chips */
+    --bg: #ffffff;
+    --soft-bg: #f7f8fa;
+    --footer-bg: #0f1724;
+    --footer-text: #c9d1d9;
+
+    /* UI */
+    --card-radius: 14px;
+    --overlay-dark: rgba(0, 0, 0, 0.46);
+    --tag-bg: rgba(255, 255, 255, 0.12);
+    --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.74));
+
+    /* Shadows */
+    --shadow-lg: 0 18px 36px rgba(12, 12, 12, 0.12);
+    --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+          --welcome-sec-max:1180px;
+      --accent:#a71c2b;        /* burgundy accent */
+      --accent-dark:#0b1221;   /* dark accent */
+      --card-border:#d6d6d6;
+      --radius:12px;
+      --container-pad:28px;
+      --h1-size:44px;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--soft-bg);
+    color: var(--fg);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* SUB NAV */
+.sub-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: none;                 /* toggled by JS */
+  z-index: 50;
+  padding: 28px 24px;
+  font-family: system-ui, -apple-system, "Helvetica Neue", Arial;
+}
+
+.sub-nav[aria-hidden="false"] {
+  display: block;
+}
+
+.sub-nav__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;                    
+  align-items: flex-start;
+}
+
+/* LEFT COLUMN LIST – smaller */
+.sub-nav__list {
+  flex: 1 1 48%;
+}
+
+.sub-navigation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 6px 16px;                 
+}
+
+.list-item {
+  margin: 0;
+}
+
+.list-item .list-item-link {
+  display: block;
+  padding: 4px 0;                
+  color: #111;
+  text-decoration: none;
+  font-weight: 500;              
+  font-size: 12px;               
+}
+
+.list-item .list-item-link:hover,
+.list-item .list-item-link:focus {
+  color: #0b64d6;
+  outline: none;
+  text-decoration: underline;
+}
+
+/* RIGHT COLUMN MEDIA – larger */
+.sub-nav__media {
+  flex: 0 0 480px;              
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modern header controls (works with your existing variables) */
+.new-hdr-controls {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* small divider */
+.ctrl-sep {
+  width: 1px;
+  height: 18px;
+  background: rgba(11,13,18,0.06);
+  margin: 0 8px;
+  border-radius: 1px;
+}
+
+/* base control button/link */
+.ctrl-btn,
+.ctrl-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--accent-2);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .12s ease, transform .12s ease, box-shadow .12s ease;
+}
+
+/* subtle variant */
+.ctrl-btn.subtle {
+  color: var(--muted);
+}
+
+/* ghost (neutral) variant */
+.ctrl-btn.ghost {
+  color: var(--muted);
+}
+
+/* primary action */
+.ctrl-btn.primary,
+.ctrl-btn.primary,
+.new-hdr-controls .primary {
+  background: linear-gradient(180deg, var(--accent), #b02a34);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(167,28,43,0.12);
+}
+
+/* hover and focus */
+.ctrl-btn:hover,
+.ctrl-link:hover {
+  transform: translateY(-2px);
+  background: rgba(11,13,18,0.03);
+  color: var(--accent-2);
+}
+
+.ctrl-btn:focus,
+.ctrl-link:focus {
+  outline: 3px solid rgba(11,100,214,0.12);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* icon sizing & alignment */
+.ctrl-btn svg,
+.ctrl-link svg {
+  display: inline-block;
+  flex: 0 0 16px;
+  height: 16px;
+  width: 16px;
+  color: inherit;
+}
+
+/* smaller chevron style */
+.ctrl-btn .chev { margin-left: 4px; width:10px; height:6px; opacity:.66; }
+
+/* text label — keep visual weight balanced */
+.new-hdr-controls .ctrl-label {
+  line-height: 1;
+  font-size: 13px;
+  display: inline-block;
+}
+
+/* responsive — collapse into a compact menu on very small screens */
+@media (max-width: 520px) {
+  .new-hdr-controls {
+    gap: 6px;
+  }
+
+  /* hide labels to save space; keep icons visible */
+  .new-hdr-controls .ctrl-label { display: none; }
+
+  /* enlarge touch targets */
+  .ctrl-btn,
+  .ctrl-link {
+    padding: 10px;
+  }
+}
+
+
+.media-card {
+  width: 100%;
+  display: flex;
+  gap: 20px;                    
+  align-items: flex-start;
+}
+
+.media-card picture,
+.media-card img {
+  width: 220px;                 
+  height: 150px;                 
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.media-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.media-title {
+  margin: 0;
+  font-size: 18px;            
+  font-weight: 700;
+}
+
+.cards-wrapper{
+  max-width: calc(var(--card-max-width) + 40px);
+  margin: 0 auto;
+  display: grid;
+  gap: 48px;
+  padding: 20px;
+}
+
+/* Base card */
+.holiday-card{
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--pad);
+  max-width: var(--card-max-width);
+  margin: 0 auto;
+  background: transparent;
+}
+
+/* Reverse modifier: visually flip left/right */
+.holiday-card--reverse{
+  flex-direction: row-reverse;
+}
+
+/* Image block */
+.holiday-image{
+  flex: 0 0 var(--image-width);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.holiday-image img{
+  display: block;
+  width: 100%;
+  height: var(--image-height);
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+/* Content block */
+.holiday-content{
+  max-width: 540px;
+}
+
+/* Typographic details */
+.tag{
+  letter-spacing: 1.8px;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.holiday-content h2{
+  font-size: 30px;
+  margin: 0 0 18px 0;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.description{
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-size: 15px;
+}
+
+/* Button */
+.explore-btn{
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 6px 14px rgba(162,0,0,0.12);
+}
+
+.explore-btn:focus{
+  outline: 3px solid rgba(162,0,0,0.15);
+  outline-offset: 3px;
+}
+
+.explore-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 880px){
+  :root{
+    --gap: 20px;
+    --image-width: 100%;
+  }
+
+  .holiday-card,
+  .holiday-card--reverse{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .holiday-image{
+    width: 100%;
+  }
+
+  .holiday-image img{
+    width: 100%;
+    height: 260px;
+  }
+
+  .holiday-content{
+    width: 100%;
+    margin-top: 18px;
+  }
+}
+
+/* Small fine-tune for very narrow screens */
+@media (max-width: 420px){
+  .holiday-content h2{ font-size: 22px; }
+  .description{ font-size: 14px; }
+  .explore-btn{ padding: 10px 20px; font-size: 15px; }
+}
+
+.media-desc {
+  margin: 0;
+  color: #555;
+  font-size: 14px;               
+  line-height: 1.3;
+  max-width: 380px;  
+}            
+
+.media-cta {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #0b64d6;
+  color: #0b64d6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* SR-only */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.calendar-themed {
+  border-radius: 14px !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.16) !important;
+  overflow: hidden !important;
+}
+
+.calendar-themed .flatpickr-months {
+  background: #0b1221 !important;
+  color: #fff !important;
+}
+
+.calendar-themed .flatpickr-day.selected,
+.calendar-themed .flatpickr-day.startRange,
+.calendar-themed .flatpickr-day.endRange {
+  background: #111827 !important;
+  color: #fff !important;
+}
+
+#guestPanel {
+    position: absolute;
+    top: -30vh;                       
+    left: 0;
+    width: 320px;
+    padding: 18px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 18px 36px rgba(0,0,0,0.16);
+    border: 1px solid #e6e6e6;
+
+    z-index: 9999 !important;        
+    display: none;                   
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  .sub-nav__inner {
+    flex-direction: column;
+  }
+
+  .sub-navigation-list {
+    grid-template-columns: 1fr;
+  }
+
+  .sub-nav__media {
+    order: -1;
+    flex: none;
+  }
+
+  .media-card picture,
+  .media-card img {
+    width: 100%;
+    height: 220px;    /* bigger mobile feature image */
+    border-radius: 10px;
+  }
+}
+
+
+
+a {
+    color: inherit
+}
+
+button {
+    font-family: inherit
+}
+
+:focus {
+    outline: 2px solid rgba(11, 17, 30, 0.12);
+    outline-offset: 2px
+}
+
+/* =========================
+   Top site header / brand
+   ========================= */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 4px solid rgba(15, 20, 30, 0.06);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.topbar {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px
+}
+
+
+.brand .sub {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 13px
+}
+
+.nav {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 14px
+}
+
+.nav a {
+    text-decoration: none
+}
+
+.nav a:hover {
+    color: var(--fg)
+}
+
+/* =========================
+   Search card (overlay) — centered and responsive
+   ========================= */
+
+.search-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 700;
+    letter-spacing: 0.02em
+}
+
+.search-card {
+  position: relative;
+  background: var(--glass);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 820px;
+  box-shadow: var(--soft-shadow);
+  border: 1px solid rgba(11,13,18,0.04);
+  transition: transform .18s ease, box-shadow .18s ease;
+  backdrop-filter: blur(6px);
+  z-index: 40;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* hover lift */
+.search-card:focus-within, .search-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(11,13,18,0.12);
+}
+
+.search-col {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width: 180px;
+}
+
+/* label */
+.search-label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  letter-spacing:0.02em;
+}
+
+/* custom inputs */
+.search-input{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,20,30,0.06);
+  background: white;
+  min-width: 200px;
+  font-weight:700;
+  color:var(--accent-2);
+  box-shadow: var(--micro-shadow);
+  outline: none;
+  transition: box-shadow .12s ease, transform .08s ease;
+  cursor: text;
+}
+
+/* stronger focus style */
+.search-input:focus{
+  box-shadow: 0 6px 18px rgba(11,100,214,0.12);
+  transform: translateY(-1px);
+  border-color: rgba(11,100,214,0.18);
+}
+
+/* Dates field: visually distinct */
+#dates {
+  background: linear-gradient(90deg,#fff,#f8fbff);
+  border-left: 4px solid var(--accent);
+  padding-left: 10px;
+  font-weight:800;
+}
+
+/* Guests mini */
+.search-mini{
+  max-width:220px;
+}
+
+/* CTA */
+.search-cta { margin-left:auto; display:flex; align-items:center; }
+.btn-primary {
+  background: linear-gradient(180deg,var(--accent),#074bb0);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow: 0 10px 30px rgba(11,13,18,0.12);
+}
+
+/* Rooms & Guests panel (dropdown) */
+.guest-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 20px 40px rgba(11,13,18,0.12);
+  border: 1px solid rgba(11,13,18,0.04);
+  display: none;
+  z-index: 80;
+  transform-origin: top right;
+  animation: pop .12s ease;
+}
+
+@keyframes pop { from { transform: scale(.98) translateY(-6px); opacity:0 } to { transform: scale(1) translateY(0); opacity:1 } }
+
+.guest-row { display:flex; justify-content:space-between; align-items:center; padding:8px 4px; gap:8px; }
+.guest-label { font-weight:700; color:var(--accent-2); }
+.guest-sub { font-size:13px; color:var(--muted); margin-top:4px; }
+
+/* counter controls */
+.counter {
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.counter button {
+  width:34px; height:34px; border-radius:8px; border:1px solid rgba(11,13,18,0.06);
+  background: #fff; font-weight:800; cursor:pointer;
+  box-shadow: var(--micro-shadow);
+}
+.counter span { min-width:34px; text-align:center; font-weight:700; display:inline-block; }
+
+/* done button */
+.guest-actions { display:flex; justify-content:flex-end; margin-top:12px; gap:8px; }
+.btn-ghost { background:transparent; border:1px solid rgba(15,20,30,0.06); padding:8px 12px; border-radius:8px; cursor:pointer; }
+.btn-apply { background: linear-gradient(180deg,var(--accent),#0a49c3); color:white; padding:8px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:700; }
+
+/* mobile responsiveness */
+@media (max-width:880px){
+  .search-card { flex-direction:column; min-width: unset; padding:12px; gap:10px; }
+  .search-cta { margin-left:0; }
+  .search-col { width:100%; min-width:unset; }
+  .guest-panel { right: 12px; left: 12px; width: auto; }
+}
+
+/* responsive: search card */
+@media(max-width:880px) {
+    .search-card {
+        position: static;
+        transform: none;
+        margin: 12px;
+        border-radius: 12px;
+        padding: 14px;
+        min-width: unset;
+        box-shadow: none;
+    }
+
+    .search-input {
+        width: 100%
+    }
+
+    .topbar {
+        padding: 10px
+    }
+
+    .brand .sub {
+        display: none
+    }
+}
+
+/* wide breakpoint for search card */
+@media(min-width:1200px) {
+    .search-card {
+        min-width: 1100px;
+    }
+}
+
+/* =========================
+   Page container and header intro
+   ========================= */
+.container {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 36px 20px
+}
+
+.hdr-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    max-width: 1500px;
+}
+
+.hdr-left {
+    display: flex;
+    align-items: center;
+    gap: 18px
+}
+
+    .brand .logo
+ { max-width: 200px;
+ }
+/* Slight hover interaction */
+.brand .logo:hover {
+  transform: scale(1.04);
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .brand .logo {
+    max-width: 140px;
+  }
+}
+
+/* Larger screens */
+@media (min-width: 1024px) {
+  .brand .logo {
+    max-width: 220px;
+  }
+}
+
+.hdr-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #444);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 18px
+}
+
+.hdr-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700
+}
+
+.hdr-sub {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600
+}
+
+
+.hdr-btn {
+    background: var(--accent-2);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600
+}
+
+/* Hero */
+.hero-wrap {
+    position: relative;
+    overflow: hidden
+}
+
+.hero-image {
+    width: 100%;
+    height: 640px;
+    object-fit: cover;
+    display: block;
+    filter: contrast(1.02) saturate(0.98)
+}
+
+
+
+    /* ========== welcome-sec container ========== */
+    .welcome-sec {
+      max-width:var(--welcome-sec-max);
+      margin:40px auto;
+      padding:0 var(--container-pad);
+    }
+
+    /* ========== welcome-hero ========== */
+    .welcome-hero {
+      text-align:center;
+      padding: 8px 0 40px 0;
+    }
+
+    .welcome-hero__eyebrow{
+      display:block;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    .welcome-hero__accent-bar {
+      width:56px;
+      height:4px;
+      margin: 8px auto 20px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+      border-radius:2px;
+      opacity:0.95;
+    }
+
+    .welcome-hero__title{
+      margin:0 auto 18px;
+      max-width:900px;
+      font-family: "Playfair Display", serif;
+      font-weight:700;
+      color:var(--accent-dark);
+      font-size: clamp(28px, 4vw, var(--h1-size));
+      line-height:1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .welcome-hero__lead{
+      margin:0 auto;
+      max-width:760px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .welcome-hero__cta{
+      display:inline-block;
+      margin-top:12px;
+      font-size:14px;
+      color:var(--accent-dark);
+      text-decoration:underline;
+    }
+
+    /* ========== Info Card ========== */
+    .info-card-wrapper{
+      margin-top:40px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .info-card{
+      width:100%;
+      max-width:1050px;
+      border-radius:var(--radius);
+      border:1px solid var(--card-border);
+      padding:26px;
+      box-shadow: 0 6px 18px rgba(11,18,33,0.04);
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.99));
+    }
+
+    /* icon column */
+    .info-card__icon {
+      flex: 0 0 44px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      margin-top:4px;
+    }
+
+    .bullet {
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      border:1px solid var(--card-border);
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:var(--accent-dark);
+      background:transparent;
+      font-size:14px;
+    }
+
+    /* content column */
+    .info-card__content{
+      flex:1 1 auto;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .info-card__title{
+      margin:0;
+      font-size:15px;
+      font-weight:700;
+      color:var(--accent-dark);
+    }
+
+    .info-card__text{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .info-card__footer{
+      margin-top:8px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    button svg{
+      margin-top: 5px;
+    }
+
+    .link-cta{
+      font-size:13px;
+      text-decoration:none;
+      font-weight:600;
+      color:var(--accent);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:transform .15s ease, opacity .15s ease;
+    }
+
+    .link-cta svg{transform:translateX(0); transition:transform .18s ease}
+
+    .link-cta:hover{
+      transform:translateX(4px);
+      opacity:0.95;
+    }
+
+    .link-cta:hover svg{transform:translateX(3px)}
+
+    /* subtle left border line (decor) for large screens */
+    @media(min-width:920px){
+      .info-card{
+        padding:30px 32px;
+      }
+      .info-card::before{
+        content:"";
+        position:absolute;
+      }
+    }
+
+    /* stacked on small screens */
+    @media(max-width:720px){
+      .welcome-sec { margin:22px auto; padding:0 18px }
+      .info-card{
+        flex-direction:row;
+        gap:14px;
+        padding:18px;
+      }
+      .welcome-hero{ padding-bottom:18px }
+      .welcome-hero__title{ font-size:28px }
+    }
+
+    /* very small screens — card becomes vertical if content is long */
+    @media(max-width:420px){
+      .info-card{ flex-direction:row; gap:12px }
+      .bullet{ width:34px; height:34px; font-size:13px }
+    }
+
+    /* accessibility focus styles */
+    a:focus{ outline: 3px solid rgba(167,28,43,0.14); outline-offset:3px; border-radius:6px; }
+
+.u-muted {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600
+}
+
+
+
+/* Experiences grid */
+.exp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-top: 30px
+}
+
+.exp-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .18s ease
+}
+
+.exp-card:hover {
+    transform: translateY(-6px)
+}
+
+.exp-icon {
+    font-size: 26px;
+    margin-bottom: 10px
+}
+
+.exp-title {
+    margin: 5px 0 10px;
+    font-size: 18px
+}
+
+.exp-desc {
+    color: var(--muted);
+    font-size: 14px
+}
+
+.exp-circle {
+    position: relative
+}
+
+.exp-circle .exp-arrow {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px
+}
+
+/* Listings */
+.list-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px
+}
+
+.list-item {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 22px;
+    background: white;
+    border-radius: var(--card-radius);
+    border: 1px solid #e7e7e7;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(12, 12, 12, 0.06)
+}
+
+.list-media {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ddd
+}
+
+.list-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block
+}
+
+.media-nav {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 2
+}
+
+.media-nav button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center
+}
+
+.media-dots {
+    position: absolute;
+    left: 18px;
+    bottom: 12px;
+    display: flex;
+    gap: 6px
+}
+
+.media-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    display: inline-block
+}
+
+.media-dots span.active {
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06) inset
+}
+
+.list-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 220px
+}
+
+.list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px
+}
+
+.list-title h3 {
+    margin: 0;
+    font-size: 20px
+}
+
+.list-meta {
+    color: var(--muted);
+    font-size: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.list-desc {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: 14px
+}
+
+.list-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px
+}
+
+.price-block {
+    text-align: right;
+    min-width: 170px
+}
+
+.price-amount {
+    font-weight: 800;
+    font-size: 20px
+}
+
+.book-btn {
+    background: var(--accent-2);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700
+}
+
+/* responsive listing */
+@media(max-width:1100px) {
+    .list-item {
+        grid-template-columns: 360px 1fr
+    }
+}
+
+@media(max-width:860px) {
+    .list-item {
+        grid-template-columns: 1fr
+    }
+
+    .list-media {
+        min-height: 220px;
+        height: 260px
+    }
+
+    .price-block {
+        text-align: left;
+        width: 100%
+    }
+}
+
+@media(max-width:520px) {
+    .list-media {
+        height: 200px
+    }
+
+    .list-item {
+        padding: 14px;
+        gap: 12px
+    }
+}
+
+/* Footer */
+.ftr {
+    margin-top: 80px;
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 50px 20px
+}
+
+.ftr-inner {
+    max-width: var(--page-max);
+    margin: 0 auto
+}
+
+.ftr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px
+}
+
+.ftr h4 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    color: white
+}
+
+.ftr a {
+    display: block;
+    color: var(--footer-text);
+    text-decoration: none;
+    font-size: 14px;
+    margin: 6px 0
+}
+
+/* Utilities */
+.kv-muted {
+    color: var(--muted);
+    font-size: 13px
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid #e7e7e7;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+/* Small accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* ===== Extra tiny-screen fixes: <= 320px then hard rules for <= 280px ===== */
+@media (max-width: 320px) {
+  /* global */
+  html, body { font-size: 14px; }
+  body { padding: 8px 8px; }
+
+  /* top header: compress */
+  .hdr-bar { padding: 10px 6px; gap: 8px; }
+  .hdr-logo { width:44px; height:44px; font-size:16px; }
+  .hdr-title { font-size:16px; }
+  .hdr-sub { font-size:11px; }
+
+  /* brand row */
+  .topbar { padding: 8px; gap: 8px; }
+  .brand .logo { padding: 8px 10px; }
+  .nav { gap:8px; font-size:12px; overflow:hidden; white-space:nowrap; }
+
+  /* hero image smaller */
+  .hero-image { height: 200px; object-position: center top; }
+
+  /* search card: always stacked and full width input */
+  .search-card {
+    position: static;
+    transform: none;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: unset;
+  }
+  .search-col { width: 100%; min-width: unset; }
+  .search-input { width: 100%; min-width: unset; padding: 8px 10px; font-size:14px; }
+  .search-cta { margin-left:0; width:100%; display:flex; justify-content:flex-end; }
+  .btn-primary { padding: 10px 14px; font-size:15px; }
+
+  /* guest panel, dropdowns */
+  .guest-panel, .guest-panel { right: 8px; left: 8px; width: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+
+  /* hero/hero controls */
+  .hero-controls { display:none; }
+
+  /* welcome hero */
+  .welcome-hero__title { font-size: 20px; line-height:1.15; }
+  .welcome-hero__lead { font-size: 13px; }
+
+  /* cards and holiday list */
+  .cards-wrapper { padding: 0; gap: 18px; }
+  .holiday-card, .holiday-card--reverse { flex-direction: column; gap: 12px; padding: 12px; }
+  .holiday-image img { height: 160px; object-fit:cover; }
+  .holiday-content h2 { font-size:18px; }
+  .description { font-size:13px; }
+
+  /* carousel reduced */
+  .crs-track { gap: 12px; padding-left: 0; }
+  .crs-card { min-width: 100%; width: 100%; height: 140px; }
+
+  /* exp-grid -> single column */
+  .exp-grid { grid-template-columns: 1fr; gap: 12px; }
+  .exp-card { padding: 14px; }
+
+  /* listings: stack & compress */
+  .list-item {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 10px;
+  }
+  .list-media { min-height: 140px; height: 140px; }
+  .list-body { font-size: 13px; }
+  .price-amount { font-size: 18px; }
+
+  /* footer */
+  .ftr { padding: 30px 10px; }
+
+  /* buttons */
+  .explore-btn, .book-btn { padding: 8px 12px; font-size:14px; }
+  .crs-arrow { display:none; } /* keep UI uncluttered */
+}
+
+/* ===== Aggressive compression for very small devices: 280px and below ===== */
+@media (max-width: 280px) {
+  html, body { font-size: 13px; }
+  body { padding: 6px 6px; }
+
+  /* header — hide secondary text to save space */
+  .hdr-sub, .brand .sub, .nav { display: none; }
+  .hdr-title { font-size: 16px; }
+
+  /* hero image — tiny */
+  .hero-image { height: 140px; }
+
+  /* search card => stacked compact */
+  .search-card { padding: 8px; gap: 6px; border-radius:10px; }
+  .search-label { font-size:11px; }
+  .search-input { padding: 8px 8px; font-size:13px; }
+
+  /* collapse info-card */
+  .info-card { padding: 12px; gap: 10px; }
+  .info-card__title { font-size: 14px; }
+  .info-card__text { font-size: 12px; }
+
+  /* holiday cards */
+  .holiday-image img { height: 120px; }
+  .holiday-content h2 { font-size: 16px; }
+  .description { font-size: 12px; margin-bottom: 12px; }
+
+  /* carousel & cards */
+  .crs-card { height: 120px; }
+  .crs-track { gap: 10px; }
+
+  /* experiences: stack tightly */
+  .exp-card { padding: 12px; }
+
+  /* listings */
+  .list-media { height: 120px; min-height: 120px; }
+  .list-title h3 { font-size: 15px; }
+  .kv-muted, .list-meta, .list-desc { font-size: 12px; }
+
+  /* make interactive targets comfortable but small */
+  .btn-primary, .book-btn, .explore-btn { padding: 8px 10px; font-size:13px; }
+  .counter button { width:30px; height:30px; }
+
+  /* avoid horizontal overflow by forcing all images to max-width */
+  img, picture, .crs-media, .hero-image { max-width: 100%; height: auto; object-fit: cover; }
+
+  /* ensure no element keeps a fixed min-width bigger than the viewport */
+  * { min-width: 0 !important; box-sizing: border-box; }
+}
+
+/* accessibility helper */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px,1px,1px,1px);
+  white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
+/* --- hamburger button --- */
+.nav-mobile-wrapper { position: relative; z-index: 40; }
+
+/* base button */
+.nav-toggle {
+  display: none; /* shown only on small screens below */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* hamburger icon lines */
+.hamburger { display:inline-block; width:28px; height:20px; position:relative; }
+.hamburger .bar {
+  display:block;
+  position:absolute;
+  left:0; right:0;
+  height:2px;
+  background-color:var(--accent-2, #111827);
+  border-radius:2px;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), opacity 200ms;
+}
+.hamburger .top { top:0; }
+.hamburger .mid { top:9px; }
+.hamburger .bot { bottom:0; }
+
+/* when open — animate into X */
+.nav-toggle[aria-expanded="true"] .hamburger .top  { transform: translateY(9px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .hamburger .mid  { opacity: 0; transform: scaleX(0.1); }
+.nav-toggle[aria-expanded="true"] .hamburger .bot  { transform: translateY(-9px) rotate(-45deg); }
+
+/* --- responsive nav styles --- */
+/* Desktop: show nav inline as before */
+@media (min-width: 769px) {
+  .nav-toggle { display: none !important; }
+  nav.nav { display: flex !important; flex-wrap:wrap; gap:12px; align-items:center; }
+  nav.nav a { tabindex: 0; }
+}
+
+/* Mobile: hide original nav, show button */
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; }
+  nav.nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 8px;
+    width: calc(100% - 16px);
+    max-width: 320px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    padding: 10px;
+    display: none; /* toggled by JS */
+    flex-direction: column;
+    gap: 6px;
+    transform-origin: top right;
+    transition: opacity 180ms ease, transform 180ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* visible menu state */
+  nav.nav[aria-hidden="false"] {
+    display: flex;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  nav.nav a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--accent-2, #111827);
+    font-weight: 600;
+    outline: none;
+  }
+  nav.nav a:focus,
+  nav.nav a:hover { background: rgba(0,0,0,0.04); }
+
+  /* keep layout compact on very tiny screens */
+  @media (max-width: 320px) {
+    nav.nav { right: 6px; left: 6px; width: auto; max-width: none; padding: 8px; }
+    .hamburger { width:24px; height:16px; }
+  }
+}
+
+/* sliding image transitions for list-media */
+.list-media { position: relative; overflow: hidden; }
+.list-media img, .list-media .slide-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform .48s cubic-bezier(.2,.9,.25,1), opacity .36s ease;
+  will-change: transform, opacity;
+  position: relative;
+}
+
+/* When we create the transition images they will use this absolute layer */
+.list-media .slide-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+/* hidden/inactive layer */
+.list-media .old-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+/* reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .list-media img, .list-media .slide-img, .list-media .old-img {
+    transition: none !important;
+  }
+}
+
+.crs {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.crs-track {
+    display: flex;
+    gap: 20px;
+    will-change: transform;
+    transition: transform .55s cubic-bezier(.2,.9,.25,1);
+}
+
+/* card sizing - show exactly N cards (default 4) */
+:root { --crs-visible: 4; --crs-gap: 22px; }
+
+.crs-card {
+    flex: 0 0 calc((100% - 60px) / 4); /* (gap × 3) / 4 cards */
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.crs-media {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+/* small visual polish */
+.crs-card:focus { outline: 3px solid rgba(11,100,214,0.12); transform: translateY(-6px); }
+
+/* arrows */
+.crs-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  z-index: 30;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.crs-arrow.crs-left { left: 10px; }
+.crs-arrow.crs-right { right: 10px; }
+
+.crs-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 10px 0;
+}
+
+.crs-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: 
+        background .25s ease,
+        transform .25s cubic-bezier(.3,.8,.25,1),
+        box-shadow .25s ease;
+    cursor: pointer;
+    opacity: .8;
+}
+
+.crs-dot:hover {
+    background: rgba(0,0,0,0.35);
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.crs-dot.crs-active {
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transform: scale(1.35);
+    opacity: 1;
+}
+
+
+/* Responsive: fewer cards on smaller screens */
+@media (max-width:1200px) { :root { --crs-visible: 3; } }
+@media (max-width:860px)  { :root { --crs-visible: 2; } .crs { padding: 12px 18px; } }
+@media (max-width:520px)  { :root { --crs-visible: 1; } .crs { padding: 8px 12px; } }
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .crs-track { transition: none !important; }
+  .crs-card { transition: none !important; }
+}
+
+
+
   </style>
 </head>
 
@@ -16,23 +1691,55 @@
   <!-- ================= HEADER ================= -->
   <header class="hdr-bar" role="banner">
     <div class="hdr-left">
-      <div class="hdr-logo">YN</div>
-      <div>
-        <h1 class="hdr-title">Quebec, Canada</h1>
-        <div class="hdr-sub">Destination · Fitness center • Restaurants</div>
-      </div>
     </div>
 
-    <div class="hdr-controls" aria-hidden="false">
-      <div class="u-muted">Thu, Dec 04 — Fri, Dec 05</div>
-      <button class="hdr-btn" onclick="alert('Find hotels (placeholder)')">🔍 Find Hotels</button>
-    </div>
+<!-- modern header controls — replace existing hdr-controls -->
+<div class="hdr-controls new-hdr-controls" aria-hidden="false" role="toolbar" aria-label="Header controls">
+  <button class="ctrl-btn ghost" type="button" aria-label="Help">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm.25 15h-1.5v-1.5h1.5V17zM13.5 11.75c-.26.32-.5.57-.5 1.5h-1.5v-.25c0-.9.3-1.28.72-1.74.44-.48 1.03-.97 1.03-1.98 0-1.1-.9-2-2-2s-2 .9-2 2H9c0-1.66 1.34-3 3-3s3 1.34 3 3c0 1.14-.56 1.8-1.5 2.5z"/>
+    </svg>
+    <span class="ctrl-label">Help</span>
+  </button>
+
+  <div class="ctrl-sep" aria-hidden="true"></div>
+
+  <button class="ctrl-btn subtle" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Select language">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M12 2l2.25 6h6.5L16.5 10l2.25 6-6.5-2.5L7.5 16 9.75 10 4 8h6.5L12 2z"/>
+    </svg>
+    <span class="ctrl-label">English</span>
+    <svg class="chev" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0 0l5 6 5-6z"/>
+    </svg>
+  </button>
+
+  <div class="ctrl-sep" aria-hidden="true"></div>
+
+  <a class="ctrl-link" href="#" aria-label="My Trips">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M7 7h10v10H7V7zm-2 12V5H3v14a2 2 0 0 0 2 2h14v-2H5z"/>
+    </svg>
+    <span class="ctrl-label">My Trips</span>
+  </a>
+
+  <div class="ctrl-sep" aria-hidden="true"></div>
+
+  <a class="ctrl-btn primary" href="#" aria-label="Sign in or join">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-3.3 0-6 1.7-6 3.8V22h12v-2.2c0-2.1-2.7-3.8-6-3.8z"/>
+    </svg>
+    <span class="ctrl-label">Sign In / Join</span>
+  </a>
+</div>
+
+
+
   </header>
   <header class="site-header" role="banner">
     <div class="topbar">
       <div class="brand" aria-label="Marriott Bonvoy brand">
-        <div class="logo">MARRIOTT</div>
-        <div class="sub">Bonvoy</div>
+        <img src="./assers/logo.png" alt="" class="logo">
       </div>
 
       <!-- Hamburger + responsive nav -->
@@ -298,12 +2005,32 @@
             <div class="crs-chev" aria-hidden="true">›</div>
           </article>
 
+                    <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media" style="background-image:url('https://picsum.photos/id/1018/1200/800');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Canada</span>
+              <div class="crs-title">Delta Hotels Quebec</div>
+            </div>
+            <div class="crs-chev" aria-hidden="true">›</div>
+          </article>
+
           <article class="crs-card" role="listitem" tabindex="0">
             <div class="crs-media" style="background-image:url('https://picsum.photos/id/1016/1200/800');"></div>
             <div class="crs-grad"></div>
             <div class="crs-meta">
               <span class="crs-tag">Canada</span>
               <div class="crs-title">Delta Hotels, Mont Sainte-Anne</div>
+            </div>
+            <div class="crs-chev" aria-hidden="true">›</div>
+          </article>
+
+                    <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media" style="background-image:url('https://picsum.photos/id/1018/1200/800');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Canada</span>
+              <div class="crs-title">Delta Hotels Quebec</div>
             </div>
             <div class="crs-chev" aria-hidden="true">›</div>
           </article>
@@ -1408,10 +3135,326 @@
   }
   mq.addListener(handleResize);
   handleResize(mq);
-
   })(); 
+
+  (function () {
+  // Helper to query
+  const qa = (sel, ctx=document) => Array.from((ctx || document).querySelectorAll(sel));
+  const q = (sel, ctx=document) => (ctx || document).querySelector(sel);
+
+  qa('.list-item').forEach(listCard => {
+    const mediaWrap = q('.list-media', listCard);
+    if (!mediaWrap) return;
+    const img = q('img', mediaWrap);
+    if (!img) return;
+
+    const nextBtn = q('.mnav.next', mediaWrap) || q('.mnav.next', listCard);
+    const prevBtn = q('.mnav.prev', mediaWrap) || q('.mnav.prev', listCard);
+    const dotsWrap = q('.media-dots', mediaWrap);
+
+    const slides = (img.dataset.slides || '').split('|').filter(Boolean);
+    if (!slides.length) return;
+
+    // state
+    let idx = 0;
+    let animating = false;
+
+    // ensure initial dots reflect slides
+    if (dotsWrap) {
+      dotsWrap.innerHTML = '';
+      slides.forEach((s,i) => {
+        const sp = document.createElement('span');
+        sp.classList.toggle('active', i === idx);
+        dotsWrap.appendChild(sp);
+      });
+    }
+
+    // Make sure the base img is full-size and positioned relatively for fallback
+    img.style.position = 'relative';
+
+    function updateDots() {
+      if (!dotsWrap) return;
+      Array.from(dotsWrap.children).forEach((d, di) => d.classList.toggle('active', di === idx));
+    }
+
+    // Core sliding function
+    // dir = 1 means next (incoming from right -> translateX(100%) -> 0)
+    // dir = -1 means prev (incoming from left -> translateX(-100%) -> 0)
+    function slideTo(newIndex, dir) {
+      if (animating) return;
+      animating = true;
+      newIndex = (newIndex + slides.length) % slides.length;
+      if (newIndex === idx) { animating = false; return; }
+
+      const incomingSrc = slides[newIndex];
+      const outgoingImg = img; // existing <img> element is the visible base
+
+      // Create incoming image element overlay
+      const incoming = document.createElement('img');
+      incoming.src = incomingSrc;
+      incoming.alt = outgoingImg.alt || '';
+      incoming.className = 'slide-img';
+      incoming.style.transform = `translateX(${dir > 0 ? 100 : -100}%)`;
+      incoming.style.opacity = '1';
+
+      // Wrap zones: mark outgoing as old layer
+      outgoingImg.classList.add('old-img');
+      outgoingImg.style.transform = 'translateX(0)';
+      outgoingImg.style.opacity = '1';
+      outgoingImg.style.zIndex = '1';
+      outgoingImg.style.position = 'absolute';
+      outgoingImg.style.top = '0';
+      outgoingImg.style.left = '0';
+      outgoingImg.style.width = '100%';
+      outgoingImg.style.height = '100%';
+
+      // Insert incoming above it
+      mediaWrap.appendChild(incoming);
+
+      // Force layout so transitions run
+      void incoming.offsetWidth;
+
+      // Animate: move incoming to 0, outgoing to opposite side
+      incoming.style.transition = 'transform .48s cubic-bezier(.2,.9,.25,1), opacity .36s ease';
+      outgoingImg.style.transition = 'transform .48s cubic-bezier(.2,.9,.25,1), opacity .36s ease';
+
+      incoming.style.transform = 'translateX(0%)';
+      outgoingImg.style.transform = `translateX(${dir > 0 ? -100 : 100}%)`;
+      outgoingImg.style.opacity = '0';
+
+      // After animation ends, cleanup and set base img to new src
+      const tidy = () => {
+        // remove listeners to be safe
+        incoming.removeEventListener('transitionend', onEnd);
+        // set base img src to new one and restore base styles
+        outgoingImg.classList.remove('old-img');
+        outgoingImg.style.transition = '';
+        outgoingImg.style.transform = '';
+        outgoingImg.style.opacity = '';
+        outgoingImg.style.position = 'relative';
+        outgoingImg.style.zIndex = '';
+        outgoingImg.style.top = '';
+        outgoingImg.style.left = '';
+        outgoingImg.style.width = '';
+        outgoingImg.style.height = '';
+
+        // actually set base image src to incoming (this avoids flicker with cached images)
+        img.src = incomingSrc;
+        // remove the incoming overlay element
+        if (incoming && incoming.parentNode) incoming.parentNode.removeChild(incoming);
+
+        idx = newIndex;
+        updateDots();
+        animating = false;
+      };
+
+      const onEnd = (e) => {
+        // ensure we only handle the transform/opacity finishing on incoming
+        if (e.target === incoming) tidy();
+      };
+
+      // fallback timeout in case transitionend doesn't fire
+      incoming.addEventListener('transitionend', onEnd);
+      setTimeout(() => {
+        if (animating) tidy();
+      }, 700);
+    }
+
+    // attach to controls
+    nextBtn && nextBtn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      slideTo(idx + 1, 1);
+    });
+    prevBtn && prevBtn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      slideTo(idx - 1, -1);
+    });
+
+    // clicking the image advances it (same direction as next)
+    img.addEventListener('click', () => slideTo(idx + 1, 1));
+  });
+})();
+
+
+(function () {
+  const carousels = Array.from(document.querySelectorAll('.crs'));
+
+  carousels.forEach(crs => {
+    const track = crs.querySelector('[data-crs-track]') || crs.querySelector('.crs-track');
+    const leftBtn = crs.querySelector('[data-crs-action="left"]') || crs.querySelector('.crs-arrow.crs-left');
+    const rightBtn = crs.querySelector('[data-crs-action="right"]') || crs.querySelector('.crs-arrow.crs-right');
+    const dotsWrap = crs.querySelector('[data-crs-dots]') || crs.querySelector('.crs-dots');
+
+    if (!track) return;
+    const cards = Array.from(track.children).filter(n => n.classList && n.classList.contains('crs-card'));
+    if (cards.length === 0) return;
+
+    // CONFIG: change this to 'pages' if you want dots = number of pages instead
+    const dotsMode = 'hidden-count'; // 'hidden-count' or 'pages'
+
+    // Read how many cards are visible from CSS variable (keeps responsive breakpoints)
+    function getVisibleCount() {
+      const css = getComputedStyle(document.documentElement);
+      const v = parseInt(css.getPropertyValue('--crs-visible')) || 4;
+      return Math.max(1, v);
+    }
+
+    // compute sizes and derived values
+    function computeLayout() {
+      const gap = parseFloat(getComputedStyle(track).gap) || parseFloat(getComputedStyle(track)['column-gap']) || 20;
+      const cardRect = cards[0].getBoundingClientRect();
+      const cardW = Math.round(cardRect.width);
+      const visible = getVisibleCount();
+      const total = cards.length;
+      const maxStart = Math.max(0, total - visible); // last valid start index
+      return { gap, cardW, visible, total, maxStart };
+    }
+
+    // state
+    let state = { startIndex: 0, animating: false };
+    // set initial transform
+    function setTransform() {
+      const { cardW, gap } = computeLayout();
+      const step = cardW + gap;
+      track.style.transform = `translateX(-${state.startIndex * step}px)`;
+    }
+
+    // update buttons & dots
+    function updateControls() {
+      const { total, visible, maxStart } = computeLayout();
+      if (leftBtn) leftBtn.disabled = state.startIndex <= 0;
+      if (rightBtn) rightBtn.disabled = state.startIndex >= maxStart;
+
+      if (!dotsWrap) return;
+      // dots count per user's request: hidden cards count
+      let dotsCount;
+      if (dotsMode === 'hidden-count') {
+        dotsCount = Math.max(0, computeLayout().total - computeLayout().visible);
+      } else { // pages
+        dotsCount = Math.max(1, computeLayout().total - computeLayout().visible + 1);
+      }
+
+      // render dots
+      dotsWrap.innerHTML = '';
+      for (let i = 0; i < dotsCount; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'crs-dot' + (i === mapStartToDotIndex(state.startIndex) ? ' crs-active' : '');
+        btn.setAttribute('aria-label', `Go to ${i+1}`);
+        (function(ci){ btn.addEventListener('click', () => {
+            // clicking dot moves the carousel to the corresponding startIndex
+            // mapping depends on dotsMode; see mapDotToStartIndex()
+            const newStart = mapDotToStartIndex(ci);
+            slideTo(newStart);
+        })})(i);
+        dotsWrap.appendChild(btn);
+      }
+    }
+
+    // Map dot index -> startIndex (which card appears first)
+    function mapDotToStartIndex(dotIndex) {
+      const { total, visible, maxStart } = computeLayout();
+      if (dotsMode === 'hidden-count') {
+        // dots = total - visible
+        // dot 0 => startIndex 0
+        // dot 1 => startIndex 1
+        // ...
+        // last dot => startIndex = total - visible (maxStart)
+        return Math.min(maxStart, dotIndex);
+      } else {
+        // pages mode: distribute pages evenly
+        return Math.min(maxStart, dotIndex);
+      }
+    }
+
+    // Map startIndex -> dot index (used to highlight active dot)
+    function mapStartToDotIndex(start) {
+      if (dotsMode === 'hidden-count') {
+        return Math.max(0, Math.min(start, computeLayout().total - computeLayout().visible));
+      } else {
+        return start; // pages mode maps 1:1
+      }
+    }
+
+    // sliding function with bounds and single-step move
+    function slideTo(newStart) {
+      const layout = computeLayout();
+      newStart = Math.max(0, Math.min(layout.maxStart, newStart));
+      if (newStart === state.startIndex) return;
+      if (state.animating) return;
+
+      state.animating = true;
+      const { cardW, gap } = layout;
+      const step = cardW + gap;
+      track.style.transition = 'transform .55s cubic-bezier(.2,.9,.25,1)';
+      track.style.transform = `translateX(-${newStart * step}px)`;
+      state.startIndex = newStart;
+
+      // wait for transition to finish, then clear animating flag
+      const onEnd = () => {
+        track.removeEventListener('transitionend', onEnd);
+        state.animating = false;
+        updateControls();
+      };
+      track.addEventListener('transitionend', onEnd);
+
+      // safety fallback
+      setTimeout(() => {
+        if (state.animating) {
+          state.animating = false;
+          updateControls();
+        }
+      }, 700);
+      updateControls();
+    }
+
+    function nextOne() {
+      slideTo(state.startIndex + 1);
+    }
+    function prevOne() {
+      slideTo(state.startIndex - 1);
+    }
+
+    // button listeners
+    if (rightBtn) rightBtn.addEventListener('click', (e) => { e.preventDefault(); nextOne(); });
+    if (leftBtn) leftBtn.addEventListener('click', (e) => { e.preventDefault(); prevOne(); });
+
+    // keyboard when carousel focused
+    crs.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextOne();
+      if (e.key === 'ArrowLeft') prevOne();
+    });
+
+    // handle resize: re-evaluate layout and snap
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        // ensure startIndex still valid after visible count change
+        const { maxStart } = computeLayout();
+        if (state.startIndex > maxStart) state.startIndex = maxStart;
+        // temporarily remove transition to avoid weird jumps
+        track.style.transition = 'none';
+        setTransform();
+        requestAnimationFrame(() => {
+          track.style.transition = '';
+          updateControls();
+        });
+      }, 120);
+    });
+
+    // initial setup once images/layout are settled
+    window.requestAnimationFrame(() => {
+      // ensure layout correct after fonts/images
+      const layout = computeLayout();
+      // clamp startIndex
+      state.startIndex = Math.max(0, Math.min(state.startIndex, layout.maxStart));
+      setTransform();
+      updateControls();
+    });
+  });
+})();
+
   </script>
-
 </body>
-
 </html>

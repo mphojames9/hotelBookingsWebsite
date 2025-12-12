@@ -1,0 +1,80 @@
+/* base state */
+.animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all .8s cubic-bezier(.25,.8,.25,1);
+}
+
+/* fade */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* slide left */
+.slide-left {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.slide-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* slide right */
+.slide-right {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.slide-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* scale subtle */
+.scale-in {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.scale-in.active {
+  opacity: 1;
+  transform: scale(1);
+}
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  document.querySelectorAll(".animate").forEach((el) => observer.observe(el));
+</script>
+
+
+For images
+<div class="holiday-image animate slide-left">
+
+For text blocks
+<div class="holiday-content animate fade-in">
+
+For cards
+<article class="info-card animate scale-in">
+
+For your carousels (optional, but dramatic)
+<article class="crs-card animate fade-in">
+
+For hero sections
+<section class="welcome-hero animate fade-in">
