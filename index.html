@@ -975,6 +975,16 @@
       position: relative;
     }
 
+    /* image itself */
+    .hero-media .hero-image {
+      width: 100%;
+      height: 640px;
+      object-fit: cover;
+      display: block;
+
+      transition: opacity .5s ease, transform 1s ease;
+    }
+
     .hero-image {
       width: 100%;
       height: 640px;
@@ -1056,7 +1066,7 @@
     }
 
     @media(max-width:800px) {
-      .hero-image {
+      .hero-media .hero-image {
         height: 400px;
       }
     }
@@ -2311,325 +2321,398 @@
       }
     }
 
- .signup-trigger {
-  background: linear-gradient(135deg, #16c5c5, #1f7fd1);
-  color: white;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-}
+    .signup-trigger {
+      background: linear-gradient(135deg, #16c5c5, #1f7fd1);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-/* =====================
+    /* =====================
    OVERLAY
 ===================== */
-.signup-overlay {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 9999;
-}
+    .signup-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 9999;
+    }
 
-.signup-overlay.active {
-  display: block;
-}
+    .signup-overlay.active {
+      display: block;
+    }
 
-.signup-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(8,12,24,.55);
-  backdrop-filter: blur(8px);
-}
+    .signup-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 12, 24, .55);
+      backdrop-filter: blur(8px);
+    }
 
-.signup-modal {
-  position: relative;
-  width: min(900px, 92%);
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,.95);
-  border-radius: 18px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
-  animation: modalIn .4s cubic-bezier(.2,.8,.2,1);
-}
+    .signup-modal {
+      position: relative;
+      width: min(900px, 92%);
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, .95);
+      border-radius: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      animation: modalIn .4s cubic-bezier(.2, .8, .2, 1);
+    }
 
-@keyframes modalIn {
-  from { opacity:0; transform:translateY(-45%) scale(.95); }
-  to   { opacity:1; transform:translateY(-50%) scale(1); }
-}
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(-45%) scale(.95);
+      }
 
-.signup-left {
-  background: linear-gradient(135deg,#16c5c5,#1f7fd1);
-  color: white;
-  padding: 42px;
-}
+      to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+    }
 
-.signup-right {
-  padding: 42px;
-}
+    .signup-left {
+      background: linear-gradient(135deg, #16c5c5, #1f7fd1);
+      color: white;
+      padding: 42px;
+    }
 
-.signup-close {
-  position: absolute;
-  top: 14px;
-  right: 18px;
-  background: none;
-  border: none;
-  font-size: 26px;
-  cursor: pointer;
-}
+    .signup-right {
+      padding: 42px;
+    }
 
-/* =====================
+    .signup-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    /* =====================
    FORM SYSTEM
 ===================== */
-.signup-step {
-  display: none;
-  flex-direction: column;
-  gap: 14px;
-}
+    .signup-step {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
 
-.signup-step.active {
-  display: flex;
-  animation: stepIn .4s cubic-bezier(.2,.8,.2,1);
-}
+    .signup-step.active {
+      display: flex;
+      animation: stepIn .4s cubic-bezier(.2, .8, .2, 1);
+    }
 
-@keyframes stepIn {
-  from { opacity:0; transform:translateX(16px); }
-  to { opacity:1; transform:none; }
-}
+    @keyframes stepIn {
+      from {
+        opacity: 0;
+        transform: translateX(16px);
+      }
 
-.field {
-  display: flex;
-  flex-direction: column;
-}
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
 
-input, select {
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,.15);
-  font-size: 15px;
-}
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
 
-.btn-primary {
-  background: linear-gradient(135deg,#16c5c5,#1f7fd1);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-}
+    input,
+    select {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, .15);
+      font-size: 15px;
+    }
 
-.btn-ghost {
-  background: none;
-  border: none;
-  color: #555;
-  cursor: pointer;
-  font-weight: 600;
-}
+    .btn-primary {
+      background: linear-gradient(135deg, #16c5c5, #1f7fd1);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.btn-social {
-  background:#1877f2;
-  color:white;
-  border:none;
-  padding:14px;
-  border-radius:999px;
-  font-weight:700;
-  cursor:pointer;
-}
+    .btn-ghost {
+      background: none;
+      border: none;
+      color: #555;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-.divider {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#777;
-}
+    .btn-social {
+      background: #1877f2;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.divider::before,
-.divider::after {
-  content:"";
-  flex:1;
-  height:1px;
-  background:rgba(0,0,0,.1);
-}
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #777;
+    }
 
-/* =====================
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, .1);
+    }
+
+    /* =====================
    VALIDATION
 ===================== */
-.error-msg {
-  font-size:12px;
-  color:#d93025;
-  opacity:0;
-  margin-top:6px;
-  transition:.2s;
-}
+    .error-msg {
+      font-size: 12px;
+      color: #d93025;
+      opacity: 0;
+      margin-top: 6px;
+      transition: .2s;
+    }
 
-.field.invalid input {
-  border-color:#d93025;
-  box-shadow:0 0 0 4px rgba(217,48,37,.15);
-}
+    .field.invalid input {
+      border-color: #d93025;
+      box-shadow: 0 0 0 4px rgba(217, 48, 37, .15);
+    }
 
-.field.invalid .error-msg {
-  opacity:1;
-}
+    .field.invalid .error-msg {
+      opacity: 1;
+    }
 
-.field.valid input {
-  border-color:#16c5c5;
-  box-shadow:0 0 0 4px rgba(22,197,197,.18);
-}
+    .field.valid input {
+      border-color: #16c5c5;
+      box-shadow: 0 0 0 4px rgba(22, 197, 197, .18);
+    }
 
-@keyframes shake {
-  0%,100%{transform:none}
-  25%{transform:translateX(-6px)}
-  50%{transform:translateX(6px)}
-  75%{transform:translateX(-4px)}
-}
+    @keyframes shake {
 
-.shake {
-  animation: shake .35s;
-}
+      0%,
+      100% {
+        transform: none
+      }
 
-/* =====================
+      25% {
+        transform: translateX(-6px)
+      }
+
+      50% {
+        transform: translateX(6px)
+      }
+
+      75% {
+        transform: translateX(-4px)
+      }
+    }
+
+    .shake {
+      animation: shake .35s;
+    }
+
+    /* =====================
    PASSWORD METER
 ===================== */
-.strength-meter {
-  height:4px;
-  background:rgba(0,0,0,.08);
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:8px;
-}
+    .strength-meter {
+      height: 4px;
+      background: rgba(0, 0, 0, .08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
 
-.strength-fill {
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#e5533d,#f2c94c,#16c5c5);
-  transition:width .25s ease;
-}
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #e5533d, #f2c94c, #16c5c5);
+      transition: width .25s ease;
+    }
 
-/* =====================
+    /* =====================
    MOBILE
 ===================== */
-@media(max-width:760px){
-  .signup-modal { grid-template-columns:1fr }
-  .signup-left { display:none }
-}
-/* FACEBOOK BUTTON */
-.btn-social.facebook {
-  background: #1877f2;
-  color: white;
-  border: none;
-  padding: 14px 20px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-}
+    @media(max-width:760px) {
+      .signup-modal {
+        grid-template-columns: 1fr
+      }
 
-.btn-social.facebook:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(24,119,242,0.45);
-}
+      .signup-left {
+        display: none
+      }
+    }
 
-/* ICON */
-.btn-social .icon {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-}
+    /* FACEBOOK BUTTON */
+    .btn-social.facebook {
+      background: #1877f2;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
 
-.btn-social .icon svg {
-  width: 100%;
-  height: 100%;
-  fill: white;
-}
+    .btn-social.facebook:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(24, 119, 242, 0.45);
+    }
 
-/* AUTH STACK */
-.auth-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+    /* ICON */
+    .btn-social .icon {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+    }
 
-/* BASE SOCIAL BUTTON */
-.btn-social {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px 20px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-}
+    .btn-social .icon svg {
+      width: 100%;
+      height: 100%;
+      fill: white;
+    }
 
-.btn-social:hover {
-  transform: translateY(-1px);
-}
+    /* AUTH STACK */
+    .auth-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-/* ICON */
-.btn-social .icon {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-}
+    /* BASE SOCIAL BUTTON */
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
 
-.btn-social svg {
-  width: 100%;
-  height: 100%;
-}
+    .btn-social:hover {
+      transform: translateY(-1px);
+    }
 
-/* GOOGLE */
-.btn-social.google {
-  background: white;
-  color: #444;
-  border: 1px solid rgba(0,0,0,.15);
-}
+    /* ICON */
+    .btn-social .icon {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+    }
 
-.btn-social.google:hover {
-  box-shadow: 0 8px 22px rgba(0,0,0,.15);
-}
+    .btn-social svg {
+      width: 100%;
+      height: 100%;
+    }
 
-/* FACEBOOK */
-.btn-social.facebook {
-  background: #1877f2;
-  color: white;
-}
+    /* GOOGLE */
+    .btn-social.google {
+      background: white;
+      color: #444;
+      border: 1px solid rgba(0, 0, 0, .15);
+    }
 
-.btn-social.facebook svg {
-  fill: white;
-}
+    .btn-social.google:hover {
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .15);
+    }
 
-/* OUTLOOK */
-.btn-social.outlook {
-  background: #0078d4;
-  color: white;
-}
+    /* FACEBOOK */
+    .btn-social.facebook {
+      background: #1877f2;
+      color: white;
+    }
 
-.btn-social.outlook svg {
-  fill: white;
-}
+    .btn-social.facebook svg {
+      fill: white;
+    }
 
-/* EMAIL */
-.btn-social.email {
-  background: #f3f4f6;
-  color: #111;
-  border: 1px solid rgba(0,0,0,.12);
-}
+    /* OUTLOOK */
+    .btn-social.outlook {
+      background: #0078d4;
+      color: white;
+    }
 
-.btn-social.email:hover {
-  box-shadow: 0 8px 22px rgba(0,0,0,.12);
-}
+    .btn-social.outlook svg {
+      fill: white;
+    }
+
+    /* EMAIL */
+    .btn-social.email {
+      background: #f3f4f6;
+      color: #111;
+      border: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    .btn-social.email:hover {
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .12);
+    }
+
+    /* image wrapper only */
+    .hero-media {
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
 
 
+
+    /* nav buttons */
+    .hero-media .hero-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+
+      background: rgba(0, 0, 0, .55);
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .hero-media .hero-prev {
+      left: 16px;
+    }
+
+    .hero-media .hero-next {
+      right: 16px;
+    }
+
+    .hero-media .hero-nav:hover {
+      background: rgba(0, 0, 0, .85);
+    }
   </style>
 </head>
 
@@ -2782,9 +2865,14 @@ input, select {
   </header>
   <section class="hero-wrap" aria-label="Hero banner">
 
-    <!-- Use local screenshot first; fallback to Unsplash if missing -->
-    <img class="hero-image" src="./assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif"
-      alt="Scenic view of Quebec city">
+    <div class="hero-media">
+      <img class="hero-image" src="./assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif"
+        alt="Scenic view of Quebec city">
+
+      <button class="hero-nav hero-prev" aria-label="Previous slide">‹</button>
+      <button class="hero-nav hero-next" aria-label="Next slide">›</button>
+    </div>
+
 
     <div class="search-card" role="search" aria-label="Find hotels search">
       <div class="search-col" style="min-width:260px">
@@ -2882,7 +2970,8 @@ input, select {
           Canada, our hotel in Quebec City Old Town is near local sites like the Quebec City Convention Centre...
         </p>
 
-        <a class="welcome-hero__cta" href="#" aria-label="See more about Quebec City Marriott Downtown">See More <span class="see-more"> ...</span></a>
+        <a class="welcome-hero__cta" href="#" aria-label="See more about Quebec City Marriott Downtown">See More <span
+            class="see-more"> ...</span></a>
       </section>
 
       <!-- INFO CARD -->
@@ -3491,109 +3580,114 @@ input, select {
     </div>
 
     <!-- OVERLAY -->
-<div class="signup-overlay" id="overlay">
-  <div class="signup-backdrop"></div>
+    <div class="signup-overlay" id="overlay">
+      <div class="signup-backdrop"></div>
 
-  <div class="signup-modal">
-    <button class="signup-close" id="close">&times;</button>
+      <div class="signup-modal">
+        <button class="signup-close" id="close">&times;</button>
 
-    <div class="signup-left">
-      <h2>Succeed Together</h2>
-      <p>Focus, accountability, clarity.</p>
-    </div>
-
-    <div class="signup-right">
-
-      <!-- STEP 1 -->
-      <div class="signup-step active" id="step1">
-
-        <div class="auth-buttons">
-
-  <!-- GOOGLE -->
-  <button class="btn-social google">
-    <span class="icon">
-      <svg viewBox="0 0 533.5 544.3">
-        <path fill="#4285F4" d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.3H272v95.1h146.9c-6.3 34-25.2 62.8-53.8 82v68h87c51-47 81.4-116.2 81.4-194.8z"/>
-        <path fill="#34A853" d="M272 544.3c73.7 0 135.5-24.4 180.7-66.1l-87-68c-24.2 16.2-55.2 25.8-93.7 25.8-71.9 0-132.9-48.5-154.7-113.7h-90.7v71.5C71.1 475.2 165.1 544.3 272 544.3z"/>
-        <path fill="#FBBC04" d="M117.3 322.3c-10.4-30.6-10.4-63.7 0-94.3v-71.5h-90.7C-6.6 220.7-6.6 323.6 26.6 394l90.7-71.7z"/>
-        <path fill="#EA4335" d="M272 107.7c39.9-.6 78.3 14.1 107.7 41.1l80.3-80.3C412.4 24.4 350.6 0 272 0 165.1 0 71.1 69.1 26.6 156.5l90.7 71.5C139.1 156.2 200.1 107.7 272 107.7z"/>
-      </svg>
-    </span>
-    Continue with Google
-  </button>
-
-  <!-- FACEBOOK -->
-  <button class="btn-social facebook">
-    <span class="icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.326v21.348C0 23.403.597 24 1.326 24h11.495v-9.294H9.691V11.01h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.505 0-1.797.716-1.797 1.766v2.316h3.587l-.467 3.696h-3.12V24h6.116C23.403 24 24 23.403 24 22.674V1.326C24 .597 23.403 0 22.675 0z"/>
-      </svg>
-    </span>
-    Continue with Facebook
-  </button>
-
-  <!-- OUTLOOK -->
-  <button class="btn-social outlook">
-    <span class="icon">
-      <svg viewBox="0 0 48 48">
-        <path fill="#0078D4" d="M6 8h20v32H6z"/>
-        <path fill="#28A8EA" d="M26 8l16 8v16l-16 8z"/>
-        <path fill="#fff" d="M18 20c-2.8 0-4.5 2.4-4.5 4s1.7 4 4.5 4 4.5-2.4 4.5-4-1.7-4-4.5-4z"/>
-      </svg>
-    </span>
-    Continue with Outlook
-  </button>
-
-  <!-- EMAIL -->
-  <button class="btn-social email">
-    <span class="icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M2 4h20v16H2z" fill="none" stroke="currentColor" stroke-width="2"/>
-        <path d="M2 6l10 7 10-7" fill="none" stroke="currentColor" stroke-width="2"/>
-      </svg>
-    </span>
-    Continue with Email
-  </button>
-
-</div>
-
-
-        <div class="divider"><span>or</span></div>
-
-        <div class="field" id="emailField">
-          <input id="email" placeholder="Email address" />
-          <span class="error-msg">Invalid email</span>
+        <div class="signup-left">
+          <h2>Succeed Together</h2>
+          <p>Focus, accountability, clarity.</p>
         </div>
 
-        <div class="field" id="passwordField">
-          <input id="password" type="password" placeholder="Password" />
-          <div class="strength-meter">
-            <span class="strength-fill" id="strengthFill"></span>
+        <div class="signup-right">
+
+          <!-- STEP 1 -->
+          <div class="signup-step active" id="step1">
+
+            <div class="auth-buttons">
+
+              <!-- GOOGLE -->
+              <button class="btn-social google">
+                <span class="icon">
+                  <svg viewBox="0 0 533.5 544.3">
+                    <path fill="#4285F4"
+                      d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.3H272v95.1h146.9c-6.3 34-25.2 62.8-53.8 82v68h87c51-47 81.4-116.2 81.4-194.8z" />
+                    <path fill="#34A853"
+                      d="M272 544.3c73.7 0 135.5-24.4 180.7-66.1l-87-68c-24.2 16.2-55.2 25.8-93.7 25.8-71.9 0-132.9-48.5-154.7-113.7h-90.7v71.5C71.1 475.2 165.1 544.3 272 544.3z" />
+                    <path fill="#FBBC04"
+                      d="M117.3 322.3c-10.4-30.6-10.4-63.7 0-94.3v-71.5h-90.7C-6.6 220.7-6.6 323.6 26.6 394l90.7-71.7z" />
+                    <path fill="#EA4335"
+                      d="M272 107.7c39.9-.6 78.3 14.1 107.7 41.1l80.3-80.3C412.4 24.4 350.6 0 272 0 165.1 0 71.1 69.1 26.6 156.5l90.7 71.5C139.1 156.2 200.1 107.7 272 107.7z" />
+                  </svg>
+                </span>
+                Continue with Google
+              </button>
+
+              <!-- FACEBOOK -->
+              <button class="btn-social facebook">
+                <span class="icon">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M22.675 0h-21.35C.597 0 0 .597 0 1.326v21.348C0 23.403.597 24 1.326 24h11.495v-9.294H9.691V11.01h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.505 0-1.797.716-1.797 1.766v2.316h3.587l-.467 3.696h-3.12V24h6.116C23.403 24 24 23.403 24 22.674V1.326C24 .597 23.403 0 22.675 0z" />
+                  </svg>
+                </span>
+                Continue with Facebook
+              </button>
+
+              <!-- OUTLOOK -->
+              <button class="btn-social outlook">
+                <span class="icon">
+                  <svg viewBox="0 0 48 48">
+                    <path fill="#0078D4" d="M6 8h20v32H6z" />
+                    <path fill="#28A8EA" d="M26 8l16 8v16l-16 8z" />
+                    <path fill="#fff" d="M18 20c-2.8 0-4.5 2.4-4.5 4s1.7 4 4.5 4 4.5-2.4 4.5-4-1.7-4-4.5-4z" />
+                  </svg>
+                </span>
+                Continue with Outlook
+              </button>
+
+              <!-- EMAIL -->
+              <button class="btn-social email">
+                <span class="icon">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M2 4h20v16H2z" fill="none" stroke="currentColor" stroke-width="2" />
+                    <path d="M2 6l10 7 10-7" fill="none" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                </span>
+                Continue with Email
+              </button>
+
+            </div>
+
+
+            <div class="divider"><span>or</span></div>
+
+            <div class="field" id="emailField">
+              <input id="email" placeholder="Email address" />
+              <span class="error-msg">Invalid email</span>
+            </div>
+
+            <div class="field" id="passwordField">
+              <input id="password" type="password" placeholder="Password" />
+              <div class="strength-meter">
+                <span class="strength-fill" id="strengthFill"></span>
+              </div>
+              <span class="error-msg">Min 8 characters</span>
+            </div>
+
+            <button class="btn-primary" id="next">Create Account</button>
           </div>
-          <span class="error-msg">Min 8 characters</span>
+
+          <!-- STEP 2 -->
+          <div class="signup-step" id="step2">
+            <input placeholder="First name" />
+            <input placeholder="Last name" />
+            <select>
+              <option>I am a…</option>
+              <option>Founder</option>
+              <option>Creator</option>
+              <option>Student</option>
+            </select>
+
+            <button class="btn-primary">Finish Signup</button>
+            <button class="btn-ghost" id="back">← Back</button>
+          </div>
+
         </div>
-
-        <button class="btn-primary" id="next">Create Account</button>
       </div>
-
-      <!-- STEP 2 -->
-      <div class="signup-step" id="step2">
-        <input placeholder="First name" />
-        <input placeholder="Last name" />
-        <select>
-          <option>I am a…</option>
-          <option>Founder</option>
-          <option>Creator</option>
-          <option>Student</option>
-        </select>
-
-        <button class="btn-primary">Finish Signup</button>
-        <button class="btn-ghost" id="back">← Back</button>
-      </div>
-
     </div>
-  </div>
-</div>
 
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -4530,67 +4624,116 @@ input, select {
       });
     })();
 
- const overlay = document.getElementById("overlay");
-document.querySelector("#ctrl-label-sign").onclick = () => {
-  overlay.classList.add("active");
-  document.body.style.overflow="hidden";
-};
-document.getElementById("close").onclick = close;
-overlay.querySelector(".signup-backdrop").onclick = close;
-function close(){
-  overlay.classList.remove("active");
-  document.body.style.overflow="";
-}
+    const overlay = document.getElementById("overlay");
+    document.querySelector("#ctrl-label-sign").onclick = () => {
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    };
+    document.getElementById("close").onclick = close;
+    overlay.querySelector(".signup-backdrop").onclick = close;
+    function close() {
+      overlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
 
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const emailField = document.getElementById("emailField");
-const passwordField = document.getElementById("passwordField");
-const strengthFill = document.getElementById("strengthFill");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const emailField = document.getElementById("emailField");
+    const passwordField = document.getElementById("passwordField");
+    const strengthFill = document.getElementById("strengthFill");
 
-function score(p){
-  let s=0;
-  if(p.length>=8)s+=30;
-  if(/[A-Z]/.test(p))s+=20;
-  if(/[0-9]/.test(p))s+=20;
-  if(/[^a-zA-Z0-9]/.test(p))s+=30;
-  return Math.min(s,100);
-}
+    function score(p) {
+      let s = 0;
+      if (p.length >= 8) s += 30;
+      if (/[A-Z]/.test(p)) s += 20;
+      if (/[0-9]/.test(p)) s += 20;
+      if (/[^a-zA-Z0-9]/.test(p)) s += 30;
+      return Math.min(s, 100);
+    }
 
-password.oninput=()=>{
-  const s=score(password.value);
-  strengthFill.style.width=s+"%";
-};
+    password.oninput = () => {
+      const s = score(password.value);
+      strengthFill.style.width = s + "%";
+    };
 
-document.getElementById("next").onclick=()=>{
-  let ok=true;
+    document.getElementById("next").onclick = () => {
+      let ok = true;
 
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){
-    emailField.classList.add("invalid","shake");
-    ok=false;
-  } else emailField.classList.add("valid");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        emailField.classList.add("invalid", "shake");
+        ok = false;
+      } else emailField.classList.add("valid");
 
-  if(password.value.length<8){
-    passwordField.classList.add("invalid","shake");
-    ok=false;
-  } else passwordField.classList.add("valid");
+      if (password.value.length < 8) {
+        passwordField.classList.add("invalid", "shake");
+        ok = false;
+      } else passwordField.classList.add("valid");
 
-  setTimeout(()=>{
-    emailField.classList.remove("shake");
-    passwordField.classList.remove("shake");
-  },400);
+      setTimeout(() => {
+        emailField.classList.remove("shake");
+        passwordField.classList.remove("shake");
+      }, 400);
 
-  if(ok){
-    step1.classList.remove("active");
-    step2.classList.add("active");
-  }
-};
+      if (ok) {
+        step1.classList.remove("active");
+        step2.classList.add("active");
+      }
+    };
 
-document.getElementById("back").onclick=()=>{
-  step2.classList.remove("active");
-  step1.classList.add("active");
-};
+    document.getElementById("back").onclick = () => {
+      step2.classList.remove("active");
+      step1.classList.add("active");
+    };
 
+    (() => {
+      const img = document.querySelector('.hero-media .hero-image');
+      const prev = document.querySelector('.hero-prev');
+      const next = document.querySelector('.hero-next');
+
+      if (!img || !prev || !next) return;
+
+      const slides = [
+        './assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif',
+        './assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif',
+        './assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif'
+      ];
+
+      let index = 0;
+      let autoplay;
+
+      function render(i) {
+        img.style.opacity = 0;
+
+        setTimeout(() => {
+          img.src = slides[i];
+          img.style.opacity = 1;
+          img.style.transform = 'scale(1.03)';
+          setTimeout(() => img.style.transform = 'scale(1)', 400);
+        }, 200);
+      }
+
+      function nextSlide() {
+        index = (index + 1) % slides.length;
+        render(index);
+        reset();
+      }
+
+      function prevSlide() {
+        index = (index - 1 + slides.length) % slides.length;
+        render(index);
+        reset();
+      }
+
+      function reset() {
+        clearInterval(autoplay);
+        autoplay = setInterval(nextSlide, 6000);
+      }
+
+      next.addEventListener('click', nextSlide);
+      prev.addEventListener('click', prevSlide);
+
+      reset();
+    })();
   </script>
 </body>
 
