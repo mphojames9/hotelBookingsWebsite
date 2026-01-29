@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hotel Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f6f8;
+  padding: 20px;
+}
+
+input, button, select {
+  padding: 10px;
+  font-size: 14px;
+}
+
+ul { padding: 0; margin:0; }
+
+/* ================= OVERLAY ================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden { display: none; }
+
+.overlay-shell {
+  width: 94%;
+  height: 90%;
+  background: #f8fafc;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  animation: rise 0.35s ease;
+}
+
+@keyframes rise {
+  from { transform: translateY(40px); opacity: 0 }
+  to { transform: translateY(0); opacity: 1 }
+}
+
+.overlay-header {
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.overlay-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 260px 1fr 220px;
+  overflow: hidden;
+}
+
+/* ================= FILTERS ================= */
+
+.filters {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 22px 18px;
+  height: 100%;
+  overflow-y: auto;        /* <-- scroll */
+  overscroll-behavior: contain;
+}
+
+/* STAR COLOR (YELLOW) */
+.star-grid span {
+  color: #fbbf24;          /* modern yellow stars */
+}
+
+.filters label {
+  font-size:13px;
+  color:#374151;
+}
+
+.rating-chips span {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  margin: 4px 4px 0 0;
+  font-size:12px;
+}
+
+/* ================= RESULTS ================= */
+
+.results {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.results-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.results li {
+  list-style:none;
+  display: grid;
+  grid-template-columns: 220px 1fr 200px;
+  gap: 16px;
+  background: white;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  padding: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.results img {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.hotel-title {
+  font-weight:700;
+  font-size:17px;
+}
+
+.stars { color:#fbbf24; font-size:14px; }
+
+.location { font-size:13px; color:#6b7280; }
+
+.amenities span {
+  display:inline-block;
+  background:#f1f5f9;
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:12px;
+  margin:6px 6px 0 0;
+}
+
+.rating {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:6px;
+}
+
+.score {
+  background:#16a34a;
+  color:white;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:14px;
+}
+
+.price-box {
+  text-align:right;
+}
+
+.price {
+  font-size:22px;
+  font-weight:800;
+}
+
+.book {
+  margin-top:8px;
+  background:#f97316;
+  border:none;
+  color:white;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* ================= PROMO ================= */
+
+.promo {
+  padding: 20px;
+  border-left: 1px solid #e5e7eb;
+}
+
+.promo-card {
+  background: linear-gradient(135deg,#0ea5e9,#22d3ee);
+  color: white;
+  padding: 20px;
+  border-radius: 18px;
+}
+
+.filters {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 22px 18px;
+}
+
+.filters-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.filters h4 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.filter-section {
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* SLIDER */
+input[type="range"] {
+  width: 100%;
+}
+
+/* STAR GRID */
+.star-grid label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* RATING PILLS */
+.rating-pills button,
+.facility-tags button {
+  border: none;
+  background: #eef2f7;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  margin: 6px 6px 0 0;
+  transition: 0.2s;
+}
+
+.rating-pills button.active,
+.facility-tags button.active {
+  background: #f97316;
+  color: white;
+}
+
+/* TOGGLES */
+.toggle-list label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.toggle-list input {
+  display: none;
+}
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  position: relative;
+  transition: 0.2s;
+}
+
+.toggle::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: 0.2s;
+}
+
+.toggle-list input:checked + .toggle {
+  background: #f97316;
+}
+
+.toggle-list input:checked + .toggle::after {
+  transform: translateX(16px);
+}
+
+/* SELECT */
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<input id="locationInput" placeholder="Enter city or area">
+<button onclick="searchHotels()">Search Hotels</button>
+
+<!-- OVERLAY -->
+<div id="searchOverlay" class="overlay hidden">
+  <div class="overlay-shell">
+
+    <div class="overlay-header">
+      <h2>Hotels in <span id="overlayCity"></span></h2>
+      <select id="sortSelect" onchange="renderHotels()">
+        <option value="recommend">Our recommendation</option>
+        <option value="price">Price (low to high)</option>
+        <option value="rating">Guest rating</option>
+      </select>
+    </div>
+
+    <div class="overlay-body">
+
+     <aside class="filters">
+  <div class="filters-inner">
+
+    <h4>Filter by</h4>
+
+    <!-- PRICE -->
+    <section class="filter-section">
+      <div class="filter-header">
+        <span>Price per night</span>
+        <strong id="priceValue">€500</strong>
+      </div>
+      <input
+        id="priceFilter"
+        type="range"
+        min="50"
+        max="500"
+        value="500"
+        oninput="updatePrice(this.value)"
+      >
+    </section>
+
+    <!-- STAR RATING -->
+    <section class="filter-section">
+      <span class="section-title">Star rating</span>
+      <div class="star-grid">
+        <label><input type="checkbox" value="5" class="starFilter"><span>★★★★★</span></label>
+        <label><input type="checkbox" value="4" class="starFilter"><span>★★★★☆</span></label>
+        <label><input type="checkbox" value="3" class="starFilter"><span>★★★☆☆</span></label>
+      </div>
+    </section>
+
+    <!-- GUEST RATING -->
+    <section class="filter-section">
+      <span class="section-title">Guest rating</span>
+      <div class="rating-pills">
+        <button data-rating="7">7+</button>
+        <button data-rating="7.5">7.5+</button>
+        <button data-rating="8">8+</button>
+        <button data-rating="8.5">8.5+</button>
+      </div>
+    </section>
+
+    <!-- ACCOMMODATION TYPE -->
+    <section class="filter-section">
+      <span class="section-title">Accommodation</span>
+      <div class="toggle-list">
+        <label>
+          <input type="checkbox" class="typeFilter" value="Hotel">
+          <span class="toggle"></span>
+          Hotels only
+        </label>
+        <label>
+          <input type="checkbox" class="typeFilter" value="Apartment">
+          <span class="toggle"></span>
+          Apartments
+        </label>
+      </div>
+    </section>
+
+    <!-- FACILITIES -->
+    <section class="filter-section">
+      <span class="section-title">Facilities</span>
+      <div class="facility-tags">
+        <button data-facility="Free WiFi">Wi-Fi</button>
+        <button data-facility="Breakfast">Breakfast</button>
+        <button data-facility="AC">AC</button>
+        <button data-facility="Parking">Parking</button>
+        <button data-facility="Shuttle">Shuttle</button>
+      </div>
+    </section>
+
+    <!-- DISTANCE -->
+    <section class="filter-section">
+      <span class="section-title">Distance from center</span>
+      <select id="distanceFilter" onchange="renderHotels()">
+        <option value="any">Any distance</option>
+        <option value="1">≤ 1 km</option>
+        <option value="3">≤ 3 km</option>
+        <option value="5">≤ 5 km</option>
+      </select>
+    </section>
+
+  </div>
+</aside>
+
+
+
+      <main class="results">
+        <ul id="overlayResults"></ul>
+      </main>
+
+      <aside class="promo">
+        <div class="promo-card">
+          <h3>Summer Deals 🌞</h3>
+          <p>Up to 30% off selected hotels</p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= DATA ================= */
+
+const HOTEL_IMAGES = [
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+  "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+  "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+  "https://images.unsplash.com/photo-1501117716987-c8e1ecb210a9"
+];
+
+let hotels = [];
+
+/* ================= HELPERS ================= */
+
+const rand = (min, max) => Math.random() * (max - min) + min;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+function stars(n) {
+  return "★".repeat(n) + "☆".repeat(5 - n);
+}
+
+/* ================= OVERLAY ================= */
+
+function openOverlay(city) {
+  overlayCity.textContent = city;
+  searchOverlay.classList.remove("hidden");
+}
+
+function closeOverlay() {
+  searchOverlay.classList.add("hidden");
+}
+
+/* ================= RENDER ================= */
+
+function renderHotels() {
+  const list = document.getElementById("overlayResults");
+  const maxPrice = +priceFilter.value;
+  const sort = sortSelect.value;
+
+  let filtered = hotels.filter(h => h.price <= maxPrice);
+
+  if (sort === "price") filtered.sort((a,b)=>a.price-b.price);
+  if (sort === "rating") filtered.sort((a,b)=>b.score-a.score);
+
+  list.innerHTML = filtered.map(h => `
+    <li>
+      <img src="${h.image}">
+      <div>
+        <div class="hotel-title">${h.name}</div>
+        <div class="stars">${stars(h.stars)}</div>
+        <div class="location">📍 ${h.distance} km from center</div>
+
+        <div class="rating">
+          <div class="score">${h.score}</div>
+          <div>Excellent · ${h.reviews} reviews</div>
+        </div>
+
+        <div class="amenities">
+          ${h.amenities.map(a=>`<span>${a}</span>`).join("")}
+        </div>
+      </div>
+
+      <div class="price-box">
+        <div class="price">€${h.price}</div>
+        <div style="font-size:12px;color:#6b7280">
+          2 nights · €${h.price*2}
+        </div>
+        <button class="book">Book</button>
+      </div>
+    </li>
+  `).join("");
+}
+
+/* ================= SEARCH ================= */
+
+async function searchHotels() {
+  const location = locationInput.value.trim();
+  if (!location) return alert("Enter a location");
+
+  const geo = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`
+  ).then(r=>r.json());
+
+  if (!geo.length) return alert("Location not found");
+
+  const { lat, lon } = geo[0];
+
+  const query = `
+    [out:json];
+    node["tourism"="hotel"](around:5000,${lat},${lon});
+    out tags;
+  `;
+
+  const res = await fetch("https://overpass-api.de/api/interpreter",{
+    method:"POST",
+    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+    body:"data="+encodeURIComponent(query)
+  });
+
+  const data = await res.json();
+
+  hotels = data.elements.map(h => ({
+    name: h.tags?.name || "Unnamed Hotel",
+    image: pick(HOTEL_IMAGES),
+    price: Math.floor(rand(80,400)),
+    stars: Math.floor(rand(3,6)),
+    score: rand(7.2,9.6).toFixed(1),
+    reviews: Math.floor(rand(50,900)),
+    distance: rand(0.3,3.5).toFixed(1),
+    amenities: ["Free WiFi","Breakfast","AC","Parking","Shuttle"].filter(()=>Math.random()>0.4)
+  }));
+
+  openOverlay(location);
+  renderHotels();
+}
+
+</script>
+
+</body>
+</html>
