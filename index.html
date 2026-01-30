@@ -1063,7 +1063,7 @@
 
     .welcome-hero__lead {
       font-size: 1.1rem;
-      color: #475569;
+      color: var(--muted);
       max-width: 650px;
     }
 
@@ -1097,15 +1097,10 @@
       padding: 0;
       font-size: 1rem;
       font-weight: 600;
-      color: #0b1221;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-    }
-
-    .welcome-hero__cta:hover {
-      text-decoration: underline;
     }
 
     .see-more-dots {
@@ -1255,6 +1250,15 @@
 
     /* very small screens — card becomes vertical if content is long */
     @media(max-width:420px) {
+
+            .welcome-hero {
+        padding: 18px 0;
+      }
+
+      .welcome-hero__cta {
+        font-size: .8rem;
+      }
+
       .info-card {
         flex-direction: column;
         gap: 12px;
@@ -2327,8 +2331,8 @@
 
     .crs-dot {
       width: 10px;
-      height: 10px;
-      border-radius: 50%;
+      height: 5px;
+      border-radius: 50px;
       background: rgba(0, 0, 0, 0.20);
       border: 1px solid rgba(255, 255, 255, 0.25);
       transition:
@@ -3412,18 +3416,18 @@
         </h1>
 
         <p class="welcome-hero__lead">
-          PrimeStay helps you discover accommodations that actually fit your needs — not just what's available.
+          PrimeStay helps you find accommodations that genuinely fit your needs, not just whatever happens to be available at the moment.
         </p>
 
         <div class="welcome-hero__more" id="moreContent">
           <p>
-            Whether you're traveling for work, relocating, or planning a getaway, we cut through the noise.
-            No confusing filters. No misleading photos. Just carefully selected stays that match your location,
-            budget, and lifestyle.
+            We’re built for people who value clarity. Whether you’re traveling for work, relocating to a new city, or planning a well-deserved escape, 
+            PrimeStay removes the guesswork. No endless scrolling. No misleading photos. No filters that promise everything and deliver nothing.
+             Just thoughtfully selected stays that align with your location, budget, and how you actually live.
           </p>
           <p>
-            From short-term apartments to long-term housing, PrimeStay connects you with places you’ll feel
-            comfortable calling home — even if it’s just for a night.
+            From short-term apartments to long-term housing, PrimeStay connects you with places designed for comfort, reliability, and peace of mind.
+             Because the right place doesn’t just give you a bed, it gives you a sense of home, even if it’s only for one night.
           </p>
         </div>
 
