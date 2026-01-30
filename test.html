@@ -259,6 +259,7 @@ ul { padding: 0; margin:0; }
 .promo {
   padding: 20px;
   border-left: 1px solid #e5e7eb;
+  display: none;
 }
 
 .promo-card {
@@ -391,6 +392,70 @@ select {
   border: 1px solid #e5e7eb;
   background: white;
 }
+
+@media (max-width: 600px) {
+
+  /* OVERLAY BODY: SINGLE COLUMN */
+  .overlay-body {
+    grid-template-columns: 1fr;
+  }
+
+  /* FILTERS MOVE TO TOP */
+  .filters {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    max-height: 40vh;
+  }
+
+  /* RESULT CARDS: STACK */
+  .results li {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .results img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .price-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .book {
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  body {
+    padding: 8px;
+  }
+
+  .overlay-header {
+    padding: 14px;
+  }
+
+  .filters {
+    padding: 14px;
+  }
+
+  .results {
+    padding: 12px;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+}
+
 
 
 

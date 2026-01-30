@@ -607,79 +607,7 @@
       color: var(--fg)
     }
 
-    /* =========================
-   Search card (overlay) — centered and responsive
-   ========================= */
 
-    .search-label {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-      letter-spacing: 0.02em
-    }
-
-    .search-card {
-      position: relative;
-      background: var(--glass);
-      border-radius: var(--radius);
-      padding: 16px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      min-width: 820px;
-      box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(11, 13, 18, 0.04);
-      transition: transform .18s ease, box-shadow .18s ease;
-      backdrop-filter: blur(6px);
-      z-index: 40;
-      max-width: 600px;
-      margin: -50px auto;
-      box-shadow: 0 2px 10px rgba(11, 13, 18, 0.12);
-    }
-
-    /* hover lift */
-    .search-card:focus-within,
-    .search-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(11, 13, 18, 0.12);
-    }
-
-    .search-col {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 180px;
-    }
-
-    /* label */
-    .search-label {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    /* custom inputs */
-    .search-input {
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(15, 20, 30, 0.06);
-      background: white;
-      min-width: 200px;
-      font-weight: 700;
-      color: var(--accent-2);
-      box-shadow: var(--micro-shadow);
-      outline: none;
-      transition: box-shadow .12s ease, transform .08s ease;
-      cursor: text;
-    }
-
-    /* stronger focus style */
-    .search-input:focus {
-      box-shadow: 0 6px 18px rgba(11, 100, 214, 0.12);
-      transform: translateY(-1px);
-      border-color: rgba(11, 100, 214, 0.18);
-    }
 
     /* Dates field: visually distinct */
     #dates {
@@ -689,35 +617,131 @@
       font-weight: 800;
     }
 
-    /* Guests mini */
-    .search-mini {
-      max-width: 220px;
-    }
+/* === Modern search bar === */
+.search-bar {
+  position: relative;        /* create stacking context */
+  z-index: 20;               /* higher than hero-media */
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+  max-width: 1100px;
+  margin: -60px auto 40px;
+  overflow: hidden;
+}
 
-    /* CTA */
-    .search-cta {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-    }
+/* shared field */
+.sb-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  min-height: 76px;
+  border-right: 1px solid #e5e7eb;
+}
 
+.sb-field i {
+  color: #6b7280;
+  font-size: 18px;
+}
 
-    /* Rooms & Guests panel (dropdown) */
-    .guest-panel {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 8px);
-      width: 320px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: 0 20px 40px rgba(11, 13, 18, 0.12);
-      border: 1px solid rgba(11, 13, 18, 0.04);
-      display: none;
-      z-index: 80;
-      transform-origin: top right;
-      animation: pop .12s ease;
-    }
+/* destination */
+.sb-destination {
+  flex: 1.6;
+}
+
+.sb-destination input {
+  border: 0;
+  outline: none;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* dates */
+.sb-dates {
+  flex: 1.4;
+  gap: 18px;
+}
+
+.sb-date {
+  display: flex;
+  flex-direction: column;
+}
+
+.sb-date-main {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.sb-date-sub {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.sb-divider {
+  width: 1px;
+  height: 40px;
+  background: #e5e7eb;
+}
+
+/* guests */
+.sb-guests {
+  flex: 1;
+  cursor: pointer;
+}
+
+.sb-main {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.sb-sub {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.sb-chev {
+  margin-left: auto;
+  font-size: 14px;
+}
+
+/* search button */
+.sb-btn {
+  background: #2563eb;
+  color: #fff;
+  border: 0;
+  padding: 0 42px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.sb-btn:hover {
+  background: #1d4ed8;
+}
+
+/* mobile */
+@media (max-width: 900px) {
+  .search-bar {
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .sb-field {
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .sb-btn {
+    width: 100%;
+    padding: 18px;
+  }
+}
+
 
     @keyframes pop {
       from {
@@ -3161,6 +3185,297 @@
       color: #111827;
       box-shadow: none;
     }
+
+    /* ===== DATE PICKER TRIGGER ===== */
+.sb-dates-picker {
+  cursor: pointer;
+  transition: background .25s ease, transform .2s ease;
+}
+
+.sb-dates-picker:hover {
+  background: linear-gradient(90deg, #ffffff, #f4f7ff);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   PREMIUM FLATPICKR THEME
+   ========================= */
+
+.flatpickr-calendar {
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 30px 60px rgba(2, 6, 23, 0.18);
+  font-family: Inter, system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* HEADER */
+.flatpickr-months {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  padding: 14px 0;
+}
+
+.flatpickr-month {
+  color: #fff;
+  font-weight: 800;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+  fill: white;
+  opacity: 0.9;
+}
+
+.flatpickr-prev-month:hover,
+.flatpickr-next-month:hover {
+  opacity: 1;
+}
+
+/* WEEKDAYS */
+.flatpickr-weekdays {
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.flatpickr-weekday {
+  color: #64748b;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* DAYS */
+.flatpickr-day {
+  border-radius: 10px;
+  font-weight: 600;
+  color: #0f172a;
+  transition: all 0.15s ease;
+}
+
+.flatpickr-day:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* TODAY */
+.flatpickr-day.today {
+  border: 2px solid #2563eb;
+}
+
+/* SELECTED / RANGE */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+}
+
+.flatpickr-day.inRange {
+  background: rgba(37, 99, 235, 0.15);
+}
+
+/* DISABLED */
+.flatpickr-day.disabled,
+.flatpickr-day.notAllowed {
+  color: #cbd5e1;
+}
+
+/* SPACING */
+.flatpickr-innerContainer {
+  padding: 12px;
+}
+
+/* =========================
+   FLATPICKR — FORCE ROW ON MOBILE
+   ========================= */
+
+@media (max-width: 768px) {
+
+  /* keep months side-by-side */
+  .flatpickr-innerContainer {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
+
+  /* prevent width explosion */
+  .flatpickr-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  /* allow horizontal scroll instead of break */
+  .flatpickr-days {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dayContainer {
+    min-width: 280px !important;
+    max-width: 280px !important;
+  }
+
+  /* keep days readable */
+  .flatpickr-day {
+    height: 40px;
+    line-height: 40px;
+    max-width: calc(100% / 7);
+    font-size: 13px;
+  }
+
+  /* smooth horizontal scrolling */
+  .flatpickr-calendar::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .flatpickr-calendar::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 999px;
+  }
+}
+
+/* =========================
+   VERY SMALL SCREENS
+   ========================= */
+@media (max-width: 360px) {
+
+  .dayContainer {
+    min-width: 260px !important;
+    max-width: 260px !important;
+  }
+
+  .flatpickr-day {
+    height: 36px;
+    line-height: 36px;
+    font-size: 12px;
+  }
+}
+
+.flatpickr-calendar.open {
+  animation: fpPop 0.2s ease-out;
+}
+
+@keyframes fpPop {
+  from {
+    transform: translateY(-8px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== Guest Panel ===== */
+
+.guest-panel {
+  position: absolute;
+  display: none;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.18);
+  padding: 16px;
+  z-index: 9999;
+}
+
+.guest-panel.open {
+  display: block;
+}
+
+/* rows */
+.guest-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-weight: 600;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.counter button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* mobile bottom sheet */
+@media (max-width: 768px) {
+  .guest-panel {
+    position: fixed;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 16px;
+    top: auto !important;
+    width: auto !important;
+    border-radius: 18px;
+  }
+}
+
+
+/* chevron animation */
+.sb-guests .sb-chev {
+  transition: transform 0.2s ease;
+}
+
+.sb-guests.active .sb-chev {
+  transform: rotate(180deg);
+}
+
+/* mobile full-width */
+@media (max-width: 768px) {
+  .guest-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 16px;
+    border-radius: 18px;
+  }
+}
+
+.guest-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-weight: 600;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.counter button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.counter button:active {
+  transform: scale(0.95);
+}
+
+.counter span {
+  min-width: 20px;
+  text-align: center;
+}
+
+
+
   </style>
 </head>
 
@@ -3172,42 +3487,41 @@
     </div>
 
     <!-- modern header controls — replace existing hdr-controls -->
-    <div class="hdr-controls new-hdr-controls" aria-hidden="false" role="toolbar" aria-label="Header controls">
-      <button class="ctrl-btn ghost" type="button" aria-label="Help">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path fill="currentColor"
-            d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm.25 15h-1.5v-1.5h1.5V17zM13.5 11.75c-.26.32-.5.57-.5 1.5h-1.5v-.25c0-.9.3-1.28.72-1.74.44-.48 1.03-.97 1.03-1.98 0-1.1-.9-2-2-2s-2 .9-2 2H9c0-1.66 1.34-3 3-3s3 1.34 3 3c0 1.14-.56 1.8-1.5 2.5z" />
-        </svg>
-        <span class="ctrl-label">Help</span>
-      </button>
+   <div class="hdr-controls new-hdr-controls" aria-hidden="false" role="toolbar" aria-label="Header controls">
 
-      <div class="ctrl-sep" aria-hidden="true"></div>
+  <button class="ctrl-btn ghost" type="button" aria-label="Help">
+    <i class="fa-regular fa-circle-question" aria-hidden="true"></i>
+    <span class="ctrl-label">Help</span>
+  </button>
 
-      <button class="ctrl-btn subtle" type="button" aria-haspopup="menu" aria-expanded="false"
-        aria-label="Select language">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M12 2l2.25 6h6.5L16.5 10l2.25 6-6.5-2.5L7.5 16 9.75 10 4 8h6.5L12 2z" />
-        </svg>
-        <span class="ctrl-label">English</span>
-      </button>
-      <div class="ctrl-sep" aria-hidden="true"></div>
-      <a class="ctrl-link" href="#" aria-label="My Trips">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M7 7h10v10H7V7zm-2 12V5H3v14a2 2 0 0 0 2 2h14v-2H5z" />
-        </svg>
-        <span class="ctrl-label">My Trips</span>
-      </a>
+  <div class="ctrl-sep" aria-hidden="true"></div>
 
-      <div class="ctrl-sep" aria-hidden="true"></div>
+  <button
+    class="ctrl-btn subtle"
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-label="Select language"
+  >
+    <i class="fa-solid fa-globe" aria-hidden="true"></i>
+    <span class="ctrl-label">English</span>
+  </button>
 
-      <a class="ctrl-btn primary" href="#" aria-label="Sign in or join">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path fill="currentColor"
-            d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-3.3 0-6 1.7-6 3.8V22h12v-2.2c0-2.1-2.7-3.8-6-3.8z" />
-        </svg>
-        <span class="ctrl-label" id="ctrl-label-sign">Sign In / Join</span>
-      </a>
-    </div>
+  <div class="ctrl-sep" aria-hidden="true"></div>
+
+  <a class="ctrl-link" href="#" aria-label="My Trips">
+    <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
+    <span class="ctrl-label">My Trips</span>
+  </a>
+
+  <div class="ctrl-sep" aria-hidden="true"></div>
+
+  <a class="ctrl-btn primary" href="#" aria-label="Sign in or join">
+    <i class="fa-regular fa-user" aria-hidden="true"></i>
+    <span class="ctrl-label" id="ctrl-label-sign">Sign In / Join</span>
+  </a>
+
+</div>
 
 
 
@@ -3323,73 +3637,86 @@
     </div>
 
 
-    <div class="search-card" role="search" aria-label="Find hotels search">
-      <div class="search-col" style="min-width:260px">
-        <label class="search-label" for="destination">Destination</label>
-        <input id="destination" class="search-input" type="text" placeholder="City, hotel or address"
-          aria-autocomplete="list" aria-haspopup="true" aria-label="Destination (use Google suggestions)">
-      </div>
+   <div class="search-bar" role="search" aria-label="Find hotels">
+  <!-- Destination -->
+  <div class="sb-field sb-destination">
+    <i class="fa fa-search"></i>
+    <input
+      id="destination"
+      type="text"
+      placeholder="Enter a destination or property"
+      aria-label="Destination"
+      autocomplete="off"
+    />
+  </div>
 
-      <div class="search-col">
-        <label class="search-label" for="dates">Dates</label>
-        <input id="dates" class="search-input" type="text" placeholder="Select check-in — check-out"
-          aria-label="Select dates" readonly>
-      </div>
+  <!-- Dates -->
+<div class="sb-field sb-dates sb-dates-picker" id="dateTrigger">
+  <i class="fa fa-calendar"></i>
 
-      <div class="search-col" style="position:relative;">
-        <label class="search-label" for="guests">Rooms &amp; Guests</label>
-        <input id="guests" class="search-input search-mini" type="text" value="1 room, 2 guests" aria-haspopup="true"
-          aria-expanded="false" readonly>
-        <!-- guest panel -->
-        <div class="guest-panel" role="dialog" aria-modal="false" aria-label="Rooms and guests selector"
-          id="guestPanel">
-          <div class="guest-row">
-            <div>
-              <div class="guest-label">Rooms</div>
-              <div class="guest-sub">Max 5 rooms</div>
-            </div>
-            <div class="counter" data-key="rooms">
-              <button type="button" class="dec" aria-label="Decrease rooms">−</button>
-              <span class="count">1</span>
-              <button type="button" class="inc" aria-label="Increase rooms">+</button>
-            </div>
-          </div>
+  <div class="sb-date">
+    <span class="sb-date-main" id="checkInMain">8 Feb 2026</span>
+    <span class="sb-date-sub" id="checkInSub">Sunday</span>
+  </div>
 
-          <div class="guest-row">
-            <div>
-              <div class="guest-label">Adults</div>
-              <div class="guest-sub">Ages 13+</div>
-            </div>
-            <div class="counter" data-key="adults">
-              <button type="button" class="dec" aria-label="Decrease adults">−</button>
-              <span class="count">2</span>
-              <button type="button" class="inc" aria-label="Increase adults">+</button>
-            </div>
-          </div>
+  <div class="sb-divider"></div>
 
-          <div class="guest-row">
-            <div>
-              <div class="guest-label">Children</div>
-              <div class="guest-sub">0–12 years</div>
-            </div>
-            <div class="counter" data-key="children">
-              <button type="button" class="dec" aria-label="Decrease children">−</button>
-              <span class="count">0</span>
-              <button type="button" class="inc" aria-label="Increase children">+</button>
-            </div>
-          </div>
+  <div class="sb-date">
+    <span class="sb-date-main" id="checkOutMain">9 Feb 2026</span>
+    <span class="sb-date-sub" id="checkOutSub">Monday</span>
+  </div>
 
-          <div class="guest-actions">
-            <button type="button" class="btn-ghost" id="guestClear">Clear</button>
-            <button type="button" class="btn-apply" id="guestApply">Apply</button>
-          </div>
-        </div>
-      </div>
+  <!-- hidden input flatpickr binds to -->
+  <input id="datePickerInput" type="text" class="visually-hidden">
+</div>
 
-      <div class="search-cta">
-        <button class="btn-primary" type="button" aria-label="Find Hotels" id="searchGo">Find Hotels</button>
-      </div>
+
+ 
+
+<!-- GUEST TOGGLE (already exists, keep it where it is) -->
+<div class="sb-field sb-guests" id="guestToggle">
+  <i class="fa fa-user-group"></i>
+  <div>
+    <div class="sb-main">2 adults</div>
+    <div class="sb-sub">1 room</div>
+  </div>
+  <i class="fa fa-chevron-down sb-chev"></i>
+</div>
+
+<!-- ✅ GUEST PANEL (THIS MUST BE AT BOTTOM OF BODY) -->
+<div id="guestPanel" class="guest-panel">
+  <div class="guest-row">
+    <span>Adults</span>
+    <div class="counter">
+      <button data-type="adults" data-action="dec">−</button>
+      <span id="adultsCount">2</span>
+      <button data-type="adults" data-action="inc">+</button>
     </div>
+  </div>
+
+  <div class="guest-row">
+    <span>Children</span>
+    <div class="counter">
+      <button data-type="children" data-action="dec">−</button>
+      <span id="childrenCount">0</span>
+      <button data-type="children" data-action="inc">+</button>
+    </div>
+  </div>
+
+  <div class="guest-row">
+    <span>Rooms</span>
+    <div class="counter">
+      <button data-type="rooms" data-action="dec">−</button>
+      <span id="roomsCount">1</span>
+      <button data-type="rooms" data-action="inc">+</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- CTA -->
+  <button class="sb-btn" id="searchGo">SEARCH</button>
+</div>
 
 
     <!-- hero dots -->
@@ -3554,6 +3881,7 @@
     </div>
 
     <button class="crs-arrow crs-right" data-crs-action="right" aria-label="Scroll right">›</button>
+    <div class="crs-dots" data-crs-dots></div>
   </div>
 </section>
 
@@ -3775,266 +4103,266 @@
 
     <!-- ================= HOTEL LISTINGS (merged long listing section) ================= -->
     <section class="sec" aria-labelledby="listings">
-      <div class="sec-head">
-        <h2 id="listings">Hotels in Quebec, Canada</h2>
-        <div style="display:flex; gap:12px; align-items:center;">
-          <div class="results-bar">
-            <div class="results-info">
-              Showing <strong id="shownRange">1–22</strong> of <strong id="totalItems">22</strong>
-            </div>
+  <div class="sec-head">
+    <h2 id="listings">Curated stays in Quebec City</h2>
 
-            <div class="sort-box">
-              <label for="sortSelect">Sort by</label>
-              <select id="sortSelect">
-                <option value="distance">Distance</option>
-                <option value="price-low">Price (Low → High)</option>
-                <option value="price-high">Price (High → Low)</option>
-              </select>
-            </div>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <div class="results-bar">
+        <div class="results-info">
+          Showing <strong id="shownRange">1–6</strong> of <strong id="totalItems">6</strong>
+        </div>
+
+        <div class="sort-box">
+          <label for="sortSelect">Sort by</label>
+          <select id="sortSelect">
+            <option value="distance">Location</option>
+            <option value="price-low">Price (Low → High)</option>
+            <option value="price-high">Price (High → Low)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-wrap">
+
+    <!-- CARD 1 -->
+    <article class="list-item" data-index="0">
+      <div class="list-media">
+        <div class="media-nav">
+          <button class="mnav prev">‹</button>
+          <button class="mnav next">›</button>
+        </div>
+        <img src="./assers/lonri-suite-0020-hor-wide.webp"
+             alt="Historic Old Quebec accommodation"
+             data-slides="./assers/lonri-suite-0020-hor-wide.webp|./assers/hamra-exterior-2386-hor-wide.avif">
+        <div class="media-dots"><span class="active"></span><span></span></div>
+      </div>
+
+      <div class="list-body">
+        <div class="list-title">
+          <h3>Historic Old Quebec Stay</h3>
+          <div class="rating">★ 4.4 <span>(660+ reviews)</span> · Central</div>
+        </div>
+
+        <div class="list-meta">
+          Walkable accommodation located in the heart of Old Quebec
+        </div>
+
+        <div class="list-desc">
+          Ideal for sightseeing, culture lovers, and short city breaks.
+        </div>
+
+        <div class="list-actions">
+          <a class="details-link" href="#">View details <span>›</span></a>
+
+          <div class="price-block">
+            <div class="price-label">From</div>
+            <div class="price-amount">280 <span>$</span></div>
+            <button class="book-btn">View stay</button>
           </div>
         </div>
       </div>
+    </article>
 
-      <div class="list-wrap">
-        <!-- HOTEL CARD 1 -->
-        <article class="list-item" data-index="0">
-          <div class="list-media">
-            <div class="media-nav">
-              <button class="mnav prev" aria-label="previous image">‹</button>
-              <button class="mnav next" aria-label="next image">›</button>
-            </div>
-            <img src="./assers/lonri-suite-0020-hor-wide.webp" alt="Quebec City Marriott Downtown main photo"
-              data-slides="./assers/lonri-suite-0020-hor-wide.webp|./assers/hamra-exterior-2386-hor-wide.avif|./assers/gneri-king-studio-0333-hor-wide.avif">
-            <div class="media-dots" aria-hidden="true">
-              <span class="active"></span><span></span><span></span>
-            </div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-title">
-              <h3>Quebec City Marriott Downtown</h3>
-              <div class="rating">★ 4.4 <span>(669 reviews)</span> · 0.5 mi</div>
-            </div>
-
-            <div class="list-meta">
-              Hotel in Quebec City boasting spacious rooms in the center of historic Old Quebec neighborhood
-            </div>
-
-            <div class="list-desc">
-              Complimentary Wi-Fi, fitness centre and family rooms available.
-            </div>
-
-            <div class="list-actions">
-              <a class="details-link" href="#">View Details <span>›</span></a>
-
-              <div class="price-block">
-                <div class="price-label">Per night</div>
-                <div class="price-amount">303 <span>$</span></div>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-        </article>
-
-        <!-- HOTEL CARD 2 -->
-        <article class="list-item" data-index="1">
-          <div class="list-media">
-            <div class="media-nav">
-              <button class="mnav prev">‹</button>
-              <button class="mnav next">›</button>
-            </div>
-            <img src="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png" alt="Delta Hotels Quebec main photo"
-              data-slides="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png|./assers/yqbmc-bar-0010-hor-clsc.webp">
-            <div class="media-dots" aria-hidden="true"><span class="active"></span><span></span></div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-title">
-              <h3>Quebec City Marriott Downtown</h3>
-              <div class="rating">★ 4.4 <span>(669 reviews)</span> · 0.5 mi</div>
-            </div>
-
-            <div class="list-meta">
-              Hotel in Quebec City boasting spacious rooms in the center of historic Old Quebec neighborhood
-            </div>
-
-            <div class="list-desc">
-              Complimentary Wi-Fi, fitness centre and family rooms available.
-            </div>
-
-            <div class="list-actions">
-              <a class="details-link" href="#">View Details <span>›</span></a>
-
-              <div class="price-block">
-                <div class="price-label">Per night</div>
-                <div class="price-amount">303 <span>$</span></div>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-        </article>
-
-        <!-- HOTEL CARD 3 -->
-        <article class="list-item" data-index="2">
-          <div class="list-media">
-            <div class="media-nav">
-              <button class="mnav prev">‹</button>
-              <button class="mnav next">›</button>
-            </div>
-            <img src="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif"
-              alt="Courtyard by Marriott Quebec City photo"
-              data-slides="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif|./assers/ri-orkri-orkri-exterior-entrance-1-37392_Wide-Hor.avif">
-            <div class="media-dots" aria-hidden="true"><span class="active"></span><span></span></div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-title">
-              <h3>Quebec City Marriott Downtown</h3>
-              <div class="rating">★ 4.4 <span>(669 reviews)</span> · 0.5 mi</div>
-            </div>
-
-            <div class="list-meta">
-              Hotel in Quebec City boasting spacious rooms in the center of historic Old Quebec neighborhood
-            </div>
-
-            <div class="list-desc">
-              Complimentary Wi-Fi, fitness centre and family rooms available.
-            </div>
-
-            <div class="list-actions">
-              <a class="details-link" href="#">View Details <span>›</span></a>
-
-              <div class="price-block">
-                <div class="price-label">Per night</div>
-                <div class="price-amount">303 <span>$</span></div>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-        </article>
-
-        <!-- HOTEL CARD 4 -->
-        <article class="list-item" data-index="3">
-          <div class="list-media">
-            <div class="media-nav">
-              <button class="mnav prev">‹</button>
-              <button class="mnav next">›</button>
-            </div>
-            <img src="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif" alt="Mont Sainte-Anne photo"
-              data-slides="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif|./assers/xf-ebjel-exterior-16831_Wide-Hor.avif">
-            <div class="media-dots" aria-hidden="true"><span class="active"></span><span></span></div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-title">
-              <h3>Quebec City Marriott Downtown</h3>
-              <div class="rating">★ 4.4 <span>(669 reviews)</span> · 0.5 mi</div>
-            </div>
-
-            <div class="list-meta">
-              Hotel in Quebec City boasting spacious rooms in the center of historic Old Quebec neighborhood
-            </div>
-
-            <div class="list-desc">
-              Complimentary Wi-Fi, fitness centre and family rooms available.
-            </div>
-
-            <div class="list-actions">
-              <a class="details-link" href="#">View Details <span>›</span></a>
-
-              <div class="price-block">
-                <div class="price-label">Per night</div>
-                <div class="price-amount">303 <span>$</span></div>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-        </article>
-
-        <!-- HOTEL CARD 5 -->
-        <article class="list-item" data-index="4">
-          <div class="list-media">
-            <div class="media-nav">
-              <button class="mnav prev">‹</button>
-              <button class="mnav next">›</button>
-            </div>
-            <img src="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp" alt="Courtyard other photo"
-              data-slides="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp|./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp">
-            <div class="media-dots" aria-hidden="true"><span class="active"></span><span></span></div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-title">
-              <h3>Quebec City Marriott Downtown</h3>
-              <div class="rating">★ 4.4 <span>(669 reviews)</span> · 0.5 mi</div>
-            </div>
-
-            <div class="list-meta">
-              Hotel in Quebec City boasting spacious rooms in the center of historic Old Quebec neighborhood
-            </div>
-
-            <div class="list-desc">
-              Complimentary Wi-Fi, fitness centre and family rooms available.
-            </div>
-
-            <div class="list-actions">
-              <a class="details-link" href="#">View Details <span>›</span></a>
-
-              <div class="price-block">
-                <div class="price-label">Per night</div>
-                <div class="price-amount">303 <span>$</span></div>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-        </article>
-
-        <!-- HOTEL CARD 6 -->
-        <article class="list-item" data-index="5">
-          <div class="list-media">
-            <div class="media-nav">
-              <button class="mnav prev">‹</button>
-              <button class="mnav next">›</button>
-            </div>
-            <img src="./assers/lonrk-exterior-9338-hor-wide.webp" alt="Hotel example photo"
-              data-slides="./assers/lonrk-exterior-9338-hor-wide.webp|./assers/lonrk-exterior-9338-hor-wide.webp">
-            <div class="media-dots" aria-hidden="true"><span class="active"></span><span></span></div>
-          </div>
-
-          <div class="list-body">
-            <div class="list-title">
-              <h3>Quebec City Marriott Downtown</h3>
-              <div class="rating">★ 4.4 <span>(669 reviews)</span> · 0.5 mi</div>
-            </div>
-
-            <div class="list-meta">
-              Hotel in Quebec City boasting spacious rooms in the center of historic Old Quebec neighborhood
-            </div>
-
-            <div class="list-desc">
-              Complimentary Wi-Fi, fitness centre and family rooms available.
-            </div>
-
-            <div class="list-actions">
-              <a class="details-link" href="#">View Details <span>›</span></a>
-
-              <div class="price-block">
-                <div class="price-label">Per night</div>
-                <div class="price-amount">303 <span>$</span></div>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-        </article>
-
+    <!-- CARD 2 -->
+    <article class="list-item" data-index="1">
+      <div class="list-media">
+        <div class="media-nav">
+          <button class="mnav prev">‹</button>
+          <button class="mnav next">›</button>
+        </div>
+        <img src="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png"
+             alt="Business-friendly accommodation"
+             data-slides="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png|./assers/yqbmc-bar-0010-hor-clsc.webp">
+        <div class="media-dots"><span class="active"></span><span></span></div>
       </div>
-    </section>
+
+      <div class="list-body">
+        <div class="list-title">
+          <h3>Business-Ready Downtown Stay</h3>
+          <div class="rating">★ 4.3 <span>(520+ reviews)</span> · Near offices</div>
+        </div>
+
+        <div class="list-meta">
+          Well-connected stay designed for work trips and conferences
+        </div>
+
+        <div class="list-desc">
+          Fast Wi-Fi, quiet rooms, and easy access to transport.
+        </div>
+
+        <div class="list-actions">
+          <a class="details-link" href="#">View details <span>›</span></a>
+
+          <div class="price-block">
+            <div class="price-label">From</div>
+            <div class="price-amount">260 <span>$</span></div>
+            <button class="book-btn">View stay</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 3 -->
+    <article class="list-item" data-index="2">
+      <div class="list-media">
+        <div class="media-nav">
+          <button class="mnav prev">‹</button>
+          <button class="mnav next">›</button>
+        </div>
+        <img src="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif"
+             alt="Extended stay studio"
+             data-slides="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif|./assers/ri-orkri-orkri-exterior-entrance-1-37392_Wide-Hor.avif">
+        <div class="media-dots"><span class="active"></span><span></span></div>
+      </div>
+
+      <div class="list-body">
+        <div class="list-title">
+          <h3>Modern Studio for Longer Stays</h3>
+          <div class="rating">★ 4.5 <span>(430+ reviews)</span> · Quiet area</div>
+        </div>
+
+        <div class="list-meta">
+          Apartment-style accommodation suited for extended visits
+        </div>
+
+        <div class="list-desc">
+          Kitchenette, extra storage, and comfortable living space.
+        </div>
+
+        <div class="list-actions">
+          <a class="details-link" href="#">View details <span>›</span></a>
+
+          <div class="price-block">
+            <div class="price-label">From</div>
+            <div class="price-amount">210 <span>$</span></div>
+            <button class="book-btn">View stay</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 4 -->
+    <article class="list-item" data-index="3">
+      <div class="list-media">
+        <div class="media-nav">
+          <button class="mnav prev">‹</button>
+          <button class="mnav next">›</button>
+        </div>
+        <img src="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif"
+             alt="Nature-focused stay"
+             data-slides="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif|./assers/xf-ebjel-exterior-16831_Wide-Hor.avif">
+        <div class="media-dots"><span class="active"></span><span></span></div>
+      </div>
+
+      <div class="list-body">
+        <div class="list-title">
+          <h3>Scenic Nature-Side Stay</h3>
+          <div class="rating">★ 4.6 <span>(310+ reviews)</span> · Outdoors</div>
+        </div>
+
+        <div class="list-meta">
+          Peaceful stay close to trails and outdoor activities
+        </div>
+
+        <div class="list-desc">
+          Ideal for guests seeking space, calm, and fresh air.
+        </div>
+
+        <div class="list-actions">
+          <a class="details-link" href="#">View details <span>›</span></a>
+
+          <div class="price-block">
+            <div class="price-label">From</div>
+            <div class="price-amount">190 <span>$</span></div>
+            <button class="book-btn">View stay</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 5 -->
+    <article class="list-item" data-index="4">
+      <div class="list-media">
+        <div class="media-nav">
+          <button class="mnav prev">‹</button>
+          <button class="mnav next">›</button>
+        </div>
+        <img src="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp"
+             alt="Lifestyle-focused urban stay"
+             data-slides="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp">
+        <div class="media-dots"><span class="active"></span></div>
+      </div>
+
+      <div class="list-body">
+        <div class="list-title">
+          <h3>Urban Lifestyle Stay</h3>
+          <div class="rating">★ 4.2 <span>(580+ reviews)</span> · Lively area</div>
+        </div>
+
+        <div class="list-meta">
+          Stay close to restaurants, cafés, and nightlife
+        </div>
+
+        <div class="list-desc">
+          Best for travelers who want everything nearby.
+        </div>
+
+        <div class="list-actions">
+          <a class="details-link" href="#">View details <span>›</span></a>
+
+          <div class="price-block">
+            <div class="price-label">From</div>
+            <div class="price-amount">240 <span>$</span></div>
+            <button class="book-btn">View stay</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 6 -->
+    <article class="list-item" data-index="5">
+      <div class="list-media">
+        <div class="media-nav">
+          <button class="mnav prev">‹</button>
+          <button class="mnav next">›</button>
+        </div>
+        <img src="./assers/lonrk-exterior-9338-hor-wide.webp"
+             alt="Comfort-focused accommodation"
+             data-slides="./assers/lonrk-exterior-9338-hor-wide.webp">
+        <div class="media-dots"><span class="active"></span></div>
+      </div>
+
+      <div class="list-body">
+        <div class="list-title">
+          <h3>Comfort-Focused City Stay</h3>
+          <div class="rating">★ 4.1 <span>(490+ reviews)</span> · Best value</div>
+        </div>
+
+        <div class="list-meta">
+          Practical accommodation offering strong value
+        </div>
+
+        <div class="list-desc">
+          Spacious rooms, fitness access, and reliable amenities.
+        </div>
+
+        <div class="list-actions">
+          <a class="details-link" href="#">View details <span>›</span></a>
+
+          <div class="price-block">
+            <div class="price-label">From</div>
+            <div class="price-amount">180 <span>$</span></div>
+            <button class="book-btn">View stay</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
   </div>
 
   <!-- ================= FOOTER ================= -->
@@ -4595,15 +4923,10 @@
     })();
 
     flatpickr("#dates", {
-      mode: "range",
-      altInput: true,
-      altFormat: "D, M j",
-      dateFormat: "Y-m-d",
+  mode: "range",
+  showMonths: window.innerWidth < 768 ? 1 : 2
+});
 
-      onOpen: function (selectedDates, dateStr, instance) {
-        instance.calendarContainer.classList.add("calendar-themed");
-      }
-    });
 
 
     /* ===== Google Places Autocomplete for destination ===== */
@@ -4626,100 +4949,6 @@
       }
     })();
 
-    /* ===== Rooms & Guests logic ===== */
-    (function () {
-      const guestsInput = document.getElementById('guests');
-      const panel = document.getElementById('guestPanel');
-      const counters = panel.querySelectorAll('.counter');
-      const state = { rooms: 1, adults: 2, children: 0 };
-
-      function updateInput() {
-        guestsInput.value = `${state.rooms} room${state.rooms > 1 ? 's' : ''}, ${state.adults} adult${state.adults > 1 ? 's' : ''}${state.children ? (', ' + state.children + ' child' + (state.children > 1 ? 'ren' : '')) : ''}`;
-      }
-
-      counters.forEach(c => {
-        const key = c.dataset.key;
-        const dec = c.querySelector('.dec');
-        const inc = c.querySelector('.inc');
-        const countEl = c.querySelector('.count');
-
-        dec.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (key === 'rooms') state[key] = Math.max(1, state[key] - 1);
-          else state[key] = Math.max(0, state[key] - 1);
-          countEl.textContent = state[key];
-          updateInput();
-        });
-
-        inc.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (key === 'rooms') state[key] = Math.min(5, state[key] + 1);       // limit rooms 5
-          else if (key === 'adults') state[key] = Math.min(10, state[key] + 1);
-          else state[key] = Math.min(6, state[key] + 1);
-          countEl.textContent = state[key];
-          updateInput();
-        });
-
-        // allow keyboard increment when focused
-        c.addEventListener('keydown', (ev) => {
-          if (ev.key === 'ArrowUp' || ev.key === '+') inc.click();
-          if (ev.key === 'ArrowDown' || ev.key === '-') dec.click();
-        });
-      });
-
-      document.getElementById('guestApply').addEventListener('click', (e) => {
-        e.preventDefault();
-        panel.style.display = 'none';
-        guestsInput.setAttribute('aria-expanded', 'false');
-      });
-
-      document.getElementById('guestClear').addEventListener('click', (e) => {
-        e.preventDefault();
-        state.rooms = 1; state.adults = 2; state.children = 0;
-        counters.forEach(c => c.querySelector('.count').textContent = state[c.dataset.key]);
-        updateInput();
-      });
-
-      // toggle panel
-      guestsInput.addEventListener('click', (e) => {
-        const isOpen = panel.style.display === 'block';
-        panel.style.display = isOpen ? 'none' : 'block';
-        guestsInput.setAttribute('aria-expanded', String(!isOpen));
-        // focus first control
-        if (!isOpen) panel.querySelector('.counter .dec').focus();
-      });
-
-      // close on outside click or Escape
-      document.addEventListener('click', (ev) => {
-        if (!panel.contains(ev.target) && ev.target !== guestsInput) {
-          panel.style.display = 'none';
-          guestsInput.setAttribute('aria-expanded', 'false');
-        }
-      });
-      document.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Escape') {
-          panel.style.display = 'none';
-          guestsInput.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      // init counts on load
-      counters.forEach(c => c.querySelector('.count').textContent = state[c.dataset.key]);
-      updateInput();
-    })();
-
-    /* ===== Search button — minimal behavior stub ===== */
-    document.getElementById('searchGo').addEventListener('click', (e) => {
-      // Collect values
-      const destination = document.getElementById('destination').value;
-      const placeId = document.getElementById('destination').dataset.placeId || '';
-      const dates = document.getElementById('dates').value;
-      const guests = document.getElementById('guests').value;
-
-      // You can now call your search endpoint with these parameters.
-      // For demo, show an accessible summary:
-      alert(`Search\nDestination: ${destination}\nDates: ${dates}\nGuests: ${guests}`);
-    });
 
     (function () {
       const btn = document.querySelector('.nav-toggle');
@@ -5005,8 +5234,9 @@
           // dots count per user's request: hidden cards count
           let dotsCount;
           if (dotsMode === 'hidden-count') {
-            dotsCount = Math.max(0, computeLayout().total - computeLayout().visible);
-          } else { // pages
+  const { total, visible } = computeLayout();
+  dotsCount = Math.max(1, total - visible + 1);
+} else { // pages
             dotsCount = Math.max(1, computeLayout().total - computeLayout().visible + 1);
           }
 
@@ -5045,14 +5275,11 @@
           }
         }
 
-        // Map startIndex -> dot index (used to highlight active dot)
-        function mapStartToDotIndex(start) {
-          if (dotsMode === 'hidden-count') {
-            return Math.max(0, Math.min(start, computeLayout().total - computeLayout().visible));
-          } else {
-            return start; // pages mode maps 1:1
-          }
-        }
+       function mapStartToDotIndex(start) {
+  const { total, visible } = computeLayout();
+  return Math.max(0, Math.min(start, total - visible));
+}
+
 
         // sliding function with bounds and single-step move
         function slideTo(newStart) {
@@ -5262,6 +5489,171 @@
       btn.firstChild.textContent = isOpen ? 'See less' : 'See more';
       dots.style.opacity = isOpen ? '0' : '1';
     });
+
+    const checkInMain  = document.getElementById('checkInMain');
+  const checkInSub   = document.getElementById('checkInSub');
+  const checkOutMain = document.getElementById('checkOutMain');
+  const checkOutSub  = document.getElementById('checkOutSub');
+
+  const picker = flatpickr("#datePickerInput", {
+    mode: "range",
+    minDate: "today",
+    dateFormat: "Y-m-d",
+    showMonths: 2,
+    animate: true,
+    disableMobile: true,
+
+    onChange(selectedDates) {
+      if (selectedDates.length === 1) {
+        updateDate(selectedDates[0], checkInMain, checkInSub);
+      }
+      if (selectedDates.length === 2) {
+        updateDate(selectedDates[0], checkInMain, checkInSub);
+        updateDate(selectedDates[1], checkOutMain, checkOutSub);
+      }
+    }
+  });
+
+  document.getElementById("dateTrigger").addEventListener("click", () => {
+    picker.open();
+  });
+
+  function updateDate(date, mainEl, subEl) {
+    mainEl.textContent = date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    });
+
+    subEl.textContent = date.toLocaleDateString("en-GB", {
+      weekday: "long"
+    });
+
+    mainEl.animate(
+      [{ transform: "translateY(-4px)", opacity: 0 },
+       { transform: "translateY(0)", opacity: 1 }],
+      { duration: 220, easing: "ease-out" }
+    );
+  }
+
+  const guestToggle = document.getElementById("guestToggle");
+const guestPanel = document.getElementById("guestPanel");
+const guestChevron = guestToggle.querySelector(".sb-chev");
+
+let guestOpen = false;
+
+guestToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  guestOpen = !guestOpen;
+
+  guestPanel.classList.toggle("open", guestOpen);
+  guestToggle.classList.toggle("active", guestOpen);
+});
+
+(() => {
+  const guestToggle = document.getElementById("guestToggle");
+  const guestPanel  = document.getElementById("guestPanel");
+
+  if (!guestToggle || !guestPanel) return;
+
+  let isOpen = false;
+
+  function positionPanel() {
+    const r = guestToggle.getBoundingClientRect();
+    guestPanel.style.top  = `${r.bottom + window.scrollY + 8}px`;
+    guestPanel.style.left = `${r.left + window.scrollX}px`;
+    guestPanel.style.width = `${r.width}px`;
+  }
+
+  function openPanel() {
+    positionPanel();
+    guestPanel.classList.add("open");
+    guestToggle.classList.add("active");
+    isOpen = true;
+  }
+
+  function closePanel() {
+    guestPanel.classList.remove("open");
+    guestToggle.classList.remove("active");
+    isOpen = false;
+  }
+
+  guestToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    isOpen ? closePanel() : openPanel();
+  });
+
+  guestPanel.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  document.addEventListener("click", () => {
+    if (isOpen) closePanel();
+  });
+
+  window.addEventListener("resize", () => {
+    if (isOpen) positionPanel();
+  });
+
+  window.addEventListener("scroll", () => {
+    if (isOpen) positionPanel();
+  });
+})();
+
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth < 768 && guestOpen) {
+    guestPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+});
+
+const state = {
+  adults: 2,
+  children: 0,
+  rooms: 1
+};
+
+const limits = {
+  adults: { min: 1, max: 10 },
+  children: { min: 0, max: 10 },
+  rooms: { min: 1, max: 5 }
+};
+
+const mainText = guestToggle.querySelector(".sb-main");
+const subText = guestToggle.querySelector(".sb-sub");
+
+function updateUI() {
+  document.getElementById("adultsCount").textContent = state.adults;
+  document.getElementById("childrenCount").textContent = state.children;
+  document.getElementById("roomsCount").textContent = state.rooms;
+
+  mainText.textContent =
+    `${state.adults} adult${state.adults > 1 ? "s" : ""}` +
+    (state.children ? `, ${state.children} child${state.children > 1 ? "ren" : ""}` : "");
+
+  subText.textContent =
+    `${state.rooms} room${state.rooms > 1 ? "s" : ""}`;
+}
+
+guestPanel.addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+
+  const type = btn.dataset.type;
+  const action = btn.dataset.action;
+
+  const step = action === "inc" ? 1 : -1;
+  const next = state[type] + step;
+
+  if (next < limits[type].min || next > limits[type].max) return;
+
+  state[type] = next;
+  updateUI();
+});
+
+updateUI();
+
+
   </script>
 </body>
 
