@@ -393,6 +393,7 @@ select {
 }
 
 
+
 </style>
 </head>
 
@@ -541,6 +542,30 @@ function stars(n) {
 }
 
 /* ================= OVERLAY ================= */
+let minGuestRating = null;
+
+// RATING PILL CLICK HANDLER
+document.querySelectorAll(".rating-pills button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = parseFloat(btn.dataset.rating);
+
+    // toggle logic
+    if (minGuestRating === val) {
+      minGuestRating = null;
+      btn.classList.remove("active");
+    } else {
+      minGuestRating = val;
+      document
+        .querySelectorAll(".rating-pills button")
+        .forEach(b => b.classList.remove("active"));
+
+      btn.classList.add("active");
+    }
+
+    renderHotels();
+  });
+});
+
 
 function openOverlay(city) {
   overlayCity.textContent = city;
@@ -551,17 +576,53 @@ function closeOverlay() {
   searchOverlay.classList.add("hidden");
 }
 
+const maxDistance = distanceFilter.value;
+const selectedFacilities = new Set();
+
+// FACILITY FILTER HANDLER
+document.querySelectorAll(".facility-tags button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const facility = btn.dataset.facility;
+
+    if (selectedFacilities.has(facility)) {
+      selectedFacilities.delete(facility);
+      btn.classList.remove("active");
+    } else {
+      selectedFacilities.add(facility);
+      btn.classList.add("active");
+    }
+
+    renderHotels();
+  });
+});
+
 /* ================= RENDER ================= */
 
 function renderHotels() {
   const list = document.getElementById("overlayResults");
   const maxPrice = +priceFilter.value;
   const sort = sortSelect.value;
+  const maxDistance = distanceFilter.value;
 
-  let filtered = hotels.filter(h => h.price <= maxPrice);
+  const selectedStars = [...document.querySelectorAll(".starFilter:checked")]
+    .map(cb => +cb.value);
 
-  if (sort === "price") filtered.sort((a,b)=>a.price-b.price);
-  if (sort === "rating") filtered.sort((a,b)=>b.score-a.score);
+let filtered = hotels.filter(h => {
+  if (h.price > maxPrice) return false;
+  if (selectedStars.length && !selectedStars.includes(h.stars)) return false;
+  if (minGuestRating !== null && h.score < minGuestRating) return false;
+  if (maxDistance !== "any" && +h.distance > +maxDistance) return false;
+
+  if (
+    selectedFacilities.size &&
+    ![...selectedFacilities].every(f => h.amenities.includes(f))
+  ) return false;
+
+  return true;
+});
+
+  if (sort === "price") filtered.sort((a, b) => a.price - b.price);
+  if (sort === "rating") filtered.sort((a, b) => b.score - a.score);
 
   list.innerHTML = filtered.map(h => `
     <li>
@@ -577,14 +638,14 @@ function renderHotels() {
         </div>
 
         <div class="amenities">
-          ${h.amenities.map(a=>`<span>${a}</span>`).join("")}
+          ${h.amenities.map(a => `<span>${a}</span>`).join("")}
         </div>
       </div>
 
       <div class="price-box">
         <div class="price">€${h.price}</div>
         <div style="font-size:12px;color:#6b7280">
-          2 nights · €${h.price*2}
+          2 nights · €${h.price * 2}
         </div>
         <button class="book">Book</button>
       </div>
@@ -639,6 +700,12 @@ function updatePrice(value) {
   document.getElementById("priceValue").textContent = `€${value}`;
   renderHotels();
 }
+
+// STAR FILTER HANDLER
+document.querySelectorAll(".starFilter").forEach(cb => {
+  cb.addEventListener("change", renderHotels);
+});
+
 
 </script>
 
