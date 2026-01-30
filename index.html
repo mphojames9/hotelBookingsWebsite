@@ -1378,6 +1378,37 @@
       place-items: center
     }
 
+    .sec-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #070a11;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.08);
+  transition: all 0.25s ease;
+  margin-bottom: 10px;
+}
+
+.sec-link .arrow {
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.sec-link:hover {
+  background: #070a11;
+  color: #fff;
+}
+
+.sec-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+
 
     .media-dots {
       position: absolute;
@@ -1470,6 +1501,10 @@
     }
 
     @media(max-width:860px) {
+       nav.nav {
+        z-index: 1000;
+       }
+
       .list-item {
         grid-template-columns: 1fr
       }
@@ -3169,7 +3204,10 @@
     <section class="sec" aria-labelledby="c1">
       <div class="sec-head">
         <h2 id="c1">Fitness Center Hotels in Quebec</h2>
-        <a class="sec-link" href="#">View All <span>›</span></a>
+        <a class="sec-link" href="#">
+  View All <span class="arrow">›</span>
+</a>
+
       </div>
 
       <div class="crs" data-crs-id="fitness">
@@ -3253,7 +3291,10 @@
     <section class="sec" aria-labelledby="c2">
       <div class="sec-head">
         <h2 id="c2">Hotels with Restaurants in Quebec</h2>
-        <a class="sec-link" href="#">View All <span>›</span></a>
+        <a class="sec-link" href="#">
+  View All <span class="arrow">›</span>
+</a>
+
       </div>
 
       <div class="crs" data-crs-id="restaurants">
