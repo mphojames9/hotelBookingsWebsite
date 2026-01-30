@@ -1021,51 +1021,95 @@
 
     /* ========== welcome-hero ========== */
     .welcome-hero {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem 1.5rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* vertical center */
+      align-items: center;
+      /* horizontal center */
       text-align: center;
-      padding: 8px 0 40px 0;
+      /* text center */
+
+      color: #0b1221;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
+
     .welcome-hero__eyebrow {
-      display: block;
-      font-size: 12px;
-      letter-spacing: 2px;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
+      color: #0b1221;
       font-weight: 600;
     }
 
     .welcome-hero__accent-bar {
-      width: 56px;
+      width: 60px;
       height: 4px;
-      margin: 8px auto 20px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-      border-radius: 2px;
-      opacity: 0.95;
+      background: linear-gradient(135deg, #f97316, #fb923c);;
+      margin: 1rem 0 1.5rem;
+      border-radius: 999px;
     }
 
     .welcome-hero__title {
-      margin: 0 auto 18px;
-      max-width: 900px;
-      font-weight: 700;
-      color: var(--accent-dark);
-      font-size: clamp(28px, 4vw, var(--h1-size));
-      line-height: 1.05;
-      letter-spacing: -0.02em;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
     }
 
     .welcome-hero__lead {
-      margin: 0 auto;
-      max-width: 760px;
-      color: var(--muted);
+      font-size: 1.1rem;
+      color: #475569;
+      max-width: 650px;
+    }
+
+    .welcome-hero__more {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition:
+        max-height 0.6s ease,
+        opacity 0.4s ease,
+        transform 0.4s ease;
+    }
+
+    .welcome-hero__more p {
+      margin-top: 1rem;
+      color: #475569;
+      max-width: 700px;
+    }
+
+    .welcome-hero__more.active {
+      max-height: 500px;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .welcome-hero__cta {
-      display: inline-block;
-      margin-top: 12px;
-      font-size: 14px;
-      color: var(--accent-dark);
-      text-decoration: none;
+      margin-top: 1.5rem;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0b1221;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .welcome-hero__cta:hover {
+      text-decoration: underline;
+    }
+
+    .see-more-dots {
+      transition: opacity 0.3s ease;
     }
 
     .see-more {
@@ -2527,7 +2571,7 @@
       cursor: pointer;
     }
 
-    .btn-social svg{
+    .btn-social svg {
       margin-top: -1px;
     }
 
@@ -3026,94 +3070,93 @@
     }
 
     .exp-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 22px;
-}
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
 
-/* card */
-.exp-card {
-  padding: 24px;
-  border-radius: 20px;
-  background: #fff;
-  border: 1px solid #eef0f3;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
-}
+    /* card */
+    .exp-card {
+      padding: 24px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid #eef0f3;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-.exp-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 70px rgba(0,0,0,0.12);
-}
+    .exp-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+    }
 
-/* FA icon container */
-.exp-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #0f172a, #111827);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 2px 5px rgba(124,58,237,0.4);
-}
+    /* FA icon container */
+    .exp-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0f172a, #111827);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 2px 5px rgba(124, 58, 237, 0.4);
+    }
 
-/* title */
-.exp-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0;
-}
+    /* title */
+    .exp-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111827;
+      margin: 0;
+    }
 
-/* description */
-.exp-desc {
-  font-size: 14px;
-  color: #6b7280;
-  line-height: 1.5;
-}
+    /* description */
+    .exp-desc {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
 
-/* link */
-.btn-ghost {
-  margin-top: auto;
-  font-size: 14px;
-  font-weight: 700;
-  color: #2563eb;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
+    /* link */
+    .btn-ghost {
+      margin-top: auto;
+      font-size: 14px;
+      font-weight: 700;
+      color: #2563eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
 
-.btn-ghost:hover {
-  gap: 12px;
-}
+    .btn-ghost:hover {
+      gap: 12px;
+    }
 
-/* featured card */
-.exp-card.highlight {
-  background: linear-gradient(135deg, #0f172a, #111827);
-  color: white;
-}
+    /* featured card */
+    .exp-card.highlight {
+      background: linear-gradient(135deg, #0f172a, #111827);
+      color: white;
+    }
 
-.exp-card.highlight .exp-title,
-.exp-card.highlight .exp-desc,
-.exp-card.highlight .btn-ghost {
-  color: white;
-}
+    .exp-card.highlight .exp-title,
+    .exp-card.highlight .exp-desc,
+    .exp-card.highlight .btn-ghost {
+      color: white;
+    }
 
-.exp-card.highlight .exp-icon {
-  background: white;
-  color: #111827;
-  box-shadow: none;
-}
-
+    .exp-card.highlight .exp-icon {
+      background: white;
+      color: #111827;
+      box-shadow: none;
+    }
   </style>
 </head>
 
@@ -3360,21 +3403,36 @@
 
       <!-- welcome-hero -->
       <section class="welcome-hero" aria-labelledby="welcome-hero-title">
-        <span class="welcome-hero__eyebrow">Welcome to Quebec City Marriott Downtown</span>
+        <span class="welcome-hero__eyebrow">PrimeStay · Smarter stays, anywhere</span>
         <div class="welcome-hero__accent-bar" aria-hidden="true"></div>
 
         <h1 id="welcome-hero-title" class="welcome-hero__title">
-          Discover downtown from our hotel in Old<br>Quebec City
+          Find the right place to stay,<br>
+          without the hassle
         </h1>
 
         <p class="welcome-hero__lead">
-          Experience a luxury getaway at Quebec City Marriott Downtown. Located in one of the oldest cities in
-          Canada, our hotel in Quebec City Old Town is near local sites like the Quebec City Convention Centre...
+          PrimeStay helps you discover accommodations that actually fit your needs — not just what's available.
         </p>
 
-        <a class="welcome-hero__cta" href="#" aria-label="See more about Quebec City Marriott Downtown">See More <span
-            class="see-more"> ...</span></a>
+        <div class="welcome-hero__more" id="moreContent">
+          <p>
+            Whether you're traveling for work, relocating, or planning a getaway, we cut through the noise.
+            No confusing filters. No misleading photos. Just carefully selected stays that match your location,
+            budget, and lifestyle.
+          </p>
+          <p>
+            From short-term apartments to long-term housing, PrimeStay connects you with places you’ll feel
+            comfortable calling home — even if it’s just for a night.
+          </p>
+        </div>
+
+        <button class="welcome-hero__cta" id="seeMoreBtn" aria-expanded="false">
+          See more
+          <span class="see-more-dots">...</span>
+        </button>
       </section>
+
 
       <!-- INFO CARD -->
       <div class="info-card-wrapper">
@@ -3671,37 +3729,37 @@
         <a class="sec-link" href="#">See all experiences <span>›</span></a>
       </div>
 
-     <div class="exp-grid">
+      <div class="exp-grid">
 
-  <div class="exp-card">
-    <div class="exp-icon"><i class="fa-solid fa-book"></i></div>
-    <h3 class="exp-title">Destination Guide</h3>
-    <p class="exp-desc">Explore attractions, neighborhoods, and hidden local gems.</p>
-    <a class="btn-ghost" href="#">Learn More ›</a>
-  </div>
+        <div class="exp-card">
+          <div class="exp-icon"><i class="fa-solid fa-book"></i></div>
+          <h3 class="exp-title">Destination Guide</h3>
+          <p class="exp-desc">Explore attractions, neighborhoods, and hidden local gems.</p>
+          <a class="btn-ghost" href="#">Learn More ›</a>
+        </div>
 
-  <div class="exp-card">
-    <div class="exp-icon"><i class="fa-solid fa-star"></i></div>
-    <h3 class="exp-title">Hotel & Travel Deals</h3>
-    <p class="exp-desc">Discover exclusive hotel discounts and travel bundles.</p>
-    <a class="btn-ghost" href="#">Search Deals ›</a>
-  </div>
+        <div class="exp-card">
+          <div class="exp-icon"><i class="fa-solid fa-star"></i></div>
+          <h3 class="exp-title">Hotel & Travel Deals</h3>
+          <p class="exp-desc">Discover exclusive hotel discounts and travel bundles.</p>
+          <a class="btn-ghost" href="#">Search Deals ›</a>
+        </div>
 
-  <div class="exp-card">
-    <div class="exp-icon"><i class="fa-solid fa-plane"></i></div>
-    <h3 class="exp-title">Flight + Hotel Packages</h3>
-    <p class="exp-desc">Bundle flights and hotels to save more on your trip.</p>
-    <a class="btn-ghost" href="#">View Packages ›</a>
-  </div>
+        <div class="exp-card">
+          <div class="exp-icon"><i class="fa-solid fa-plane"></i></div>
+          <h3 class="exp-title">Flight + Hotel Packages</h3>
+          <p class="exp-desc">Bundle flights and hotels to save more on your trip.</p>
+          <a class="btn-ghost" href="#">View Packages ›</a>
+        </div>
 
-  <div class="exp-card highlight">
-    <div class="exp-icon"><i class="fa-solid fa-utensils"></i></div>
-    <h3 class="exp-title">Restaurants & Bars</h3>
-    <p class="exp-desc">Find top dining spots, cafes, and nightlife hotspots.</p>
-    <a class="btn-ghost" href="#">Explore Dining ›</a>
-  </div>
+        <div class="exp-card highlight">
+          <div class="exp-icon"><i class="fa-solid fa-utensils"></i></div>
+          <h3 class="exp-title">Restaurants & Bars</h3>
+          <p class="exp-desc">Find top dining spots, cafes, and nightlife hotspots.</p>
+          <a class="btn-ghost" href="#">Explore Dining ›</a>
+        </div>
 
-</div>
+      </div>
 
 
     </section>
@@ -4027,9 +4085,10 @@
         <button class="signup-close" id="close">&times;</button>
 
         <div class="signup-left">
-  <h2>Book Hotels With Confidence</h2>
-  <p>Create an account to compare trusted hotels, access better rates, and manage your bookings in one place.</p>
-</div>
+          <h2>Book Hotels With Confidence</h2>
+          <p>Create an account to compare trusted hotels, access better rates, and manage your bookings in one place.
+          </p>
+        </div>
 
 
         <div class="signup-right">
@@ -5181,6 +5240,18 @@
 
     closeBtn?.addEventListener('click', () => {
       subNav.setAttribute('aria-hidden', 'true');
+    });
+
+    const btn = document.getElementById('seeMoreBtn');
+    const more = document.getElementById('moreContent');
+    const dots = btn.querySelector('.see-more-dots');
+
+    btn.addEventListener('click', () => {
+      const isOpen = more.classList.toggle('active');
+
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.firstChild.textContent = isOpen ? 'See less' : 'See more';
+      dots.style.opacity = isOpen ? '0' : '1';
     });
   </script>
 </body>
