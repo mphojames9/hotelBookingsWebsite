@@ -35,10 +35,9 @@ ul { padding: 0; margin:0; }
 .hidden { display: none; }
 
 .overlay-shell {
-  width: 94%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   background: #f8fafc;
-  border-radius: 22px;
   box-shadow: 0 30px 80px rgba(0,0,0,0.35);
   display: flex;
   flex-direction: column;
@@ -110,77 +109,150 @@ ul { padding: 0; margin:0; }
 }
 
 .results li {
-  list-style:none;
+  list-style: none;
   display: grid;
   grid-template-columns: 220px 1fr 200px;
-  gap: 16px;
-  background: white;
-  border-radius: 18px;
-  margin-bottom: 18px;
-  padding: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  gap: 18px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border-radius: 22px;
+  margin-bottom: 22px;
+  padding: 16px;
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.results li:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 45px rgba(15,23,42,0.14);
 }
 
 .results img {
   width: 220px;
-  height: 140px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 18px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.results li:hover img {
+  transform: scale(1.06);
+  filter: saturate(1.1) contrast(1.05);
 }
 
 .hotel-title {
-  font-weight:700;
-  font-size:17px;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  margin-bottom: 2px;
 }
 
-.stars { color:#fbbf24; font-size:14px; }
-
-.location { font-size:13px; color:#6b7280; }
-
-.amenities span {
-  display:inline-block;
-  background:#f1f5f9;
-  padding:5px 8px;
-  border-radius:8px;
-  font-size:12px;
-  margin:6px 6px 0 0;
+.stars {
+  color: #facc15;
+  font-size: 15px;
+  text-shadow: 0 1px 3px rgba(250,204,21,0.35);
 }
 
 .rating {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .score {
-  background:#16a34a;
-  color:white;
-  font-weight:700;
-  padding:6px 10px;
-  border-radius:8px;
-  font-size:14px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.amenities span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15,23,42,0.05);
+  backdrop-filter: blur(6px);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 8px 6px 0 0;
 }
 
 .price-box {
-  text-align:right;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .price {
-  font-size:22px;
-  font-weight:800;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
 }
 
 .book {
-  margin-top:8px;
-  background:#f97316;
-  border:none;
-  color:white;
-  padding:10px 16px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.book:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(249,115,22,0.45);
+}
+
+/* Text block spacing */
+.results li > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* overall vertical spacing */
+}
+
+/* Title separation */
+.hotel-title {
+  margin-bottom: 2px;
+}
+
+/* Stars & location breathing room */
+.stars {
+  margin-bottom: 4px;
+}
+
+.location {
+  margin-bottom: 6px;
+}
+
+/* Rating spacing */
+.rating {
+  margin: 6px 0 8px;
+}
+
+/* Amenities spacing */
+.amenities {
+  margin-top: 6px;
+}
+
+.amenities span {
+  margin-right: 8px;
+  margin-bottom: 6px;
+}
+
+
+.location { font-size:13px; color:#6b7280; }
 
 /* ================= PROMO ================= */
 
@@ -254,11 +326,12 @@ input[type="range"] {
   border: none;
   background: #eef2f7;
   padding: 8px 14px;
-  border-radius: 999px;
+  border-radius: 8px;
   font-size: 13px;
   cursor: pointer;
   margin: 6px 6px 0 0;
   transition: 0.2s;
+  width: 80px;
 }
 
 .rating-pills button.active,
@@ -559,6 +632,11 @@ async function searchHotels() {
   }));
 
   openOverlay(location);
+  renderHotels();
+}
+
+function updatePrice(value) {
+  document.getElementById("priceValue").textContent = `€${value}`;
   renderHotels();
 }
 
