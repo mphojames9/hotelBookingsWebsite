@@ -734,7 +734,15 @@
   .sb-field {
     border-right: 0;
     border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
+  .sb-date {
+    width: 50%;
+  }
+  
 
   .sb-btn {
     width: 100%;
@@ -3207,6 +3215,7 @@
   box-shadow: 0 30px 60px rgba(2, 6, 23, 0.18);
   font-family: Inter, system-ui, sans-serif;
   overflow: hidden;
+  width:650px;
 }
 
 /* HEADER */
@@ -3280,80 +3289,8 @@
   color: #cbd5e1;
 }
 
-/* SPACING */
-.flatpickr-innerContainer {
-  padding: 12px;
-}
-
-/* =========================
-   FLATPICKR — FORCE ROW ON MOBILE
-   ========================= */
-
-@media (max-width: 768px) {
-
-  /* keep months side-by-side */
-  .flatpickr-innerContainer {
-    flex-direction: row !important;
-    align-items: stretch;
-  }
-
-  /* prevent width explosion */
-  .flatpickr-calendar {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: auto;
-    padding-bottom: 6px;
-  }
-
-  /* allow horizontal scroll instead of break */
-  .flatpickr-days {
-    display: flex;
-    gap: 8px;
-  }
-
-  .dayContainer {
-    min-width: 280px !important;
-    max-width: 280px !important;
-  }
-
-  /* keep days readable */
-  .flatpickr-day {
-    height: 40px;
-    line-height: 40px;
-    max-width: calc(100% / 7);
-    font-size: 13px;
-  }
-
-  /* smooth horizontal scrolling */
-  .flatpickr-calendar::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .flatpickr-calendar::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.25);
-    border-radius: 999px;
-  }
-}
-
-/* =========================
-   VERY SMALL SCREENS
-   ========================= */
-@media (max-width: 360px) {
-
-  .dayContainer {
-    min-width: 260px !important;
-    max-width: 260px !important;
-  }
-
-  .flatpickr-day {
-    height: 36px;
-    line-height: 36px;
-    font-size: 12px;
-  }
-}
-
-.flatpickr-calendar.open {
-  animation: fpPop 0.2s ease-out;
+.flatpickr-current-month {
+  color: white;
 }
 
 @keyframes fpPop {
@@ -4922,12 +4859,6 @@
       // openMenuFor(topNav.querySelector('a').textContent.trim());
     })();
 
-    flatpickr("#dates", {
-  mode: "range",
-  showMonths: window.innerWidth < 768 ? 1 : 2
-});
-
-
 
     /* ===== Google Places Autocomplete for destination ===== */
     (function () {
@@ -5495,28 +5426,29 @@
   const checkOutMain = document.getElementById('checkOutMain');
   const checkOutSub  = document.getElementById('checkOutSub');
 
-  const picker = flatpickr("#datePickerInput", {
-    mode: "range",
-    minDate: "today",
-    dateFormat: "Y-m-d",
-    showMonths: 2,
-    animate: true,
-    disableMobile: true,
 
-    onChange(selectedDates) {
-      if (selectedDates.length === 1) {
-        updateDate(selectedDates[0], checkInMain, checkInSub);
-      }
-      if (selectedDates.length === 2) {
-        updateDate(selectedDates[0], checkInMain, checkInSub);
-        updateDate(selectedDates[1], checkOutMain, checkOutSub);
-      }
-    }
-  });
+const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
-  document.getElementById("dateTrigger").addEventListener("click", () => {
+
+const pickerRaw = flatpickr('#datePickerInput', {
+  mode: 'range',
+  showMonths: isMobile ? 1 : 2,
+  disableMobile: true,
+  animate: true,
+  onChange(selectedDates) {
+    if (selectedDates[0]) updateDate(selectedDates[0], checkInMain, checkInSub);
+    if (selectedDates[1]) updateDate(selectedDates[1], checkOutMain, checkOutSub);
+  }
+});
+
+// 🔒 normalize: ALWAYS end up with a single instance
+const picker = Array.isArray(pickerRaw) ? pickerRaw[0] : pickerRaw;
+
+document.getElementById("dateTrigger").addEventListener("click", () => {
+  if (picker && typeof picker.open === 'function') {
     picker.open();
-  });
+  }
+});
 
   function updateDate(date, mainEl, subEl) {
     mainEl.textContent = date.toLocaleDateString("en-GB", {
