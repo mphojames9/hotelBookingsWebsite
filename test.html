@@ -26,9 +26,9 @@
       margin: 0;
     }
 
-    /* ================= results-overlay ================= */
+    /* ================= resultsOverlay ================= */
 
-    .results-overlay {
+    .resultsOverlay {
       position: fixed;
       inset: 0;
       background: rgba(15, 23, 42, 0.55);
@@ -43,7 +43,7 @@
       display: none;
     }
 
-    .results-overlay-shell {
+    .resultsOverlay-shell {
       width: 100%;
       height: 100%;
       background: #f8fafc;
@@ -65,7 +65,7 @@
       }
     }
 
-    .results-overlay-header {
+    .resultsOverlay-header {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
@@ -74,7 +74,7 @@
       border-bottom: 1px solid #e5e7eb;
     }
 
-    .results-overlay-title {
+    .resultsOverlay-title {
       margin: 0;
       font-size: 20px;
       font-weight: 800;
@@ -82,7 +82,7 @@
       white-space: nowrap;
     }
 
-    .results-overlay-body {
+    .resultsOverlay-body {
       flex: 1;
       display: grid;
       grid-template-columns: 260px 1fr;
@@ -469,8 +469,8 @@
 
     @media (max-width: 850px) {
 
-      /* results-overlay BODY: SINGLE COLUMN */
-      .results-overlay-body {
+      /* resultsOverlay BODY: SINGLE COLUMN */
+      .resultsOverlay-body {
         grid-template-columns: 1fr;
       }
 
@@ -512,7 +512,7 @@
         padding: 8px;
       }
 
-      .results-overlay-header {
+      .resultsOverlay-header {
         padding: 14px;
       }
 
@@ -534,7 +534,7 @@
     /* MOBILE FILTER DRAWER */
     @media (max-width: 1080px) {
 
-      .results-overlay-body {
+      .resultsOverlay-body {
         grid-template-columns: 1fr;
       }
 
@@ -605,7 +605,7 @@
       transform: rotate(-45deg);
     }
 
-    #results-overlayCity::first-letter {
+    #resultsOverlayCity::first-letter {
       text-transform: uppercase;
     }
 
@@ -726,6 +726,34 @@
   font-style: italic;
 }
 
+/* OVERLAY CLOSE BUTTON */
+.overlay-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(0,0,0,0.05);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.overlay-close:hover {
+  background: rgba(0,0,0,0.12);
+  transform: scale(1.08);
+}
+
+.resultsOverlay-shell {
+  position: relative;
+}
+
+
   </style>
 </head>
 
@@ -734,11 +762,15 @@
   <input id="locationInput" placeholder="Enter city or area">
   <button onclick="searchHotels()">Search Hotels</button>
 
-  <!-- results-overlay -->
-  <div id="searchresults-overlay" class="results-overlay hidden">
-    <div class="results-overlay-shell">
+  <!-- resultsOverlay -->
+  <div id="searchresultsOverlay" class="resultsOverlay hidden">
+    <div class="resultsOverlay-shell">
 
-      <div class="results-overlay-header">
+      <div class="resultsOverlay-header">
+          <!-- OVERLAY CLOSE BUTTON -->
+  <button class="overlay-close" onclick="closeresultsOverlay()" aria-label="Close results">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
 
         <button class="filter-toggle" onclick="toggleFilters()" aria-label="Toggle filters">
           <span></span>
@@ -747,14 +779,14 @@
         </button>
 
 
-        <h2 class="results-overlay-title">
-          Hotels in <span id="results-overlayCity">Pretoria</span>
+        <h2 class="resultsOverlay-title">
+          Hotels in <span id="resultsOverlayCity">Pretoria</span>
         </h2>
 
       </div>
 
 
-      <div class="results-overlay-body">
+      <div class="resultsOverlay-body">
 
         <aside class="filters">
           <div class="filters-inner">
@@ -845,7 +877,7 @@
           </div>
         </aside>
         <main class="results">
-          <ul id="results-overlayResults">
+          <ul id="resultsOverlayResults">
 
           </ul>
         </main>
@@ -882,7 +914,7 @@
       return "★".repeat(n) + "☆".repeat(5 - n);
     }
 
-    /* ================= results-overlay ================= */
+    /* ================= resultsOverlay ================= */
     let minGuestRating = null;
 
     // RATING PILL CLICK HANDLER
@@ -908,13 +940,13 @@
     });
 
 
-    function openresults-overlay(city) {
-      results-overlayCity.textContent = city;
-      searchresults-overlay.classList.remove("hidden");
+    function openresultsOverlay(city) {
+      resultsOverlayCity.textContent = city;
+      searchresultsOverlay.classList.remove("hidden");
     }
 
-    function closeresults-overlay() {
-      searchresults-overlay.classList.add("hidden");
+    function closeresultsOverlay() {
+      searchresultsOverlay.classList.add("hidden");
     }
 
     const maxDistance = distanceFilter.value;
@@ -940,7 +972,7 @@
     /* ================= RENDER ================= */
 
     function renderHotels() {
-      const list = document.getElementById("results-overlayResults");
+      const list = document.getElementById("resultsOverlayResults");
       const maxPrice = +priceFilter.value;
       const maxDistance = distanceFilter.value;
 
@@ -1076,7 +1108,7 @@
           .filter(() => Math.random() > 0.4)
       }));
 
-      openresults-overlay(location);
+      openresultsOverlay(location);
       renderHotels();
     }
 
@@ -1093,7 +1125,7 @@
           .filter(() => Math.random() > 0.4)
       }));
 
-      openresults-overlay(location);
+      openresultsOverlay(location);
       renderHotels();
     }
 
@@ -1126,13 +1158,22 @@
       return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    function openresults-overlay(city) {
-      results-overlayCity.textContent = capitalizeFirst(city.trim());
-      searchresults-overlay.classList.remove("hidden");
+    function openresultsOverlay(city) {
+      resultsOverlayCity.textContent = capitalizeFirst(city.trim());
+      searchresultsOverlay.classList.remove("hidden");
     }
 
+    function closeresultsOverlay() {
+  searchresultsOverlay.classList.add("hidden");
+}
 
+searchresultsOverlay.addEventListener("click", e => {
+  if (e.target === searchresultsOverlay) closeresultsOverlay();
+});
 
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeresultsOverlay();
+});
 
   </script>
 
