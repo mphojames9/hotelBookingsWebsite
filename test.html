@@ -1,695 +1,852 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Hotel Search</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #f5f6f8;
-  padding: 20px;
-}
-
-input, button, select {
-  padding: 10px;
-  font-size: 14px;
-}
-
-ul { padding: 0; margin:0; }
-
-/* ================= OVERLAY ================= */
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(8px);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hidden { display: none; }
-
-.overlay-shell {
-  width: 100%;
-  height: 100%;
-  background: #f8fafc;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  animation: rise 0.35s ease;
-}
-
-@keyframes rise {
-  from { transform: translateY(40px); opacity: 0 }
-  to { transform: translateY(0); opacity: 1 }
-}
-
-.overlay-header {
-  padding: 18px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items:center;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.overlay-body {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 260px 1fr 220px;
-  overflow: hidden;
-}
-
-/* ================= FILTERS ================= */
-
-.filters {
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  padding: 22px 18px;
-  height: 100%;
-  overflow-y: auto;        /* <-- scroll */
-  overscroll-behavior: contain;
-}
-
-/* STAR COLOR (YELLOW) */
-.star-grid span {
-  color: #fbbf24;          /* modern yellow stars */
-}
-
-.filters label {
-  font-size:13px;
-  color:#374151;
-}
-
-.rating-chips span {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: #e5e7eb;
-  margin: 4px 4px 0 0;
-  font-size:12px;
-}
-
-/* ================= RESULTS ================= */
-
-.results {
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.results-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-}
-
-.results li {
-  list-style: none;
-  display: grid;
-  grid-template-columns: 220px 1fr 200px;
-  gap: 18px;
-  background: linear-gradient(180deg, #ffffff, #f8fafc);
-  border-radius: 22px;
-  margin-bottom: 22px;
-  padding: 16px;
-  box-shadow:
-    0 10px 30px rgba(15,23,42,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.results li:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 20px 45px rgba(15,23,42,0.14);
-}
-
-.results img {
-  width: 220px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 18px;
-  transition: transform 0.4s ease, filter 0.4s ease;
-}
-
-.results li:hover img {
-  transform: scale(1.06);
-  filter: saturate(1.1) contrast(1.05);
-}
-
-.hotel-title {
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.2px;
-  margin-bottom: 2px;
-}
-
-.stars {
-  color: #facc15;
-  font-size: 15px;
-  text-shadow: 0 1px 3px rgba(250,204,21,0.35);
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.score {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: white;
-  font-weight: 800;
-  padding: 6px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.amenities span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(15,23,42,0.05);
-  backdrop-filter: blur(6px);
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  margin: 8px 6px 0 0;
-}
-
-.price-box {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.price {
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-}
-
-.book {
-  margin-top: 10px;
-  background: linear-gradient(135deg, #f97316, #fb923c);
-  border: none;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 14px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.book:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(249,115,22,0.45);
-}
-
-/* Text block spacing */
-.results li > div:nth-child(2) {
-  display: flex;
-  flex-direction: column;
-  gap: 8px; /* overall vertical spacing */
-}
-
-/* Title separation */
-.hotel-title {
-  margin-bottom: 2px;
-}
-
-/* Stars & location breathing room */
-.stars {
-  margin-bottom: 4px;
-}
-
-.location {
-  margin-bottom: 6px;
-}
-
-/* Rating spacing */
-.rating {
-  margin: 6px 0 8px;
-}
-
-/* Amenities spacing */
-.amenities {
-  margin-top: 6px;
-}
-
-.amenities span {
-  margin-right: 8px;
-  margin-bottom: 6px;
-}
-
-
-.location { font-size:13px; color:#6b7280; }
-
-/* ================= PROMO ================= */
-
-.promo {
-  padding: 20px;
-  border-left: 1px solid #e5e7eb;
-  display: none;
-}
-
-.promo-card {
-  background: linear-gradient(135deg,#0ea5e9,#22d3ee);
-  color: white;
-  padding: 20px;
-  border-radius: 18px;
-}
-
-.filters {
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  padding: 22px 18px;
-}
-
-.filters-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.filters h4 {
-  font-size: 20px;
-  margin: 0;
-}
-
-.filter-section {
-  background: #f8fafc;
-  padding: 14px;
-  border-radius: 14px;
-}
-
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.section-title {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  display: block;
-}
-
-/* SLIDER */
-input[type="range"] {
-  width: 100%;
-}
-
-/* STAR GRID */
-.star-grid label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
-
-/* RATING PILLS */
-.rating-pills button,
-.facility-tags button {
-  border: none;
-  background: #eef2f7;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  margin: 6px 6px 0 0;
-  transition: 0.2s;
-  width: 80px;
-}
-
-.rating-pills button.active,
-.facility-tags button.active {
-  background: #f97316;
-  color: white;
-}
-
-/* TOGGLES */
-.toggle-list label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-.toggle-list input {
-  display: none;
-}
-
-.toggle {
-  width: 36px;
-  height: 20px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  position: relative;
-  transition: 0.2s;
-}
-
-.toggle::after {
-  content: "";
-  width: 16px;
-  height: 16px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  transition: 0.2s;
-}
-
-.toggle-list input:checked + .toggle {
-  background: #f97316;
-}
-
-.toggle-list input:checked + .toggle::after {
-  transform: translateX(16px);
-}
-
-/* SELECT */
-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: white;
-}
-
-@media (max-width: 600px) {
-
-  /* OVERLAY BODY: SINGLE COLUMN */
-  .overlay-body {
-    grid-template-columns: 1fr;
-  }
-
-  /* FILTERS MOVE TO TOP */
-  .filters {
-    border-right: none;
-    border-bottom: 1px solid #e5e7eb;
-    max-height: 40vh;
-  }
-
-  /* RESULT CARDS: STACK */
-  .results li {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .results img {
-    width: 100%;
-    height: 180px;
-  }
-
-  .price-box {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .book {
-    width: 100%;
-  }
-}
-
-@media (max-width: 360px) {
-
-  * {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  body {
-    padding: 8px;
-  }
-
-  .overlay-header {
-    padding: 14px;
-  }
-
-  .filters {
-    padding: 14px;
-  }
-
-  .results {
-    padding: 12px;
-  }
-
-  .price {
-    font-size: 20px;
-  }
-}
-
-
-
-
-</style>
+  <meta charset="UTF-8">
+  <title>Hotel Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f6f8;
+      padding: 20px;
+    }
+
+    input,
+    button,
+    select {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    /* ================= OVERLAY ================= */
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .overlay-shell {
+      width: 100%;
+      height: 100%;
+      background: #f8fafc;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      animation: rise 0.35s ease;
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(40px);
+        opacity: 0
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    .overlay-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .overlay-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .overlay-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      overflow: hidden;
+    }
+
+    /* ================= FILTERS ================= */
+
+    .filters {
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      padding: 22px 18px;
+      height: 100%;
+      overflow-y: auto;
+      /* <-- scroll */
+      overscroll-behavior: contain;
+    }
+
+    /* STAR COLOR (YELLOW) */
+    .star-grid span {
+      color: #fbbf24;
+      /* modern yellow stars */
+    }
+
+    .filters label {
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .rating-chips span {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #e5e7eb;
+      margin: 4px 4px 0 0;
+      font-size: 12px;
+    }
+
+    /* ================= RESULTS ================= */
+
+    .results {
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .results li {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 18px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border-radius: 22px;
+      margin-bottom: 22px;
+      padding: 16px;
+      box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .results li:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 20px 45px rgba(15, 23, 42, 0.14);
+    }
+
+    .results img {
+      width: 220px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 18px;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .results li:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .hotel-title {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+      margin-bottom: 2px;
+    }
+
+    .stars {
+      color: #facc15;
+      font-size: 15px;
+      text-shadow: 0 1px 3px rgba(250, 204, 21, 0.35);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .score {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .amenities span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.05);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 8px 6px 0 0;
+      min-width: 45px;
+      text-align: center;
+    }
+
+    .price-box {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .book {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      border: none;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .book:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(249, 115, 22, 0.45);
+    }
+
+    /* Text block spacing */
+    .results li>div:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      /* overall vertical spacing */
+    }
+
+    /* Title separation */
+    .hotel-title {
+      margin-bottom: 2px;
+    }
+
+    /* Stars & location breathing room */
+    .stars {
+      margin-bottom: 4px;
+    }
+
+    .location {
+      margin-bottom: 6px;
+    }
+
+    /* Rating spacing */
+    .rating {
+      margin: 6px 0 8px;
+    }
+
+    /* Amenities spacing */
+    .amenities {
+      margin-top: 6px;
+    }
+
+    .amenities span {
+      margin-right: 8px;
+      margin-bottom: 6px;
+    }
+
+
+    .location {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* ================= PROMO ================= */
+
+    .promo {
+      padding: 20px;
+      border-left: 1px solid #e5e7eb;
+      display: none;
+    }
+
+    .promo-card {
+      background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+      color: white;
+      padding: 20px;
+      border-radius: 18px;
+    }
+
+
+    .filters-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .filters h4 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .filter-section {
+      background: #f8fafc;
+      padding: 14px;
+      border-radius: 14px;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* SLIDER */
+    input[type="range"] {
+      width: 100%;
+    }
+
+    /* STAR GRID */
+    .star-grid label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    /* RATING PILLS */
+    .rating-pills button,
+    .facility-tags button {
+      border: none;
+      background: #eef2f7;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      margin: 6px 6px 0 0;
+      transition: 0.2s;
+      width: 80px;
+    }
+
+    .rating-pills button.active,
+    .facility-tags button.active {
+      background: #f97316;
+      color: white;
+    }
+
+    /* TOGGLES */
+    .toggle-list label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .toggle-list input {
+      display: none;
+    }
+
+    .toggle {
+      width: 36px;
+      height: 20px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      position: relative;
+      transition: 0.2s;
+    }
+
+    .toggle::after {
+      content: "";
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: 0.2s;
+    }
+
+    .toggle-list input:checked+.toggle {
+      background: #f97316;
+    }
+
+    .toggle-list input:checked+.toggle::after {
+      transform: translateX(16px);
+    }
+
+    /* ANIMATED FILTER BUTTON */
+    .filter-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.2s ease;
+
+    }
+
+    .filter-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .filter-toggle span {
+      display: flex;
+      flex-direction: column;
+      width: 18px;
+      height: 2px;
+      background: black;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.2s ease;
+      margin: 2px;
+    }
+
+    /* OPEN STATE (turn into X) */
+    .filter-toggle.active span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .filter-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .filter-toggle.active span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+
+
+
+    /* SELECT */
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    @media (max-width: 850px) {
+
+      /* OVERLAY BODY: SINGLE COLUMN */
+      .overlay-body {
+        grid-template-columns: 1fr;
+      }
+
+      /* FILTERS MOVE TO TOP */
+      .filters {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      /* RESULT CARDS: STACK */
+      .results li {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .results img {
+        width: 100%;
+        height: 180px;
+      }
+
+      .price-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .book {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 360px) {
+
+      * {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      body {
+        padding: 8px;
+      }
+
+      .overlay-header {
+        padding: 14px;
+      }
+
+      .filters {
+        padding: 14px;
+      }
+
+      .results {
+        padding: 12px;
+      }
+
+      .price {
+        font-size: 20px;
+      }
+    }
+
+
+
+    /* MOBILE FILTER DRAWER */
+    @media (max-width: 1080px) {
+
+      .overlay-body {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-toggle {
+        display: inline-block;
+      }
+
+      .filters {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        height: 100%;
+        background: white;
+        z-index: 999999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .filters.open {
+        transform: translateX(0);
+        box-shadow: 20px 0 40px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    /* FILTERS HEADER */
+    .filters-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* CLOSE BUTTON */
+    .filters-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: none;
+      background: #eef2f7;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: none;
+    }
+
+    .filters-close:hover {
+      background: #e5e7eb;
+      transform: scale(1.05);
+    }
+
+    /* X ICON */
+    .filters-close span {
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      background: #0f172a;
+      border-radius: 2px;
+    }
+
+    .filters-close span:first-child {
+      transform: rotate(45deg);
+    }
+
+    .filters-close span:last-child {
+      transform: rotate(-45deg);
+    }
+
+    #overlayCity::first-letter {
+      text-transform: uppercase;
+    }
+
+    .hotel-title {
+      text-transform: capitalize;
+    }
+
+        /* SHOW ON MOBILE */
+    @media (max-width: 1080px) {
+      .filters-close {
+        display: flex;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<input id="locationInput" placeholder="Enter city or area">
-<button onclick="searchHotels()">Search Hotels</button>
+  <input id="locationInput" placeholder="Enter city or area">
+  <button onclick="searchHotels()">Search Hotels</button>
 
-<!-- OVERLAY -->
-<div id="searchOverlay" class="overlay hidden">
-  <div class="overlay-shell">
+  <!-- OVERLAY -->
+  <div id="searchOverlay" class="overlay hidden">
+    <div class="overlay-shell">
 
-    <div class="overlay-header">
-      <h2>Hotels in <span id="overlayCity"></span></h2>
-      <select id="sortSelect" onchange="renderHotels()">
-        <option value="recommend">Our recommendation</option>
-        <option value="price">Price (low to high)</option>
-        <option value="rating">Guest rating</option>
-      </select>
+      <div class="overlay-header">
+
+        <button class="filter-toggle" onclick="toggleFilters()" aria-label="Toggle filters">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+
+        <h2 class="overlay-title">
+          Hotels in <span id="overlayCity">Pretoria</span>
+        </h2>
+
+      </div>
+
+
+      <div class="overlay-body">
+
+        <aside class="filters">
+          <div class="filters-inner">
+
+            <!-- FILTER HEADER -->
+            <div class="filters-header">
+              <h4>Filter by</h4>
+
+              <button class="filters-close" onclick="toggleFilters()" aria-label="Close filters">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+
+            <!-- PRICE -->
+            <section class="filter-section">
+              <div class="filter-header">
+                <span>Price per night</span>
+                <strong id="priceValue">€500</strong>
+              </div>
+              <input id="priceFilter" type="range" min="50" max="500" value="500" oninput="updatePrice(this.value)">
+            </section>
+
+            <!-- rest stays the same -->
+
+
+            <!-- STAR RATING -->
+            <section class="filter-section">
+              <span class="section-title">Star rating</span>
+              <div class="star-grid">
+                <label><input type="checkbox" value="5" class="starFilter"><span>★★★★★</span></label>
+                <label><input type="checkbox" value="4" class="starFilter"><span>★★★★☆</span></label>
+                <label><input type="checkbox" value="3" class="starFilter"><span>★★★☆☆</span></label>
+              </div>
+            </section>
+
+            <!-- GUEST RATING -->
+            <section class="filter-section">
+              <span class="section-title">Guest rating</span>
+              <div class="rating-pills">
+                <button data-rating="7">7+</button>
+                <button data-rating="7.5">7.5+</button>
+                <button data-rating="8">8+</button>
+                <button data-rating="8.5">8.5+</button>
+              </div>
+            </section>
+
+            <!-- ACCOMMODATION TYPE -->
+            <section class="filter-section">
+              <span class="section-title">Accommodation</span>
+              <div class="toggle-list">
+                <label>
+                  <input type="checkbox" class="typeFilter" value="Hotel">
+                  <span class="toggle"></span>
+                  Hotels only
+                </label>
+                <label>
+                  <input type="checkbox" class="typeFilter" value="Apartment">
+                  <span class="toggle"></span>
+                  Apartments
+                </label>
+              </div>
+            </section>
+
+            <!-- FACILITIES -->
+            <section class="filter-section">
+              <span class="section-title">Facilities</span>
+              <div class="facility-tags">
+                <button data-facility="Free WiFi">Wi-Fi</button>
+                <button data-facility="Breakfast">Breakfast</button>
+                <button data-facility="AC">AC</button>
+                <button data-facility="Parking">Parking</button>
+                <button data-facility="Shuttle">Shuttle</button>
+              </div>
+            </section>
+
+            <!-- DISTANCE -->
+            <section class="filter-section">
+              <span class="section-title">Distance from center</span>
+              <select id="distanceFilter" onchange="renderHotels()">
+                <option value="any">Any distance</option>
+                <option value="1">≤ 1 km</option>
+                <option value="3">≤ 3 km</option>
+                <option value="5">≤ 5 km</option>
+              </select>
+            </section>
+
+          </div>
+        </aside>
+        <main class="results">
+          <ul id="overlayResults">
+
+          </ul>
+        </main>
+
+      </div>
     </div>
-
-    <div class="overlay-body">
-
-     <aside class="filters">
-  <div class="filters-inner">
-
-    <h4>Filter by</h4>
-
-    <!-- PRICE -->
-    <section class="filter-section">
-      <div class="filter-header">
-        <span>Price per night</span>
-        <strong id="priceValue">€500</strong>
-      </div>
-      <input
-        id="priceFilter"
-        type="range"
-        min="50"
-        max="500"
-        value="500"
-        oninput="updatePrice(this.value)"
-      >
-    </section>
-
-    <!-- STAR RATING -->
-    <section class="filter-section">
-      <span class="section-title">Star rating</span>
-      <div class="star-grid">
-        <label><input type="checkbox" value="5" class="starFilter"><span>★★★★★</span></label>
-        <label><input type="checkbox" value="4" class="starFilter"><span>★★★★☆</span></label>
-        <label><input type="checkbox" value="3" class="starFilter"><span>★★★☆☆</span></label>
-      </div>
-    </section>
-
-    <!-- GUEST RATING -->
-    <section class="filter-section">
-      <span class="section-title">Guest rating</span>
-      <div class="rating-pills">
-        <button data-rating="7">7+</button>
-        <button data-rating="7.5">7.5+</button>
-        <button data-rating="8">8+</button>
-        <button data-rating="8.5">8.5+</button>
-      </div>
-    </section>
-
-    <!-- ACCOMMODATION TYPE -->
-    <section class="filter-section">
-      <span class="section-title">Accommodation</span>
-      <div class="toggle-list">
-        <label>
-          <input type="checkbox" class="typeFilter" value="Hotel">
-          <span class="toggle"></span>
-          Hotels only
-        </label>
-        <label>
-          <input type="checkbox" class="typeFilter" value="Apartment">
-          <span class="toggle"></span>
-          Apartments
-        </label>
-      </div>
-    </section>
-
-    <!-- FACILITIES -->
-    <section class="filter-section">
-      <span class="section-title">Facilities</span>
-      <div class="facility-tags">
-        <button data-facility="Free WiFi">Wi-Fi</button>
-        <button data-facility="Breakfast">Breakfast</button>
-        <button data-facility="AC">AC</button>
-        <button data-facility="Parking">Parking</button>
-        <button data-facility="Shuttle">Shuttle</button>
-      </div>
-    </section>
-
-    <!-- DISTANCE -->
-    <section class="filter-section">
-      <span class="section-title">Distance from center</span>
-      <select id="distanceFilter" onchange="renderHotels()">
-        <option value="any">Any distance</option>
-        <option value="1">≤ 1 km</option>
-        <option value="3">≤ 3 km</option>
-        <option value="5">≤ 5 km</option>
-      </select>
-    </section>
-
   </div>
-</aside>
 
+  <script>
+    /* ================= DATA ================= */
 
+    const HOTEL_IMAGES = [
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+      "https://images.unsplash.com/photo-1501117716987-c8e1ecb210a9"
+    ];
 
-      <main class="results">
-        <ul id="overlayResults"></ul>
-      </main>
+    let hotels = [];
 
-      <aside class="promo">
-        <div class="promo-card">
-          <h3>Summer Deals 🌞</h3>
-          <p>Up to 30% off selected hotels</p>
-        </div>
-      </aside>
+    /* ================= HELPERS ================= */
 
-    </div>
-  </div>
-</div>
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
-<script>
-/* ================= DATA ================= */
-
-const HOTEL_IMAGES = [
-  "https://images.unsplash.com/photo-1566073771259-6a8506099945",
-  "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
-  "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-  "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
-  "https://images.unsplash.com/photo-1501117716987-c8e1ecb210a9"
-];
-
-let hotels = [];
-
-/* ================= HELPERS ================= */
-
-const rand = (min, max) => Math.random() * (max - min) + min;
-const pick = arr => arr[Math.floor(Math.random() * arr.length)];
-
-function stars(n) {
-  return "★".repeat(n) + "☆".repeat(5 - n);
-}
-
-/* ================= OVERLAY ================= */
-let minGuestRating = null;
-
-// RATING PILL CLICK HANDLER
-document.querySelectorAll(".rating-pills button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const val = parseFloat(btn.dataset.rating);
-
-    // toggle logic
-    if (minGuestRating === val) {
-      minGuestRating = null;
-      btn.classList.remove("active");
-    } else {
-      minGuestRating = val;
-      document
-        .querySelectorAll(".rating-pills button")
-        .forEach(b => b.classList.remove("active"));
-
-      btn.classList.add("active");
+    function stars(n) {
+      return "★".repeat(n) + "☆".repeat(5 - n);
     }
 
-    renderHotels();
-  });
-});
+    /* ================= OVERLAY ================= */
+    let minGuestRating = null;
+
+    // RATING PILL CLICK HANDLER
+    document.querySelectorAll(".rating-pills button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const val = parseFloat(btn.dataset.rating);
+
+        // toggle logic
+        if (minGuestRating === val) {
+          minGuestRating = null;
+          btn.classList.remove("active");
+        } else {
+          minGuestRating = val;
+          document
+            .querySelectorAll(".rating-pills button")
+            .forEach(b => b.classList.remove("active"));
+
+          btn.classList.add("active");
+        }
+
+        renderHotels();
+      });
+    });
 
 
-function openOverlay(city) {
-  overlayCity.textContent = city;
-  searchOverlay.classList.remove("hidden");
-}
-
-function closeOverlay() {
-  searchOverlay.classList.add("hidden");
-}
-
-const maxDistance = distanceFilter.value;
-const selectedFacilities = new Set();
-
-// FACILITY FILTER HANDLER
-document.querySelectorAll(".facility-tags button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const facility = btn.dataset.facility;
-
-    if (selectedFacilities.has(facility)) {
-      selectedFacilities.delete(facility);
-      btn.classList.remove("active");
-    } else {
-      selectedFacilities.add(facility);
-      btn.classList.add("active");
+    function openOverlay(city) {
+      overlayCity.textContent = city;
+      searchOverlay.classList.remove("hidden");
     }
 
-    renderHotels();
-  });
-});
+    function closeOverlay() {
+      searchOverlay.classList.add("hidden");
+    }
 
-/* ================= RENDER ================= */
+    const maxDistance = distanceFilter.value;
+    const selectedFacilities = new Set();
 
-function renderHotels() {
-  const list = document.getElementById("overlayResults");
-  const maxPrice = +priceFilter.value;
-  const sort = sortSelect.value;
-  const maxDistance = distanceFilter.value;
+    // FACILITY FILTER HANDLER
+    document.querySelectorAll(".facility-tags button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const facility = btn.dataset.facility;
 
-  const selectedStars = [...document.querySelectorAll(".starFilter:checked")]
-    .map(cb => +cb.value);
+        if (selectedFacilities.has(facility)) {
+          selectedFacilities.delete(facility);
+          btn.classList.remove("active");
+        } else {
+          selectedFacilities.add(facility);
+          btn.classList.add("active");
+        }
 
-let filtered = hotels.filter(h => {
-  if (h.price > maxPrice) return false;
-  if (selectedStars.length && !selectedStars.includes(h.stars)) return false;
-  if (minGuestRating !== null && h.score < minGuestRating) return false;
-  if (maxDistance !== "any" && +h.distance > +maxDistance) return false;
+        renderHotels();
+      });
+    });
 
-  if (
-    selectedFacilities.size &&
-    ![...selectedFacilities].every(f => h.amenities.includes(f))
-  ) return false;
+    /* ================= RENDER ================= */
 
-  return true;
-});
+    function renderHotels() {
+      const list = document.getElementById("overlayResults");
+      const maxPrice = +priceFilter.value;
+      const maxDistance = distanceFilter.value;
 
-  if (sort === "price") filtered.sort((a, b) => a.price - b.price);
-  if (sort === "rating") filtered.sort((a, b) => b.score - a.score);
+      const selectedStars = [...document.querySelectorAll(".starFilter:checked")]
+        .map(cb => +cb.value);
 
-  list.innerHTML = filtered.map(h => `
+      let filtered = hotels.filter(h => {
+        if (h.price > maxPrice) return false;
+        if (selectedStars.length && !selectedStars.includes(h.stars)) return false;
+        if (minGuestRating !== null && h.score < minGuestRating) return false;
+        if (maxDistance !== "any" && +h.distance > +maxDistance) return false;
+
+        if (
+          selectedFacilities.size &&
+          ![...selectedFacilities].every(f => h.amenities.includes(f))
+        ) return false;
+
+        return true;
+      });
+
+      list.innerHTML = filtered.map(h => `
     <li>
       <img src="${h.image}">
       <div>
@@ -716,63 +873,152 @@ let filtered = hotels.filter(h => {
       </div>
     </li>
   `).join("");
-}
+    }
 
-/* ================= SEARCH ================= */
+    /* ================= SEARCH ================= */
+    async function searchHotels() {
+      const location = locationInput.value.trim();
+      if (!location) return alert("Enter a location");
 
-async function searchHotels() {
-  const location = locationInput.value.trim();
-  if (!location) return alert("Enter a location");
+      let coords = null;
 
-  const geo = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`
-  ).then(r=>r.json());
+      /* ================= GEO FALLBACK CHAIN ================= */
 
-  if (!geo.length) return alert("Location not found");
+      const geoProviders = [
+        async () => {
+          const r = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`,
+            { headers: { "Accept": "application/json" } }
+          );
+          if (!r.ok) throw new Error("Nominatim failed");
+          const j = await r.json();
+          return j[0] ? { lat: j[0].lat, lon: j[0].lon } : null;
+        },
 
-  const { lat, lon } = geo[0];
+        async () => {
+          const r = await fetch(
+            `https://geocode.maps.co/search?q=${encodeURIComponent(location)}`
+          );
+          if (!r.ok) throw new Error("Maps.co failed");
+          const j = await r.json();
+          return j[0] ? { lat: j[0].lat, lon: j[0].lon } : null;
+        }
+      ];
 
-  const query = `
-    [out:json];
+      for (const provider of geoProviders) {
+        try {
+          coords = await provider();
+          if (coords) break;
+        } catch (e) {
+          console.warn("Geocode provider failed:", e.message);
+        }
+      }
+
+      if (!coords) {
+        console.warn("All geo APIs failed → using fallback data");
+        loadFallbackHotels(location);
+        return;
+      }
+
+      /* ================= HOTEL FETCH ================= */
+
+      try {
+        await fetchHotelsFromOverpass(coords.lat, coords.lon, location);
+      } catch (e) {
+        console.warn("Overpass failed → fallback data", e.message);
+        loadFallbackHotels(location);
+      }
+    }
+
+    async function fetchHotelsFromOverpass(lat, lon, location) {
+      const query = `
+    [out:json][timeout:25];
     node["tourism"="hotel"](around:5000,${lat},${lon});
     out tags;
   `;
 
-  const res = await fetch("https://overpass-api.de/api/interpreter",{
-    method:"POST",
-    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-    body:"data="+encodeURIComponent(query)
-  });
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "data=" + encodeURIComponent(query)
+      });
 
-  const data = await res.json();
+      if (!res.ok) throw new Error("Overpass request failed");
 
-  hotels = data.elements.map(h => ({
-    name: h.tags?.name || "Unnamed Hotel",
-    image: pick(HOTEL_IMAGES),
-    price: Math.floor(rand(80,400)),
-    stars: Math.floor(rand(3,6)),
-    score: rand(7.2,9.6).toFixed(1),
-    reviews: Math.floor(rand(50,900)),
-    distance: rand(0.3,3.5).toFixed(1),
-    amenities: ["Free WiFi","Breakfast","AC","Parking","Shuttle"].filter(()=>Math.random()>0.4)
-  }));
+      const data = await res.json();
 
-  openOverlay(location);
-  renderHotels();
-}
+      hotels = data.elements.map(h => ({
+        name: h.tags?.name || "Unnamed Hotel",
+        image: pick(HOTEL_IMAGES),
+        price: Math.floor(rand(80, 400)),
+        stars: Math.floor(rand(3, 6)),
+        score: rand(7.2, 9.6).toFixed(1),
+        reviews: Math.floor(rand(50, 900)),
+        distance: rand(0.3, 3.5).toFixed(1),
+        amenities: ["Free WiFi", "Breakfast", "AC", "Parking", "Shuttle"]
+          .filter(() => Math.random() > 0.4)
+      }));
 
-function updatePrice(value) {
-  document.getElementById("priceValue").textContent = `€${value}`;
-  renderHotels();
-}
+      openOverlay(location);
+      renderHotels();
+    }
 
-// STAR FILTER HANDLER
-document.querySelectorAll(".starFilter").forEach(cb => {
-  cb.addEventListener("change", renderHotels);
-});
+    function loadFallbackHotels(location) {
+      hotels = Array.from({ length: 12 }, (_, i) => ({
+        name: `${location} Hotel ${i + 1}`,
+        image: pick(HOTEL_IMAGES),
+        price: Math.floor(rand(90, 350)),
+        stars: Math.floor(rand(3, 6)),
+        score: rand(7.5, 9.4).toFixed(1),
+        reviews: Math.floor(rand(80, 1200)),
+        distance: rand(0.2, 4).toFixed(1),
+        amenities: ["Free WiFi", "Breakfast", "AC", "Parking", "Shuttle"]
+          .filter(() => Math.random() > 0.4)
+      }));
+
+      openOverlay(location);
+      renderHotels();
+    }
 
 
-</script>
+    function updatePrice(value) {
+      document.getElementById("priceValue").textContent = `€${value}`;
+      renderHotels();
+    }
+
+    // STAR FILTER HANDLER
+    document.querySelectorAll(".starFilter").forEach(cb => {
+      cb.addEventListener("change", renderHotels);
+    });
+
+    function toggleFilters() {
+      const filters = document.querySelector(".filters");
+
+      filters.classList.toggle("open");
+    }
+
+    function toggleFilters() {
+      const filters = document.querySelector(".filters");
+      const btn = document.querySelector(".filter-toggle");
+
+      const isOpen = filters.classList.toggle("open");
+      btn.classList.toggle("active", isOpen);
+    }
+
+    function capitalizeFirst(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    function openOverlay(city) {
+      overlayCity.textContent = capitalizeFirst(city.trim());
+      searchOverlay.classList.remove("hidden");
+    }
+
+
+
+
+  </script>
 
 </body>
+
 </html>

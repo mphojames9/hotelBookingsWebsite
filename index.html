@@ -5427,6 +5427,7 @@
   const checkOutSub  = document.getElementById('checkOutSub');
 
 
+
 const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
 
@@ -5442,7 +5443,7 @@ const pickerRaw = flatpickr('#datePickerInput', {
 });
 
 // 🔒 normalize: ALWAYS end up with a single instance
-const picker = Array.isArray(pickerRaw) ? pickerRaw[0] : pickerRaw;
+let picker = Array.isArray(pickerRaw) ? pickerRaw[0] : pickerRaw;
 
 document.getElementById("dateTrigger").addEventListener("click", () => {
   if (picker && typeof picker.open === 'function') {
@@ -5586,6 +5587,38 @@ guestPanel.addEventListener("click", (e) => {
 updateUI();
 
 
+function initDatePicker() {
+  const isMobile = window.innerWidth <= 900;
+
+  if (picker) {
+    picker.destroy(); // 🔥 REQUIRED
+  }
+
+  picker = flatpickr('#datePickerInput', {
+    mode: 'range',
+    showMonths: isMobile ? 1 : 2,
+    disableMobile: true,
+    animate: true,
+    onChange(selectedDates) {
+      if (selectedDates[0]) updateDate(selectedDates[0], checkInMain, checkInSub);
+      if (selectedDates[1]) updateDate(selectedDates[1], checkOutMain, checkOutSub);
+    }
+  });
+}
+
+// init once
+initDatePicker();
+
+// 🔁 re-init on resize (only when breakpoint changes)
+let lastIsMobile = window.innerWidth <= 900;
+
+window.addEventListener('resize', () => {
+  const nowIsMobile = window.innerWidth <= 900;
+  if (nowIsMobile !== lastIsMobile) {
+    lastIsMobile = nowIsMobile;
+    initDatePicker();
+  }
+});
   </script>
 </body>
 
