@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Hotel Search</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     body {
@@ -25,9 +26,9 @@
       margin: 0;
     }
 
-    /* ================= OVERLAY ================= */
+    /* ================= results-overlay ================= */
 
-    .overlay {
+    .results-overlay {
       position: fixed;
       inset: 0;
       background: rgba(15, 23, 42, 0.55);
@@ -42,7 +43,7 @@
       display: none;
     }
 
-    .overlay-shell {
+    .results-overlay-shell {
       width: 100%;
       height: 100%;
       background: #f8fafc;
@@ -64,7 +65,7 @@
       }
     }
 
-    .overlay-header {
+    .results-overlay-header {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
@@ -73,7 +74,7 @@
       border-bottom: 1px solid #e5e7eb;
     }
 
-    .overlay-title {
+    .results-overlay-title {
       margin: 0;
       font-size: 20px;
       font-weight: 800;
@@ -81,7 +82,7 @@
       white-space: nowrap;
     }
 
-    .overlay-body {
+    .results-overlay-body {
       flex: 1;
       display: grid;
       grid-template-columns: 260px 1fr;
@@ -216,6 +217,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      font-style: italic;
     }
 
     .price {
@@ -467,8 +469,8 @@
 
     @media (max-width: 850px) {
 
-      /* OVERLAY BODY: SINGLE COLUMN */
-      .overlay-body {
+      /* results-overlay BODY: SINGLE COLUMN */
+      .results-overlay-body {
         grid-template-columns: 1fr;
       }
 
@@ -510,7 +512,7 @@
         padding: 8px;
       }
 
-      .overlay-header {
+      .results-overlay-header {
         padding: 14px;
       }
 
@@ -532,7 +534,7 @@
     /* MOBILE FILTER DRAWER */
     @media (max-width: 1080px) {
 
-      .overlay-body {
+      .results-overlay-body {
         grid-template-columns: 1fr;
       }
 
@@ -603,7 +605,7 @@
       transform: rotate(-45deg);
     }
 
-    #overlayCity::first-letter {
+    #results-overlayCity::first-letter {
       text-transform: uppercase;
     }
 
@@ -617,6 +619,113 @@
         display: flex;
       }
     }
+
+    /* ================= SCROLLBAR: SHOW ON HOVER ONLY ================= */
+
+/* Base: scrolling works but scrollbar hidden */
+.filters,
+.results {
+  overflow-y: auto;
+  scrollbar-width: none;              /* Firefox */
+  -ms-overflow-style: none;           /* IE / Edge legacy */
+}
+
+/* Chrome / Safari */
+.filters::-webkit-scrollbar,
+.results::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ON HOVER: reveal scrollbar */
+.filters:hover,
+.results:hover {
+  scrollbar-width: thin;              /* Firefox */
+}
+
+/* Chrome / Safari hover scrollbar */
+.filters:hover::-webkit-scrollbar,
+.results:hover::-webkit-scrollbar {
+  width: 8px;
+}
+
+.filters:hover::-webkit-scrollbar-thumb,
+.results:hover::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.35);
+  border-radius: 8px;
+}
+
+.filters:hover::-webkit-scrollbar-track,
+.results:hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Style the range slider */
+#priceFilter {
+  -webkit-appearance: none;  /* Remove default styles */
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 8px;
+  outline: none;
+  transition: background 0.3s ease;  /* Smooth track change */
+  margin: 15px 0;  /* Space around slider */
+}
+
+/* Style the thumb (the draggable part) */
+#priceFilter::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #f97316;  /* Bright accent color */
+  border-radius: 50%;  /* Circle thumb */
+  border: 2px solid #ffffff;  /* White border for the thumb */
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  margin-top: -5px;
+}
+
+/* When thumb is hovered */
+#priceFilter::-webkit-slider-thumb:hover {
+  background: #ff6a00;  /* Darker color on hover */
+  transform: scale(1.1);  /* Slight zoom effect */
+}
+
+/* For Firefox */
+#priceFilter::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #f97316;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* When thumb is hovered in Firefox */
+#priceFilter::-moz-range-thumb:hover {
+  background: #ff6a00;
+  transform: scale(1.1);
+}
+
+/* Style the track (bar) for when the thumb moves */
+#priceFilter::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 8px;
+  background: #e5e7eb;
+}
+
+#priceFilter::-moz-range-track {
+  height: 10px;
+  border-radius: 8px;
+  background: #e5e7eb;
+}
+
+.location {
+  font-style: italic;
+}
+
   </style>
 </head>
 
@@ -625,11 +734,11 @@
   <input id="locationInput" placeholder="Enter city or area">
   <button onclick="searchHotels()">Search Hotels</button>
 
-  <!-- OVERLAY -->
-  <div id="searchOverlay" class="overlay hidden">
-    <div class="overlay-shell">
+  <!-- results-overlay -->
+  <div id="searchresults-overlay" class="results-overlay hidden">
+    <div class="results-overlay-shell">
 
-      <div class="overlay-header">
+      <div class="results-overlay-header">
 
         <button class="filter-toggle" onclick="toggleFilters()" aria-label="Toggle filters">
           <span></span>
@@ -638,14 +747,14 @@
         </button>
 
 
-        <h2 class="overlay-title">
-          Hotels in <span id="overlayCity">Pretoria</span>
+        <h2 class="results-overlay-title">
+          Hotels in <span id="results-overlayCity">Pretoria</span>
         </h2>
 
       </div>
 
 
-      <div class="overlay-body">
+      <div class="results-overlay-body">
 
         <aside class="filters">
           <div class="filters-inner">
@@ -664,7 +773,7 @@
             <section class="filter-section">
               <div class="filter-header">
                 <span>Price per night</span>
-                <strong id="priceValue">€500</strong>
+                <strong id="priceValue">$ 500</strong>
               </div>
               <input id="priceFilter" type="range" min="50" max="500" value="500" oninput="updatePrice(this.value)">
             </section>
@@ -736,7 +845,7 @@
           </div>
         </aside>
         <main class="results">
-          <ul id="overlayResults">
+          <ul id="results-overlayResults">
 
           </ul>
         </main>
@@ -749,12 +858,18 @@
     /* ================= DATA ================= */
 
     const HOTEL_IMAGES = [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945",
-      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
-      "https://images.unsplash.com/photo-1501117716987-c8e1ecb210a9"
-    ];
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+  "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+  "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+  "https://images.unsplash.com/photo-1496412705862-e0088f16f791",
+  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+  "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba",
+  "https://images.unsplash.com/photo-1493809842364-78817add7ffb",
+  "https://images.unsplash.com/photo-1505691938895-1758d7feb511"
+];
+
 
     let hotels = [];
 
@@ -767,7 +882,7 @@
       return "★".repeat(n) + "☆".repeat(5 - n);
     }
 
-    /* ================= OVERLAY ================= */
+    /* ================= results-overlay ================= */
     let minGuestRating = null;
 
     // RATING PILL CLICK HANDLER
@@ -793,13 +908,13 @@
     });
 
 
-    function openOverlay(city) {
-      overlayCity.textContent = city;
-      searchOverlay.classList.remove("hidden");
+    function openresults-overlay(city) {
+      results-overlayCity.textContent = city;
+      searchresults-overlay.classList.remove("hidden");
     }
 
-    function closeOverlay() {
-      searchOverlay.classList.add("hidden");
+    function closeresults-overlay() {
+      searchresults-overlay.classList.add("hidden");
     }
 
     const maxDistance = distanceFilter.value;
@@ -825,7 +940,7 @@
     /* ================= RENDER ================= */
 
     function renderHotels() {
-      const list = document.getElementById("overlayResults");
+      const list = document.getElementById("results-overlayResults");
       const maxPrice = +priceFilter.value;
       const maxDistance = distanceFilter.value;
 
@@ -852,8 +967,10 @@
       <div>
         <div class="hotel-title">${h.name}</div>
         <div class="stars">${stars(h.stars)}</div>
-        <div class="location">📍 ${h.distance} km from center</div>
 
+<div class="location">
+  <i class="fa-solid fa-location-dot"></i> ${h.distance} Kilomiters
+</div>
         <div class="rating">
           <div class="score">${h.score}</div>
           <div>Excellent · ${h.reviews} reviews</div>
@@ -865,9 +982,9 @@
       </div>
 
       <div class="price-box">
-        <div class="price">€${h.price}</div>
+        <div class="price">$ ${h.price}</div>
         <div style="font-size:12px;color:#6b7280">
-          2 nights · €${h.price * 2}
+          2 nights · $ ${h.price * 2}
         </div>
         <button class="book">Book</button>
       </div>
@@ -959,7 +1076,7 @@
           .filter(() => Math.random() > 0.4)
       }));
 
-      openOverlay(location);
+      openresults-overlay(location);
       renderHotels();
     }
 
@@ -976,13 +1093,13 @@
           .filter(() => Math.random() > 0.4)
       }));
 
-      openOverlay(location);
+      openresults-overlay(location);
       renderHotels();
     }
 
 
     function updatePrice(value) {
-      document.getElementById("priceValue").textContent = `€${value}`;
+      document.getElementById("priceValue").textContent = `$ ${value}`;
       renderHotels();
     }
 
@@ -1009,9 +1126,9 @@
       return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    function openOverlay(city) {
-      overlayCity.textContent = capitalizeFirst(city.trim());
-      searchOverlay.classList.remove("hidden");
+    function openresults-overlay(city) {
+      results-overlayCity.textContent = capitalizeFirst(city.trim());
+      searchresults-overlay.classList.remove("hidden");
     }
 
 
