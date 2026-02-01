@@ -1,0 +1,715 @@
+    .resultsOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .resultsOverlay-shell {
+      width: 100%;
+      height: 100%;
+      background: #f8fafc;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      animation: rise 0.35s ease;
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(40px);
+        opacity: 0
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    .resultsOverlay-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .resultsOverlay-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .resultsOverlay-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      overflow: hidden;
+    }
+
+    /* ================= FILTERS ================= */
+
+    .filters {
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      padding: 22px 18px;
+      height: 100%;
+      overflow-y: auto;
+      /* <-- scroll */
+      overscroll-behavior: contain;
+    }
+
+    /* STAR COLOR (YELLOW) */
+    .star-grid span {
+      color: #fbbf24;
+      /* modern yellow stars */
+    }
+
+    .filters label {
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .rating-chips span {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #e5e7eb;
+      margin: 4px 4px 0 0;
+      font-size: 12px;
+    }
+
+    /* ================= RESULTS ================= */
+
+    .results {
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .results li {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 18px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border-radius: 22px;
+      margin-bottom: 22px;
+      padding: 16px;
+      box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .results li:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 20px 45px rgba(15, 23, 42, 0.14);
+    }
+
+    .results img {
+      width: 220px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 18px;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .results li:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .hotel-title {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+      margin-bottom: 2px;
+    }
+
+    .stars {
+      color: #facc15;
+      font-size: 15px;
+      text-shadow: 0 1px 3px rgba(250, 204, 21, 0.35);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .score {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .amenities span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.05);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 8px 6px 0 0;
+      min-width: 45px;
+      text-align: center;
+    }
+
+    .price-box {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-style: italic;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .book {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      border: none;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .book:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(249, 115, 22, 0.45);
+    }
+
+    /* Text block spacing */
+    .results li>div:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      /* overall vertical spacing */
+    }
+
+    /* Title separation */
+    .hotel-title {
+      margin-bottom: 2px;
+    }
+
+    /* Stars & location breathing room */
+    .stars {
+      margin-bottom: 4px;
+    }
+
+    .location {
+      margin-bottom: 6px;
+    }
+
+    /* Rating spacing */
+    .rating {
+      margin: 6px 0 8px;
+    }
+
+    /* Amenities spacing */
+    .amenities {
+      margin-top: 6px;
+    }
+
+    .amenities span {
+      margin-right: 8px;
+      margin-bottom: 6px;
+    }
+
+
+    .location {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* ================= PROMO ================= */
+
+    .promo {
+      padding: 20px;
+      border-left: 1px solid #e5e7eb;
+      display: none;
+    }
+
+    .promo-card {
+      background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+      color: white;
+      padding: 20px;
+      border-radius: 18px;
+    }
+
+
+    .filters-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .filters h4 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .filter-section {
+      background: #f8fafc;
+      padding: 14px;
+      border-radius: 14px;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* SLIDER */
+    input[type="range"] {
+      width: 100%;
+    }
+
+    /* STAR GRID */
+    .star-grid label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    /* RATING PILLS */
+    .rating-pills button,
+    .facility-tags button {
+      border: none;
+      background: #eef2f7;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      margin: 6px 6px 0 0;
+      transition: 0.2s;
+      width: 80px;
+    }
+
+    .rating-pills button.active,
+    .facility-tags button.active {
+      background: #f97316;
+      color: white;
+    }
+
+    /* TOGGLES */
+    .toggle-list label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .toggle-list input {
+      display: none;
+    }
+
+    .toggle {
+      width: 36px;
+      height: 20px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      position: relative;
+      transition: 0.2s;
+    }
+
+    .toggle::after {
+      content: "";
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: 0.2s;
+    }
+
+    .toggle-list input:checked+.toggle {
+      background: #f97316;
+    }
+
+    .toggle-list input:checked+.toggle::after {
+      transform: translateX(16px);
+    }
+
+    /* ANIMATED FILTER BUTTON */
+    .filter-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.2s ease;
+
+    }
+
+    .filter-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .filter-toggle span {
+      display: flex;
+      flex-direction: column;
+      width: 18px;
+      height: 2px;
+      background: black;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.2s ease;
+      margin: 2px;
+    }
+
+    /* OPEN STATE (turn into X) */
+    .filter-toggle.active span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .filter-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .filter-toggle.active span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+
+
+
+    /* SELECT */
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    @media (max-width: 850px) {
+
+      /* resultsOverlay BODY: SINGLE COLUMN */
+      .resultsOverlay-body {
+        grid-template-columns: 1fr;
+      }
+
+      /* FILTERS MOVE TO TOP */
+      .filters {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      /* RESULT CARDS: STACK */
+      .results li {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .results img {
+        width: 100%;
+        height: 180px;
+      }
+
+      .price-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .book {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 360px) {
+
+      .resultsOverlay-header {
+        padding: 14px;
+      }
+
+      .filters {
+        padding: 14px;
+      }
+
+      .results {
+        padding: 12px;
+      }
+
+      .price {
+        font-size: 20px;
+      }
+    }
+
+
+
+    /* MOBILE FILTER DRAWER */
+    @media (max-width: 1080px) {
+
+      .resultsOverlay-body {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-toggle {
+        display: inline-block;
+      }
+
+      .filters {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        height: 100%;
+        background: white;
+        z-index: 999999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .filters.open {
+        transform: translateX(0);
+        box-shadow: 20px 0 40px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    /* FILTERS HEADER */
+    .filters-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* CLOSE BUTTON */
+    .filters-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      border: none;
+      background: #eef2f7;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: none;
+    }
+
+    .filters-close:hover {
+      background: #e5e7eb;
+      transform: scale(1.05);
+    }
+
+    /* X ICON */
+    .filters-close span {
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      background: #0f172a;
+      border-radius: 2px;
+    }
+
+    .filters-close span:first-child {
+      transform: rotate(45deg);
+    }
+
+    .filters-close span:last-child {
+      transform: rotate(-45deg);
+    }
+
+    #resultsOverlayCity::first-letter {
+      text-transform: uppercase;
+    }
+
+    .hotel-title {
+      text-transform: capitalize;
+    }
+
+        /* SHOW ON MOBILE */
+    @media (max-width: 1080px) {
+      .filters-close {
+        display: flex;
+      }
+    }
+
+    /* ================= SCROLLBAR: SHOW ON HOVER ONLY ================= */
+
+/* Base: scrolling works but scrollbar hidden */
+.filters,
+.results {
+  overflow-y: auto;
+  scrollbar-width: none;              /* Firefox */
+  -ms-overflow-style: none;           /* IE / Edge legacy */
+}
+
+/* Chrome / Safari */
+.filters::-webkit-scrollbar,
+.results::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ON HOVER: reveal scrollbar */
+.filters:hover,
+.results:hover {
+  scrollbar-width: thin;              /* Firefox */
+}
+
+/* Chrome / Safari hover scrollbar */
+.filters:hover::-webkit-scrollbar,
+.results:hover::-webkit-scrollbar {
+  width: 8px;
+}
+
+.filters:hover::-webkit-scrollbar-thumb,
+.results:hover::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.35);
+  border-radius: 8px;
+}
+
+.filters:hover::-webkit-scrollbar-track,
+.results:hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Style the range slider */
+#priceFilter {
+  -webkit-appearance: none;  /* Remove default styles */
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 8px;
+  outline: none;
+  transition: background 0.3s ease;  /* Smooth track change */
+  margin: 15px 0;  /* Space around slider */
+}
+
+/* Style the thumb (the draggable part) */
+#priceFilter::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #f97316;  /* Bright accent color */
+  border-radius: 50%;  /* Circle thumb */
+  border: 2px solid #ffffff;  /* White border for the thumb */
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  margin-top: -5px;
+}
+
+/* When thumb is hovered */
+#priceFilter::-webkit-slider-thumb:hover {
+  background: #ff6a00;  /* Darker color on hover */
+  transform: scale(1.1);  /* Slight zoom effect */
+}
+
+/* For Firefox */
+#priceFilter::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #f97316;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* When thumb is hovered in Firefox */
+#priceFilter::-moz-range-thumb:hover {
+  background: #ff6a00;
+  transform: scale(1.1);
+}
+
+/* Style the track (bar) for when the thumb moves */
+#priceFilter::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 8px;
+  background: #e5e7eb;
+}
+
+#priceFilter::-moz-range-track {
+  height: 10px;
+  border-radius: 8px;
+  background: #e5e7eb;
+}
+
+.location {
+  font-style: italic;
+}
+
+/* OVERLAY CLOSE BUTTON */
+.overlay-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(0,0,0,0.05);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.overlay-close:hover {
+  background: rgba(0,0,0,0.12);
+  transform: scale(1.08);
+}
+
+.resultsOverlay-shell {
+  position: relative;
+}

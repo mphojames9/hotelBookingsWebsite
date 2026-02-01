@@ -193,12 +193,12 @@
 
     .ctrl-btn.primary,
     .new-hdr-controls .primary {
-      background: linear-gradient(135deg, #0f172a, #111827);
+      background: #2563eb;
       color: #fff;
       padding: 8px 14px;
       border-radius: 999px;
       font-weight: 700;
-      border: 1px solid black;
+      border: none;
 
     }
 
@@ -366,11 +366,12 @@
 
     /* Button */
     .explore-btn {
-      background: linear-gradient(135deg, #0f172a, #111827);
+      background: #2563eb;
       color: #fff;
       padding: 12px 32px;
       border: none;
       border-radius: 25px;
+      font-weight: 700;
       cursor: pointer;
       font-size: 16px;
       transition: transform .12s ease, box-shadow .12s ease;
@@ -492,21 +493,19 @@
       color: #fff !important;
     }
 
-    #guestPanel {
+    .guest-panel {
       position: absolute;
-      top: -30vh;
-      left: 0;
       width: 320px;
       padding: 18px;
       background: #fff;
       border-radius: 14px;
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
       border: 1px solid #e6e6e6;
-
+      top: 100% !important;
+      right: 20% !important;
       z-index: 9999 !important;
       display: none;
     }
-
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
@@ -617,138 +616,156 @@
       font-weight: 800;
     }
 
-/* === Modern search bar === */
-.search-bar {
-  position: relative;        /* create stacking context */
-  z-index: 20;               /* higher than hero-media */
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.12);
-  max-width: 1100px;
-  margin: -60px auto 40px;
-  overflow: hidden;
-}
+    /* === Modern search bar === */
+    .search-bar {
+      position: relative;
+      /* create stacking context */
+      z-index: 20;
+      /* higher than hero-media */
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+      max-width: 1100px;
+      margin: -60px auto 40px;
+    }
 
-/* shared field */
-.sb-field {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 18px;
-  min-height: 76px;
-  border-right: 1px solid #e5e7eb;
-}
+    /* shared field */
+    .sb-field {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      min-height: 76px;
+      border-right: 1px solid #e5e7eb;
+    }
 
-.sb-field i {
-  color: #6b7280;
-  font-size: 18px;
-}
+    .sb-field i {
+      color: #6b7280;
+      font-size: 18px;
+    }
 
-/* destination */
-.sb-destination {
-  flex: 1.6;
-}
+    /* destination */
+    .sb-destination {
+      flex: 1.6;
+    }
 
-.sb-destination input {
-  border: 0;
-  outline: none;
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-}
+    .sb-destination input {
+      border: 0;
+      outline: none;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+    }
 
-/* dates */
-.sb-dates {
-  flex: 1.4;
-  gap: 18px;
-}
+    /* dates */
+    .sb-dates {
+      flex: 1.4;
+      gap: 18px;
+    }
 
-.sb-date {
-  display: flex;
-  flex-direction: column;
-}
+    .sb-date {
+      display: flex;
+      flex-direction: column;
+    }
 
-.sb-date-main {
-  font-weight: 700;
-  font-size: 15px;
-}
+    .sb-date-main {
+      font-weight: 700;
+      font-size: 15px;
+    }
 
-.sb-date-sub {
-  font-size: 13px;
-  color: #6b7280;
-}
+    .sb-date-sub {
+      font-size: 13px;
+      color: #6b7280;
+    }
 
-.sb-divider {
-  width: 1px;
-  height: 40px;
-  background: #e5e7eb;
-}
+    .sb-divider {
+      width: 1px;
+      height: 40px;
+      background: #e5e7eb;
+    }
 
-/* guests */
-.sb-guests {
-  flex: 1;
-  cursor: pointer;
-}
+    /* guests */
+    .sb-guests {
+      flex: 1;
+      cursor: pointer;
+    }
 
-.sb-main {
-  font-weight: 700;
-  font-size: 15px;
-}
+    .sb-main {
+      font-weight: 700;
+      font-size: 15px;
+    }
 
-.sb-sub {
-  font-size: 13px;
-  color: #6b7280;
-}
+    .sb-sub {
+      font-size: 13px;
+      color: #6b7280;
+    }
 
-.sb-chev {
-  margin-left: auto;
-  font-size: 14px;
-}
+    .sb-chev {
+      margin-left: auto;
+      font-size: 14px;
+    }
 
-/* search button */
-.sb-btn {
-  background: #2563eb;
-  color: #fff;
-  border: 0;
-  padding: 0 42px;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: background .2s ease;
-}
+    /* search button */
+    .sb-btn {
+      background: #2563eb;
+      color: #fff;
+      border: 0;
+      padding: 0 42px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .2s ease;
+      border-bottom-right-radius: 16px;
+      border-top-right-radius: 16px;
+    }
 
-.sb-btn:hover {
-  background: #1d4ed8;
-}
+    .sb-btn:hover {
+      background: #1d4ed8;
+    }
 
-/* mobile */
-@media (max-width: 900px) {
-  .search-bar {
-    flex-direction: column;
-    border-radius: 14px;
-  }
+    /* mobile */
+    @media (max-width: 900px) {
 
-  .sb-field {
-    border-right: 0;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+      .sb-btn {
+        border-radius: unset;
+      }
 
-  .sb-date {
-    width: 50%;
-  }
-  
+      @media (max-width: 900px) {
+        .flatpickr-calendar {
+          width: max-content !important;
+          /* fit content */
+          max-width: 100%;
+          /* prevent overflow */
+        }
+      }
 
-  .sb-btn {
-    width: 100%;
-    padding: 18px;
-  }
-}
+
+      .search-bar {
+        flex-direction: column;
+        border-radius: 14px;
+      }
+
+      .sb-field {
+        border-right: 0;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sb-date {
+        width: 50%;
+      }
+
+
+      .sb-btn {
+        width: 100%;
+        padding: 18px;
+      }
+    }
 
 
     @keyframes pop {
@@ -795,7 +812,6 @@
     .btn-ghost:hover,
     .ctrl-link:hover {
       opacity: 0.8;
-      animation: pulse 2.2s infinite;
     }
 
     button:active,
@@ -865,7 +881,7 @@
 
 
     .btn-apply {
-      background: linear-gradient(135deg, #0f172a, #111827);
+      background: #2563eb;
       color: white;
       padding: 8px 12px;
       border-radius: 8px;
@@ -896,12 +912,6 @@
       .search-col {
         width: 100%;
         min-width: unset;
-      }
-
-      .guest-panel {
-        right: 12px;
-        left: 12px;
-        width: auto;
       }
     }
 
@@ -1082,7 +1092,8 @@
     .welcome-hero__accent-bar {
       width: 60px;
       height: 4px;
-      background: linear-gradient(135deg, #f97316, #fb923c);;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      ;
       margin: 1rem 0 1.5rem;
       border-radius: 999px;
     }
@@ -1283,7 +1294,7 @@
     /* very small screens — card becomes vertical if content is long */
     @media(max-width:420px) {
 
-            .welcome-hero {
+      .welcome-hero {
         padding: 18px 0;
       }
 
@@ -1700,15 +1711,6 @@
         font-size: 15px;
       }
 
-      /* guest panel, dropdowns */
-      .guest-panel,
-      .guest-panel {
-        right: 8px;
-        left: 8px;
-        width: auto;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-      }
-
       /* hero/hero controls */
       .hero-controls {
         display: none;
@@ -2038,6 +2040,7 @@
     .results-info {
       color: #6b7280;
       font-weight: 500;
+      letter-spacing: 1px;
     }
 
     .results-info strong {
@@ -2453,6 +2456,11 @@
         width: auto !important;
         flex: 0 0 calc((100%) / 1);
       }
+
+      .results-bar {
+        flex-direction:column;
+        width: 100%;
+      }
     }
 
     .signup-trigger {
@@ -2580,7 +2588,7 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #0f172a, #111827);
+      background: #2563eb;
       color: white;
       border: none;
       padding: 14px;
@@ -3195,223 +3203,371 @@
     }
 
     /* ===== DATE PICKER TRIGGER ===== */
-.sb-dates-picker {
-  cursor: pointer;
-  transition: background .25s ease, transform .2s ease;
-}
+    .sb-dates-picker {
+      cursor: pointer;
+      transition: background .25s ease, transform .2s ease;
+    }
 
-.sb-dates-picker:hover {
-  background: linear-gradient(90deg, #ffffff, #f4f7ff);
-  transform: translateY(-1px);
-}
+    .sb-dates-picker:hover {
+      background: linear-gradient(90deg, #ffffff, #f4f7ff);
+      transform: translateY(-1px);
+    }
 
-/* =========================
+    /* =========================
    PREMIUM FLATPICKR THEME
    ========================= */
 
-.flatpickr-calendar {
-  border-radius: 18px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 30px 60px rgba(2, 6, 23, 0.18);
-  font-family: Inter, system-ui, sans-serif;
+    .flatpickr-calendar {
+      border-radius: 18px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 30px 60px rgba(2, 6, 23, 0.18);
+      font-family: Inter, system-ui, sans-serif;
+      overflow: hidden;
+      width: 650px;
+    }
+
+    /* HEADER */
+    .flatpickr-months {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      padding: 14px 0;
+    }
+
+    .flatpickr-month {
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .flatpickr-prev-month,
+    .flatpickr-next-month {
+      fill: white;
+      opacity: 0.9;
+    }
+
+    .flatpickr-prev-month:hover,
+    .flatpickr-next-month:hover {
+      opacity: 1;
+    }
+
+    /* WEEKDAYS */
+    .flatpickr-weekdays {
+      background: #f8fafc;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .flatpickr-weekday {
+      color: #64748b;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* DAYS */
+    .flatpickr-day {
+      border-radius: 10px;
+      font-weight: 600;
+      color: #0f172a;
+      transition: all 0.15s ease;
+    }
+
+    .flatpickr-day:hover {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+
+    /* TODAY */
+    .flatpickr-day.today {
+      border: 2px solid #2563eb;
+    }
+
+    /* SELECTED / RANGE */
+    .flatpickr-day.selected,
+    .flatpickr-day.startRange,
+    .flatpickr-day.endRange {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+    }
+
+    .flatpickr-day.inRange {
+      background: rgba(37, 99, 235, 0.15);
+    }
+
+    /* DISABLED */
+    .flatpickr-day.disabled,
+    .flatpickr-day.notAllowed {
+      color: #cbd5e1;
+    }
+
+    .flatpickr-current-month {
+      color: white;
+    }
+
+    @keyframes fpPop {
+      from {
+        transform: translateY(-8px) scale(0.98);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* ===== Guest Panel ===== */
+    .guest-panel.open {
+      display: block;
+    }
+
+    /* rows */
+    .guest-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      font-weight: 600;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .counter button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      cursor: pointer;
+    }
+
+
+    /* chevron animation */
+    .sb-guests .sb-chev {
+      transition: transform 0.2s ease;
+    }
+
+    .sb-guests.active .sb-chev {
+      transform: rotate(180deg);
+    }
+
+    /* mobile full-width */
+
+
+    .guest-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      font-weight: 600;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .counter button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .counter button:active {
+      transform: scale(0.95);
+    }
+
+    .counter span {
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* ===== FULLSCREEN DETAIL OVERLAY ===== */
+    .detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      background: rgba(10, 12, 18, 0.88);
+      backdrop-filter: blur(18px);
+      color: white;
+
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.02);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .detail-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .detail-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-content {
+      padding: clamp(24px, 4vw, 56px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      overflow-y: scroll;
+    }
+
+    .detail-content h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      margin: 0;
+    }
+
+    .detail-meta {
+      color: #cbd5f5;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .detail-content p {
+      color: #e5e7eb;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .detail-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-size: 36px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .detail-overlay {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-media {
+        height: 45vh;
+      }
+    }
+
+    /* SLIDER */
+.slider {
+  position: relative;
+  height: 100%;
   overflow: hidden;
-  width:650px;
 }
 
-/* HEADER */
-.flatpickr-months {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  padding: 14px 0;
+.slides {
+  display: flex;
+  height: 100%;
+  transition: transform .4s ease;
 }
 
-.flatpickr-month {
-  color: #fff;
-  font-weight: 800;
+.slides img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-.flatpickr-prev-month,
-.flatpickr-next-month {
-  fill: white;
-  opacity: 0.9;
-}
-
-.flatpickr-prev-month:hover,
-.flatpickr-next-month:hover {
-  opacity: 1;
-}
-
-/* WEEKDAYS */
-.flatpickr-weekdays {
-  background: #f8fafc;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.flatpickr-weekday {
-  color: #64748b;
-  font-weight: 700;
-  font-size: 12px;
-}
-
-/* DAYS */
-.flatpickr-day {
-  border-radius: 10px;
-  font-weight: 600;
-  color: #0f172a;
-  transition: all 0.15s ease;
-}
-
-.flatpickr-day:hover {
-  background: #eff6ff;
-  color: #2563eb;
-}
-
-/* TODAY */
-.flatpickr-day.today {
-  border: 2px solid #2563eb;
-}
-
-/* SELECTED / RANGE */
-.flatpickr-day.selected,
-.flatpickr-day.startRange,
-.flatpickr-day.endRange {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-}
-
-.flatpickr-day.inRange {
-  background: rgba(37, 99, 235, 0.15);
-}
-
-/* DISABLED */
-.flatpickr-day.disabled,
-.flatpickr-day.notAllowed {
-  color: #cbd5e1;
-}
-
-.flatpickr-current-month {
-  color: white;
-}
-
-@keyframes fpPop {
-  from {
-    transform: translateY(-8px) scale(0.98);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* ===== Guest Panel ===== */
-
-.guest-panel {
+.overlayNav {
   position: absolute;
-  display: none;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.18);
-  padding: 16px;
-  z-index: 9999;
-}
-
-.guest-panel.open {
-  display: block;
-}
-
-/* rows */
-.guest-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  font-weight: 600;
-}
-
-.counter {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.counter button {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.788);
+  border: none;
+  color: white;
+  font-size: 36px;
+  width: 48px;
+  height: 48px;
   cursor: pointer;
+  border-radius: 20px;
+
 }
 
-/* mobile bottom sheet */
-@media (max-width: 768px) {
-  .guest-panel {
-    position: fixed;
-    left: 12px !important;
-    right: 12px !important;
-    bottom: 16px;
-    top: auto !important;
-    width: auto !important;
-    border-radius: 18px;
-  }
-}
+.overlayNav.prev { left: 12px; }
+.overlayNav.next { right: 12px; }
 
-
-/* chevron animation */
-.sb-guests .sb-chev {
-  transition: transform 0.2s ease;
-}
-
-.sb-guests.active .sb-chev {
-  transform: rotate(180deg);
-}
-
-/* mobile full-width */
-@media (max-width: 768px) {
-  .guest-panel {
-    position: fixed;
-    left: 12px;
-    right: 12px;
-    bottom: 16px;
-    border-radius: 18px;
-  }
-}
-
-.guest-row {
+/* META */
+.detail-meta-row {
   display: flex;
-  justify-content: space-between;
+  gap: 16px;
   align-items: center;
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+/* REVIEWS */
+.reviews {
+  margin-top: 24px;
+}
+
+.reviews h3 {
+  margin-bottom: 8px;
+}
+
+.review {
   padding: 12px 0;
-  font-weight: 600;
+  border-top: 1px solid rgba(255,255,255,.08);
 }
 
-.counter {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.review strong {
+  display: block;
+  font-size: 14px;
 }
 
-.counter button {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-size: 18px;
-  cursor: pointer;
+.review span {
+  font-size: 13px;
+  color: #d1d5db;
 }
 
-.counter button:active {
-  transform: scale(0.95);
+/* INITIAL STATE */
+.info-card {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(.22,.61,.36,1);
+  will-change: transform, opacity;
 }
 
-.counter span {
-  min-width: 20px;
-  text-align: center;
+/* ACTIVE (WHEN IN VIEW) */
+.info-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
+/* OPTIONAL: subtle icon pop */
+.info-card.is-visible .bullet {
+  animation: bulletPop 0.5s ease forwards;
+}
 
+@keyframes bulletPop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
 
   </style>
 </head>
@@ -3424,41 +3580,36 @@
     </div>
 
     <!-- modern header controls — replace existing hdr-controls -->
-   <div class="hdr-controls new-hdr-controls" aria-hidden="false" role="toolbar" aria-label="Header controls">
+    <div class="hdr-controls new-hdr-controls" aria-hidden="false" role="toolbar" aria-label="Header controls">
 
-  <button class="ctrl-btn ghost" type="button" aria-label="Help">
-    <i class="fa-regular fa-circle-question" aria-hidden="true"></i>
-    <span class="ctrl-label">Help</span>
-  </button>
+      <button class="ctrl-btn ghost" type="button" aria-label="Help">
+        <i class="fa-regular fa-circle-question" aria-hidden="true"></i>
+        <span class="ctrl-label">Help</span>
+      </button>
 
-  <div class="ctrl-sep" aria-hidden="true"></div>
+      <div class="ctrl-sep" aria-hidden="true"></div>
 
-  <button
-    class="ctrl-btn subtle"
-    type="button"
-    aria-haspopup="menu"
-    aria-expanded="false"
-    aria-label="Select language"
-  >
-    <i class="fa-solid fa-globe" aria-hidden="true"></i>
-    <span class="ctrl-label">English</span>
-  </button>
+      <button class="ctrl-btn subtle" type="button" aria-haspopup="menu" aria-expanded="false"
+        aria-label="Select language">
+        <i class="fa-solid fa-globe" aria-hidden="true"></i>
+        <span class="ctrl-label">English</span>
+      </button>
 
-  <div class="ctrl-sep" aria-hidden="true"></div>
+      <div class="ctrl-sep" aria-hidden="true"></div>
 
-  <a class="ctrl-link" href="#" aria-label="My Trips">
-    <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
-    <span class="ctrl-label">My Trips</span>
-  </a>
+      <a class="ctrl-link" href="#" aria-label="My Trips">
+        <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
+        <span class="ctrl-label">My Trips</span>
+      </a>
 
-  <div class="ctrl-sep" aria-hidden="true"></div>
+      <div class="ctrl-sep" aria-hidden="true"></div>
 
-  <a class="ctrl-btn primary" href="#" aria-label="Sign in or join">
-    <i class="fa-regular fa-user" aria-hidden="true"></i>
-    <span class="ctrl-label" id="ctrl-label-sign">Sign In / Join</span>
-  </a>
+      <a class="ctrl-btn primary" href="#" aria-label="Sign in or join">
+        <i class="fa-regular fa-user" aria-hidden="true"></i>
+        <span class="ctrl-label" id="ctrl-label-sign">Sign In / Join</span>
+      </a>
 
-</div>
+    </div>
 
 
 
@@ -3537,12 +3688,12 @@
               <picture>
                 <!-- desktop -->
                 <source media="(min-width:992px)"
-                  srcset="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=2880&auto=format&fit=crop 2x">
+                  srcset="./assers/dusri-corner-studio-9627-hor-wide.avif 1x, ./assers/el-dohel-dohel-4-bedroom-a-l17862-51364_Wide-Hor.avif 2x">
                 <!-- tablet -->
                 <source media="(min-width:768px)"
-                  srcset="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1536&auto=format&fit=crop 2x">
+                  srcset="./assers/bruri-lobby-bar-8192-hor-wide.webp 1x, ./assers/mc-yqbmc-cheers-41874_Classic-Hor.jpeg 2x">
                 <!-- mobile -->
-                <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=365&auto=format&fit=crop"
+                <img src="./assers/d4722ed3-8710-462f-8687-29f40b8904d9.png"
                   alt="Vacation rental with pool and garden">
               </picture>
 
@@ -3574,86 +3725,81 @@
     </div>
 
 
-   <div class="search-bar" role="search" aria-label="Find hotels">
-  <!-- Destination -->
-  <div class="sb-field sb-destination">
-    <i class="fa fa-search"></i>
-    <input
-      id="destination"
-      type="text"
-      placeholder="Enter a destination or property"
-      aria-label="Destination"
-      autocomplete="off"
-    />
-  </div>
+    <div class="search-bar" role="search" aria-label="Find hotels">
+      <!-- Destination -->
+      <div class="sb-field sb-destination">
+        <i class="fa fa-search"></i>
+        <input id="destination" type="text" placeholder="Enter a destination or property" aria-label="Destination"
+          autocomplete="off" />
+      </div>
 
-  <!-- Dates -->
-<div class="sb-field sb-dates sb-dates-picker" id="dateTrigger">
-  <i class="fa fa-calendar"></i>
+      <!-- Dates -->
+      <div class="sb-field sb-dates sb-dates-picker" id="dateTrigger">
+        <i class="fa fa-calendar"></i>
 
-  <div class="sb-date">
-    <span class="sb-date-main" id="checkInMain">8 Feb 2026</span>
-    <span class="sb-date-sub" id="checkInSub">Sunday</span>
-  </div>
+        <div class="sb-date">
+          <span class="sb-date-main" id="checkInMain">8 Feb 2026</span>
+          <span class="sb-date-sub" id="checkInSub">Sunday</span>
+        </div>
 
-  <div class="sb-divider"></div>
+        <div class="sb-divider"></div>
 
-  <div class="sb-date">
-    <span class="sb-date-main" id="checkOutMain">9 Feb 2026</span>
-    <span class="sb-date-sub" id="checkOutSub">Monday</span>
-  </div>
+        <div class="sb-date">
+          <span class="sb-date-main" id="checkOutMain">9 Feb 2026</span>
+          <span class="sb-date-sub" id="checkOutSub">Monday</span>
+        </div>
 
-  <!-- hidden input flatpickr binds to -->
-  <input id="datePickerInput" type="text" class="visually-hidden">
-</div>
+        <!-- hidden input flatpickr binds to -->
+        <input id="datePickerInput" type="text" class="visually-hidden">
+      </div>
 
 
- 
 
-<!-- GUEST TOGGLE (already exists, keep it where it is) -->
-<div class="sb-field sb-guests" id="guestToggle">
-  <i class="fa fa-user-group"></i>
-  <div>
-    <div class="sb-main">2 adults</div>
-    <div class="sb-sub">1 room</div>
-  </div>
-  <i class="fa fa-chevron-down sb-chev"></i>
-</div>
 
-<!-- ✅ GUEST PANEL (THIS MUST BE AT BOTTOM OF BODY) -->
-<div id="guestPanel" class="guest-panel">
-  <div class="guest-row">
-    <span>Adults</span>
-    <div class="counter">
-      <button data-type="adults" data-action="dec">−</button>
-      <span id="adultsCount">2</span>
-      <button data-type="adults" data-action="inc">+</button>
+      <!-- GUEST TOGGLE (already exists, keep it where it is) -->
+      <div class="sb-field sb-guests" id="guestToggle">
+        <i class="fa fa-user-group"></i>
+        <div>
+          <div class="sb-main">2 adults</div>
+          <div class="sb-sub">1 room</div>
+        </div>
+        <i class="fa fa-chevron-down sb-chev"></i>
+      </div>
+
+      <!-- ✅ GUEST PANEL (THIS MUST BE AT BOTTOM OF BODY) -->
+      <div id="guestPanel" class="guest-panel">
+        <div class="guest-row">
+          <span>Adults</span>
+          <div class="counter">
+            <button data-type="adults" data-action="dec">−</button>
+            <span id="adultsCount">2</span>
+            <button data-type="adults" data-action="inc">+</button>
+          </div>
+        </div>
+
+        <div class="guest-row">
+          <span>Children</span>
+          <div class="counter">
+            <button data-type="children" data-action="dec">−</button>
+            <span id="childrenCount">0</span>
+            <button data-type="children" data-action="inc">+</button>
+          </div>
+        </div>
+
+        <div class="guest-row">
+          <span>Rooms</span>
+          <div class="counter">
+            <button data-type="rooms" data-action="dec">−</button>
+            <span id="roomsCount">1</span>
+            <button data-type="rooms" data-action="inc">+</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- CTA -->
+      <button class="sb-btn" id="searchGo" onclick="searchHotels()">SEARCH</button>
     </div>
-  </div>
-
-  <div class="guest-row">
-    <span>Children</span>
-    <div class="counter">
-      <button data-type="children" data-action="dec">−</button>
-      <span id="childrenCount">0</span>
-      <button data-type="children" data-action="inc">+</button>
-    </div>
-  </div>
-
-  <div class="guest-row">
-    <span>Rooms</span>
-    <div class="counter">
-      <button data-type="rooms" data-action="dec">−</button>
-      <span id="roomsCount">1</span>
-      <button data-type="rooms" data-action="inc">+</button>
-    </div>
-  </div>
-</div>
-
-
-  <!-- CTA -->
-  <button class="sb-btn" id="searchGo">SEARCH</button>
-</div>
 
 
     <!-- hero dots -->
@@ -3680,18 +3826,23 @@
         </h1>
 
         <p class="welcome-hero__lead">
-          PrimeStay helps you find accommodations that genuinely fit your needs, not just whatever happens to be available at the moment.
+          PrimeStay helps you find accommodations that genuinely fit your needs, not just whatever happens to be
+          available at the moment.
         </p>
 
         <div class="welcome-hero__more" id="moreContent">
           <p>
-            We’re built for people who value clarity. Whether you’re traveling for work, relocating to a new city, or planning a well-deserved escape, 
-            PrimeStay removes the guesswork. No endless scrolling. No misleading photos. No filters that promise everything and deliver nothing.
-             Just thoughtfully selected stays that align with your location, budget, and how you actually live.
+            We’re built for people who value clarity. Whether you’re traveling for work, relocating to a new city, or
+            planning a well-deserved escape,
+            PrimeStay removes the guesswork. No endless scrolling. No misleading photos. No filters that promise
+            everything and deliver nothing.
+            Just thoughtfully selected stays that align with your location, budget, and how you actually live.
           </p>
           <p>
-            From short-term apartments to long-term housing, PrimeStay connects you with places designed for comfort, reliability, and peace of mind.
-             Because the right place doesn’t just give you a bed, it gives you a sense of home, even if it’s only for one night.
+            From short-term apartments to long-term housing, PrimeStay connects you with places designed for comfort,
+            reliability, and peace of mind.
+            Because the right place doesn’t just give you a bed, it gives you a sense of home, even if it’s only for one
+            night.
           </p>
         </div>
 
@@ -3705,36 +3856,33 @@
       <!-- INFO CARD -->
       <div class="info-card-wrapper">
         <article class="info-card" aria-labelledby="card-title" role="region">
-  <div class="info-card__icon" aria-hidden="true">
-    <div class="bullet">i</div>
-  </div>
+          <div class="info-card__icon" aria-hidden="true">
+            <div class="bullet">i</div>
+          </div>
 
-  <div class="info-card__content">
-    <h3 id="card-title" class="info-card__title">
-      Find stays that match how you actually live
-    </h3>
+          <div class="info-card__content">
+            <h3 id="card-title" class="info-card__title">
+              Find stays that match how you actually live
+            </h3>
 
-    <p class="info-card__text">
-      PrimeStay helps you discover accommodations based on what truly matters — location, budget,
-      length of stay, and lifestyle. Whether you need a short-term apartment, a long-term place to settle,
-      or something in between, we surface options that make sense for you.
-      No clutter. No fake availability. Just places you can trust.
-    </p>
+            <p class="info-card__text">
+              PrimeStay helps you discover accommodations based on what truly matters — location, budget,
+              length of stay, and lifestyle. Whether you need a short-term apartment, a long-term place to settle,
+              or something in between, we surface options that make sense for you.
+              No clutter. No fake availability. Just places you can trust.
+            </p>
 
-    <div class="info-card__footer">
-      <a class="link-cta" href="#" aria-label="Explore available accommodations">
-        Explore stays
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-          <path d="M5 12h14M13 5l7 7-7 7"
-                stroke="currentColor"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-        </svg>
-      </a>
-    </div>
-  </div>
-</article>
+            <div class="info-card__footer">
+              <a class="link-cta" href="#" aria-label="Explore available accommodations">
+                Explore stays
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
 
       </div>
 
@@ -3742,85 +3890,89 @@
 
 
     <!-- ================= CAROUSEL: Fitness Center Hotels (original first carousel) ================= -->
-   <section class="sec" aria-labelledby="c1">
-  <div class="sec-head">
-    <h2 id="c1">Top Fitness-Friendly Stays in Quebec</h2>
-    <a class="sec-link" href="#">
-      View all <span class="arrow">›</span>
-    </a>
-  </div>
+    <section class="sec" aria-labelledby="c1">
+      <div class="sec-head">
+        <h2 id="c1">Top Fitness-Friendly Stays in Quebec</h2>
+        <a class="sec-link" href="#">
+          View all <span class="arrow">›</span>
+        </a>
+      </div>
 
-  <div class="crs" data-crs-id="fitness">
-    <button class="crs-arrow crs-left" data-crs-action="left" aria-label="Scroll left" disabled>‹</button>
+      <div class="crs" data-crs-id="fitness">
+        <button class="crs-arrow crs-left" data-crs-action="left" aria-label="Scroll left" disabled>‹</button>
 
-    <div class="crs-track" role="list" tabindex="0" aria-label="Fitness stays carousel" data-crs-track>
-      
-      <article class="crs-card" role="listitem" tabindex="0">
-        <div class="crs-media" style="background-image:url('./assers/lonrk-exterior-9338-hor-wide.webp');"></div>
-        <div class="crs-grad"></div>
-        <div class="crs-meta">
-          <span class="crs-tag">Downtown Quebec</span>
-          <div class="crs-title">Delta Hotels — City Center</div>
+        <div class="crs-track" role="list" tabindex="0" aria-label="Fitness stays carousel" data-crs-track>
+
+          <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media" style="background-image:url('./assers/lonrk-exterior-9338-hor-wide.webp');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Downtown Quebec</span>
+              <div class="crs-title">Delta Hotels — City Center</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
+
+          <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media" style="background-image:url('./assers/homeHero.jpeg');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Business District</span>
+              <div class="crs-title">Courtyard by Marriott — Work & Stay</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
+
+          <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media" style="background-image:url('./assers/dusri-corner-studio-9627-hor-wide.avif');">
+            </div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Extended Stay</span>
+              <div class="crs-title">Modern Studio Apartments</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
+
+          <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media"
+              style="background-image:url('./assers/el-dohel-dohel-4-bedroom-a-l17862-51364_Wide-Hor.avif');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Nature & Fitness</span>
+              <div class="crs-title">Mont-Sainte-Anne Active Stay</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
+
+          <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media"
+              style="background-image:url('./assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Accessible Living</span>
+              <div class="crs-title">Comfort-Focused Urban Suites</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
+
+          <article class="crs-card" role="listitem" tabindex="0">
+            <div class="crs-media" style="background-image:url('./assers/er-dohec-dohec-lobby-23078_Wide-Hor.avif');">
+            </div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Lifestyle Stay</span>
+              <div class="crs-title">Hotel PUR — Modern Living</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
+
         </div>
-        <div class="crs-chev">›</div>
-      </article>
 
-      <article class="crs-card" role="listitem" tabindex="0">
-        <div class="crs-media" style="background-image:url('./assers/homeHero.jpeg');"></div>
-        <div class="crs-grad"></div>
-        <div class="crs-meta">
-          <span class="crs-tag">Business District</span>
-          <div class="crs-title">Courtyard by Marriott — Work & Stay</div>
-        </div>
-        <div class="crs-chev">›</div>
-      </article>
-
-      <article class="crs-card" role="listitem" tabindex="0">
-        <div class="crs-media" style="background-image:url('./assers/dusri-corner-studio-9627-hor-wide.avif');"></div>
-        <div class="crs-grad"></div>
-        <div class="crs-meta">
-          <span class="crs-tag">Extended Stay</span>
-          <div class="crs-title">Modern Studio Apartments</div>
-        </div>
-        <div class="crs-chev">›</div>
-      </article>
-
-      <article class="crs-card" role="listitem" tabindex="0">
-        <div class="crs-media" style="background-image:url('./assers/el-dohel-dohel-4-bedroom-a-l17862-51364_Wide-Hor.avif');"></div>
-        <div class="crs-grad"></div>
-        <div class="crs-meta">
-          <span class="crs-tag">Nature & Fitness</span>
-          <div class="crs-title">Mont-Sainte-Anne Active Stay</div>
-        </div>
-        <div class="crs-chev">›</div>
-      </article>
-
-      <article class="crs-card" role="listitem" tabindex="0">
-        <div class="crs-media" style="background-image:url('./assers/el-wroel-accessible-living-room-24301_Classic-Hor.avif');"></div>
-        <div class="crs-grad"></div>
-        <div class="crs-meta">
-          <span class="crs-tag">Accessible Living</span>
-          <div class="crs-title">Comfort-Focused Urban Suites</div>
-        </div>
-        <div class="crs-chev">›</div>
-      </article>
-
-      <article class="crs-card" role="listitem" tabindex="0">
-        <div class="crs-media" style="background-image:url('./assers/er-dohec-dohec-lobby-23078_Wide-Hor.avif');"></div>
-        <div class="crs-grad"></div>
-        <div class="crs-meta">
-          <span class="crs-tag">Lifestyle Stay</span>
-          <div class="crs-title">Hotel PUR — Modern Living</div>
-        </div>
-        <div class="crs-chev">›</div>
-      </article>
-
-    </div>
-
-    <button class="crs-arrow crs-right" data-crs-action="right" aria-label="Scroll right">›</button>
-    <div class="crs-dots" data-crs-dots></div>
-  </div>
-</section>
+        <button class="crs-arrow crs-right" data-crs-action="right" aria-label="Scroll right">›</button>
+        <div class="crs-dots" data-crs-dots></div>
+      </div>
+    </section>
 
 
 
@@ -3839,57 +3991,61 @@
 
         <div class="crs-track" role="list" tabindex="0" aria-label="Dining-focused stays carousel" data-crs-track>
 
-  <article class="crs-card">
-    <div class="crs-media" style="background-image:url('./assers/ChatGPT Image Dec 8, 2025, 01_55_39 AM.png');"></div>
-    <div class="crs-grad"></div>
-    <div class="crs-meta">
-      <span class="crs-tag">Food District</span>
-      <div class="crs-title">Hotel PUR — Dining & Nightlife</div>
-    </div>
-    <div class="crs-chev">›</div>
-  </article>
+          <article class="crs-card">
+            <div class="crs-media" style="background-image:url('./assers/ChatGPT Image Dec 8, 2025, 01_55_39 AM.png');">
+            </div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Food District</span>
+              <div class="crs-title">Hotel PUR — Dining & Nightlife</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
 
-  <article class="crs-card">
-    <div class="crs-media" style="background-image:url('./assers/bruri-lobby-bar-8192-hor-wide.webp');"></div>
-    <div class="crs-grad"></div>
-    <div class="crs-meta">
-      <span class="crs-tag">On-Site Restaurant</span>
-      <div class="crs-title">Delta Hotels — Bar & Bistro Stay</div>
-    </div>
-    <div class="crs-chev">›</div>
-  </article>
+          <article class="crs-card">
+            <div class="crs-media" style="background-image:url('./assers/bruri-lobby-bar-8192-hor-wide.webp');"></div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">On-Site Restaurant</span>
+              <div class="crs-title">Delta Hotels — Bar & Bistro Stay</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
 
-  <article class="crs-card">
-    <div class="crs-media" style="background-image:url('./assers/ChatGPT Image Dec 8, 2025, 01_50_19 AM.png');"></div>
-    <div class="crs-grad"></div>
-    <div class="crs-meta">
-      <span class="crs-tag">Old Quebec</span>
-      <div class="crs-title">Historic Stays Near Local Cuisine</div>
-    </div>
-    <div class="crs-chev">›</div>
-  </article>
+          <article class="crs-card">
+            <div class="crs-media" style="background-image:url('./assers/ChatGPT Image Dec 8, 2025, 01_50_19 AM.png');">
+            </div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Old Quebec</span>
+              <div class="crs-title">Historic Stays Near Local Cuisine</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
 
-  <article class="crs-card">
-    <div class="crs-media" style="background-image:url('./assers/ChatGPT Image Dec 8, 2025, 01_52_39 AM.png');"></div>
-    <div class="crs-grad"></div>
-    <div class="crs-meta">
-      <span class="crs-tag">Business Dining</span>
-      <div class="crs-title">Work-Friendly Stays with Dining Access</div>
-    </div>
-    <div class="crs-chev">›</div>
-  </article>
+          <article class="crs-card">
+            <div class="crs-media" style="background-image:url('./assers/ChatGPT Image Dec 8, 2025, 01_52_39 AM.png');">
+            </div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Business Dining</span>
+              <div class="crs-title">Work-Friendly Stays with Dining Access</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
 
-  <article class="crs-card">
-    <div class="crs-media" style="background-image:url('./assers/403a753d-dd07-44e7-82bc-67e061b6a35e.png');"></div>
-    <div class="crs-grad"></div>
-    <div class="crs-meta">
-      <span class="crs-tag">Local Favorites</span>
-      <div class="crs-title">Boutique Stays Near Top Restaurants</div>
-    </div>
-    <div class="crs-chev">›</div>
-  </article>
+          <article class="crs-card">
+            <div class="crs-media" style="background-image:url('./assers/403a753d-dd07-44e7-82bc-67e061b6a35e.png');">
+            </div>
+            <div class="crs-grad"></div>
+            <div class="crs-meta">
+              <span class="crs-tag">Local Favorites</span>
+              <div class="crs-title">Boutique Stays Near Top Restaurants</div>
+            </div>
+            <div class="crs-chev">›</div>
+          </article>
 
-</div>
+        </div>
 
 
         <button class="crs-arrow crs-right" data-crs-action="right">›</button>
@@ -3946,54 +4102,54 @@
         <div class="crs-dots" data-crs-dots></div>
       </div>
     </section>
-    
+
     <div class="cards-wrapper">
 
-  <!-- Image left, text right -->
-  <article class="holiday-card" aria-labelledby="title-1">
-    <div class="holiday-image">
-      <img src="./assers/d4722ed3-8710-462f-8687-29f40b8904d9.png"
-           alt="People enjoying a warm evening meal in a cozy city apartment.">
-    </div>
+      <!-- Image left, text right -->
+      <article class="holiday-card" aria-labelledby="title-1">
+        <div class="holiday-image">
+          <img src="./assers/d4722ed3-8710-462f-8687-29f40b8904d9.png"
+            alt="People enjoying a warm evening meal in a cozy city apartment.">
+        </div>
 
-    <div class="holiday-content">
-      <p class="tag">SEASONAL STAYS</p>
-      <h2 id="title-1">Winter-ready stays in Quebec City</h2>
-      <p class="description">
-        Cold outside doesn’t mean uncomfortable inside. PrimeStay highlights winter-ready
-        accommodations in Quebec City — warm interiors, reliable heating, walkable locations,
-        and easy access to seasonal events and local food spots.
-        Perfect for short visits or extended winter stays.
-      </p>
-      <button class="explore-btn" type="button" aria-label="Explore winter stays in Quebec City">
-        Explore stays
-      </button>
-    </div>
-  </article>
+        <div class="holiday-content">
+          <p class="tag">SEASONAL STAYS</p>
+          <h2 id="title-1">Winter-ready stays in Quebec City</h2>
+          <p class="description">
+            Cold outside doesn’t mean uncomfortable inside. PrimeStay highlights winter-ready
+            accommodations in Quebec City — warm interiors, reliable heating, walkable locations,
+            and easy access to seasonal events and local food spots.
+            Perfect for short visits or extended winter stays.
+          </p>
+          <button class="explore-btn" type="button" aria-label="Explore winter stays in Quebec City">
+            Explore stays
+          </button>
+        </div>
+      </article>
 
-  <!-- Image right, text left -->
-  <article class="holiday-card holiday-card--reverse" aria-labelledby="title-2">
-    <div class="holiday-image">
-      <img src="./assers/mc-yqbmc-cheers-41874_Classic-Hor.jpeg"
-           alt="Friends enjoying dinner together in a modern dining space.">
-    </div>
+      <!-- Image right, text left -->
+      <article class="holiday-card holiday-card--reverse" aria-labelledby="title-2">
+        <div class="holiday-image">
+          <img src="./assers/mc-yqbmc-cheers-41874_Classic-Hor.jpeg"
+            alt="Friends enjoying dinner together in a modern dining space.">
+        </div>
 
-    <div class="holiday-content">
-      <p class="tag">LOCAL EXPERIENCES</p>
-      <h2 id="title-2">Stay close to food, culture, and nightlife</h2>
-      <p class="description">
-        Some trips revolve around experiences, not just a bed.
-        These stays are selected for their proximity to restaurants, cafés, markets,
-        and nightlife — so you spend less time commuting and more time enjoying the city.
-        Ideal for travelers who want to live like locals.
-      </p>
-      <button class="explore-btn" type="button" aria-label="Explore stays near food and nightlife">
-        Discover nearby stays
-      </button>
-    </div>
-  </article>
+        <div class="holiday-content">
+          <p class="tag">LOCAL EXPERIENCES</p>
+          <h2 id="title-2">Stay close to food, culture, and nightlife</h2>
+          <p class="description">
+            Some trips revolve around experiences, not just a bed.
+            These stays are selected for their proximity to restaurants, cafés, markets,
+            and nightlife — so you spend less time commuting and more time enjoying the city.
+            Ideal for travelers who want to live like locals.
+          </p>
+          <button class="explore-btn" type="button" aria-label="Explore stays near food and nightlife">
+            Discover nearby stays
+          </button>
+        </div>
+      </article>
 
-</div>
+    </div>
 
 
     <!-- ================= EXPERIENCES GRID (merged content from third fragment) ================= -->
@@ -4040,265 +4196,259 @@
 
     <!-- ================= HOTEL LISTINGS (merged long listing section) ================= -->
     <section class="sec" aria-labelledby="listings">
-  <div class="sec-head">
-    <h2 id="listings">Curated stays in Quebec City</h2>
+      <div class="sec-head">
+        <h2 id="listings">Curated stays in Quebec City</h2>
 
-    <div style="display:flex; gap:12px; align-items:center;">
-      <div class="results-bar">
-        <div class="results-info">
-          Showing <strong id="shownRange">1–6</strong> of <strong id="totalItems">6</strong>
-        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div class="results-bar">
+            <div class="results-info">
+              Showing <strong id="shownRange">1–6</strong> of <strong id="totalItems">6</strong>
+            </div>
 
-        <div class="sort-box">
-          <label for="sortSelect">Sort by</label>
-          <select id="sortSelect">
-            <option value="distance">Location</option>
-            <option value="price-low">Price (Low → High)</option>
-            <option value="price-high">Price (High → Low)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="list-wrap">
-
-    <!-- CARD 1 -->
-    <article class="list-item" data-index="0">
-      <div class="list-media">
-        <div class="media-nav">
-          <button class="mnav prev">‹</button>
-          <button class="mnav next">›</button>
-        </div>
-        <img src="./assers/lonri-suite-0020-hor-wide.webp"
-             alt="Historic Old Quebec accommodation"
-             data-slides="./assers/lonri-suite-0020-hor-wide.webp|./assers/hamra-exterior-2386-hor-wide.avif">
-        <div class="media-dots"><span class="active"></span><span></span></div>
-      </div>
-
-      <div class="list-body">
-        <div class="list-title">
-          <h3>Historic Old Quebec Stay</h3>
-          <div class="rating">★ 4.4 <span>(660+ reviews)</span> · Central</div>
-        </div>
-
-        <div class="list-meta">
-          Walkable accommodation located in the heart of Old Quebec
-        </div>
-
-        <div class="list-desc">
-          Ideal for sightseeing, culture lovers, and short city breaks.
-        </div>
-
-        <div class="list-actions">
-          <a class="details-link" href="#">View details <span>›</span></a>
-
-          <div class="price-block">
-            <div class="price-label">From</div>
-            <div class="price-amount">280 <span>$</span></div>
-            <button class="book-btn">View stay</button>
+            <div class="sort-box">
+              <label for="sortSelect">Sort by</label>
+              <select id="sortSelect">
+                <option value="distance">Location</option>
+                <option value="price-low">Price (Low → High)</option>
+                <option value="price-high">Price (High → Low)</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-    </article>
 
-    <!-- CARD 2 -->
-    <article class="list-item" data-index="1">
-      <div class="list-media">
-        <div class="media-nav">
-          <button class="mnav prev">‹</button>
-          <button class="mnav next">›</button>
-        </div>
-        <img src="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png"
-             alt="Business-friendly accommodation"
-             data-slides="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png|./assers/yqbmc-bar-0010-hor-clsc.webp">
-        <div class="media-dots"><span class="active"></span><span></span></div>
-      </div>
+      <div class="list-wrap">
 
-      <div class="list-body">
-        <div class="list-title">
-          <h3>Business-Ready Downtown Stay</h3>
-          <div class="rating">★ 4.3 <span>(520+ reviews)</span> · Near offices</div>
-        </div>
-
-        <div class="list-meta">
-          Well-connected stay designed for work trips and conferences
-        </div>
-
-        <div class="list-desc">
-          Fast Wi-Fi, quiet rooms, and easy access to transport.
-        </div>
-
-        <div class="list-actions">
-          <a class="details-link" href="#">View details <span>›</span></a>
-
-          <div class="price-block">
-            <div class="price-label">From</div>
-            <div class="price-amount">260 <span>$</span></div>
-            <button class="book-btn">View stay</button>
+        <!-- CARD 1 -->
+        <article class="list-item" data-index="0">
+          <div class="list-media">
+            <div class="media-nav">
+              <button class="mnav prev">‹</button>
+              <button class="mnav next">›</button>
+            </div>
+            <img src="./assers/lonri-suite-0020-hor-wide.webp" alt="Historic Old Quebec accommodation"
+              data-slides="./assers/hamra-exterior-2386-hor-wide.avif">
+            <div class="media-dots"><span class="active"></span><span></span></div>
           </div>
-        </div>
-      </div>
-    </article>
 
-    <!-- CARD 3 -->
-    <article class="list-item" data-index="2">
-      <div class="list-media">
-        <div class="media-nav">
-          <button class="mnav prev">‹</button>
-          <button class="mnav next">›</button>
-        </div>
-        <img src="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif"
-             alt="Extended stay studio"
-             data-slides="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif|./assers/ri-orkri-orkri-exterior-entrance-1-37392_Wide-Hor.avif">
-        <div class="media-dots"><span class="active"></span><span></span></div>
-      </div>
+          <div class="list-body">
+            <div class="list-title">
+              <h3>Historic Old Quebec Stay</h3>
+              <div class="rating">★ 4.4 <span>(660+ reviews)</span> · Central</div>
+            </div>
 
-      <div class="list-body">
-        <div class="list-title">
-          <h3>Modern Studio for Longer Stays</h3>
-          <div class="rating">★ 4.5 <span>(430+ reviews)</span> · Quiet area</div>
-        </div>
+            <div class="list-meta">
+              Walkable accommodation located in the heart of Old Quebec
+            </div>
 
-        <div class="list-meta">
-          Apartment-style accommodation suited for extended visits
-        </div>
+            <div class="list-desc">
+              Ideal for sightseeing, culture lovers, and short city breaks.
+            </div>
 
-        <div class="list-desc">
-          Kitchenette, extra storage, and comfortable living space.
-        </div>
+            <div class="list-actions">
+              <a class="details-link" href="#">View details <span>›</span></a>
 
-        <div class="list-actions">
-          <a class="details-link" href="#">View details <span>›</span></a>
-
-          <div class="price-block">
-            <div class="price-label">From</div>
-            <div class="price-amount">210 <span>$</span></div>
-            <button class="book-btn">View stay</button>
+              <div class="price-block">
+                <div class="price-label">From</div>
+                <div class="price-amount">280 <span>$</span></div>
+                <button class="book-btn">View stay</button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </article>
+        </article>
 
-    <!-- CARD 4 -->
-    <article class="list-item" data-index="3">
-      <div class="list-media">
-        <div class="media-nav">
-          <button class="mnav prev">‹</button>
-          <button class="mnav next">›</button>
-        </div>
-        <img src="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif"
-             alt="Nature-focused stay"
-             data-slides="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif|./assers/xf-ebjel-exterior-16831_Wide-Hor.avif">
-        <div class="media-dots"><span class="active"></span><span></span></div>
-      </div>
-
-      <div class="list-body">
-        <div class="list-title">
-          <h3>Scenic Nature-Side Stay</h3>
-          <div class="rating">★ 4.6 <span>(310+ reviews)</span> · Outdoors</div>
-        </div>
-
-        <div class="list-meta">
-          Peaceful stay close to trails and outdoor activities
-        </div>
-
-        <div class="list-desc">
-          Ideal for guests seeking space, calm, and fresh air.
-        </div>
-
-        <div class="list-actions">
-          <a class="details-link" href="#">View details <span>›</span></a>
-
-          <div class="price-block">
-            <div class="price-label">From</div>
-            <div class="price-amount">190 <span>$</span></div>
-            <button class="book-btn">View stay</button>
+        <!-- CARD 2 -->
+        <article class="list-item" data-index="1">
+          <div class="list-media">
+            <div class="media-nav">
+              <button class="mnav prev">‹</button>
+              <button class="mnav next">›</button>
+            </div>
+            <img src="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png" alt="Business-friendly accommodation"
+              data-slides="./assers/b77eb469-0080-4384-8fed-41f99204c91a.png|./assers/yqbmc-bar-0010-hor-clsc.webp">
+            <div class="media-dots"><span class="active"></span><span></span></div>
           </div>
-        </div>
-      </div>
-    </article>
 
-    <!-- CARD 5 -->
-    <article class="list-item" data-index="4">
-      <div class="list-media">
-        <div class="media-nav">
-          <button class="mnav prev">‹</button>
-          <button class="mnav next">›</button>
-        </div>
-        <img src="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp"
-             alt="Lifestyle-focused urban stay"
-             data-slides="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp">
-        <div class="media-dots"><span class="active"></span></div>
-      </div>
+          <div class="list-body">
+            <div class="list-title">
+              <h3>Business-Ready Downtown Stay</h3>
+              <div class="rating">★ 4.3 <span>(520+ reviews)</span> · Near offices</div>
+            </div>
 
-      <div class="list-body">
-        <div class="list-title">
-          <h3>Urban Lifestyle Stay</h3>
-          <div class="rating">★ 4.2 <span>(580+ reviews)</span> · Lively area</div>
-        </div>
+            <div class="list-meta">
+              Well-connected stay designed for work trips and conferences
+            </div>
 
-        <div class="list-meta">
-          Stay close to restaurants, cafés, and nightlife
-        </div>
+            <div class="list-desc">
+              Fast Wi-Fi, quiet rooms, and easy access to transport.
+            </div>
 
-        <div class="list-desc">
-          Best for travelers who want everything nearby.
-        </div>
+            <div class="list-actions">
+              <a class="details-link" href="#">View details <span>›</span></a>
 
-        <div class="list-actions">
-          <a class="details-link" href="#">View details <span>›</span></a>
-
-          <div class="price-block">
-            <div class="price-label">From</div>
-            <div class="price-amount">240 <span>$</span></div>
-            <button class="book-btn">View stay</button>
+              <div class="price-block">
+                <div class="price-label">From</div>
+                <div class="price-amount">260 <span>$</span></div>
+                <button class="book-btn">View stay</button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </article>
+        </article>
 
-    <!-- CARD 6 -->
-    <article class="list-item" data-index="5">
-      <div class="list-media">
-        <div class="media-nav">
-          <button class="mnav prev">‹</button>
-          <button class="mnav next">›</button>
-        </div>
-        <img src="./assers/lonrk-exterior-9338-hor-wide.webp"
-             alt="Comfort-focused accommodation"
-             data-slides="./assers/lonrk-exterior-9338-hor-wide.webp">
-        <div class="media-dots"><span class="active"></span></div>
-      </div>
-
-      <div class="list-body">
-        <div class="list-title">
-          <h3>Comfort-Focused City Stay</h3>
-          <div class="rating">★ 4.1 <span>(490+ reviews)</span> · Best value</div>
-        </div>
-
-        <div class="list-meta">
-          Practical accommodation offering strong value
-        </div>
-
-        <div class="list-desc">
-          Spacious rooms, fitness access, and reliable amenities.
-        </div>
-
-        <div class="list-actions">
-          <a class="details-link" href="#">View details <span>›</span></a>
-
-          <div class="price-block">
-            <div class="price-label">From</div>
-            <div class="price-amount">180 <span>$</span></div>
-            <button class="book-btn">View stay</button>
+        <!-- CARD 3 -->
+        <article class="list-item" data-index="2">
+          <div class="list-media">
+            <div class="media-nav">
+              <button class="mnav prev">‹</button>
+              <button class="mnav next">›</button>
+            </div>
+            <img src="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif" alt="Extended stay studio"
+              data-slides="./assers/ri-napnn-hotel-gricignano-26546-11169_Wide-Hor.avif|./assers/ri-orkri-orkri-exterior-entrance-1-37392_Wide-Hor.avif">
+            <div class="media-dots"><span class="active"></span><span></span></div>
           </div>
-        </div>
-      </div>
-    </article>
 
-  </div>
-</section>
+          <div class="list-body">
+            <div class="list-title">
+              <h3>Modern Studio for Longer Stays</h3>
+              <div class="rating">★ 4.5 <span>(430+ reviews)</span> · Quiet area</div>
+            </div>
+
+            <div class="list-meta">
+              Apartment-style accommodation suited for extended visits
+            </div>
+
+            <div class="list-desc">
+              Kitchenette, extra storage, and comfortable living space.
+            </div>
+
+            <div class="list-actions">
+              <a class="details-link" href="#">View details <span>›</span></a>
+
+              <div class="price-block">
+                <div class="price-label">From</div>
+                <div class="price-amount">210 <span>$</span></div>
+                <button class="book-btn">View stay</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 4 -->
+        <article class="list-item" data-index="3">
+          <div class="list-media">
+            <div class="media-nav">
+              <button class="mnav prev">‹</button>
+              <button class="mnav next">›</button>
+            </div>
+            <img src="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif" alt="Nature-focused stay"
+              data-slides="./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif|./assers/xf-ebjel-exterior-16831_Wide-Hor.avif">
+            <div class="media-dots"><span class="active"></span><span></span></div>
+          </div>
+
+          <div class="list-body">
+            <div class="list-title">
+              <h3>Scenic Nature-Side Stay</h3>
+              <div class="rating">★ 4.6 <span>(310+ reviews)</span> · Outdoors</div>
+            </div>
+
+            <div class="list-meta">
+              Peaceful stay close to trails and outdoor activities
+            </div>
+
+            <div class="list-desc">
+              Ideal for guests seeking space, calm, and fresh air.
+            </div>
+
+            <div class="list-actions">
+              <a class="details-link" href="#">View details <span>›</span></a>
+
+              <div class="price-block">
+                <div class="price-label">From</div>
+                <div class="price-amount">190 <span>$</span></div>
+                <button class="book-btn">View stay</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 5 -->
+        <article class="list-item" data-index="4">
+          <div class="list-media">
+            <div class="media-nav">
+              <button class="mnav prev">‹</button>
+              <button class="mnav next">›</button>
+            </div>
+            <img src="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp" alt="Lifestyle-focused urban stay"
+              data-slides="./assers/yqbmc-attraction-battlefields-0063-hor-clsc.webp">
+            <div class="media-dots"><span class="active"></span></div>
+          </div>
+
+          <div class="list-body">
+            <div class="list-title">
+              <h3>Urban Lifestyle Stay</h3>
+              <div class="rating">★ 4.2 <span>(580+ reviews)</span> · Lively area</div>
+            </div>
+
+            <div class="list-meta">
+              Stay close to restaurants, cafés, and nightlife
+            </div>
+
+            <div class="list-desc">
+              Best for travelers who want everything nearby.
+            </div>
+
+            <div class="list-actions">
+              <a class="details-link" href="#">View details <span>›</span></a>
+
+              <div class="price-block">
+                <div class="price-label">From</div>
+                <div class="price-amount">240 <span>$</span></div>
+                <button class="book-btn">View stay</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 6 -->
+        <article class="list-item" data-index="5">
+          <div class="list-media">
+            <div class="media-nav">
+              <button class="mnav prev">‹</button>
+              <button class="mnav next">›</button>
+            </div>
+            <img src="./assers/lonrk-exterior-9338-hor-wide.webp" alt="Comfort-focused accommodation"
+              data-slides="./assers/lonrk-exterior-9338-hor-wide.webp">
+            <div class="media-dots"><span class="active"></span></div>
+          </div>
+
+          <div class="list-body">
+            <div class="list-title">
+              <h3>Comfort-Focused City Stay</h3>
+              <div class="rating">★ 4.1 <span>(490+ reviews)</span> · Best value</div>
+            </div>
+
+            <div class="list-meta">
+              Practical accommodation offering strong value
+            </div>
+
+            <div class="list-desc">
+              Spacious rooms, fitness access, and reliable amenities.
+            </div>
+
+            <div class="list-actions">
+              <a class="details-link" href="#">View details <span>›</span></a>
+
+              <div class="price-block">
+                <div class="price-label">From</div>
+                <div class="price-amount">180 <span>$</span></div>
+                <button class="book-btn">View stay</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
 
   </div>
 
@@ -4463,6 +4613,171 @@
       </div>
     </div>
 
+    <div id="detailOverlay" class="detail-overlay" aria-hidden="true">
+      <button class="detail-close" aria-label="Close">&times;</button>
+
+      <!-- IMAGE SLIDER -->
+<div class="detail-media">
+  <div class="slider">
+    <div class="slides" id="detailSlides"></div>
+
+    <button class="overlayNav prev">‹</button>
+    <button class="overlayNav next">›</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="detail-content">
+  <h1 id="detailTitle"></h1>
+
+  <div class="detail-meta-row">
+    <span id="detailMeta"></span>
+    <span class="rating">
+      ⭐ <strong id="detailRating"></strong>
+      <small>(<span id="detailReviewsCount"></span> reviews)</small>
+    </span>
+  </div>
+
+  <p id="detailDesc"></p>
+
+  <!-- REVIEWS -->
+  <div class="reviews">
+    <h3>Guest reviews</h3>
+    <div id="reviewsList"></div>
+  </div>
+
+  <div class="detail-actions">
+    <button class="book-btn">Book now</button>
+    <button class="btn-ghost" id="closeDetails">Close</button>
+  </div>
+</div>
+    </div>
+
+     <div id="searchresultsOverlay" class="resultsOverlay hidden">
+    <div class="resultsOverlay-shell">
+
+      <div class="resultsOverlay-header">
+          <!-- OVERLAY CLOSE BUTTON -->
+  <button class="overlay-close" onclick="closeresultsOverlay()" aria-label="Close results">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+        <button class="filter-toggle" onclick="toggleFilters()" aria-label="Toggle filters">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+
+        <h2 class="resultsOverlay-title">
+          Hotels in <span id="resultsOverlayCity">Pretoria</span>
+        </h2>
+
+      </div>
+
+
+      <div class="resultsOverlay-body">
+
+        <aside class="filters">
+          <div class="filters-inner">
+
+            <!-- FILTER HEADER -->
+            <div class="filters-header">
+              <h4>Filter by</h4>
+
+              <button class="filters-close" onclick="toggleFilters()" aria-label="Close filters">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+
+            <!-- PRICE -->
+            <section class="filter-section">
+              <div class="filter-header">
+                <span>Price per night</span>
+                <strong id="priceValue">$ 500</strong>
+              </div>
+              <input id="priceFilter" type="range" min="50" max="500" value="500" oninput="updatePrice(this.value)">
+            </section>
+
+            <!-- rest stays the same -->
+
+
+            <!-- STAR RATING -->
+            <section class="filter-section">
+              <span class="section-title">Star rating</span>
+              <div class="star-grid">
+                <label><input type="checkbox" value="5" class="starFilter"><span>★★★★★</span></label>
+                <label><input type="checkbox" value="4" class="starFilter"><span>★★★★☆</span></label>
+                <label><input type="checkbox" value="3" class="starFilter"><span>★★★☆☆</span></label>
+              </div>
+            </section>
+
+            <!-- GUEST RATING -->
+            <section class="filter-section">
+              <span class="section-title">Guest rating</span>
+              <div class="rating-pills">
+                <button data-rating="7">7+</button>
+                <button data-rating="7.5">7.5+</button>
+                <button data-rating="8">8+</button>
+                <button data-rating="8.5">8.5+</button>
+              </div>
+            </section>
+
+            <!-- ACCOMMODATION TYPE -->
+            <section class="filter-section">
+              <span class="section-title">Accommodation</span>
+              <div class="toggle-list">
+                <label>
+                  <input type="checkbox" class="typeFilter" value="Hotel">
+                  <span class="toggle"></span>
+                  Hotels only
+                </label>
+                <label>
+                  <input type="checkbox" class="typeFilter" value="Apartment">
+                  <span class="toggle"></span>
+                  Apartments
+                </label>
+              </div>
+            </section>
+
+            <!-- FACILITIES -->
+            <section class="filter-section">
+              <span class="section-title">Facilities</span>
+              <div class="facility-tags">
+                <button data-facility="Free WiFi">Wi-Fi</button>
+                <button data-facility="Breakfast">Breakfast</button>
+                <button data-facility="AC">AC</button>
+                <button data-facility="Parking">Parking</button>
+                <button data-facility="Shuttle">Shuttle</button>
+              </div>
+            </section>
+
+            <!-- DISTANCE -->
+            <section class="filter-section">
+              <span class="section-title">Distance from center</span>
+              <select id="distanceFilter" onchange="renderHotels()">
+                <option value="any">Any distance</option>
+                <option value="1">≤ 1 km</option>
+                <option value="3">≤ 3 km</option>
+                <option value="5">≤ 5 km</option>
+              </select>
+            </section>
+
+          </div>
+        </aside>
+        <main class="results">
+          <ul id="resultsOverlayResults">
+
+          </ul>
+        </main>
+
+      </div>
+    </div>
+  </div>
+
+
+
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <!-- Replace YOUR_GOOGLE_API_KEY_HERE with your key. Enable Places API. -->
@@ -4590,16 +4905,6 @@
       });
 
 
-      qa('.crs-card, .list-item').forEach(node => {
-        node.addEventListener('click', (e) => {
-          // find a title inside
-          const t = q('.crs-title, .list-title h3', node) || q('.list-title h3', node);
-          const titleText = t ? (t.innerText || t.textContent) : 'Item';
-          alert(titleText + '\\n(Details placeholder)');
-        });
-      });
-
-
       const sortSel = q('#sortSelect');
       if (sortSel) {
         sortSel.addEventListener('change', () => {
@@ -4646,9 +4951,9 @@
             title: "Find & Reserve",
             desc: "Search hotels, resorts and Homes & Villas to book your stay.",
             image: {
-              src: "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop",
-              srcsetDesktop: "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=2880&auto=format&fit=crop 2x",
-              srcsetTablet: "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1536&auto=format&fit=crop 2x"
+              src: "./assers/hotel1.jpg",
+              srcsetDesktop: "./assers/hotel3.jpg 1x, ./assers/hotel4.jpg 2x",
+              srcsetTablet: "./assers/hotel5.jpg 1x, ./assers/hotel8.jpg 2x"
             },
             cta: { label: "Search Hotels", href: "/search/default.mi" }
           }
@@ -4667,9 +4972,9 @@
             title: "Popular Offers & Deals",
             desc: "Limited-time savings across hotels and packages.",
             image: {
-              src: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1200&auto=format&fit=crop",
-              srcsetDesktop: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=2880&auto=format&fit=crop 2x",
-              srcsetTablet: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1536&auto=format&fit=crop 2x"
+              src: "./assers/hotel18.jpg",
+              srcsetDesktop: "./assers/hotel20.jpg 1x, ./assers/hotel6.webp 2x",
+              srcsetTablet: "./assers/hotel2.avif 1x, ./assers/hotel18.avif 2x"
             },
             cta: { label: "View Offers", href: "/offers" }
           }
@@ -4688,9 +4993,9 @@
             title: "All-Inclusive Vacations",
             desc: "Your all-inclusive escape — rooms, dining and activities bundled.",
             image: {
-              src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
-              srcsetDesktop: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2880&auto=format&fit=crop 2x",
-              srcsetTablet: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1536&auto=format&fit=crop 2x"
+              src: "./assers/hotel6.webp",
+              srcsetDesktop: "./assers/hotel7.webp 1x, ./assers/hotel9.jpeg 2x",
+              srcsetTablet: "./assers/hotel10.jpeg 1x, ./assers/hotel12.jpeg 2x"
             },
             cta: { label: "Explore Vacations", href: "/vacations" }
           }
@@ -4709,9 +5014,9 @@
             title: "Explore Our Brands",
             desc: "Find the brand that fits your trip — luxury to select-service.",
             image: {
-              src: "https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=1200&auto=format&fit=crop",
-              srcsetDesktop: "https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=2880&auto=format&fit=crop 2x",
-              srcsetTablet: "https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1505691723518-36a1fb9a3c30?q=80&w=1536&auto=format&fit=crop 2x"
+              src: "./assers/hotel7.webp",
+              srcsetDesktop: "./assers/hotel6.webp 1x, ./assers/hotel7.jpeg 2x",
+              srcsetTablet: "./assers/hotel10.jpeg 1x, ./assers/hotel12.jpeg 2x"
             },
             cta: { label: "Browse Brands", href: "/brands" }
           }
@@ -4730,9 +5035,9 @@
             title: "Meetings & Events",
             desc: "Find venues, catering options and group services to make your event successful.",
             image: {
-              src: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
-              srcsetDesktop: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1440&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2880&auto=format&fit=crop 2x",
-              srcsetTablet: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=768&auto=format&fit=crop 1x, https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1536&auto=format&fit=crop 2x"
+              src: "./assers/lonrk-exterior-9338-hor-wide.webp",
+              srcsetDesktop: "./assers/xf-ebjel-exterior-16831_Wide-Hor.avif 1x, ./assers/ri-parrn-studio-suite14235-14096_Wide-Hor.avif 2x",
+              srcsetTablet: "./assers/hamra-exterior-2386-hor-wide.avif 1x, ./assers/hamra-exterior-2386-hor-wide.avif 2x"
             },
             cta: { label: "Plan an Event", href: "/meetings" }
           }
@@ -5165,9 +5470,9 @@
           // dots count per user's request: hidden cards count
           let dotsCount;
           if (dotsMode === 'hidden-count') {
-  const { total, visible } = computeLayout();
-  dotsCount = Math.max(1, total - visible + 1);
-} else { // pages
+            const { total, visible } = computeLayout();
+            dotsCount = Math.max(1, total - visible + 1);
+          } else { // pages
             dotsCount = Math.max(1, computeLayout().total - computeLayout().visible + 1);
           }
 
@@ -5206,10 +5511,10 @@
           }
         }
 
-       function mapStartToDotIndex(start) {
-  const { total, visible } = computeLayout();
-  return Math.max(0, Math.min(start, total - visible));
-}
+        function mapStartToDotIndex(start) {
+          const { total, visible } = computeLayout();
+          return Math.max(0, Math.min(start, total - visible));
+        }
 
 
         // sliding function with bounds and single-step move
@@ -5290,6 +5595,10 @@
         });
       });
     })();
+
+    let autoSlideTimer = null;
+let AUTO_SLIDE_DELAY = 4000;
+
 
     const overlay = document.getElementById("overlay");
     document.querySelector("#ctrl-label-sign").onclick = () => {
@@ -5421,204 +5730,734 @@
       dots.style.opacity = isOpen ? '0' : '1';
     });
 
-    const checkInMain  = document.getElementById('checkInMain');
-  const checkInSub   = document.getElementById('checkInSub');
-  const checkOutMain = document.getElementById('checkOutMain');
-  const checkOutSub  = document.getElementById('checkOutSub');
+    const checkInMain = document.getElementById('checkInMain');
+    const checkInSub = document.getElementById('checkInSub');
+    const checkOutMain = document.getElementById('checkOutMain');
+    const checkOutSub = document.getElementById('checkOutSub');
 
 
 
-const isMobile = window.matchMedia('(max-width: 900px)').matches;
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
 
-const pickerRaw = flatpickr('#datePickerInput', {
-  mode: 'range',
-  showMonths: isMobile ? 1 : 2,
-  disableMobile: true,
-  animate: true,
-  onChange(selectedDates) {
-    if (selectedDates[0]) updateDate(selectedDates[0], checkInMain, checkInSub);
-    if (selectedDates[1]) updateDate(selectedDates[1], checkOutMain, checkOutSub);
-  }
-});
-
-// 🔒 normalize: ALWAYS end up with a single instance
-let picker = Array.isArray(pickerRaw) ? pickerRaw[0] : pickerRaw;
-
-document.getElementById("dateTrigger").addEventListener("click", () => {
-  if (picker && typeof picker.open === 'function') {
-    picker.open();
-  }
-});
-
-  function updateDate(date, mainEl, subEl) {
-    mainEl.textContent = date.toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric"
+    const pickerRaw = flatpickr('#datePickerInput', {
+      mode: 'range',
+      showMonths: isMobile ? 1 : 2,
+      disableMobile: true,
+      animate: true,
+      onChange(selectedDates) {
+        if (selectedDates[0]) updateDate(selectedDates[0], checkInMain, checkInSub);
+        if (selectedDates[1]) updateDate(selectedDates[1], checkOutMain, checkOutSub);
+      }
     });
 
-    subEl.textContent = date.toLocaleDateString("en-GB", {
-      weekday: "long"
+    // 🔒 normalize: ALWAYS end up with a single instance
+    let picker = Array.isArray(pickerRaw) ? pickerRaw[0] : pickerRaw;
+
+    document.getElementById("dateTrigger").addEventListener("click", () => {
+      if (picker && typeof picker.open === 'function') {
+        picker.open();
+      }
     });
 
-    mainEl.animate(
-      [{ transform: "translateY(-4px)", opacity: 0 },
-       { transform: "translateY(0)", opacity: 1 }],
-      { duration: 220, easing: "ease-out" }
-    );
-  }
+    function updateDate(date, mainEl, subEl) {
+      mainEl.textContent = date.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
 
-  const guestToggle = document.getElementById("guestToggle");
-const guestPanel = document.getElementById("guestPanel");
-const guestChevron = guestToggle.querySelector(".sb-chev");
+      subEl.textContent = date.toLocaleDateString("en-GB", {
+        weekday: "long"
+      });
 
-let guestOpen = false;
+      mainEl.animate(
+        [{ transform: "translateY(-4px)", opacity: 0 },
+        { transform: "translateY(0)", opacity: 1 }],
+        { duration: 220, easing: "ease-out" }
+      );
+    }
 
-guestToggle.addEventListener("click", (e) => {
-  e.stopPropagation();
-  guestOpen = !guestOpen;
+    const guestToggle = document.getElementById("guestToggle");
+    const guestPanel = document.getElementById("guestPanel");
+    const guestChevron = guestToggle.querySelector(".sb-chev");
 
-  guestPanel.classList.toggle("open", guestOpen);
-  guestToggle.classList.toggle("active", guestOpen);
-});
+    let guestOpen = false;
 
-(() => {
-  const guestToggle = document.getElementById("guestToggle");
-  const guestPanel  = document.getElementById("guestPanel");
+    guestToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      guestOpen = !guestOpen;
 
-  if (!guestToggle || !guestPanel) return;
+      guestPanel.classList.toggle("open", guestOpen);
+      guestToggle.classList.toggle("active", guestOpen);
+    });
 
-  let isOpen = false;
+    (() => {
+      const guestPanel = document.getElementById("guestPanel");
 
-  function positionPanel() {
-    const r = guestToggle.getBoundingClientRect();
-    guestPanel.style.top  = `${r.bottom + window.scrollY + 8}px`;
-    guestPanel.style.left = `${r.left + window.scrollX}px`;
-    guestPanel.style.width = `${r.width}px`;
-  }
+      if (!guestToggle || !guestPanel) return;
 
-  function openPanel() {
-    positionPanel();
-    guestPanel.classList.add("open");
-    guestToggle.classList.add("active");
-    isOpen = true;
-  }
+      let isOpen = false;
 
-  function closePanel() {
-    guestPanel.classList.remove("open");
-    guestToggle.classList.remove("active");
-    isOpen = false;
-  }
+      function positionPanel() {
+        const r = guestToggle.getBoundingClientRect();
+      }
 
-  guestToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    isOpen ? closePanel() : openPanel();
-  });
+      function openPanel() {
+        positionPanel();
+        guestPanel.classList.add("open");
+        guestToggle.classList.add("active");
+        isOpen = true;
+      }
 
-  guestPanel.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
+      function closePanel() {
+        guestPanel.classList.remove("open");
+        guestToggle.classList.remove("active");
+        isOpen = false;
+      }
 
-  document.addEventListener("click", () => {
-    if (isOpen) closePanel();
-  });
+      guestToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        isOpen ? closePanel() : openPanel();
+      });
 
-  window.addEventListener("resize", () => {
-    if (isOpen) positionPanel();
-  });
+      guestPanel.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
 
-  window.addEventListener("scroll", () => {
-    if (isOpen) positionPanel();
-  });
-})();
+      document.addEventListener("click", () => {
+        if (isOpen) closePanel();
+      });
+
+      window.addEventListener("resize", () => {
+        if (isOpen) positionPanel();
+      });
+
+      window.addEventListener("scroll", () => {
+        if (isOpen) positionPanel();
+      });
+    })();
 
 
-window.addEventListener("resize", () => {
-  if (window.innerWidth < 768 && guestOpen) {
-    guestPanel.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-});
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 768 && guestOpen) {
+        guestPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
 
-const state = {
-  adults: 2,
-  children: 0,
-  rooms: 1
-};
+    const state = {
+      adults: 2,
+      children: 0,
+      rooms: 1
+    };
 
-const limits = {
-  adults: { min: 1, max: 10 },
-  children: { min: 0, max: 10 },
-  rooms: { min: 1, max: 5 }
-};
+    const limits = {
+      adults: { min: 1, max: 10 },
+      children: { min: 0, max: 10 },
+      rooms: { min: 1, max: 5 }
+    };
 
-const mainText = guestToggle.querySelector(".sb-main");
-const subText = guestToggle.querySelector(".sb-sub");
+    const mainText = guestToggle.querySelector(".sb-main");
+    const subText = guestToggle.querySelector(".sb-sub");
 
-function updateUI() {
-  document.getElementById("adultsCount").textContent = state.adults;
-  document.getElementById("childrenCount").textContent = state.children;
-  document.getElementById("roomsCount").textContent = state.rooms;
+    function updateUI() {
+      document.getElementById("adultsCount").textContent = state.adults;
+      document.getElementById("childrenCount").textContent = state.children;
+      document.getElementById("roomsCount").textContent = state.rooms;
 
-  mainText.textContent =
-    `${state.adults} adult${state.adults > 1 ? "s" : ""}` +
-    (state.children ? `, ${state.children} child${state.children > 1 ? "ren" : ""}` : "");
+      mainText.textContent =
+        `${state.adults} adult${state.adults > 1 ? "s" : ""}` +
+        (state.children ? `, ${state.children} child${state.children > 1 ? "ren" : ""}` : "");
 
-  subText.textContent =
-    `${state.rooms} room${state.rooms > 1 ? "s" : ""}`;
+      subText.textContent =
+        `${state.rooms} room${state.rooms > 1 ? "s" : ""}`;
+    }
+
+    guestPanel.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+
+      const type = btn.dataset.type;
+      const action = btn.dataset.action;
+
+      const step = action === "inc" ? 1 : -1;
+      const next = state[type] + step;
+
+      if (next < limits[type].min || next > limits[type].max) return;
+
+      state[type] = next;
+      updateUI();
+    });
+
+    updateUI();
+
+
+    function initDatePicker() {
+      const isMobile = window.innerWidth <= 900;
+
+      if (picker) {
+        picker.destroy(); // 🔥 REQUIRED
+      }
+
+      picker = flatpickr('#datePickerInput', {
+        mode: 'range',
+        showMonths: isMobile ? 1 : 2,
+        disableMobile: true,
+        animate: true,
+        onChange(selectedDates) {
+          if (selectedDates[0]) updateDate(selectedDates[0], checkInMain, checkInSub);
+          if (selectedDates[1]) updateDate(selectedDates[1], checkOutMain, checkOutSub);
+        }
+      });
+    }
+
+    // init once
+    initDatePicker();
+
+    // 🔁 re-init on resize (only when breakpoint changes)
+    let lastIsMobile = window.innerWidth <= 900;
+
+    window.addEventListener('resize', () => {
+      const nowIsMobile = window.innerWidth <= 900;
+      if (nowIsMobile !== lastIsMobile) {
+        lastIsMobile = nowIsMobile;
+        initDatePicker();
+      }
+    });
+
+    const q  = (sel, root = document) => root.querySelector(sel);
+const qa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+const detailOverlay = q('#detailOverlay');
+const detailImage   = q('#detailImage');
+const detailTitle   = q('#detailTitle');
+const detailMeta    = q('#detailMeta');
+const detailDesc    = q('#detailDesc');
+
+if (!detailOverlay) {
+  console.error('Detail overlay missing from DOM');
 }
 
-guestPanel.addEventListener("click", (e) => {
-  const btn = e.target.closest("button");
-  if (!btn) return;
+function openDetails(data) {
+  const images  = Array.isArray(data.images)  ? data.images  : [];
+  const reviews = Array.isArray(data.reviews) ? data.reviews : [];
 
-  const type = btn.dataset.type;
-  const action = btn.dataset.action;
+  detailTitle.textContent = data.title || '';
+  detailMeta.textContent  = data.meta || '';
+  detailDesc.textContent  = data.description || '';
 
-  const step = action === "inc" ? 1 : -1;
-  const next = state[type] + step;
+  ratingEl.textContent = data.rating || '—';
+  reviewsCountEl.textContent = reviews.length;
 
-  if (next < limits[type].min || next > limits[type].max) return;
-
-  state[type] = next;
-  updateUI();
-});
-
-updateUI();
-
-
-function initDatePicker() {
-  const isMobile = window.innerWidth <= 900;
-
-  if (picker) {
-    picker.destroy(); // 🔥 REQUIRED
+  if (images.length) {
+    renderSlides(images);
+  } else {
+    slidesWrap.innerHTML = '';
   }
 
-  picker = flatpickr('#datePickerInput', {
-    mode: 'range',
-    showMonths: isMobile ? 1 : 2,
-    disableMobile: true,
-    animate: true,
-    onChange(selectedDates) {
-      if (selectedDates[0]) updateDate(selectedDates[0], checkInMain, checkInSub);
-      if (selectedDates[1]) updateDate(selectedDates[1], checkOutMain, checkOutSub);
+  if (reviews.length) {
+    renderReviews(reviews);
+  } else {
+    reviewsList.innerHTML = '<p class="muted">No reviews yet</p>';
+  }
+
+  detailOverlay.classList.add('active');
+  detailOverlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+
+function closeDetails() {
+  stopAutoSlide(); // ⛔ stop autoplay
+  detailOverlay.classList.remove('active');
+  detailOverlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+
+q('.detail-close').addEventListener('click', closeDetails);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDetails();
+});
+
+qa('.crs-card, .list-item').forEach(node => {
+  node.addEventListener('click', () => {
+
+    /* TITLE */
+    const t = q('.crs-title, .list-title h3', node);
+    const titleText = t ? t.textContent.trim() : 'Item';
+
+    /* IMAGE — works for BOTH card types */
+    let image = '';
+
+    // list-item uses <img>
+    const imgEl = q('img', node);
+    if (imgEl) {
+      image = imgEl.src;
+    } 
+    // crs-card uses background-image
+    else {
+      const bg = q('.crs-media', node);
+      if (bg) {
+        image = getComputedStyle(bg)
+          .backgroundImage
+          .replace(/^url\(["']?/, '')
+          .replace(/["']?\)$/, '');
+      }
+    }
+
+    /* DESCRIPTION (fallback safe) */
+    const d = q('.list-desc', node);
+    const description = d
+      ? d.textContent.trim()
+      : 'Premium stay with modern comfort and top-tier amenities.';
+
+    qa('.crs-card, .list-item').forEach(node => {
+  node.addEventListener('click', () => {
+
+    const t = q('.crs-title, .list-title h3', node);
+    const titleText = t ? t.textContent.trim() : 'Item';
+
+    const d = q('.list-desc', node);
+    const description = d
+      ? d.textContent.trim()
+      : 'Premium stay with modern comfort and top-tier amenities.';
+
+    const images = extractImagesFromCard(node);
+
+    openDetails({
+      title: titleText,
+      meta: 'Featured stay · City center',
+      description,
+      rating: '4.6',
+      images,
+      reviews: [
+        { name: 'Ayesha', rating: '5.0', text: 'Perfect location and spotless rooms.' },
+        { name: 'James', rating: '4.5', text: 'Very modern, smooth check-in.' },
+        { name: 'Lerato', rating: '4.7', text: 'Loved the atmosphere and service.' }
+      ]
+    });
+  });
+});
+
+
+  });
+});
+
+let slideIndex = 0;
+
+
+const slidesWrap = q('#detailSlides');
+const ratingEl = q('#detailRating');
+const reviewsCountEl = q('#detailReviewsCount');
+const reviewsList = q('#reviewsList');
+
+function renderSlides(images) {
+  slidesWrap.innerHTML = '';
+  slideIndex = 0;
+
+  images.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.loading = 'lazy';
+    slidesWrap.appendChild(img);
+  });
+
+  updateSlide();
+  startAutoSlide(); // 🔥 AUTO START
+}
+
+function updateSlide() {
+  slidesWrap.style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+
+q('.overlayNav.prev').onclick = () => {
+  stopAutoSlide();
+  slideIndex = (slideIndex - 1 + slidesWrap.children.length) % slidesWrap.children.length;
+  updateSlide();
+  startAutoSlide();
+};
+
+q('.overlayNav.next').onclick = () => {
+  stopAutoSlide();
+  slideIndex = (slideIndex + 1) % slidesWrap.children.length;
+  updateSlide();
+  startAutoSlide();
+};
+
+
+function renderReviews(reviews) {
+  reviewsList.innerHTML = '';
+
+  reviews.slice(0, 3).forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'review';
+    div.innerHTML = `
+      <strong>${r.name} ⭐ ${r.rating}</strong>
+      <span>${r.text}</span>
+    `;
+    reviewsList.appendChild(div);
+  });
+}
+
+function extractImagesFromCard(node) {
+  const images = new Set();
+
+  // 1️⃣ <img> tags (covers list-item + inner images)
+  qa('img', node).forEach(img => {
+    if (img.src) images.add(img.src);
+  });
+
+  // 2️⃣ data-slides="a|b|c"
+  qa('[data-slides]', node).forEach(el => {
+    const slides = (el.dataset.slides || '')
+      .split('|')
+      .map(s => s.trim())
+      .filter(Boolean);
+    slides.forEach(src => images.add(src));
+  });
+
+  // 3️⃣ background-image (crs-card / media blocks)
+  qa('*', node).forEach(el => {
+    const bg = getComputedStyle(el).backgroundImage;
+    if (bg && bg !== 'none') {
+      const match = bg.match(/url\(["']?(.*?)["']?\)/);
+      if (match && match[1]) images.add(match[1]);
     }
   });
+
+  // 4️⃣ fallback safety
+  return images.size ? Array.from(images) : [];
 }
 
-// init once
-initDatePicker();
+function startAutoSlide() {
+  stopAutoSlide(); // safety
+  if (!slidesWrap || slidesWrap.children.length <= 1) return;
 
-// 🔁 re-init on resize (only when breakpoint changes)
-let lastIsMobile = window.innerWidth <= 900;
+  autoSlideTimer = setInterval(() => {
+    slideIndex = (slideIndex + 1) % slidesWrap.children.length;
+    updateSlide();
+  }, AUTO_SLIDE_DELAY);
+}
 
-window.addEventListener('resize', () => {
-  const nowIsMobile = window.innerWidth <= 900;
-  if (nowIsMobile !== lastIsMobile) {
-    lastIsMobile = nowIsMobile;
-    initDatePicker();
+function stopAutoSlide() {
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = null;
   }
+}
+
+
+slidesWrap.addEventListener('mouseenter', stopAutoSlide);
+slidesWrap.addEventListener('mouseleave', startAutoSlide);
+
+const infoCards = document.querySelectorAll('.info-card');
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        } else {
+          // 🔥 remove class so animation replays every time
+          entry.target.classList.remove('is-visible');
+        }
+      });
+    },
+    {
+      threshold: 0.35
+    }
+  );
+
+  infoCards.forEach(card => observer.observe(card));
+
+
+      const HOTEL_IMAGES = [
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+  "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+  "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+  "https://images.unsplash.com/photo-1496412705862-e0088f16f791",
+  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+  "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba",
+  "https://images.unsplash.com/photo-1493809842364-78817add7ffb",
+  "https://images.unsplash.com/photo-1505691938895-1758d7feb511"
+];
+
+
+    let hotels = [];
+
+    /* ================= HELPERS ================= */
+
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+    function stars(n) {
+      return "★".repeat(n) + "☆".repeat(5 - n);
+    }
+
+    /* ================= resultsOverlay ================= */
+    let minGuestRating = null;
+
+    // RATING PILL CLICK HANDLER
+    document.querySelectorAll(".rating-pills button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const val = parseFloat(btn.dataset.rating);
+
+        // toggle logic
+        if (minGuestRating === val) {
+          minGuestRating = null;
+          btn.classList.remove("active");
+        } else {
+          minGuestRating = val;
+          document
+            .querySelectorAll(".rating-pills button")
+            .forEach(b => b.classList.remove("active"));
+
+          btn.classList.add("active");
+        }
+
+        renderHotels();
+      });
+    });
+
+
+    function openresultsOverlay(city) {
+      resultsOverlayCity.textContent = city;
+      searchresultsOverlay.classList.remove("hidden");
+    }
+
+    function closeresultsOverlay() {
+      searchresultsOverlay.classList.add("hidden");
+    }
+
+    const maxDistance = distanceFilter.value;
+    const selectedFacilities = new Set();
+
+    // FACILITY FILTER HANDLER
+    document.querySelectorAll(".facility-tags button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const facility = btn.dataset.facility;
+
+        if (selectedFacilities.has(facility)) {
+          selectedFacilities.delete(facility);
+          btn.classList.remove("active");
+        } else {
+          selectedFacilities.add(facility);
+          btn.classList.add("active");
+        }
+
+        renderHotels();
+      });
+    });
+
+    /* ================= RENDER ================= */
+
+    function renderHotels() {
+      const list = document.getElementById("resultsOverlayResults");
+      const maxPrice = +priceFilter.value;
+      const maxDistance = distanceFilter.value;
+
+      const selectedStars = [...document.querySelectorAll(".starFilter:checked")]
+        .map(cb => +cb.value);
+
+      let filtered = hotels.filter(h => {
+        if (h.price > maxPrice) return false;
+        if (selectedStars.length && !selectedStars.includes(h.stars)) return false;
+        if (minGuestRating !== null && h.score < minGuestRating) return false;
+        if (maxDistance !== "any" && +h.distance > +maxDistance) return false;
+
+        if (
+          selectedFacilities.size &&
+          ![...selectedFacilities].every(f => h.amenities.includes(f))
+        ) return false;
+
+        return true;
+      });
+
+      list.innerHTML = filtered.map(h => `
+    <li>
+      <img src="${h.image}">
+      <div>
+        <div class="hotel-title">${h.name}</div>
+        <div class="stars">${stars(h.stars)}</div>
+
+<div class="location">
+  <i class="fa-solid fa-location-dot"></i> ${h.distance} Kilomiters
+</div>
+        <div class="rating">
+          <div class="score">${h.score}</div>
+          <div>Excellent · ${h.reviews} reviews</div>
+        </div>
+
+        <div class="amenities">
+          ${h.amenities.map(a => `<span>${a}</span>`).join("")}
+        </div>
+      </div>
+
+      <div class="price-box">
+        <div class="price">$ ${h.price}</div>
+        <div style="font-size:12px;color:#6b7280">
+          2 nights · $ ${h.price * 2}
+        </div>
+        <button class="book">Book</button>
+      </div>
+    </li>
+  `).join("");
+    }
+
+    /* ================= SEARCH ================= */
+    async function searchHotels() {
+      const location = destination.value.trim();
+      if (!location) return alert("Enter a location");
+
+      let coords = null;
+
+      /* ================= GEO FALLBACK CHAIN ================= */
+
+      const geoProviders = [
+        async () => {
+          const r = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`,
+            { headers: { "Accept": "application/json" } }
+          );
+          if (!r.ok) throw new Error("Nominatim failed");
+          const j = await r.json();
+          return j[0] ? { lat: j[0].lat, lon: j[0].lon } : null;
+        },
+
+        async () => {
+          const r = await fetch(
+            `https://geocode.maps.co/search?q=${encodeURIComponent(location)}`
+          );
+          if (!r.ok) throw new Error("Maps.co failed");
+          const j = await r.json();
+          return j[0] ? { lat: j[0].lat, lon: j[0].lon } : null;
+        }
+      ];
+
+      for (const provider of geoProviders) {
+        try {
+          coords = await provider();
+          if (coords) break;
+        } catch (e) {
+          console.warn("Geocode provider failed:", e.message);
+        }
+      }
+
+      if (!coords) {
+        console.warn("All geo APIs failed → using fallback data");
+        loadFallbackHotels(location);
+        return;
+      }
+
+      /* ================= HOTEL FETCH ================= */
+
+      try {
+        await fetchHotelsFromOverpass(coords.lat, coords.lon, location);
+      } catch (e) {
+        console.warn("Overpass failed → fallback data", e.message);
+        loadFallbackHotels(location);
+      }
+    }
+
+    async function fetchHotelsFromOverpass(lat, lon, location) {
+      const query = `
+    [out:json][timeout:25];
+    node["tourism"="hotel"](around:5000,${lat},${lon});
+    out tags;
+  `;
+
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "data=" + encodeURIComponent(query)
+      });
+
+      if (!res.ok) throw new Error("Overpass request failed");
+
+      const data = await res.json();
+
+      hotels = data.elements.map(h => ({
+        name: h.tags?.name || "Unnamed Hotel",
+        image: pick(HOTEL_IMAGES),
+        price: Math.floor(rand(80, 400)),
+        stars: Math.floor(rand(3, 6)),
+        score: rand(7.2, 9.6).toFixed(1),
+        reviews: Math.floor(rand(50, 900)),
+        distance: rand(0.3, 3.5).toFixed(1),
+        amenities: ["Free WiFi", "Breakfast", "AC", "Parking", "Shuttle"]
+          .filter(() => Math.random() > 0.4)
+      }));
+
+      openresultsOverlay(location);
+      renderHotels();
+    }
+
+    function loadFallbackHotels(location) {
+      hotels = Array.from({ length: 12 }, (_, i) => ({
+        name: `${location} Hotel ${i + 1}`,
+        image: pick(HOTEL_IMAGES),
+        price: Math.floor(rand(90, 350)),
+        stars: Math.floor(rand(3, 6)),
+        score: rand(7.5, 9.4).toFixed(1),
+        reviews: Math.floor(rand(80, 1200)),
+        distance: rand(0.2, 4).toFixed(1),
+        amenities: ["Free WiFi", "Breakfast", "AC", "Parking", "Shuttle"]
+          .filter(() => Math.random() > 0.4)
+      }));
+
+      openresultsOverlay(location);
+      renderHotels();
+    }
+
+
+    function updatePrice(value) {
+      document.getElementById("priceValue").textContent = `$ ${value}`;
+      renderHotels();
+    }
+
+    // STAR FILTER HANDLER
+    document.querySelectorAll(".starFilter").forEach(cb => {
+      cb.addEventListener("change", renderHotels);
+    });
+
+    function toggleFilters() {
+      const filters = document.querySelector(".filters");
+
+      filters.classList.toggle("open");
+    }
+
+    function toggleFilters() {
+      const filters = document.querySelector(".filters");
+      const btn = document.querySelector(".filter-toggle");
+
+      const isOpen = filters.classList.toggle("open");
+      btn.classList.toggle("active", isOpen);
+    }
+
+    function capitalizeFirst(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    function openresultsOverlay(city) {
+      resultsOverlayCity.textContent = capitalizeFirst(city.trim());
+      searchresultsOverlay.classList.remove("hidden");
+    }
+
+    function closeresultsOverlay() {
+  searchresultsOverlay.classList.add("hidden");
+}
+
+searchresultsOverlay.addEventListener("click", e => {
+  if (e.target === searchresultsOverlay) closeresultsOverlay();
 });
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeresultsOverlay();
+});
+
   </script>
 </body>
 
