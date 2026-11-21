@@ -1,0 +1,167 @@
+.list-search{
+    max-width: 440px;
+    margin-bottom: 16px;
+}
+
+.list-card{
+    overflow: hidden;
+}
+
+/* desktop: table-like rows */
+.list-row{
+    display: grid;
+    grid-template-columns: 64px minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) 92px;
+    align-items: center;
+    gap: 16px;
+    max-height: 160px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
+    transition: background-color .2s;
+}
+.list-row:last-child{ border-bottom: 0; }
+
+@media (hover:hover){
+    .list-row:not(.list-head):hover{ background: #F8FAFD; }
+}
+
+.list-head{
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: #F8FAFD;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ink-3);
+}
+
+.thumb{
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: var(--r-md);
+    background: var(--bg);
+    color: var(--ink-3);
+}
+.thumb img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.list-name{
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+/* chip + price are separate cells on desktop, one stacked block on mobile */
+.list-meta{ display: contents; }
+.list-meta .chip{ justify-self: start; }
+
+.list-specs{
+    color: var(--ink-3);
+    font-size: .8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.list-price{
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* edit + remove buttons */
+.list-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+}
+@media (hover:hover){
+    .icon-btn.accent:hover{ background: var(--brand-50); color: var(--brand-600); }
+}
+.icon-btn.accent{ color: var(--ink-3); }
+
+/* row leaves with a slide + collapse after a successful delete */
+.list-row.is-leaving{
+    overflow: hidden;
+    animation: rowLeave .32s var(--ease-out) forwards;
+}
+@keyframes rowLeave{
+    from{ opacity: 1; max-height: 160px; }
+    to{
+        opacity: 0;
+        transform: translateX(28px);
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-bottom-width: 0;
+    }
+}
+
+/* skeleton shapes */
+.skel-thumb{ width: 64px; height: 64px; border-radius: var(--r-md); }
+.skel-line{ height: 14px; width: 80%; }
+.skel-line.short{ width: 50%; }
+.skel-chip{ height: 24px; width: 90px; border-radius: 999px; }
+
+/* ---------- mobile: each row becomes a compact product card ---------- */
+@media (max-width: 720px){
+    .list-head{ display: none; }
+
+    .list-row{
+        grid-template-columns: 72px minmax(0, 1fr) 92px;
+        grid-template-areas:
+            "thumb name act"
+            "thumb meta act";
+        gap: 4px 14px;
+        padding: 14px 12px 14px 14px;
+    }
+    .list-row > .thumb,
+    .list-row > .skel-thumb{ grid-area: thumb; width: 72px; height: 72px; align-self: center; }
+    .list-row > .list-name{ grid-area: name; align-self: end; }
+    .list-row > .list-actions{ grid-area: act; align-self: center; }
+
+    .list-meta{
+        grid-area: meta;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px 10px;
+        align-self: start;
+    }
+
+    /* skeleton rows reuse the same grid */
+    .list-row > .skel-line:not(.short){ grid-area: name; }
+    .list-row > .skel-chip{ grid-area: meta; }
+    .list-row > .skel-line.short{ display: none; }
+}
+
+@media (max-width: 720px){
+    .list-search{ max-width: none; }
+}
+
+@media (max-width: 860px){
+    .page-head .btn{ display: none; }
+}
+
+/* compact phone sizing */
+@media (max-width: 600px){
+    .list-search{ margin-bottom: 12px; }
+    .list-row{
+        grid-template-columns: 56px minmax(0, 1fr) 84px;
+        gap: 2px 12px;
+        padding: 10px 6px 10px 12px;
+    }
+    .list-row > .thumb,
+    .list-row > .skel-thumb{ width: 56px; height: 56px; }
+    .thumb{ border-radius: 12px; }
+    .thumb svg{ width: 18px; height: 18px; }
+    .list-name{ font-size: 14px; line-height: 1.3; }
+    .list-price{ font-size: 13px; }
+    .list-meta{ gap: 2px 8px; }
+    .list-row .icon-btn svg{ width: 17px; height: 17px; }
+    .list-actions{ gap: 4px; }
+}
