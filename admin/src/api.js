@@ -2,7 +2,7 @@ import axios from "axios";
 
 // VITE_API_URL wins when it is set at build time. Production builds fall back to the deployed API
 // (never localhost), and local `npm run dev` falls back to the local server.
-const DEPLOYED_API = "https://shopping-cart-1-wmbm.onrender.com";
+const DEPLOYED_API = "https://primestay-backend-d4lq.onrender.com";
 export const API_URL = (import.meta.env.VITE_API_URL || (import.meta.env.PROD ? DEPLOYED_API : "http://localhost:4000")).replace(/\/+$/,"");
 
 const api = axios.create({ baseURL: API_URL });
