@@ -55,7 +55,7 @@
     aspect-ratio: 1 / 1;
     padding: 9px;
     border-radius: 16px;
-    background: linear-gradient(160deg, #f4f8fb, #e6eef5);
+    background: #f4f8fb;
 }
 
 .cart-thumb img{

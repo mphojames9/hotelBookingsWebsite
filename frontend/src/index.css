@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Figtree:wght@400;500;600;700;800&display=swap');
 
 :root{
     /* colour */
-    --ink: #0a1f33;
-    --ink-soft: #17314c;
+    --ink: #0f1c3a;
+    --ink-soft: #24335a;
     --muted: #5b6d80;
-    --line: #e2e8ef;
-    --panel: #eef3f8;
+    --line: #e3d9c8;
+    --panel: #ece3d4;
     --surface: var(--panel);
-    --canvas: #f5f8fb;
+    --canvas: #f5efe6;
     --paper: #ffffff;
-    --brand: #2aa1d9;          /* the blue in the One Stop logo */
-    --brand-strong: #0a6aa1;   /* buttons and text on white (AA contrast) */
-    --brand-deep: #08507a;
-    --mint: #34d3a5;
+    --brand: #f4b942;          /* the blue in the One Stop logo */
+    --brand-strong: #0f1c3a;   /* buttons and text on white (AA contrast) */
+    --brand-deep: #08122b;
+    --mint: #ff6a3d;
     --success: #0f8a4b;
     --warn: #8a5a00;
     --danger: #b3261e;
@@ -35,7 +35,7 @@
     --tabbar-h: 64px;
     --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Fraunces", Georgia, "Segoe UI", system-ui, sans-serif;
     --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
 }
 
@@ -393,7 +393,7 @@ button{
 /* the home page is full width (hero image runs edge to edge) */
 .app.app-wide{width:100%;margin:0;padding-bottom:0}
 
-/* fixed site header: other pages start below it, the home hero runs underneath it */
+/* sticky site header */
 :root{ --nav-h: 76px; }
-.app:not(.app-wide){ padding-top: 92px; }
-@media (max-width: 900px){ :root{ --nav-h: 64px; } .app:not(.app-wide){ padding-top: 80px; } }
+@media (max-width: 900px){ :root{ --nav-h: 64px; } }
+.app:not(.app-wide){ padding-top: 28px; }

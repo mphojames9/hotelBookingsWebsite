@@ -23,89 +23,64 @@ const fmtDay = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-ZA', 
 const fmtWeekday = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-ZA', { weekday: 'long' });
 const scrollToId = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
-/* ---------- search bar (destination, dates, guests) ---------- */
+/* ---------- search card (destination, dates, guests) ---------- */
 const SearchBar = ({ query, setQuery, onSearch }) => {
-  const { stay, setStay, cartItems } = useContext(StoreContext);
-  const [open, setOpen] = useState(false);
-  const rooms = Object.values(cartItems).reduce((a, b) => a + b, 0);
+  const { stay, setStay } = useContext(StoreContext);
   const today = toISO(new Date());
   const pick = (e) => e.currentTarget.showPicker?.();
-
   return (
-    <form className="ps-search" id="find" role="search" aria-label="Find a room" onSubmit={(e) => { e.preventDefault(); onSearch(); }}>
-      <label className="sb-field sb-dest">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
-        <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search rooms, e.g. sea view suite" aria-label="Search rooms" />
+    <form className="sx" id="find" role="search" aria-label="Find a room" onSubmit={(e) => { e.preventDefault(); onSearch(); }}>
+      <label className="sx-box sx-dest">
+        <span className="sx-label">Looking for</span>
+        <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Sea view, suite, family room…" aria-label="Search rooms" />
       </label>
-
-      <div className="sb-field sb-dates">
-        <div className="sb-date">
-          <span className="sb-main">{fmtDay(stay.checkIn)}</span>
-          <span className="sb-sub">{fmtWeekday(stay.checkIn)}</span>
-          <input type="date" aria-label="Check-in" min={today} value={stay.checkIn} onClick={pick} onChange={(e) => e.target.value && setStay({ checkIn: e.target.value })} />
-        </div>
-        <span className="sb-divider" />
-        <div className="sb-date">
-          <span className="sb-main">{fmtDay(stay.checkOut)}</span>
-          <span className="sb-sub">{fmtWeekday(stay.checkOut)}</span>
-          <input type="date" aria-label="Check-out" min={addDaysISO(stay.checkIn, 1)} value={stay.checkOut} onClick={pick} onChange={(e) => e.target.value && setStay({ checkOut: e.target.value })} />
+      <div className="sx-box sx-date">
+        <span className="sx-label">Check-in</span>
+        <span className="sx-main">{fmtDay(stay.checkIn)}</span>
+        <input type="date" aria-label="Check-in" min={today} value={stay.checkIn} onClick={pick} onChange={(e) => e.target.value && setStay({ checkIn: e.target.value })} />
+      </div>
+      <div className="sx-box sx-date">
+        <span className="sx-label">Check-out</span>
+        <span className="sx-main">{fmtDay(stay.checkOut)}</span>
+        <input type="date" aria-label="Check-out" min={addDaysISO(stay.checkIn, 1)} value={stay.checkOut} onClick={pick} onChange={(e) => e.target.value && setStay({ checkOut: e.target.value })} />
+      </div>
+      <div className="sx-box sx-guests">
+        <span className="sx-label">Guests</span>
+        <div className="sx-step">
+          <button type="button" aria-label="Fewer guests" onClick={() => setStay({ guests: Math.max(1, stay.guests - 1) })}>&minus;</button>
+          <b>{stay.guests}</b>
+          <button type="button" aria-label="More guests" onClick={() => setStay({ guests: Math.min(20, stay.guests + 1) })}>+</button>
         </div>
       </div>
-
-      <div className="sb-field sb-guests">
-        <button type="button" className="sb-guest-btn" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-          <span>
-            <span className="sb-main">{stay.guests} {stay.guests === 1 ? 'guest' : 'guests'}</span>
-            <span className="sb-sub">{rooms > 0 ? `${rooms} ${rooms === 1 ? 'room' : 'rooms'} selected` : 'No rooms yet'}</span>
-          </span>
-          <span aria-hidden="true">&#9662;</span>
-        </button>
-        {open && (
-          <div className="sb-panel">
-            <span>Guests</span>
-            <div className="sb-step">
-              <button type="button" aria-label="Fewer guests" onClick={() => setStay({ guests: Math.max(1, stay.guests - 1) })}>&minus;</button>
-              <b>{stay.guests}</b>
-              <button type="button" aria-label="More guests" onClick={() => setStay({ guests: Math.min(20, stay.guests + 1) })}>+</button>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <button type="submit" className="sb-go">SEARCH</button>
+      <button type="submit" className="sx-go">Check availability</button>
     </form>
   );
 };
 
-/* ---------- one room as a photo card with text on a gradient ---------- */
-const PhotoCard = ({ room, url, tag }) => (
-  <button type="button" className="ps-photo" onClick={() => openProduct(room._id)} aria-label={`View ${room.name}`}>
-    <img src={url + '/images/' + room.image} alt="" loading="lazy" />
-    <span className="ps-photo-text">
-      <small>{tag || room.category}</small>
+/* ---------- room card with the photo on top and the text underneath ---------- */
+const Tile = ({ room, url }) => (
+  <button type="button" className="tile" onClick={() => openProduct(room._id)} aria-label={`View ${room.name}`}>
+    <span className="tile-img"><img src={url + '/images/' + room.image} alt="" loading="lazy" /></span>
+    <span className="tile-body">
+      <small>{room.category} &middot; sleeps {room.maxGuests || 2}</small>
       <strong>{room.name}</strong>
-      <em>{formatPrice(room.price)} / night</em>
+      <em>{formatPrice(room.price)} <span>/ night</span></em>
     </span>
   </button>
 );
 
 /* ---------- horizontal row with arrows ---------- */
-const Row = ({ id, title, rooms, url, onViewAll, tagOf }) => {
+const Row = ({ rooms, url }) => {
   const ref = useRef(null);
   const by = (dir) => { const el = ref.current; el?.scrollBy({ left: dir * el.clientWidth * 0.9, behavior: 'smooth' }); };
-  if (rooms.length === 0) return null;
   return (
-    <section className="ps-sec" id={id} aria-label={title}>
-      <h2>{title}</h2>
-      {onViewAll && <button type="button" className="ps-chip" onClick={onViewAll}>View all &rsaquo;</button>}
-      <div className="ps-row-wrap">
-        {rooms.length > 4 && <button type="button" className="ps-arrow ps-prev" aria-label="Scroll left" onClick={() => by(-1)}>&lsaquo;</button>}
-        <div className="ps-row" ref={ref}>
-          {rooms.map((room) => <PhotoCard key={room._id} room={room} url={url} tag={tagOf?.(room)} />)}
-        </div>
-        {rooms.length > 4 && <button type="button" className="ps-arrow ps-next" aria-label="Scroll right" onClick={() => by(1)}>&rsaquo;</button>}
-      </div>
-    </section>
+    <div className="row-wrap">
+      <div className="row" ref={ref}>{rooms.map((room) => <Tile key={room._id} room={room} url={url} />)}</div>
+      {rooms.length > 4 && <div className="row-btns">
+        <button type="button" aria-label="Scroll left" onClick={() => by(-1)}>&larr;</button>
+        <button type="button" aria-label="Scroll right" onClick={() => by(1)}>&rarr;</button>
+      </div>}
+    </div>
   );
 };
 
@@ -161,12 +136,15 @@ const Home = () => {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
   const [smart, setSmart] = useState(null);
+  const [extra, setExtra] = useState(null); // filter from the header menu: {label, categories, minPrice, maxPrice, minGuests}
   const [slide, setSlide] = useState(0);
   useEffect(() => { const t = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 6000); return () => clearInterval(t); }, []);
 
   // Spotlight and the nav ask the home page to scroll, filter or reveal a room
   useEffect(() => {
     if (!state) return;
+    setExtra(state.filter || null);
+    if (state.filter) { setSmart(null); setCategory('All'); }
     if (state.category) { setSmart(null); setCategory(state.category); }
     if (state.smart) { setSmart(state.smart); setCategory('All'); }
     if (state.reveal) { setSmart(null); setCategory('All'); setQuery(''); }
@@ -184,70 +162,103 @@ const Home = () => {
   const order = smart ? new Map(smart.ids.map((id, i) => [id, i])) : null;
   let visible = rooms.filter((r) =>
     (category === 'All' || r.category === category) &&
+    (!extra || ((!extra.categories || extra.categories.includes(r.category)) && (extra.minPrice == null || r.price >= extra.minPrice) && (extra.maxPrice == null || r.price <= extra.maxPrice) && (extra.minGuests == null || (r.maxGuests || 2) >= extra.minGuests))) &&
     (!q || [r.name, r.description, r.category].some((t) => t?.toLowerCase().includes(q))) &&
     (!order || order.has(r._id)));
   if (order) visible = [...visible].sort((a, b) => order.get(a._id) - order.get(b._id));
 
   const hero = SLIDES[slide % SLIDES.length];
   const picked = Object.values(cartItems).reduce((a, b) => a + b, 0);
-  const viewAll = (name) => { setSmart(null); setCategory(name); setTimeout(() => scrollToId('listings'), 50); };
+  const viewAll = (name) => { setSmart(null); setExtra(null); setCategory(name); setTimeout(() => scrollToId('listings'), 50); };
   const search = () => { setSmart(null); setCategory('All'); scrollToId('listings'); };
+
+  const typeTiles = types.slice(0, 6).map((t) => ({ name: t, rooms: rooms.filter((r) => r.category === t) }));
+  const sideA = SLIDES[(slide + 1) % SLIDES.length], sideB = SLIDES[(slide + 2) % SLIDES.length];
 
   return (
     <div className="ps">
-      <section className="ps-hero" aria-label="Hero banner">
-        <div className="ps-hero-media">
-          <img key={slide} className="ps-hero-img" src={hero.src} alt={hero.alt} />
-          <div className="ps-hero-shade" aria-hidden="true" />
-          <div className="ps-hero-copy">
-            <p>Free cancellation &middot; Best rate guaranteed</p>
-            <div className="ps-hero-title">Stay somewhere<br />extraordinary</div>
-          </div>
-          <div className="ps-dots" role="tablist" aria-label="Hero slides">
-            {SLIDES.map((_, i) => <button key={i} type="button" role="tab" aria-selected={i === slide} aria-label={`Slide ${i + 1}`} className={i === slide ? 'on' : ''} onClick={() => setSlide(i)} />)}
-          </div>
-          <button type="button" className="ps-nav-btn l" aria-label="Previous slide" onClick={() => setSlide((s) => (s - 1 + SLIDES.length) % SLIDES.length)}>&lsaquo;</button>
-          <button type="button" className="ps-nav-btn r" aria-label="Next slide" onClick={() => setSlide((s) => (s + 1) % SLIDES.length)}>&rsaquo;</button>
+      <section className="hx" aria-label="Find your stay">
+        <div className="hx-copy">
+          <p className="hx-tag"><i aria-hidden="true" />Free cancellation up to 48 hours before check-in</p>
+          <h1>Stay somewhere <em>you will talk about.</em></h1>
+          <p className="hx-lead">Handpicked rooms, honest prices and instant confirmation. Pick your dates and see exactly what is free.</p>
+          <SearchBar query={query} setQuery={setQuery} onSearch={search} />
+          <ul className="hx-proof">
+            <li><b>4.9</b> guest rating</li>
+            <li><b>{rooms.length || '15'}</b> rooms to choose from</li>
+            <li><b>0</b> booking fees</li>
+          </ul>
         </div>
-        <SearchBar query={query} setQuery={setQuery} onSearch={search} />
+        <div className="hx-art" aria-hidden="false">
+          <img key={slide} className="hx-main" src={hero.src} alt={hero.alt} />
+          <button type="button" className="hx-side a" aria-label="Show next photo" onClick={() => setSlide((s) => (s + 1) % SLIDES.length)}><img src={sideA.src} alt="" /></button>
+          <button type="button" className="hx-side b" aria-label="Show another photo" onClick={() => setSlide((s) => (s + 2) % SLIDES.length)}><img src={sideB.src} alt="" /></button>
+          <span className="hx-badge"><b>Instant</b> confirmation</span>
+        </div>
       </section>
 
-      <section className="ps-welcome" aria-labelledby="ps-welcome-title">
-        <p className="ps-eyebrow">PrimeStay &middot; Smarter stays</p>
-        <span className="ps-rule" aria-hidden="true" />
-        <h1 id="ps-welcome-title">Find the right room,<br />without the hassle</h1>
-        <p>Pick your dates, see what is genuinely available, and book in minutes. No surprise fees, and free cancellation up to 48 hours before check-in.</p>
+      <section className="trust" aria-label="Why guests book with us">
+        <ul>
+          <li><strong>Free cancellation</strong><span>Up to 48 hours before arrival</span></li>
+          <li><strong>Instant confirmation</strong><span>Your room is held the moment you pay</span></li>
+          <li><strong>Secure payment</strong><span>Card payments handled by Stripe</span></li>
+          <li><strong>Real availability</strong><span>Only rooms that are actually free</span></li>
+        </ul>
       </section>
 
       {!ready && <p className="ps-loading">Loading rooms&hellip;</p>}
       {ready && rooms.length === 0 && <p className="ps-loading">No rooms are listed yet. Check back soon.</p>}
 
-      <Row id="featured" title="Featured rooms" rooms={rooms.slice(0, 8)} url={url} onViewAll={() => viewAll('All')} />
-      {types.filter((t) => rooms.filter((r) => r.category === t).length >= 2).slice(0, 2).map((t) => (
-        <Row key={t} id={`type-${t}`} title={`${t} rooms`} rooms={rooms.filter((r) => r.category === t)} url={url} onViewAll={() => viewAll(t)} tagOf={(r) => `Sleeps ${r.maxGuests || 2}`} />
-      ))}
+      {typeTiles.length > 0 && (
+        <section className="sec" id="types" aria-labelledby="types-h">
+          <header className="sec-head"><div><p className="eyebrow">Room types</p><h2 id="types-h">Find your kind of stay</h2></div></header>
+          <div className="types">
+            {typeTiles.map(({ name, rooms: rs }) => (
+              <button type="button" key={name} className="type" onClick={() => viewAll(name)}>
+                <span className="type-img"><img src={url + '/images/' + rs[0].image} alt="" loading="lazy" /></span>
+                <span className="type-body"><strong>{name}</strong><small>from {formatPrice(Math.min(...rs.map((r) => r.price)))}</small></span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
-      <section className="ps-feature" id="why">
-        <div className="ps-feature-img"><img src={featureImg} alt="Sea view room with a balcony" loading="lazy" /></div>
-        <div className="ps-feature-text">
-          <p className="ps-eyebrow left">Why book direct</p>
-          <h2>The best rate, no middleman</h2>
-          <p>Every room is priced per night with the total shown up front. Your booking is confirmed the moment payment goes through, and you can cancel online up to 48 hours before you arrive.</p>
-          <button type="button" className="ps-cta" onClick={() => scrollToId('listings')}>Explore rooms</button>
+      {rooms.length > 0 && (
+        <section className="sec" id="featured" aria-labelledby="feat-h">
+          <header className="sec-head"><div><p className="eyebrow">Featured</p><h2 id="feat-h">Guest favourites</h2></div>
+            <button type="button" className="link-btn" onClick={() => viewAll('All')}>View all rooms &rarr;</button></header>
+          <Row rooms={rooms.slice(0, 8)} url={url} />
+        </section>
+      )}
+
+      <section className="why" id="why">
+        <div className="why-in">
+          <div className="why-text">
+            <p className="eyebrow light">Why book direct</p>
+            <h2>The best rate, with nothing hidden</h2>
+            <ol>
+              <li><b>01</b><span><strong>Total price up front</strong>Per-night rates and the full stay total, before you pay.</span></li>
+              <li><b>02</b><span><strong>Confirmed in seconds</strong>No waiting for an email. Your booking is live as soon as payment clears.</span></li>
+              <li><b>03</b><span><strong>Change of plans?</strong>Cancel online up to 48 hours before check-in.</span></li>
+            </ol>
+            <button type="button" className="btn-gold" onClick={() => scrollToId('listings')}>Explore rooms</button>
+          </div>
+          <div className="why-img"><img src={featureImg} alt="Sea view room with a balcony" loading="lazy" /></div>
         </div>
       </section>
 
-      <section className="ps-sec" id="listings" aria-label="All rooms">
-        <p className="ps-eyebrow left">Your dates: {fmtDay(stay.checkIn)} &rarr; {fmtDay(stay.checkOut)}</p>
-        <h2>{smart ? 'Search results' : category === 'All' ? 'Rooms available for your stay' : `${category} rooms`}</h2>
-        <div className="ps-filters" role="group" aria-label="Room types">
-          <button type="button" className={category === 'All' && !smart ? 'on' : ''} onClick={() => { setSmart(null); setCategory('All'); }}>All {ready && rooms.length}</button>
-          {types.map((t) => <button type="button" key={t} className={category === t ? 'on' : ''} onClick={() => { setSmart(null); setCategory(t); }}>{t}</button>)}
-          {(smart || q) && <button type="button" className="clear" onClick={() => { setSmart(null); setQuery(''); setCategory('All'); }}>Clear search</button>}
+      <section className="sec" id="listings" aria-label="All rooms">
+        <header className="sec-head"><div>
+          <p className="eyebrow">{fmtDay(stay.checkIn)} &rarr; {fmtDay(stay.checkOut)} &middot; {nights} {nights === 1 ? 'night' : 'nights'}</p>
+          <h2>{extra ? extra.label : smart ? 'Search results' : category === 'All' ? 'Rooms available for your stay' : `${category} rooms`}</h2></div></header>
+        <div className="filters" role="group" aria-label="Room types">
+          <button type="button" className={category === 'All' && !smart ? 'on' : ''} onClick={() => { setSmart(null); setExtra(null); setCategory('All'); }}>All {ready && rooms.length}</button>
+          {types.map((t) => <button type="button" key={t} className={category === t ? 'on' : ''} onClick={() => { setSmart(null); setExtra(null); setCategory(t); }}>{t}</button>)}
+          {(smart || q || extra) && <button type="button" className="clear" onClick={() => { setSmart(null); setQuery(''); setCategory('All'); setExtra(null); }}>Clear filters</button>}
         </div>
         {ready && visible.length === 0
           ? <p className="ps-loading">No rooms match your search.</p>
-          : <div className="ps-grid">{visible.map((r) => <RoomCard key={r._id} room={r} />)}</div>}
+          : <div className="grid">{visible.map((r) => <RoomCard key={r._id} room={r} />)}</div>}
       </section>
 
       {picked > 0 &&
