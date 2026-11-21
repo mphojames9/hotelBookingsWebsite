@@ -11,7 +11,7 @@ const MAX_NIGHTS = 30;
 const PENDING_HOLD_MS = 30*60*1000; // unpaid bookings hold rooms for 30 minutes (the Stripe session expires then)
 
 const getStripe = () => process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
-const frontendUrl = () => (process.env.FRONTEND_URL || "http://localhost:5173/shopping-cart").replace(/\/$/,"");
+const frontendUrl = () => (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/$/,"");
 
 // dates arrive as YYYY-MM-DD; treated as UTC midnight so a night is exactly one day
 const parseDay = (s) => /^\d{4}-\d{2}-\d{2}$/.test(String(s)) ? new Date(`${s}T00:00:00Z`) : null;
@@ -103,8 +103,8 @@ const placeBooking = async (req,res) => {
                 price_data:{currency:"zar",product_data:{name:`${l.name}: ${nights} night${nights>1?"s":""}, ${inStr} to ${outStr}`},unit_amount:Math.round(l.price*nights*100)},
                 quantity:l.quantity
             })),
-            success_url:`${frontendUrl()}/verify?success=true&bookingId=${booking._id}`,
-            cancel_url:`${frontendUrl()}/verify?success=false&bookingId=${booking._id}`
+            success_url:`${frontendUrl()}/#/verify?success=true&bookingId=${booking._id}`,
+            cancel_url:`${frontendUrl()}/#/verify?success=false&bookingId=${booking._id}`
         });
 
         booking.stripeSessionId = session.id;

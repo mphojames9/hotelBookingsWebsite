@@ -11,8 +11,8 @@ import {
   ArrowRightIcon, CartIcon, ClockIcon, CloseIcon, EnterIcon, MicIcon, MinusIcon, PlusIcon, SearchIcon, SparklesIcon,
 } from '../Icons';
 
-const HOME = '/shopping-cart';
-const CART = '/shopping-cart/cart';
+const HOME = '/';
+const CART = '/cart';
 const RECENT_KEY = 'onestop:recent-searches';
 const LIMIT = 8;
 const FALLBACK_EXAMPLES = ['suite under R3000', 'cheapest room', 'family 2k-4k'];

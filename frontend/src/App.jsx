@@ -26,13 +26,13 @@ const App = () => {
     <>
       {showLogin ? <LoginPopup setShowLogin={setShowLogin}/> : null}
       <NavBar setShowLogin={setShowLogin} />
-      <main className={pathname.replace(/\/$/,'')==='/shopping-cart'?'app app-wide':'app'}>
+      <main className={pathname==='/'?'app app-wide':'app'}>
         <Routes>
-          <Route path='/shopping-cart' element={<Home />} />
-          <Route path='/shopping-cart/cart' element={<Cart setShowLogin={setShowLogin} />} />
-          <Route path='/shopping-cart/placeOder' element={<PlaceOder />} />
-          <Route path='/shopping-cart/verify' element={<Verify />} />
-          <Route path='/shopping-cart/myorders' element={<MyOrders setShowLogin={setShowLogin} />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/cart' element={<Cart setShowLogin={setShowLogin} />} />
+          <Route path='/placeOder' element={<PlaceOder />} />
+          <Route path='/verify' element={<Verify />} />
+          <Route path='/myorders' element={<MyOrders setShowLogin={setShowLogin} />} />
         </Routes>
       </main>
       <Footer />

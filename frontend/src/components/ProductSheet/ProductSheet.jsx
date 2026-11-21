@@ -5,7 +5,7 @@ import { StoreContext } from '../../context/StoreContext';
 import { categoryLabel, formatPrice } from '../../utils/format';
 import { ArrowRightIcon, CartIcon, CloseIcon, MinusIcon, PlusIcon } from '../Icons';
 
-const CART = '/shopping-cart/cart';
+const CART = '/cart';
 
 /* Anything can open the product sheet: openProduct(product._id) */
 export const openProduct = (id) =>

@@ -14,9 +14,9 @@ const Footer = () => (
       <div>
         <h3>Explore</h3>
         <ul>
-          <li><Link to="/shopping-cart">Home</Link></li>
-          <li><Link to="/shopping-cart/cart">Your stay</Link></li>
-          <li><Link to="/shopping-cart/myorders">My bookings</Link></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/cart">Your stay</Link></li>
+          <li><Link to="/myorders">My bookings</Link></li>
         </ul>
       </div>
       <div>

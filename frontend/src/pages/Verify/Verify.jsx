@@ -16,7 +16,7 @@ const Verify = () => {
   useEffect(()=>{
     if (!ready) return;
     if (!token || !bookingId) {
-      navigate('/shopping-cart');
+      navigate('/');
       return;
     }
     const verifyPayment = async () => {
@@ -24,12 +24,12 @@ const Verify = () => {
         const response = await axios.post(url+"/api/booking/verify",{bookingId},authConfig());
         if (response.data.success) {
           setCartItems({});
-          navigate('/shopping-cart/myorders');
+          navigate('/myorders');
         } else {
-          navigate('/shopping-cart/cart');
+          navigate('/cart');
         }
       } catch (error) {
-        navigate('/shopping-cart/cart');
+        navigate('/cart');
       }
     }
     verifyPayment();

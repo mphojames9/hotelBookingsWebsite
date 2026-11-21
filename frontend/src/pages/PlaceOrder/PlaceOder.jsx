@@ -62,7 +62,7 @@ const PlaceOder = () => {
   useEffect(()=>{
     if (!ready) return;
     if (!token || getTotalCartAmount() === 0) {
-      navigate('/shopping-cart/cart');
+      navigate('/cart');
     }
   },[ready,token])
 

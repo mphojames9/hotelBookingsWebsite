@@ -27,7 +27,7 @@ const Cart = ({setShowLogin}) => {
       setShowLogin(true);
       return;
     }
-    navigate('/shopping-cart/placeOder');
+    navigate('/placeOder');
   }
 
   // wait for the saved cart to load so we do not flash "empty"
@@ -41,7 +41,7 @@ const Cart = ({setShowLogin}) => {
         <span className="cart-empty-icon"><CartIcon /></span>
         <h1>No rooms selected</h1>
         <p>Pick your dates and choose a room to start your booking.</p>
-        <Link to='/shopping-cart' state={{scrollTo:'food-display'}} className="btn btn-primary">Browse rooms</Link>
+        <Link to='/' state={{scrollTo:'food-display'}} className="btn btn-primary">Browse rooms</Link>
       </div>
     );
   }

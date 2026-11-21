@@ -6,7 +6,7 @@ import { StoreContext } from '../../context/StoreContext';
 import { formatPrice } from '../../utils/format';
 import { openSpotlight } from '../Spotlight/Spotlight';
 
-const HOME = '/shopping-cart';
+const HOME = '/';
 
 const PATHS = {
   bed: 'M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5M7 12h.01',
@@ -139,7 +139,7 @@ const NavBar = ({ setShowLogin }) => {
                 </div>
               )}
             </div>
-            <Link to="/shopping-cart/myorders" className="nv-util-btn">My bookings</Link>
+            <Link to="/myorders" className="nv-util-btn">My bookings</Link>
           </div>
         </div>
       </div>
@@ -210,7 +210,7 @@ const NavBar = ({ setShowLogin }) => {
           <button type="button" className="nv-iconbtn" aria-label="Search rooms" onClick={() => openSpotlight()}><Ico n="search" /></button>
 
           <div className="nv-rel" onMouseEnter={() => enter('trip')} onMouseLeave={leave}>
-            <Link to="/shopping-cart/cart" data-dd="trip" className="nv-stay" aria-label={`Your stay, ${rooms} ${rooms === 1 ? 'room' : 'rooms'}`}>
+            <Link to="/cart" data-dd="trip" className="nv-stay" aria-label={`Your stay, ${rooms} ${rooms === 1 ? 'room' : 'rooms'}`}>
               <Ico n="bed" /><span>Your stay</span>{rooms > 0 && <b key={rooms}>{rooms}</b>}
             </Link>
             {open === 'trip' && (
@@ -221,7 +221,7 @@ const NavBar = ({ setShowLogin }) => {
                       <p className="nv-label">{nights} {nights === 1 ? 'night' : 'nights'} &middot; {rooms} {rooms === 1 ? 'room' : 'rooms'}</p>
                       {picked.map((r) => <div key={r._id} className="nv-trip-row"><span>{r.name} <small>&times; {cartItems[r._id]}</small></span><b>{formatPrice(r.price * cartItems[r._id] * nights)}</b></div>)}
                       <div className="nv-trip-total"><span>Total</span><b>{formatPrice(getTotalCartAmount())}</b></div>
-                      <Link to="/shopping-cart/cart" className="nv-trip-go">Review your stay</Link>
+                      <Link to="/cart" className="nv-trip-go">Review your stay</Link>
                     </>}
               </div>
             )}
@@ -232,11 +232,11 @@ const NavBar = ({ setShowLogin }) => {
             {open === 'account' && (
               <div className="nv-drop nv-drop-r" data-panel="account" role="menu" onKeyDown={panelKey}>
                 {token ? <>
-                  <Item icon="cal" title="My bookings" desc="Upcoming and past stays" href="/shopping-cart/myorders" role="menuitem" onClick={(e) => { e.preventDefault(); setOpen(null); navigate('/shopping-cart/myorders'); }} />
+                  <Item icon="cal" title="My bookings" desc="Upcoming and past stays" href="/myorders" role="menuitem" onClick={(e) => { e.preventDefault(); setOpen(null); navigate('/myorders'); }} />
                   <button role="menuitem" type="button" className="nv-plain" onClick={() => { setOpen(null); logout(); navigate(HOME); }}>Sign out</button>
                 </> : <>
                   <button role="menuitem" type="button" className="nv-primary" onClick={() => { setOpen(null); setShowLogin(true); }}>Sign in / Join</button>
-                  <Item icon="cal" title="My bookings" desc="Sign in to view" href="/shopping-cart/myorders" role="menuitem" onClick={(e) => { e.preventDefault(); setOpen(null); navigate('/shopping-cart/myorders'); }} />
+                  <Item icon="cal" title="My bookings" desc="Sign in to view" href="/myorders" role="menuitem" onClick={(e) => { e.preventDefault(); setOpen(null); navigate('/myorders'); }} />
                 </>}
               </div>
             )}
@@ -267,8 +267,8 @@ const NavBar = ({ setShowLogin }) => {
             <a href="tel:+27112331245">Call +27 11 233 1245</a>
             <a href="mailto:demo@onestop.com">Email us</a>
           </details>
-          <Link to="/shopping-cart/myorders" className="nv-d-link">My bookings</Link>
-          <Link to="/shopping-cart/cart" className="nv-d-link">Your stay{rooms > 0 ? ` (${rooms})` : ''}</Link>
+          <Link to="/myorders" className="nv-d-link">My bookings</Link>
+          <Link to="/cart" className="nv-d-link">Your stay{rooms > 0 ? ` (${rooms})` : ''}</Link>
           {token
             ? <button type="button" className="nv-d-cta" onClick={() => { logout(); setMobile(false); navigate(HOME); }}>Sign out</button>
             : <button type="button" className="nv-d-cta" onClick={() => { setMobile(false); setShowLogin(true); }}>Sign in / Join</button>}

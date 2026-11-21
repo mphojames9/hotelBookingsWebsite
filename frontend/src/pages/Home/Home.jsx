@@ -264,7 +264,7 @@ const Home = () => {
       {picked > 0 &&
         <div className="ps-staybar" role="status">
           <div><small>{picked} {picked === 1 ? 'room' : 'rooms'} &middot; {nights} {nights === 1 ? 'night' : 'nights'}</small><strong>{formatPrice(getTotalCartAmount())}</strong></div>
-          <Link to="/shopping-cart/cart" className="ps-cta">Review your stay</Link>
+          <Link to="/cart" className="ps-cta">Review your stay</Link>
         </div>}
     </div>
   );

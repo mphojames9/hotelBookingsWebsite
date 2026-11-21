@@ -73,7 +73,7 @@ const MyOrders = ({setShowLogin}) => {
           ? <div className="orders-message">
               <span className="orders-icon"><PackageIcon /></span>
               <p>You have no bookings yet.</p>
-              <Link to='/shopping-cart' state={{scrollTo:'food-display'}} className="btn btn-primary">Find a room</Link>
+              <Link to='/' state={{scrollTo:'food-display'}} className="btn btn-primary">Find a room</Link>
             </div>
           : <ul className="orders-list">
               {data.map((b,i)=>(
