@@ -26,7 +26,12 @@ api.interceptors.response.use(
   }
 );
 
-export const errorMessage = (error, fallback = "Something went wrong") =>
-  error.response?.data?.message || fallback;
+export const errorMessage = (error, fallback = "Something went wrong") => {
+  const message = error.response?.data?.message;
+  if (message) return message;
+  // a 404 with no message means the request reached a server that has no API (usually a wrong VITE_API_URL)
+  if (error.response?.status === 404) return `No API found at ${API_URL} (404). Check VITE_API_URL on the admin service.`;
+  return fallback;
+};
 
 export default api;
