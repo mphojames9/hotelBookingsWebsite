@@ -8,10 +8,15 @@ const STATUSES = ["Confirmed","Checked in","Checked out","Cancelled"];
 const GUEST_FIELDS = ["firstName","lastName","email","phone","country"];
 const DAY = 24*60*60*1000;
 const MAX_NIGHTS = 30;
-const PENDING_HOLD_MS = 30*60*1000; // unpaid bookings hold rooms for 30 minutes (the Stripe session expires then)
+// Stripe only accepts a Checkout Session that lasts at least 30 minutes from the moment it receives the request,
+// so the session is created for 31 minutes. Unpaid bookings keep their rooms a minute longer than that.
+const SESSION_MINUTES = 31;
+const PENDING_HOLD_MS = (SESSION_MINUTES + 1)*60*1000;
 
 const getStripe = () => process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
-const frontendUrl = () => (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/$/,"");
+// where Stripe sends guests back to: the storefront root, e.g. https://primestay-boqi.onrender.com
+// (a trailing slash or an old "/shopping-cart" suffix is ignored)
+const frontendUrl = () => (process.env.FRONTEND_URL || "http://localhost:5173").trim().replace(/\/+$/,"").replace(/\/shopping-cart$/,"");
 
 // dates arrive as YYYY-MM-DD; treated as UTC midnight so a night is exactly one day
 const parseDay = (s) => /^\d{4}-\d{2}-\d{2}$/.test(String(s)) ? new Date(`${s}T00:00:00Z`) : null;
@@ -98,7 +103,7 @@ const placeBooking = async (req,res) => {
             mode:"payment",
             payment_method_types:["card"],
             customer_email:cleanGuest.email,
-            expires_at:Math.floor(Date.now()/1000) + 30*60,
+            expires_at:Math.floor(Date.now()/1000) + SESSION_MINUTES*60,
             line_items:lines.map(l => ({
                 price_data:{currency:"zar",product_data:{name:`${l.name}: ${nights} night${nights>1?"s":""}, ${inStr} to ${outStr}`},unit_amount:Math.round(l.price*nights*100)},
                 quantity:l.quantity
