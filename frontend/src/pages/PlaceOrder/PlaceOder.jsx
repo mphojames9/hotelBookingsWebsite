@@ -14,7 +14,7 @@ const Field = ({label, ...props}) => (
 
 const PlaceOder = () => {
 
-  const {getTotalCartAmount, token, food_list, cartItems, stay, url, ready, authConfig} = useContext(StoreContext);
+  const {getTotalCartAmount, token, food_list, cartItems, url, ready, authConfig, promo} = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [submitting,setSubmitting] = useState(false);
@@ -27,8 +27,7 @@ const PlaceOder = () => {
     province:"",
     zipCode:"",
     country:"South Africa",
-    phone:"",
-    requests:""
+    phone:""
   })
 
   const onChangeHandler = (event) => {
@@ -45,14 +44,14 @@ const PlaceOder = () => {
 
     setSubmitting(true);
     try {
-      const response = await axios.post(url+"/api/booking/place",{guest:data,items,checkIn:stay.checkIn,checkOut:stay.checkOut,guests:stay.guests},authConfig());
+      const response = await axios.post(url+"/api/order/place",{address:data,items,promoCode:promo?.code},authConfig());
       if (response.data.success) {
         window.location.replace(response.data.session_url);
       } else {
         alert(response.data.message);
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Could not make your booking. Please try again.");
+      alert(error.response?.data?.message || "Could not place your order. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -62,30 +61,34 @@ const PlaceOder = () => {
   useEffect(()=>{
     if (!ready) return;
     if (!token || getTotalCartAmount() === 0) {
-      navigate('/cart');
+      navigate('/shopping-cart/cart');
     }
   },[ready,token])
 
   return (
     <form onSubmit={placeOrder} className='checkout page'>
       <div className='checkout-form'>
-        <h1>Guest details</h1>
+        <h1>Delivery details</h1>
         <div className='field-row'>
           <Field label='First name' name='firstName' autoComplete='given-name' value={data.firstName} onChange={onChangeHandler} type='text' />
           <Field label='Last name' name='lastName' autoComplete='family-name' value={data.lastName} onChange={onChangeHandler} type='text' />
         </div>
         <Field label='Email address' name='email' autoComplete='email' value={data.email} onChange={onChangeHandler} type='email' />
         <Field label='Phone' name='phone' autoComplete='tel' value={data.phone} onChange={onChangeHandler} type='tel' />
-        <Field label='Country' name='country' autoComplete='country-name' value={data.country} onChange={onChangeHandler} type='text' />
-        <label className='field'>
-          <span>Special requests (optional)</span>
-          <textarea name='requests' rows='3' maxLength='300' value={data.requests} onChange={onChangeHandler} placeholder='Late arrival, extra pillows, quiet room...' />
-        </label>
+        <Field label='Street address' name='street' autoComplete='street-address' value={data.street} onChange={onChangeHandler} type='text' />
+        <div className='field-row'>
+          <Field label='City' name='city' autoComplete='address-level2' value={data.city} onChange={onChangeHandler} type='text' />
+          <Field label='Province' name='province' autoComplete='address-level1' value={data.province} onChange={onChangeHandler} type='text' />
+        </div>
+        <div className='field-row'>
+          <Field label='Postal code' name='zipCode' autoComplete='postal-code' value={data.zipCode} onChange={onChangeHandler} type='text' />
+          <Field label='Country' name='country' autoComplete='country-name' value={data.country} onChange={onChangeHandler} type='text' />
+        </div>
       </div>
 
-      <OrderSummary showItems note="Rooms are held for 30 minutes while you pay. Payments are processed securely by Stripe.">
+      <OrderSummary showItems note="Payments are processed securely by Stripe.">
         <button type='submit' className='btn btn-primary btn-block' disabled={submitting}>
-          {submitting ? 'Redirecting to payment…' : 'Pay and confirm booking'}
+          {submitting ? 'Redirecting to payment…' : 'Continue to payment'}
         </button>
       </OrderSummary>
     </form>

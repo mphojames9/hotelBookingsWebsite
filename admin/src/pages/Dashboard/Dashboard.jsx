@@ -13,7 +13,7 @@ import {
 } from '../../components/Icons';
 
 const RANGES = [7, 30, 90];
-const STATUS_TONES = { "Confirmed": "warn", "Checked in": "info", "Checked out": "ok", "Cancelled": "bad" };
+const STATUS_TONES = { "Processing": "warn", "Out for delivery": "info", "Delivered": "ok" };
 const INSIGHT_ICONS = {
   up: TrendUpIcon,
   down: TrendDownIcon,
@@ -87,18 +87,18 @@ export const DashboardView = ({
   const kpis = [
     { key: "revenue", label: "Revenue", Icon: WalletIcon, tone: "brand", value: totals.revenue, format: formatRandWhole,
       values: series.current.map((b) => b.revenue), delta: deltas.revenue },
-    { key: "orders", label: "Bookings", Icon: ReceiptIcon, tone: "ok", value: totals.orders, format: formatCount,
+    { key: "orders", label: "Orders", Icon: ReceiptIcon, tone: "ok", value: totals.orders, format: formatCount,
       values: series.current.map((b) => b.orders), delta: deltas.orders },
     { key: "items", label: "Items sold", Icon: BoxIcon, tone: "violet", value: totals.items, format: formatCount,
       values: series.current.map((b) => b.items), delta: deltas.items },
-    { key: "aov", label: "Avg. booking", Icon: TagIcon, tone: "warn", value: totals.aov, format: formatRandWhole,
+    { key: "aov", label: "Avg. order", Icon: TagIcon, tone: "warn", value: totals.aov, format: formatRandWhole,
       values: series.current.map((b) => (b.orders ? b.revenue / b.orders : 0)), delta: deltas.aov },
   ];
 
   const maxRevenue = Math.max(...stats.top.map((p) => p.revenue), 1);
   const pipelineTotal = stats.pipeline.total || 1;
-  const processing = stats.pipeline.counts.Confirmed;
-  const deliveredShare = Math.round((stats.pipeline.counts["Checked out"] / pipelineTotal) * 100);
+  const processing = stats.pipeline.counts.Processing;
+  const deliveredShare = Math.round((stats.pipeline.counts.Delivered / pipelineTotal) * 100);
 
   return (
     <div className="dash">
@@ -197,7 +197,7 @@ export const DashboardView = ({
         <section className="card panel rise" style={{ '--i': 9 }}>
           <header className="panel-head">
             <div>
-              <h2>Booking pipeline</h2>
+              <h2>Order pipeline</h2>
               <p className="panel-sub">{stats.pipeline.total} paid {stats.pipeline.total === 1 ? "order" : "orders"} in total</p>
             </div>
           </header>
@@ -221,8 +221,8 @@ export const DashboardView = ({
           <div className="pipe-foot">
             <span><strong>{deliveredShare}%</strong> delivered</span>
             {processing > 0 &&
-              <Link to="/orders?status=Confirmed" className="pipe-link">
-                Review {processing} upcoming <ArrowRightIcon size={15} />
+              <Link to="/orders?status=Processing" className="pipe-link">
+                Review {processing} processing <ArrowRightIcon size={15} />
               </Link>
             }
           </div>
@@ -235,7 +235,7 @@ export const DashboardView = ({
           <header className="panel-head">
             <div>
               <h2>Top sellers</h2>
-              <p className="panel-sub">Best performing rooms, last {days} days</p>
+              <p className="panel-sub">Best performing products, last {days} days</p>
             </div>
           </header>
 
@@ -250,7 +250,7 @@ export const DashboardView = ({
                     <Thumb image={product.image} className="ts-thumb" />
                     <span className="ts-main">
                       <strong>{product.name}</strong>
-                      <span>{product.units} rooms booked · {product.category}</span>
+                      <span>{product.units} sold · {product.category}</span>
                       <span className="ts-bar"><i style={{ '--w': `${Math.max(4, (product.revenue / maxRevenue) * 100)}%`, '--i': index }} /></span>
                     </span>
                     <span className="ts-rev">{formatRandWhole(product.revenue)}</span>
@@ -259,7 +259,7 @@ export const DashboardView = ({
                 return (
                   <li key={product.key}>
                     {product.exists ? (
-                      <Link to={`/edit/${product.roomId}`} className="ts-row" aria-label={`Edit ${product.name}`}>{body}</Link>
+                      <Link to={`/edit/${product.foodId}`} className="ts-row" aria-label={`Edit ${product.name}`}>{body}</Link>
                     ) : (
                       <div className="ts-row">{body}</div>
                     )}
@@ -323,8 +323,8 @@ const Dashboard = () => {
     if (!silent) setRefreshing(true);
     try {
       const [ordersResponse, foodsResponse] = await Promise.all([
-        api.get("/api/booking/list"),
-        api.get("/api/room/list"),
+        api.get("/api/order/list"),
+        api.get("/api/food/list"),
       ]);
       if (!ordersResponse.data.success) {
         throw new Error(ordersResponse.data.message || "Could not load orders");

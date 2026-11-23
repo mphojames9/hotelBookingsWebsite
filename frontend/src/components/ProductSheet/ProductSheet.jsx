@@ -3,9 +3,12 @@ import './ProductSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import { categoryLabel, formatPrice } from '../../utils/format';
+import { stockInfo } from '../../utils/stock';
+import Reviews from '../Reviews/Reviews';
+import WishButton from '../WishButton/WishButton';
 import { ArrowRightIcon, CartIcon, CloseIcon, MinusIcon, PlusIcon } from '../Icons';
 
-const CART = '/cart';
+const CART = '/shopping-cart/cart';
 
 /* Anything can open the product sheet: openProduct(product._id) */
 export const openProduct = (id) =>
@@ -13,7 +16,7 @@ export const openProduct = (id) =>
 
 const ProductSheet = () => {
 
-  const { food_list, ready, cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
+  const { food_list, ready, cartItems, addToCart, removeFromCart, url, trackView } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [id, setId] = useState(null);
@@ -48,6 +51,11 @@ const ProductSheet = () => {
 
   const product = id ? food_list.find((item) => item._id === id) : null;
 
+  // opening a product adds it to "Recently viewed"
+  useEffect(() => {
+    if (product?._id) trackView(product._id);
+  }, [product?._id]);
+
   // the page behind stops scrolling, focus moves into the dialog, Esc closes it
   useEffect(() => {
     if (!product) return undefined;
@@ -71,6 +79,8 @@ const ProductSheet = () => {
 
   const qty = cartItems[product._id] || 0;
   const specs = Array.isArray(product.specs) ? product.specs : [];
+  const { left, out, low } = stockInfo(product.stock);
+  const atLimit = left !== null && qty >= left;
 
   const addFirst = () => {
     addToCart(product._id);
@@ -108,6 +118,8 @@ const ProductSheet = () => {
             <span className="ps-cat">{categoryLabel(product.category)}</span>
             <h2 id="ps-title">{product.name}</h2>
             <strong className="ps-price">{formatPrice(product.price)}</strong>
+            {out && <span className="ps-stock is-out">Sold out</span>}
+            {low && <span className="ps-stock is-low">Only {left} left</span>}
             <p className="ps-desc">{product.description}</p>
 
             {specs.length > 0 ? (
@@ -125,19 +137,29 @@ const ProductSheet = () => {
             ) : (
               <p className="ps-nospecs">No specifications listed for this product yet.</p>
             )}
+
+            <Reviews
+              productId={product._id}
+              productName={product.name}
+              onNeedLogin={() => {
+                hide({ restoreFocus: false });
+                window.dispatchEvent(new CustomEvent('login:open'));
+              }}
+            />
           </div>
 
           <div className="ps-foot">
+            <WishButton id={product._id} name={product.name} className="wish-lg" />
             {qty === 0 ? (
-              <button type="button" className="ps-add" onClick={addFirst}>
-                <PlusIcon /><span>Add to cart</span><b>{formatPrice(product.price)}</b>
+              <button type="button" className="ps-add" onClick={addFirst} disabled={out}>
+                <PlusIcon /><span>{out ? 'Sold out' : 'Add to cart'}</span>{!out && <b>{formatPrice(product.price)}</b>}
               </button>
             ) : (
               <>
                 <div className="ps-stepper">
                   <button type="button" aria-label={`Remove one ${product.name}`} onClick={() => removeFromCart(product._id)}><MinusIcon /></button>
                   <span key={qty} aria-live="polite">{qty}</span>
-                  <button type="button" aria-label={`Add one more ${product.name}`} onClick={() => addToCart(product._id)}><PlusIcon /></button>
+                  <button type="button" aria-label={atLimit ? `No more ${product.name} in stock` : `Add one more ${product.name}`} disabled={atLimit} onClick={() => addToCart(product._id)}><PlusIcon /></button>
                 </div>
                 <button type="button" className="ps-cart" onClick={goCart}>
                   <CartIcon /><span>View cart</span><ArrowRightIcon />

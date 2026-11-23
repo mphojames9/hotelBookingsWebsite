@@ -84,35 +84,35 @@ export const assets = {
 
 export const menu_list = [
     {
-        menu_name: "Standard",
+        menu_name: "Accessories",
         menu_image: menu_1
     },
     {
-        menu_name: "Deluxe",
+        menu_name: "Phones",
         menu_image: menu_2
     },
     {
-        menu_name: "Executive",
+        menu_name: "Laptops",
         menu_image: menu_3
     },
     {
-        menu_name: "Family",
+        menu_name: "Smart TV",
         menu_image: menu_4
     },
     {
-        menu_name: "Suite",
+        menu_name: "Monitor",
         menu_image: menu_5
     },
     {
-        menu_name: "Studio",
+        menu_name: "Taplets",
         menu_image: menu_6
     },
     {
-        menu_name: "Penthouse",
+        menu_name: "Office",
         menu_image: menu_7
     },
     {
-        menu_name: "Accessible",
+        menu_name: "Gaming",
         menu_image: menu_8
     }]
 

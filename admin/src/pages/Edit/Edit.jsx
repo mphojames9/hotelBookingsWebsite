@@ -31,7 +31,7 @@ const Edit = () => {
         setStatus("loading");
         (async ()=>{
             try {
-                const response = await api.get("/api/room/list");
+                const response = await api.get("/api/food/list");
                 if (cancelled) return;
                 if (!response.data.success) {
                     setStatus("error");
@@ -47,8 +47,7 @@ const Edit = () => {
                     name:found.name,
                     description:found.description,
                     price:String(found.price),
-                    maxGuests:found.maxGuests||2,
-                    totalRooms:found.totalRooms||1,
+                    stock:typeof found.stock === "number" ? String(found.stock) : "",
                     category:found.category
                 });
                 setSpecRows(toRows(found.specs));
@@ -57,7 +56,7 @@ const Edit = () => {
                 setStatus("ready");
             } catch (error) {
                 if (cancelled) return;
-                toast.error(errorMessage(error,"Could not load this room"));
+                toast.error(errorMessage(error,"Could not load this product"));
                 setStatus("error");
             }
         })();
@@ -78,8 +77,7 @@ const Edit = () => {
             data.name.trim() !== product.name ||
             data.description.trim() !== product.description ||
             Number(data.price) !== product.price ||
-            Number(data.maxGuests) !== (product.maxGuests||2) ||
-            Number(data.totalRooms) !== (product.totalRooms||1) ||
+            String(data.stock) !== (typeof product.stock === "number" ? String(product.stock) : "") ||
             data.category !== product.category ||
             JSON.stringify(cleanSpecs(specRows).specs) !== JSON.stringify(product.specs || [])
         );
@@ -120,15 +118,14 @@ const Edit = () => {
         formData.append("name",data.name.trim());
         formData.append("description",data.description.trim());
         formData.append("price",Number(data.price));
-        formData.append("maxGuests",Number(data.maxGuests));
-        formData.append("totalRooms",Number(data.totalRooms));
         formData.append("category",data.category);
+        formData.append("stock",data.stock);
         formData.append("specs",JSON.stringify(specs));
         if (image) formData.append("image",image);
 
         setSaving(true);
         try {
-            const response = await api.post("/api/room/update",formData);
+            const response = await api.post("/api/food/update",formData);
             if (response.data.success) {
                 toast.success(response.data.message);
                 navigate("/list");
@@ -146,7 +143,7 @@ const Edit = () => {
         <div className="page-head">
             <div>
                 <Link to="/list" className="edit-back"><ChevronLeftIcon size={18} />Products</Link>
-                <h1>Edit room</h1>
+                <h1>Edit product</h1>
                 <p>Change the photo or details shoppers see.</p>
             </div>
         </div>
@@ -175,7 +172,7 @@ const Edit = () => {
                 <div className="card">
                     <div className="empty">
                         <span className="empty-icon"><BoxIcon size={32} /></span>
-                        <h3>{status === "missing" ? "Room not found" : "Could not load this room"}</h3>
+                        <h3>{status === "missing" ? "Product not found" : "Could not load this product"}</h3>
                         <p>{status === "missing" ? "It may have been removed from your store." : "Check your connection and try again."}</p>
                         <Link to="/list" className="btn btn-primary">Back to products</Link>
                     </div>
@@ -216,7 +213,7 @@ const Edit = () => {
                                     <img
                                         key={shownImage}
                                         src={shownImage}
-                                        alt="Room"
+                                        alt="Product"
                                         onError={()=>{ if (!newPreview) setCurrentBroken(true); }}
                                     />
                                     <span className="dropzone-change">{newPreview ? "New photo selected" : "Change photo"}</span>
@@ -240,7 +237,7 @@ const Edit = () => {
                         <h2>Details</h2>
 
                         <div className="field-block">
-                            <label htmlFor="name">Room name</label>
+                            <label htmlFor="name">Product name</label>
                             <input className="control" id="name" onChange={onChangeHandler} value={data.name} type='text' name='name' placeholder='Type here' autoComplete="off" required />
                         </div>
 
@@ -263,22 +260,17 @@ const Edit = () => {
                             </div>
 
                             <div className="field-block">
-                                <label htmlFor="price">Price per night</label>
+                                <label htmlFor="price">Price</label>
                                 <div className="control-wrap">
                                     <span className="price-prefix">R</span>
                                     <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='200' required />
                                 </div>
                             </div>
-
-                        <div className="field-block">
-                            <label htmlFor="maxGuests">Guests per room</label>
-                            <div className="control-wrap"><input className="control-bare" id="maxGuests" onChange={onChangeHandler} value={data.maxGuests} type='number' min='1' max='10' name='maxGuests' required /></div>
                         </div>
-
                         <div className="field-block">
-                            <label htmlFor="totalRooms">Rooms of this type</label>
-                            <div className="control-wrap"><input className="control-bare" id="totalRooms" onChange={onChangeHandler} value={data.totalRooms} type='number' min='1' name='totalRooms' required /></div>
-                        </div>
+                            <label htmlFor="stock">Stock <span className="optional">(optional)</span></label>
+                            <input className="control" id="stock" onChange={onChangeHandler} value={data.stock} type='number' inputMode="numeric" min='0' step='1' name='stock' placeholder='Leave empty to not track stock' />
+                            <small className="field-help">Shoppers see "Only N left" at 5 or fewer, and "Sold out" at 0.</small>
                         </div>
                     </section>
 
@@ -303,7 +295,7 @@ const Edit = () => {
                         </div>
                         <div className="preview-body">
                             <span className="chip">{data.category}</span>
-                            <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Room name"}</h3>
+                            <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Product name"}</h3>
                             <p className={data.description ? "" : "is-placeholder"}>{data.description || "Your description will appear here."}</p>
                             {previewSpecs.length > 0 &&
                                 <ul className="preview-specs">

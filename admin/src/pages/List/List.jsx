@@ -18,14 +18,14 @@ const List = () => {
 
     const fetchList = async () => {
       try {
-        const response = await api.get("/api/room/list");
+        const response = await api.get("/api/food/list");
         if (response.data.success){
           setList(response.data.data)
         } else {
           toast.error("Error")
         }
       } catch (error) {
-        toast.error(errorMessage(error,"Could not load rooms"))
+        toast.error(errorMessage(error,"Could not load products"))
       } finally {
         setLoading(false);
       }
@@ -36,7 +36,7 @@ const List = () => {
       const foodId = target._id;
       setRemoving(true);
       try {
-        const response = await api.post("/api/room/remove",{id:foodId});
+        const response = await api.post("/api/food/remove",{id:foodId});
         setTarget(null);
         if (response.data.success) {
           setLeavingId(foodId);   // let the row animate out before the list refreshes
@@ -75,10 +75,10 @@ const List = () => {
 
       <div className="page-head">
         <div>
-          <h1>Rooms</h1>
-          <p>{loading ? "Loading rooms..." : `${list.length} ${list.length === 1 ? "room type" : "room types"} in your hotel`}</p>
+          <h1>Products</h1>
+          <p>{loading ? "Loading products..." : `${list.length} ${list.length === 1 ? "product" : "products"} in your store`}</p>
         </div>
-        <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add room</Link>
+        <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add product</Link>
       </div>
 
       {(loading || list.length > 0) &&
@@ -88,7 +88,7 @@ const List = () => {
             className="control-bare"
             type="search"
             placeholder="Search by name or category"
-            aria-label="Search rooms"
+            aria-label="Search products"
             value={query}
             onChange={(e)=>setQuery(e.target.value)}
           />
@@ -114,9 +114,9 @@ const List = () => {
         {!loading && list.length === 0 &&
           <div className="empty">
             <span className="empty-icon"><BoxIcon size={32} /></span>
-            <h3>No rooms yet</h3>
-            <p>Add your first room and it will show up here.</p>
-            <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add room</Link>
+            <h3>No products yet</h3>
+            <p>Add your first product and it will show up here.</p>
+            <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add product</Link>
           </div>
         }
 
@@ -148,7 +148,10 @@ const List = () => {
                     onError={(e)=>{ e.currentTarget.style.display = "none"; }}
                   />
                 </div>
-                <p className="list-name">{item.name}</p>
+                <p className="list-name">
+                  {item.name}
+                  {typeof item.stock === "number" && <small className={`list-stock${item.stock === 0 ? " is-out" : item.stock <= 5 ? " is-low" : ""}`}>{item.stock === 0 ? "Sold out" : `${item.stock} in stock`}</small>}
+                </p>
                 <div className="list-meta">
                   <span className="chip">{item.category}</span>
                   {item.specs?.length > 0 && <span className="list-specs">{item.specs.length} {item.specs.length === 1 ? "spec" : "specs"}</span>}
@@ -179,9 +182,9 @@ const List = () => {
 
       <ConfirmDialog
         open={!!target}
-        title="Remove this room?"
+        title="Remove this product?"
         message={target ? `“${target.name}” will be removed from your store.` : ""}
-        confirmLabel="Remove room"
+        confirmLabel="Remove product"
         busy={removing}
         onConfirm={removeFood}
         onCancel={()=>setTarget(null)}

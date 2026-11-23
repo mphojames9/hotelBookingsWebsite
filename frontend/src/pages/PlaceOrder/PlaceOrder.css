@@ -14,7 +14,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     background: var(--paper);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
 .checkout-form h1{
@@ -41,5 +41,3 @@
         grid-template-columns: 1fr;
     }
 }
-
-.field textarea{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line,#d5d9de);border-radius:10px;background:var(--surface,#fff);color:inherit;resize:vertical}

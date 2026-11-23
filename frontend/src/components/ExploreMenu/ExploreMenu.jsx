@@ -23,7 +23,7 @@ const ExploreMenu = ({category, setCategory}) => {
     },[category]);
 
     return (
-        <nav className='categories' id='explore-menu' aria-label="Room types" ref={barRef}>
+        <nav className='categories' id='explore-menu' aria-label="Product categories" ref={barRef}>
             <button type="button" className={`chip${category==='All'?' active':''}`} aria-pressed={category==='All'} onClick={()=>setCategory('All')}>
                 <span className="chip-thumb chip-thumb-all"><GridIcon /></span>
                 All {ready && <small>{food_list.length}</small>}

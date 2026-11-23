@@ -234,3 +234,5 @@ export const CalendarIcon = (p) => (
     <path d="M3 10h18M8 3v4M16 3v4" />
   </Svg>
 );
+
+export const StarIcon = (p) => <Svg {...p}><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9 6.7 19.6l1-5.8-4.2-4.1 5.9-.9L12 3.5z" /></Svg>;

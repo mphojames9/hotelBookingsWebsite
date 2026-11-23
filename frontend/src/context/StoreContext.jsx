@@ -1,51 +1,57 @@
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios"
 import { shuffle } from "../utils/shuffle";
+import { stockLeft } from "../utils/stock";
 
 export const StoreContext = createContext(null)
 
-// VITE_API_URL wins when it is set at build time. Production builds fall back to the deployed API
-// (never localhost), and local `npm run dev` falls back to the local server.
-const DEPLOYED_API = "https://primestay-backend-d4lq.onrender.com";
-const API_URL = (import.meta.env.VITE_API_URL || (import.meta.env.PROD ? DEPLOYED_API : "http://localhost:4000")).replace(/\/+$/,"");
-const DAY = 24*60*60*1000;
-
-// YYYY-MM-DD in the visitor's own timezone
-export const toISO = (d) => new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
-export const addDaysISO = (iso,n) => toISO(new Date(new Date(iso+"T00:00:00Z").getTime() + n*DAY + new Date().getTimezoneOffset()*60000));
-export const nightsBetween = (a,b) => (a && b) ? Math.round((new Date(b+"T00:00:00Z") - new Date(a+"T00:00:00Z"))/DAY) : 0;
-
-const defaultStay = () => {
-    const today = toISO(new Date());
-    return {checkIn:addDaysISO(today,1),checkOut:addDaysISO(today,2),guests:2};
-}
-const loadStay = () => {
-    try {
-        const saved = JSON.parse(localStorage.getItem("stay"));
-        if (saved?.checkIn >= toISO(new Date()) && nightsBetween(saved.checkIn,saved.checkOut) > 0) return saved;
-    } catch { /* ignore */ }
-    return defaultStay();
-}
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+export const DELIVERY_FEE = 40; // keep in sync with backend/controllers/orderController.js
 
 const StoreContextProvider = (props) => {
 
-    // cartItems = {roomId: number of rooms}. The name is kept so the rest of the app keeps working.
     const [cartItems,setCartItems] = useState({});
     const url = API_URL;
     const [token,setToken] = useState(()=>localStorage.getItem("token") || "");
-    const [food_list,setFoodList] = useState([]);       // the rooms
-    const [ready,setReady] = useState(false);
-    const [stay,setStayState] = useState(loadStay);
-    const [availability,setAvailability] = useState({}); // {roomId: rooms free for the chosen dates}
+    const [food_list,setFoodList] = useState([]);
+    const [ready,setReady] = useState(false); // products + saved cart finished loading
+    const [promo,setPromo] = useState(null);   // {code,label,discount,delivery} once a code has been accepted
+    const [promoNotice,setPromoNotice] = useState(""); // why a code was dropped
 
-    const nights = nightsBetween(stay.checkIn,stay.checkOut);
-    const setStay = (patch) => setStayState((prev)=>{
-        const next = {...prev,...patch};
-        // keep check-out after check-in
-        if (nightsBetween(next.checkIn,next.checkOut) < 1) next.checkOut = addDaysISO(next.checkIn,1);
-        localStorage.setItem("stay",JSON.stringify(next));
-        return next;
+    // saved products: kept on this device so guests can use it too
+    const [wishlist,setWishlist] = useState(()=>{
+        try {
+            const saved = JSON.parse(localStorage.getItem("wishlist") || "[]");
+            return Array.isArray(saved) ? saved.filter((id)=>typeof id === "string") : [];
+        } catch (error) { return []; }
     });
+    useEffect(()=>{
+        try { localStorage.setItem("wishlist",JSON.stringify(wishlist)); } catch (error) { /* storage blocked: still works for this visit */ }
+    },[wishlist]);
+    const toggleWishlist = (id) => setWishlist((prev)=>prev.includes(id) ? prev.filter((x)=>x!==id) : [id,...prev]);
+
+    // products opened in the product sheet, newest first (kept on this device, at most 8)
+    const RECENT_MAX = 8;
+    const [recent,setRecent] = useState(()=>{
+        try {
+            const saved = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
+            return Array.isArray(saved) ? saved.filter((id)=>typeof id === "string").slice(0,RECENT_MAX) : [];
+        } catch (error) { return []; }
+    });
+    useEffect(()=>{
+        try { localStorage.setItem("recentlyViewed",JSON.stringify(recent)); } catch (error) { /* storage blocked: still works for this visit */ }
+    },[recent]);
+    const trackView = (id) => setRecent((prev)=>prev[0] === id ? prev : [id,...prev.filter((x)=>x !== id)].slice(0,RECENT_MAX));
+    const clearRecent = () => setRecent([]);
+
+    // average rating and review count per product: { [productId]: {average,count} }
+    const [ratings,setRatings] = useState({});
+    const refreshRatings = async () => {
+        try {
+            const response = await axios.get(API_URL+"/api/review/summary");
+            if (response.data.success) setRatings(response.data.data || {});
+        } catch (error) { /* ratings are optional: the shop still works without them */ }
+    }
 
     const authConfig = (t = token) => ({headers:{Authorization:`Bearer ${t}`}});
 
@@ -55,15 +61,15 @@ const StoreContextProvider = (props) => {
         setCartItems({});
     }
 
+    // expired token -> log the user out
     const handleAuthError = (error) => {
         if (error.response?.status === 401) logout();
     }
 
-    // rooms still free for the chosen dates (Infinity until we know)
-    const roomsLeft = (id) => availability[id] ?? Infinity;
-
     const addToCart = async (itemId) => {
-        if ((cartItems[itemId]||0) >= roomsLeft(itemId)) return;
+        // never put more in the cart than is in stock
+        const left = stockLeft(food_list.find((product)=>product._id === itemId));
+        if (left !== null && (cartItems[itemId] || 0) >= left) return;
         setCartItems((prev)=>({...prev,[itemId]:(prev[itemId]||0)+1}))
         if (token) {
             try {
@@ -90,37 +96,58 @@ const StoreContextProvider = (props) => {
         }
     }
 
-    // price of the selected rooms for ONE night
-    const getNightlyTotal = () => {
-        let total = 0;
-        for (const id in cartItems) {
-            const room = food_list.find((r) => r._id === id);
-            if (room && cartItems[id] > 0) total += room.price * cartItems[id];
+    const getTotalCartAmount = () => {
+        let totalAmount = 0;
+        for (const item in cartItems) {
+            if (cartItems[item] > 0) {
+                const itemInfo = food_list.find((product) => product._id === item);
+                if (itemInfo) totalAmount += itemInfo.price * cartItems[item];
+            }
         }
-        return total;
+        return totalAmount;
     }
-    // whole stay (nightly total x nights)
-    const getTotalCartAmount = () => getNightlyTotal() * nights;
-    const guestCapacity = () => food_list.reduce((sum,r)=>sum + (cartItems[r._id]||0)*(r.maxGuests||2),0);
 
-    const fetchRooms = async () => {
+    const cartLines = () => food_list
+        .filter((product) => cartItems[product._id] > 0)
+        .map((product) => ({id:product._id,quantity:cartItems[product._id]}));
+
+    // the server works out every discount; the browser only shows what it says
+    const applyPromo = async (code) => {
+        const items = cartLines();
+        if (items.length === 0) return {ok:false,message:"Your cart is empty"};
         try {
-            const response = await axios.get(url+"/api/room/list");
+            const response = await axios.post(url+"/api/order/promo",{code,items});
+            if (!response.data.success) return {ok:false,message:response.data.message || "That promo code is not valid"};
+            const {code:accepted,label,discount,delivery} = response.data;
+            setPromo({code:accepted,label,discount,delivery});
+            setPromoNotice("");
+            return {ok:true};
+        } catch (error) {
+            return {ok:false,message:"Could not check that code. Please try again."};
+        }
+    }
+
+    const removePromo = () => { setPromo(null); setPromoNotice(""); }
+
+    // subtotal, discount, delivery and total as the shopper should see them
+    const getOrderTotals = () => {
+        const subtotal = getTotalCartAmount();
+        const discount = promo ? Math.min(promo.discount,subtotal) : 0;
+        const delivery = subtotal === 0 ? 0 : (promo && promo.delivery === 0 ? 0 : DELIVERY_FEE);
+        return {subtotal,discount,delivery,total:subtotal-discount+delivery};
+    }
+
+    const fetchFoodList = async () => {
+        try {
+            const response = await axios.get(url+"/api/food/list");
+            // a fresh random order on every page load (stays stable while browsing)
             setFoodList(shuffle(response.data.data))
         } catch (error) {
             console.log(error);
         }
     }
 
-    // refresh availability whenever the dates change
-    useEffect(()=>{
-        let cancelled = false;
-        axios.get(url+"/api/booking/availability",{params:{checkIn:stay.checkIn,checkOut:stay.checkOut}})
-            .then((res)=>{ if (!cancelled && res.data.success) setAvailability(res.data.data); })
-            .catch(()=>{});
-        return ()=>{ cancelled = true; };
-    },[stay.checkIn,stay.checkOut,food_list.length]);
-
+    // page reload with a saved login: load the saved cart
     const loadCartData = async (t) => {
         try {
             const response = await axios.post(url+"/api/cart/get",{},authConfig(t));
@@ -130,6 +157,7 @@ const StoreContextProvider = (props) => {
         }
     }
 
+    // fresh login / sign up: keep the token and merge any guest cart into the saved one
     const login = async (newToken) => {
         localStorage.setItem("token",newToken);
         setToken(newToken);
@@ -143,7 +171,8 @@ const StoreContextProvider = (props) => {
 
     useEffect(()=>{
         async function loadData() {
-            await fetchRooms();
+            await fetchFoodList();
+            refreshRatings();
             const stored = localStorage.getItem("token");
             if (stored) await loadCartData(stored);
             setReady(true);
@@ -151,12 +180,62 @@ const StoreContextProvider = (props) => {
         loadData();
     },[])
 
-    const contextValue = useMemo(()=>({
-        food_list, cartItems, setCartItems, addToCart, removeFromCart,
-        getTotalCartAmount, getNightlyTotal, guestCapacity,
-        stay, setStay, nights, roomsLeft,
-        url, token, setToken, login, logout, ready, authConfig
-    }));
+    // the cart changed: check the code again (a percentage or a minimum spend may no longer fit)
+    const cartKey = JSON.stringify(cartItems);
+    useEffect(()=>{
+        if (!promo || !ready) return;
+        if (getTotalCartAmount() === 0) { setPromo(null); return; }
+        let stale = false;
+        (async ()=>{
+            try {
+                const response = await axios.post(url+"/api/order/promo",{code:promo.code,items:cartLines()});
+                if (stale) return;
+                if (response.data.success) {
+                    const {code,label,discount,delivery} = response.data;
+                    setPromo({code,label,discount,delivery});
+                } else {
+                    setPromo(null);
+                    setPromoNotice(response.data.message || "Your promo code was removed");
+                }
+            } catch (error) { /* offline: keep what we have, the server checks again at payment */ }
+        })();
+        return ()=>{ stale = true; };
+    },[cartKey]);
+
+    // newest first, and products that no longer exist are left out
+    const wishlistItems = wishlist.map((id)=>food_list.find((product)=>product._id === id)).filter(Boolean);
+
+    const recentItems = recent.map((id)=>food_list.find((product)=>product._id === id)).filter(Boolean);
+
+    const contextValue = {
+        ratings,
+        refreshRatings,
+        handleAuthError,
+        recentItems,
+        trackView,
+        clearRecent,
+        wishlist,
+        wishlistItems,
+        toggleWishlist,
+        promo,
+        promoNotice,
+        applyPromo,
+        removePromo,
+        getOrderTotals,
+        food_list,
+        cartItems,
+        setCartItems,
+        addToCart,
+        removeFromCart,
+        getTotalCartAmount,
+        url,
+        token,
+        setToken,
+        login,
+        logout,
+        ready,
+        authConfig
+    }
 
     return (
         <StoreContext.Provider value={contextValue}>

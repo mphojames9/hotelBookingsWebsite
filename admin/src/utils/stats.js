@@ -3,7 +3,7 @@ import { formatRandWhole } from "./format";
 
 const DAY = 86400000;
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-export const STATUSES = ["Confirmed", "Checked in", "Checked out", "Cancelled"];
+export const STATUSES = ["Processing", "Out for delivery", "Delivered"];
 
 export const startOfDay = (value) => {
   const date = new Date(value);
@@ -79,10 +79,10 @@ export function buildStats(orders, foods, days, nowValue = new Date()) {
   for (const order of inPeriod) {
     for (const item of itemsOf(order)) {
       const quantity = Number(item.quantity) || 0;
-      const key = String(item.roomId || item.name);
+      const key = String(item.foodId || item.name);
       const entry = sold.get(key) || {
         key,
-        roomId: item.roomId ? String(item.roomId) : null,
+        foodId: item.foodId ? String(item.foodId) : null,
         fallbackName: item.name,
         units: 0,
         revenue: 0,
@@ -93,7 +93,7 @@ export function buildStats(orders, foods, days, nowValue = new Date()) {
     }
   }
   const products = [...sold.values()].map((entry) => {
-    const food = entry.roomId ? foodById.get(entry.roomId) : null;
+    const food = entry.foodId ? foodById.get(entry.foodId) : null;
     return {
       ...entry,
       exists: !!food,
@@ -122,7 +122,7 @@ export function buildStats(orders, foods, days, nowValue = new Date()) {
   // ----- order pipeline (all paid orders, not just this period)
   const counts = Object.fromEntries(STATUSES.map((status) => [status, 0]));
   for (const order of valid) {
-    const status = STATUSES.includes(order.status) ? order.status : "Confirmed";
+    const status = STATUSES.includes(order.status) ? order.status : "Processing";
     counts[status] += 1;
   }
 
@@ -150,8 +150,8 @@ export function buildStats(orders, foods, days, nowValue = new Date()) {
     });
   }
 
-  if (counts.Confirmed > 0) {
-    const n = counts.Confirmed;
+  if (counts.Processing > 0) {
+    const n = counts.Processing;
     insights.push({
       id: "processing",
       tone: "warn",
@@ -178,7 +178,7 @@ export function buildStats(orders, foods, days, nowValue = new Date()) {
     }
   }
 
-  const soldIds = new Set(products.filter((p) => p.roomId).map((p) => p.roomId));
+  const soldIds = new Set(products.filter((p) => p.foodId).map((p) => p.foodId));
   const unsold = foods.filter((food) => !soldIds.has(String(food._id)));
   if (inPeriod.length > 0 && unsold.length > 0) {
     insights.push({

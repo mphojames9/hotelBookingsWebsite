@@ -15,9 +15,10 @@
     gap: 12px;
     padding: 10px 10px 10px 12px;
     border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, .2);
     background: var(--ink);
     color: #fff;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-pop);
     animation: toastIn 500ms var(--spring);
 }
 

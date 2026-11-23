@@ -6,8 +6,8 @@ import { toast } from 'react-toastify';
 import { BoxIcon, CheckIcon, ChevronDownIcon, MapPinIcon, PhoneIcon, ReceiptIcon } from '../../components/Icons';
 import { formatDate, formatRand } from '../../utils/format';
 
-const STATUSES = ["Confirmed","Checked in","Checked out","Cancelled"];
-const TONES = { "Confirmed":"warn", "Checked in":"info", "Checked out":"ok", "Cancelled":"bad" };
+const STATUSES = ["Processing","Out for delivery","Delivered"];
+const TONES = { "Processing":"warn", "Out for delivery":"info", "Delivered":"ok" };
 
 const Orders = () => {
 
@@ -20,14 +20,14 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await api.get("/api/booking/list");
+      const response = await api.get("/api/order/list");
       if (response.data.success) {
         setOrders(response.data.data);
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error(errorMessage(error,"Could not load bookings"));
+      toast.error(errorMessage(error,"Could not load orders"));
     } finally {
       setLoading(false);
     }
@@ -36,7 +36,7 @@ const Orders = () => {
   const statusHandler = async (event,orderId) => {
     setUpdatingId(orderId);
     try {
-      const response = await api.post("/api/booking/status",{bookingId:orderId,status:event.target.value});
+      const response = await api.post("/api/order/status",{orderId,status:event.target.value});
       if (response.data.success) {
         await fetchOrders();
         toast.success(response.data.message);
@@ -67,7 +67,7 @@ const Orders = () => {
 
       <div className="page-head">
         <div>
-          <h1>Bookings</h1>
+          <h1>Orders</h1>
           <p>{loading ? "Loading orders..." : `${orders.length} paid ${orders.length === 1 ? "order" : "orders"}`}</p>
         </div>
       </div>
@@ -106,8 +106,8 @@ const Orders = () => {
         <div className="card">
           <div className="empty">
             <span className="empty-icon"><ReceiptIcon size={32} /></span>
-            <h3>No paid bookings yet</h3>
-            <p>Bookings show up here as soon as a guest has paid.</p>
+            <h3>No paid orders yet</h3>
+            <p>Orders show up here as soon as a customer has paid.</p>
           </div>
         </div>
       }
@@ -117,7 +117,7 @@ const Orders = () => {
           <div className="empty">
             <span className="empty-icon"><BoxIcon size={30} /></span>
             <h3>Nothing here</h3>
-            <p>No bookings are marked “{filter}” right now.</p>
+            <p>No orders are marked “{filter}” right now.</p>
           </div>
         </div>
       }
@@ -128,7 +128,7 @@ const Orders = () => {
             const stepIndex = Math.max(0,STATUSES.indexOf(order.status));
             const tone = TONES[order.status] || "info";
             const itemCount = order.items.reduce((sum,item)=>sum+item.quantity,0);
-            const fullName = order.guest.firstName+" "+order.guest.lastName;
+            const fullName = order.address.firstName+" "+order.address.lastName;
 
             return (
               <article
@@ -141,11 +141,11 @@ const Orders = () => {
                   <span className="order-icon"><BoxIcon size={22} /></span>
                   <div className="order-who">
                     <h3>{fullName}</h3>
-                    <span>{formatDate(order.checkIn)} → {formatDate(order.checkOut)} · {order.guests} guests</span>
+                    <span>{formatDate(order.date)}</span>
                   </div>
                   <div className="order-total">
                     <strong>{formatRand(order.amount)}</strong>
-                    <span>{order.nights} {order.nights === 1 ? "night" : "nights"} · {itemCount} {itemCount === 1 ? "room" : "rooms"}</span>
+                    <span>{itemCount} {itemCount === 1 ? "item" : "items"}</span>
                   </div>
                 </header>
 
@@ -161,17 +161,20 @@ const Orders = () => {
                 <div className="order-contact">
                   <p>
                     <MapPinIcon size={17} />
-                    <span>{order.guest.email}{order.guest.requests ? <><br/>Request: {order.guest.requests}</> : null}</span>
+                    <span>
+                      {order.address.street+","}<br/>
+                      {order.address.city+", "+order.address.province+", "+order.address.country+", "+order.address.zipCode}
+                    </span>
                   </p>
-                  <a href={`tel:${order.guest.phone}`}>
+                  <a href={`tel:${order.address.phone}`}>
                     <PhoneIcon size={17} />
-                    {order.guest.phone}
+                    {order.address.phone}
                   </a>
                 </div>
 
                 <div className="order-foot">
-                  <ol className="stepper" style={{'--step':stepIndex}} aria-label="Stay progress">
-                    {STATUSES.slice(0,3).map((status,k)=>(
+                  <ol className="stepper" style={{'--step':stepIndex}} aria-label="Delivery progress">
+                    {STATUSES.map((status,k)=>(
                       <li key={status} className={k <= stepIndex ? "done" : ""} aria-current={k === stepIndex ? "step" : undefined}>
                         <span className="dot">{k < stepIndex && <CheckIcon size={11} />}</span>
                         <span className="label">{status}</span>
@@ -182,7 +185,7 @@ const Orders = () => {
                   <div className="status-select">
                     <span className="status-dot" aria-hidden="true" />
                     <select
-                      aria-label={`Booking status for ${fullName}`}
+                      aria-label={`Order status for ${fullName}`}
                       onChange={(event)=>statusHandler(event,order._id)}
                       value={order.status}
                       disabled={updatingId === order._id}

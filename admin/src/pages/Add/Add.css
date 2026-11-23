@@ -35,7 +35,7 @@
 
 .add-row{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 16px;
 }
 
@@ -241,7 +241,7 @@
 }
 
 @media (max-width: 560px){
-    .add-row{ grid-template-columns: 1fr; }
+    .add-row{ grid-template-columns: minmax(0, 1fr); }
     .dropzone{ height: 200px; }
     .add-btn{ justify-self: stretch; }
 }
@@ -266,4 +266,16 @@
 
     .add-form textarea.control{ height: 100px; }
     .add-btn{ min-height: 46px; }
+}
+
+.field-help{
+    display: block;
+    margin-top: 6px;
+    color: var(--ink-3);
+    font-size: .82rem;
+}
+
+.optional{
+    color: var(--ink-3);
+    font-weight: 500;
 }

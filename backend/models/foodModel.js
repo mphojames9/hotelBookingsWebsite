@@ -7,6 +7,8 @@ const foodSchema = new mongoose.Schema({
     image:{type:String,required:true},
     category:{type:String,required:true},
     // technical specifications shown on the product card, e.g. {label:"Screen size", value:"13 inch"}
+    // units in stock. null = not tracked (always available), 0 = sold out
+    stock:{type:Number,min:0,default:null},
     specs:{type:[{label:{type:String,required:true},value:{type:String,required:true},_id:false}],default:[]}
 })
 

@@ -27,7 +27,7 @@
     overflow: hidden;
     border-radius: 26px;
     background: var(--paper);
-    box-shadow: 0 0 0 1px rgba(10, 31, 51, .06), 0 40px 90px rgba(10, 31, 51, .35);
+    box-shadow: var(--shadow-pop);
     animation: spPanel 280ms var(--spring) both;
     transform-origin: 50% 0;
 }
@@ -46,7 +46,7 @@
 
 /* a soft light sweeps around the panel while the mic is listening */
 .sp-panel.is-listening{
-    box-shadow: 0 0 0 2px rgba(42, 161, 217, .75), 0 0 0 8px rgba(42, 161, 217, .18), 0 40px 90px rgba(10, 31, 51, .35);
+    box-shadow: 0 0 0 2px rgba(42, 161, 217, .75), var(--shadow-pop);
 }
 
 /* ---------- input row ---------- */
@@ -276,7 +276,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     padding: 5px;
     overflow: hidden;
     border-radius: 14px;
-    background: #f4f8fb;
+    background: var(--tile);
 }
 .sp-thumb img{
     width: 100%;
@@ -375,7 +375,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     background: var(--brand-strong);
     color: #fff;
     font-weight: 700;
-    box-shadow: 0 5px 14px rgba(10, 106, 161, .28);
+    box-shadow: none;
     transition: background-color 150ms, transform 200ms var(--spring);
 }
 .sp-add svg{ width: 17px; height: 17px; stroke-width: 2.4; }

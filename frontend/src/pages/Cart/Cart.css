@@ -46,7 +46,7 @@
     border: 1px solid var(--line);
     border-radius: 22px;
     background: var(--paper);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
     animation: rise 600ms var(--ease) both;
     animation-delay: calc(var(--i) * 60ms);
 }
@@ -55,7 +55,7 @@
     aspect-ratio: 1 / 1;
     padding: 9px;
     border-radius: 16px;
-    background: #f4f8fb;
+    background: var(--tile);
 }
 
 .cart-thumb img{
@@ -173,7 +173,7 @@
         border-radius: 22px;
         background: var(--ink);
         color: #fff;
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-pop);
         animation: rise 600ms var(--ease) both;
     }
 
@@ -229,4 +229,11 @@
     .cart-name{ grid-area: name; }
     .cart-row .stepper{ grid-area: step; }
     .cart-line{ grid-area: line; align-self: center; }
+}
+
+.cart-name .cart-stock{
+    margin-top: 4px;
+    color: var(--danger);
+    font-size: .85rem;
+    font-weight: 700;
 }

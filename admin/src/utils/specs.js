@@ -1,41 +1,42 @@
-// Room amenities: a list of {label, value}, e.g. {label:"Bed", value:"King"}
+// Product specifications: a list of {label, value}, e.g. {label:"Screen size", value:"13 inch"}
 export const MAX_SPECS = 12;
 
-// quick-add suggestions per room type (the types are listed in utils/categories.js)
+// quick-add suggestions per category
 export const SPEC_PRESETS = {
-  "Standard": ["Bed", "Size", "View", "Wi-Fi", "Breakfast", "Shower"],
-  "Deluxe": ["Bed", "Size", "View", "Balcony", "Minibar", "Shower"],
-  "Executive": ["Bed", "Size", "Lounge", "Breakfast", "Desk", "View"],
-  "Family": ["Bedrooms", "Sleeps", "Living area", "Kitchenette", "Bed", "Size"],
-  "Suite": ["Bed", "Size", "Lounge", "Living area", "View", "Breakfast"],
-  "Studio": ["Bed", "Kitchenette", "Desk", "Laundry", "Size", "Wi-Fi"],
-  "Penthouse": ["Bed", "Terrace", "Views", "Size", "Living area", "Breakfast"],
-  "Accessible": ["Access", "Shower", "Bed", "Size", "Lounge", "Wi-Fi"],
+  "Phones": ["Screen size", "Storage", "RAM", "Camera", "Battery", "Colour"],
+  "Laptops": ["Screen size", "Processor", "RAM", "Storage", "Battery", "Weight"],
+  "Smart TV": ["Screen size", "Resolution", "Refresh rate", "Smart platform", "HDMI ports"],
+  "Monitor": ["Screen size", "Resolution", "Refresh rate", "Panel type", "Response time"],
+  "Taplets": ["Screen size", "Storage", "RAM", "Battery", "Connectivity"],
+  "Accessories": ["Compatibility", "Connectivity", "Colour", "Warranty", "Battery"],
+  "Office": ["Dimensions", "Material", "Weight", "Colour", "Warranty"],
+  "Gaming": ["Platform", "Connectivity", "Colour", "Warranty", "Battery"],
 };
 
 // what a typical value looks like (shown as the placeholder)
 const HINTS = {
-  "bed": "King",
-  "beds": "2 x Twin",
-  "bedrooms": "2",
-  "sleeps": "4",
-  "size": "32 m²",
-  "view": "Sea",
-  "views": "180°",
-  "wi-fi": "Free",
-  "breakfast": "Included",
-  "balcony": "Private",
-  "terrace": "Private",
-  "minibar": "Yes",
-  "shower": "Rain",
-  "lounge": "Access",
-  "living area": "Yes",
-  "kitchenette": "Full",
-  "desk": "Yes",
-  "laundry": "On site",
-  "access": "Step-free",
+  "screen size": "13 inch",
+  "storage": "256GB",
+  "ram": "8GB",
+  "camera": "48MP",
+  "battery": "5000mAh",
+  "resolution": "1920 x 1080",
+  "refresh rate": "144Hz",
+  "weight": "1.3kg",
+  "colour": "Midnight black",
+  "warranty": "2 years",
+  "processor": "Intel Core i5",
+  "response time": "1ms",
+  "panel type": "IPS",
+  "connectivity": "Bluetooth 5.3",
+  "hdmi ports": "3",
+  "dimensions": "120 x 60 x 45 cm",
+  "material": "Mesh and aluminium",
+  "platform": "PlayStation 5",
+  "compatibility": "Windows and macOS",
+  "smart platform": "Google TV",
 };
-export const hintFor = (label) => HINTS[String(label || "").trim().toLowerCase()] || "King";
+export const hintFor = (label) => HINTS[String(label || "").trim().toLowerCase()] || "13 inch";
 
 export const ALL_LABELS = [...new Set(Object.values(SPEC_PRESETS).flat())].sort();
 

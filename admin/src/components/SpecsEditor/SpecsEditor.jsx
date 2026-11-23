@@ -63,13 +63,13 @@ const SpecsEditor = ({ rows, onChange, category }) => {
     return (
         <div className="specs" ref={wrapRef}>
             <div className="specs-head">
-                <h2>Amenities</h2>
+                <h2>Specifications</h2>
                 <span className="specs-count">{rows.length ? `${rows.length} / ${MAX_SPECS}` : "Optional"}</span>
             </div>
-            <p className="specs-help">Add the facts guests compare, like bed type or view. They show on the room card.</p>
+            <p className="specs-help">Add the facts shoppers compare, like screen size or storage. They show on the product card.</p>
 
             {suggestions.length > 0 && !atLimit &&
-                <div className="specs-suggest" aria-label="Suggested amenities">
+                <div className="specs-suggest" aria-label="Suggested specifications">
                     {suggestions.map((label)=>(
                         <button type="button" key={label} className="spec-chip" onClick={()=>addPreset(label)}>
                             <PlusIcon size={14} />{label}
@@ -90,7 +90,7 @@ const SpecsEditor = ({ rows, onChange, category }) => {
                                 value={row.label}
                                 onChange={(e)=>update(row.id,"label",e.target.value)}
                                 onKeyDown={(e)=>onKeyDown(e,row,index,"label")}
-                                placeholder="Name, e.g. Bed"
+                                placeholder="Name, e.g. Screen size"
                                 aria-label={`Specification ${index + 1} name`}
                                 maxLength={40}
                                 autoComplete="off"
@@ -122,7 +122,7 @@ const SpecsEditor = ({ rows, onChange, category }) => {
             </datalist>
 
             <button type="button" className="spec-add" onClick={addBlank} disabled={atLimit}>
-                <PlusIcon size={18} />{atLimit ? `Limit of ${MAX_SPECS} reached` : "Add amenity"}
+                <PlusIcon size={18} />{atLimit ? `Limit of ${MAX_SPECS} reached` : "Add specification"}
             </button>
         </div>
     );

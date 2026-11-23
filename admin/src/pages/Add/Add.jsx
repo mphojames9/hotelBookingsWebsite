@@ -12,9 +12,8 @@ const emptyData = {
     name:"",
     description:"",
     price:"",
-    maxGuests:2,
-    totalRooms:1,
-    category:"Standard"
+    stock:"",
+    category:"Accessories"
 };
 
 const Add = () => {
@@ -61,16 +60,15 @@ const Add = () => {
         const formData = new FormData();
         formData.append("name",data.name)
         formData.append("description",data.description)
-        formData.append("price",Number(data.price));
-        formData.append("maxGuests",Number(data.maxGuests));
-        formData.append("totalRooms",Number(data.totalRooms))
+        formData.append("price",Number(data.price))
         formData.append("category",data.category)
+        formData.append("stock",data.stock)
         formData.append("specs",JSON.stringify(specs))
         formData.append("image",image)
 
         setLoading(true);
         try {
-            const response = await api.post("/api/room/add",formData);
+            const response = await api.post("/api/food/add",formData);
             if (response.data.success) {
                 setData(emptyData)
                 setSpecRows([])
@@ -92,7 +90,7 @@ const Add = () => {
 
         <div className="page-head">
             <div>
-                <h1>Add room</h1>
+                <h1>Add product</h1>
                 <p>Add a photo and the details shoppers will see.</p>
             </div>
         </div>
@@ -119,7 +117,7 @@ const Add = () => {
                         />
                         {preview ? (
                             <>
-                                <img src={preview} alt="Selected room" />
+                                <img src={preview} alt="Selected product" />
                                 <span className="dropzone-change">Change photo</span>
                                 <button type="button" className="dropzone-clear" onClick={clearImage} aria-label="Remove photo">
                                     <CloseIcon size={16} />
@@ -139,7 +137,7 @@ const Add = () => {
                     <h2>Details</h2>
 
                     <div className="field-block">
-                        <label htmlFor="name">Room name</label>
+                        <label htmlFor="name">Product name</label>
                         <input className="control" id="name" onChange={onChangeHandler} value={data.name} type='text' name='name' placeholder='Type here' autoComplete="off" required />
                     </div>
 
@@ -162,22 +160,17 @@ const Add = () => {
                         </div>
 
                         <div className="field-block">
-                            <label htmlFor="price">Price per night</label>
+                            <label htmlFor="price">Price</label>
                             <div className="control-wrap">
                                 <span className="price-prefix">R</span>
                                 <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='200' required />
                             </div>
                         </div>
-
-                        <div className="field-block">
-                            <label htmlFor="maxGuests">Guests per room</label>
-                            <div className="control-wrap"><input className="control-bare" id="maxGuests" onChange={onChangeHandler} value={data.maxGuests} type='number' min='1' max='10' name='maxGuests' required /></div>
-                        </div>
-
-                        <div className="field-block">
-                            <label htmlFor="totalRooms">Rooms of this type</label>
-                            <div className="control-wrap"><input className="control-bare" id="totalRooms" onChange={onChangeHandler} value={data.totalRooms} type='number' min='1' name='totalRooms' required /></div>
-                        </div>
+                    </div>
+                    <div className="field-block">
+                        <label htmlFor="stock">Stock <span className="optional">(optional)</span></label>
+                        <input className="control" id="stock" onChange={onChangeHandler} value={data.stock} type='number' inputMode="numeric" min='0' step='1' name='stock' placeholder='Leave empty to not track stock' />
+                        <small className="field-help">Shoppers see "Only N left" at 5 or fewer, and "Sold out" at 0.</small>
                     </div>
                 </section>
 
@@ -187,7 +180,7 @@ const Add = () => {
 
                 <button className="btn btn-primary add-btn" type='submit' disabled={loading}>
                     {loading && <span className="spinner" aria-hidden="true" />}
-                    {loading ? "Adding..." : "Add room"}
+                    {loading ? "Adding..." : "Add product"}
                 </button>
             </form>
 
@@ -199,7 +192,7 @@ const Add = () => {
                     </div>
                     <div className="preview-body">
                         <span className="chip">{data.category}</span>
-                        <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Room name"}</h3>
+                        <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Product name"}</h3>
                         <p className={data.description ? "" : "is-placeholder"}>{data.description || "Your description will appear here."}</p>
                         {previewSpecs.length > 0 &&
                             <ul className="preview-specs">

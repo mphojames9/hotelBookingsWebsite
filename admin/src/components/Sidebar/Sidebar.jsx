@@ -1,13 +1,14 @@
 import React from 'react';
 import './Sidebar.css';
 import { NavLink, useLocation } from 'react-router-dom';
-import { DashboardIcon, PlusIcon, BoxIcon, ReceiptIcon } from '../Icons';
+import { DashboardIcon, PlusIcon, BoxIcon, ReceiptIcon, StarIcon } from '../Icons';
 
 const items = [
   { to:'/dashboard', label:'Dashboard', Icon:DashboardIcon },
-  { to:'/add',    label:'Add room', Icon:PlusIcon },
-  { to:'/list',   label:'Rooms',    Icon:BoxIcon, also:['/edit'] },
-  { to:'/orders', label:'Bookings',      Icon:ReceiptIcon },
+  { to:'/add',    label:'Add product', Icon:PlusIcon },
+  { to:'/list',   label:'Products',    Icon:BoxIcon, also:['/edit'] },
+  { to:'/orders', label:'Orders',      Icon:ReceiptIcon },
+  { to:'/reviews', label:'Reviews',    Icon:StarIcon },
 ];
 
 const Sidebar = () => {

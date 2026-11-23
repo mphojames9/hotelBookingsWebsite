@@ -22,10 +22,11 @@
     max-height: calc(100dvh - 32px);
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: minmax(0, 1fr); /* keeps the details scrolling inside the panel on short screens */
     overflow: hidden;
     border-radius: 30px;
     background: var(--paper);
-    box-shadow: 0 0 0 1px rgba(10, 31, 51, .06), 0 40px 90px rgba(10, 31, 51, .38);
+    box-shadow: var(--shadow-pop);
     animation: psIn 320ms var(--spring) both;
 }
 
@@ -52,7 +53,7 @@
     border-radius: 50%;
     background: var(--paper);
     color: var(--ink);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
     transition: transform 200ms var(--spring), background-color 150ms;
 }
 .ps-close:hover{ background: var(--panel); }
@@ -65,7 +66,7 @@
     margin: 10px 0 10px 10px;
     padding: 9%;
     border-radius: 22px;
-    background: #f4f8fb;
+    background: var(--tile);
 }
 .ps-media img{
     width: 100%;
@@ -195,7 +196,7 @@
     color: #fff;
     font-size: 1.02rem;
     font-weight: 700;
-    box-shadow: 0 10px 24px rgba(10, 106, 161, .32);
+    box-shadow: none;
     transition: background-color 150ms, transform 200ms var(--spring);
 }
 .ps-add svg{ width: 20px; height: 20px; stroke-width: 2.4; }
@@ -302,3 +303,54 @@
     to{ opacity: 1; transform: none; }
 }
 @keyframes psSheetOut{ to{ opacity: 0; transform: translateY(40px); } }
+
+/* ---------- stock ---------- */
+.ps-stock{
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.ps-stock.is-low{
+    border: 1px solid #f0d3a0;
+    background: #fff3dc;
+    color: #8a4b00;
+}
+
+.ps-stock.is-out{
+    background: var(--ink);
+    color: #fff;
+}
+
+.ps-add:disabled{
+    border: 1px solid var(--line);
+    background: var(--tile);
+    color: var(--muted);
+    cursor: not-allowed;
+}
+
+/* short landscape screens (phones turned sideways): photo and details side by side, never taller than the screen */
+@media (max-height: 520px) and (orientation: landscape){
+    .ps-root{
+        padding: 8px;
+        align-items: center;
+    }
+    .ps-panel{
+        width: min(920px, 100%);
+        max-height: calc(100dvh - 16px);
+        grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+        grid-template-rows: minmax(0, 1fr);
+        border-radius: 22px;
+        animation: psIn 320ms var(--spring) both;
+    }
+    .ps-root.is-closing .ps-panel{ animation: psOut 170ms ease both; }
+    .ps-media{
+        margin: 8px 0 8px 8px;
+        padding: 8px;
+        border-radius: 16px;
+    }
+    .ps-media img{ max-height: calc(100dvh - 48px); }
+}

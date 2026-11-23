@@ -11,13 +11,13 @@ import {
   ArrowRightIcon, CartIcon, ClockIcon, CloseIcon, EnterIcon, MicIcon, MinusIcon, PlusIcon, SearchIcon, SparklesIcon,
 } from '../Icons';
 
-const HOME = '/';
-const CART = '/cart';
+const HOME = '/shopping-cart';
+const CART = '/shopping-cart/cart';
 const RECENT_KEY = 'onestop:recent-searches';
 const LIMIT = 8;
-const FALLBACK_EXAMPLES = ['suite under R3000', 'cheapest room', 'family 2k-4k'];
+const FALLBACK_EXAMPLES = ['phones under R5000', 'cheapest laptop', 'gaming 2k-6k'];
 
-/* Anything in the app can open the palette: openSpotlight() or openSpotlight('suite') */
+/* Anything in the app can open the palette: openSpotlight() or openSpotlight('phones') */
 export const openSpotlight = (query = '') =>
   window.dispatchEvent(new CustomEvent('spotlight:open', { detail: { query } }));
 
@@ -48,7 +48,7 @@ export const SpotlightView = ({
   onKeyDown, chips, onChip, sections, cursor, onCursor, onRun, onAdd, onRemoveOne, qtyOf, url, tokens, ready,
   cart, onCart, activeItem, mod, notice, emptyFor, onClearRecent,
 }) => {
-  const hint = !activeItem ? '' : activeItem.kind === 'product' ? 'select room' : activeItem.kind === 'action' ? 'open' : activeItem.kind === 'category' ? 'browse' : 'search';
+  const hint = !activeItem ? '' : activeItem.kind === 'product' ? 'add to cart' : activeItem.kind === 'action' ? 'open' : activeItem.kind === 'category' ? 'browse' : 'search';
 
   const renderItem = (item) => {
     const active = item.idx === cursor;

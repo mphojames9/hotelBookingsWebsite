@@ -56,25 +56,49 @@
 }
 
 .order{
-    display: grid;
-    grid-template-columns: 170px minmax(0, 1fr) 120px 170px;
-    gap: 20px;
-    align-items: center;
     padding: 20px 22px;
     border: 1px solid var(--line);
     border-radius: 22px;
     background: var(--paper);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
     animation: rise 600ms var(--ease) both;
     animation-delay: calc(var(--i) * 70ms);
+}
+
+.order-row{
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr) 120px 170px;
+    gap: 20px;
+    align-items: center;
+}
+
+.order-track{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 6px 0;
+    border: none;
+    background: none;
+    color: var(--brand-strong);
+    font-weight: 700;
+}
+
+.order-track svg{
+    width: 16px;
+    height: 16px;
+    transition: transform 250ms var(--ease);
+}
+
+.order-track[aria-expanded="true"] svg{
+    transform: rotate(180deg);
 }
 
 .order-skeleton{
     height: 88px;
     border-radius: 22px;
-    background: var(--panel);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s linear infinite;
+    background: var(--tile);
+    animation: pulse 1.4s ease-in-out infinite;
 }
 
 .order-meta{
@@ -134,10 +158,13 @@
 
 @media (max-width: 760px){
     .order{
-        grid-template-columns: 1fr auto;
-        gap: 8px 16px;
         padding: 16px;
         border-radius: 20px;
+    }
+
+    .order-row{
+        grid-template-columns: 1fr auto;
+        gap: 8px 16px;
     }
 
     .order-items{ grid-column: 1 / -1; order: 3; font-size: .95rem; }

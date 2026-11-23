@@ -109,7 +109,7 @@ const Login = ({setToken}) => {
 
         <div className='auth-copy'>
           <h1>Run your store from anywhere.</h1>
-          <p>Manage rooms, track bookings and keep arrivals on schedule, from your phone or your desk.</p>
+          <p>Add products, track orders and keep deliveries moving, from your phone or your desk.</p>
         </div>
 
         <div className='auth-tiles' aria-hidden='true'>
@@ -125,7 +125,7 @@ const Login = ({setToken}) => {
 
           <div className='auth-head' key={mode}>
             <h2>{isRegister ? "Create admin account" : "Admin sign in"}</h2>
-            <p>{isRegister ? "You will need the invite code from the site owner." : "Sign in to manage rooms and bookings."}</p>
+            <p>{isRegister ? "You will need the invite code from the site owner." : "Sign in to manage products and orders."}</p>
           </div>
 
           <div className='seg' role='tablist' aria-label='Sign in or create account' style={{'--i': isRegister ? 1 : 0}}>

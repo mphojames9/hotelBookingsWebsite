@@ -7,5 +7,6 @@ export const formatPrice = (value) => {
   });
 };
 
-// room types are shown exactly as the admin saved them
-export const categoryLabel = (name) => name;
+// The admin "Add product" form saves the category as "Taplets", so products are stored under that name.
+// This only fixes how it is shown to shoppers.
+export const categoryLabel = (name) => (name === "Taplets" ? "Tablets" : name);

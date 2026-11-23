@@ -5,6 +5,7 @@ import Login from './components/Login/Login';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Orders from './pages/Orders/Orders';
+import Reviews from './pages/Reviews/Reviews';
 import List from './pages/List/List';
 import Add from './pages/Add/Add';
 import Edit from './pages/Edit/Edit';
@@ -59,6 +60,7 @@ const App = () => {
               <Route path='/list' element={<List/>}/>
               <Route path='/edit/:id' element={<Edit/>}/>
               <Route path='/orders' element={<Orders/>}/>
+              <Route path='/reviews' element={<Reviews/>}/>
               <Route path='*' element={<Navigate to='/dashboard' replace/>}/>
             </Routes>
           </div>

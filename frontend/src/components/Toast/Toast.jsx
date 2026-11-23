@@ -27,8 +27,8 @@ const Toast = () => {
       {toast &&
         <div key={toast.id} className="toast" role="status">
           <span className="toast-check"><CheckIcon /></span>
-          <span className="toast-text"><strong>{toast.name}</strong> selected for your stay</span>
-          <Link to="/cart" className="toast-link" onClick={()=>setToast(null)}>View stay</Link>
+          <span className="toast-text"><strong>{toast.name}</strong> added to cart</span>
+          <Link to="/shopping-cart/cart" className="toast-link" onClick={()=>setToast(null)}>View cart</Link>
         </div>
       }
     </div>

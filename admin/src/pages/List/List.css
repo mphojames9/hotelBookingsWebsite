@@ -68,6 +68,18 @@
     white-space: nowrap;
 }
 
+.list-stock{
+    display: block;
+    margin-top: 2px;
+    color: var(--ink-3);
+    font-size: .8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.list-stock.is-low{ color: #A15C00; }
+.list-stock.is-out{ color: #B3261E; }
+
 .list-price{
     font-weight: 700;
     font-variant-numeric: tabular-nums;

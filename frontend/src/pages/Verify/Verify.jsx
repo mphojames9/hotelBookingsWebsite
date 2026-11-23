@@ -5,31 +5,31 @@ import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 
 // Stripe sends the customer back here after checkout.
-// The server asks Stripe whether the booking was really paid.
+// The server asks Stripe whether the order was really paid.
 const Verify = () => {
 
   const [searchParams] = useSearchParams();
-  const bookingId = searchParams.get("bookingId");
+  const orderId = searchParams.get("orderId");
   const {url,token,ready,setCartItems,authConfig} = useContext(StoreContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
     if (!ready) return;
-    if (!token || !bookingId) {
-      navigate('/');
+    if (!token || !orderId) {
+      navigate('/shopping-cart');
       return;
     }
     const verifyPayment = async () => {
       try {
-        const response = await axios.post(url+"/api/booking/verify",{bookingId},authConfig());
+        const response = await axios.post(url+"/api/order/verify",{orderId},authConfig());
         if (response.data.success) {
           setCartItems({});
-          navigate('/myorders');
+          navigate('/shopping-cart/myorders');
         } else {
-          navigate('/cart');
+          navigate('/shopping-cart/cart');
         }
       } catch (error) {
-        navigate('/cart');
+        navigate('/shopping-cart/cart');
       }
     }
     verifyPayment();
@@ -38,7 +38,7 @@ const Verify = () => {
   return (
     <div className='verify' role="status">
       <div className="spinner"></div>
-      <p>Confirming your booking…</p>
+      <p>Confirming your payment…</p>
     </div>
   );
 }

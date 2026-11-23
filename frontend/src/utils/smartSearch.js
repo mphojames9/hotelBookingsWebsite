@@ -1,5 +1,5 @@
 // Spotlight search brain: understands everyday shopping phrases such as
-// "suite under R3000", "cheapest room", "family 2k-4k" and ranks products
+// "phones under R5000", "cheapest laptop", "gaming 2k-6k" and ranks products
 // with typo tolerance. Pure functions, no React, so it is easy to test.
 import { categoryLabel } from "./format";
 
@@ -11,14 +11,14 @@ const STOPWORDS = new Set([
 
 // words that mean a category, keyed by the category name in lower case
 const SYNONYMS = {
-  standard: ["standard","basic","budget","single"],
-  deluxe: ["deluxe","comfort","premium"],
-  executive: ["executive","business"],
-  family: ["family","kids","children"],
-  suite: ["suite","suites"],
-  studio: ["studio","kitchenette"],
-  penthouse: ["penthouse","luxury","top floor"],
-  accessible: ["accessible","wheelchair","disabled"],
+  phones: ["phone","phones","smartphone","smartphones","mobile","mobiles","cellphone","cellphones"],
+  laptops: ["laptop","laptops","notebook","notebooks"],
+  "smart tv": ["tv","tvs","television","televisions"],
+  monitor: ["monitor","monitors"],
+  taplets: ["tablet","tablets","taplet","taplets"],
+  accessories: ["accessory","accessories"],
+  office: ["office"],
+  gaming: ["gaming","gamer","console","consoles"],
 };
 
 const words = (text) => {

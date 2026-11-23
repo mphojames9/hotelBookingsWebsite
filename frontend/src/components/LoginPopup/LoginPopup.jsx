@@ -83,7 +83,7 @@ const LoginPopup = ({setShowLogin}) => {
             <div key={currState} className="auth-body">
                 <div>
                     <h2 id="auth-title">{isSignUp?"Create your account":"Welcome back"}</h2>
-                    <p className="auth-sub">{isSignUp?"Save your stay and manage your bookings.":"Sign in to book and see your bookings."}</p>
+                    <p className="auth-sub">{isSignUp?"Save your cart and track your orders.":"Sign in to check out and see your orders."}</p>
                 </div>
 
                 {isSignUp &&

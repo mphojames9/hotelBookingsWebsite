@@ -8,7 +8,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     background: var(--paper);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
 .order-summary h2{
@@ -82,4 +82,110 @@
     }
 }
 
-.summary-dates{margin:0 0 12px;font-weight:600}
+/* ---------- promo code ---------- */
+.promo-row{
+    display: flex;
+    gap: 8px;
+    min-width: 0;
+}
+
+.promo-row .btn{
+    flex: none;
+}
+
+.promo-row input{
+    flex: 1 1 0;
+    width: 0; /* let the field shrink so the Apply button never gets pushed out */
+    min-width: 0;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: border-color 200ms, box-shadow 200ms;
+}
+
+.promo-row input::placeholder{
+    text-transform: none;
+    color: var(--muted);
+}
+
+.promo-row input:focus{
+    outline: none;
+    border-color: var(--brand-strong);
+    box-shadow: 0 0 0 4px rgba(42, 161, 217, .2);
+}
+
+.promo-row input[aria-invalid="true"]{
+    border-color: var(--danger);
+}
+
+.promo-error{
+    margin-top: 8px;
+    color: var(--danger);
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.promo-applied{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px 10px 12px;
+    border: 1px solid #b7e3cf;
+    border-radius: 12px;
+    background: #e6f6ee;
+    color: var(--success);
+}
+
+.promo-applied > svg{
+    flex: none;
+    width: 20px;
+    height: 20px;
+}
+
+.promo-applied span{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+}
+
+.promo-applied b{
+    letter-spacing: .02em;
+}
+
+.promo-applied small{
+    color: var(--ink-soft);
+    font-size: .82rem;
+}
+
+.promo-applied button{
+    flex: none;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    transition: background-color 150ms;
+}
+
+.promo-applied button:hover{
+    background: rgba(10, 31, 51, .08);
+}
+
+.promo-applied button svg{
+    width: 16px;
+    height: 16px;
+}
+
+.summary-lines .summary-discount{
+    color: var(--success);
+    font-weight: 600;
+}

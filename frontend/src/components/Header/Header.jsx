@@ -1,15 +1,14 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import './Header.css';
-import { StoreContext } from '../../context/StoreContext';
+import { StoreContext, DELIVERY_FEE } from '../../context/StoreContext';
 import { categoryLabel, formatPrice } from '../../utils/format';
 import { buildCategoryWords, buildSuggestions } from '../../utils/smartSearch';
 import { ArrowRightIcon, CheckIcon, ClockIcon, PlusIcon, SearchIcon, ShieldIcon, SparklesIcon, TruckIcon } from '../Icons';
-import StayPicker from '../StayPicker/StayPicker';
 import { modifierKey, openSpotlight } from '../Spotlight/Spotlight';
 import { openProduct } from '../ProductSheet/ProductSheet';
 
 // words that rotate in the headline
-const WORDS = ['room', 'suite', 'weekend', 'getaway', 'holiday'];
+const WORDS = ['phones', 'laptops', 'TVs', 'tablets', 'gaming'];
 // how the showcase cards sit on desktop: rotation (deg) and parallax depth (px)
 const POSES = [
   { r: 3, depth: 16 },
@@ -62,8 +61,6 @@ const Header = () => {
     <section className="hero-wrap">
       <div className="hero" ref={heroRef} onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}>
 
-        <div className="hero-aurora" aria-hidden="true"><i /><i /><i /></div>
-
         <div className="hero-copy">
           <button type="button" className="hero-badge" onClick={() => openSpotlight()}>
             <SparklesIcon />
@@ -72,22 +69,20 @@ const Header = () => {
           </button>
 
           <h1>
-            Book your perfect
+            Your one stop for
             <span className="rotor" aria-hidden="true">
               <span className="rotor-track">
                 {[...WORDS, WORDS[0]].map((word, i) => <b key={i}>{word}</b>)}
               </span>
             </span>
-            <span className="hero-sr">stay</span>
+            <span className="hero-sr">tech</span>
           </h1>
 
-          <p>Pick your dates, choose a room and pay securely online. Free cancellation up to 48 hours before check-in.</p>
+          <p>Phones, laptops, TVs and more, delivered to your door for a flat {formatPrice(DELIVERY_FEE)}.</p>
 
-          <StayPicker />
-
-          <button type="button" className="hero-search" onClick={() => openSpotlight()} aria-label="Search rooms">
+          <button type="button" className="hero-search" onClick={() => openSpotlight()} aria-label="Search products">
             <SearchIcon />
-            <span>Search rooms, e.g. sea view king suite</span>
+            <span>Search or ask for anything…</span>
             <kbd>{modifierKey()} K</kbd>
           </button>
 
@@ -103,7 +98,7 @@ const Header = () => {
         </div>
 
         {(!ready || featured.length > 0) &&
-          <ul className="hero-deck" aria-label="Featured rooms">
+          <ul className="hero-deck" aria-label="Featured products">
             {!ready && POSES.map((pose, i) => (
               <li key={i} className="deck-card is-skeleton" style={{ '--i': i, '--r': `${pose.r}deg`, '--depth': pose.depth }} aria-hidden="true">
                 <span className="deck-media" />
@@ -128,7 +123,7 @@ const Header = () => {
                     </button>
                     <div className="deck-foot">
                       <b>{formatPrice(product.price)}</b>
-                      <button type="button" className={`deck-add${inCart ? ' is-in' : ''}`} onClick={() => quickAdd(product)} aria-label={`Select ${product.name}`}>
+                      <button type="button" className={`deck-add${inCart ? ' is-in' : ''}`} onClick={() => quickAdd(product)} aria-label={`Add ${product.name} to cart`}>
                         {inCart ? <CheckIcon /> : <PlusIcon />}
                       </button>
                     </div>
@@ -141,8 +136,8 @@ const Header = () => {
       </div>
 
       <ul className="trust">
-        <li><span><TruckIcon /></span>Free cancellation (48h before)</li>
-        <li><span><ClockIcon /></span>Instant booking confirmation</li>
+        <li><span><TruckIcon /></span>Flat {formatPrice(DELIVERY_FEE)} delivery</li>
+        <li><span><ClockIcon /></span>Delivered within 7 working days</li>
         <li><span><ShieldIcon /></span>Pay securely by card</li>
       </ul>
     </section>

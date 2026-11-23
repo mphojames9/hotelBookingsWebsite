@@ -1,0 +1,75 @@
+/* Compare rooms dialog. Sits above the nav (60) and below the room details sheet (65). */
+.cmp-root{position:fixed;inset:0;z-index:64;display:grid;place-items:center;padding:16px}
+.cmp-backdrop{position:absolute;inset:0;background:rgba(15,28,58,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:cmpFade .2s ease both}
+.cmp-panel{position:relative;width:min(1040px,100%);max-height:calc(100dvh - 32px);display:flex;flex-direction:column;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:28px;box-shadow:8px 8px 0 var(--ink);overflow:hidden;animation:cmpIn .28s var(--ease) both;font-family:var(--font-body)}
+@keyframes cmpFade{from{opacity:0}to{opacity:1}}
+@keyframes cmpIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+
+.cmp-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 26px 16px;border-bottom:2px solid var(--ink)}
+.cmp-top h2{font:600 clamp(24px,3vw,32px)/1.1 var(--font-display);letter-spacing:-.02em;margin:0 0 4px}
+.cmp-top p{margin:0;color:var(--muted);font-size:14px}
+.cmp-x{flex:none;width:42px;height:42px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;transition:background .15s}
+.cmp-x:hover{background:var(--brand)}
+
+.cmp-scroll{overflow:auto;overscroll-behavior:contain}
+.cmp-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;min-width:640px}
+.cmp-table th,.cmp-table td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.4}
+.cmp-table tbody th{position:sticky;left:0;z-index:1;width:120px;background:var(--canvas);font-weight:700;font-size:13px;color:var(--muted);border-right:1px solid var(--line)}
+.cmp-table thead td{width:120px;position:sticky;left:0;z-index:1;background:var(--canvas);border-right:1px solid var(--line)}
+.cmp-table thead th{font-weight:400;padding-top:18px}
+.cmp-table thead th small{display:block;margin:10px 0 2px;color:var(--muted);font-size:12.5px;font-weight:600}
+.cmp-table thead th strong{display:block;font:600 19px/1.2 var(--font-display);letter-spacing:-.01em}
+.cmp-photo{display:block;aspect-ratio:16/10;border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:var(--panel)}
+.cmp-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.cmp-drop{margin-top:8px;padding:0;border:0;background:none;color:var(--muted);font:600 13px var(--font-body);text-decoration:underline;cursor:pointer}
+.cmp-drop:hover{color:var(--mint)}
+
+.cmp-table td b{display:block;font-weight:700}
+.cmp-big{font:600 24px/1.1 var(--font-display);letter-spacing:-.02em}
+.cmp-sub{display:block;margin-top:2px;font-size:12.5px;color:var(--muted)}
+.cmp-sub.ok{color:var(--success);font-weight:600}
+.cmp-table td.is-best{background:#fff7e3}
+.cmp-table td em{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:999px;background:var(--brand);color:var(--ink);font-size:12px;font-weight:700;font-style:normal}
+.cmp-good{color:var(--success)}
+.cmp-warn{color:var(--warn)}
+.cmp-bad{color:var(--danger)}
+.cmp-none{color:var(--muted)}
+
+.cmp-actions td,.cmp-actions th{border-bottom:0;padding-top:14px;padding-bottom:16px;position:sticky;bottom:0;background:#fff;border-top:2px solid var(--ink)}
+.cmp-actions th{left:0;z-index:2;background:var(--canvas)}
+.cmp-pick{display:block;width:100%;padding:12px 14px;border:2px solid var(--ink);border-radius:12px;background:var(--ink);color:#fff;font:700 14.5px var(--font-body);cursor:pointer;transition:background .15s,color .15s}
+.cmp-pick:hover:not(:disabled){background:var(--brand);color:var(--ink)}
+.cmp-pick:disabled{opacity:.45;cursor:not-allowed}
+.cmp-more{display:block;margin:10px 0 0;padding:0;border:0;background:none;color:var(--ink);font:700 13.5px var(--font-body);border-bottom:2px solid var(--brand);cursor:pointer}
+.cmp-more:hover{color:var(--mint)}
+.cmp-actions .cmp-sub{margin:6px 0 0}
+
+.cmp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cmp-x:focus-visible,.cmp-pick:focus-visible,.cmp-more:focus-visible,.cmp-drop:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+
+@media (max-width:640px){
+  .cmp-root{padding:8px}
+  .cmp-panel{max-height:calc(100dvh - 16px);border-radius:22px;box-shadow:4px 4px 0 var(--ink)}
+  .cmp-top{padding:18px 18px 14px}
+  .cmp-table{min-width:0;width:calc(84px + var(--n, 2) * 140px)}
+  .cmp-table th,.cmp-table td{padding:10px;font-size:13.5px}
+  .cmp-table tbody th,.cmp-table thead td{width:84px}
+  .cmp-table thead th,.cmp-table tbody td{width:140px}
+  .cmp-table thead th strong{font-size:16px}
+  .cmp-big{font-size:20px}
+  .cmp-pick{padding:10px 8px;font-size:13.5px}
+}
+@media (prefers-reduced-motion:reduce){.cmp-panel,.cmp-backdrop{animation:none}}
+
+/* phones held sideways: very little height, so shrink the chrome and let the actions scroll with the table */
+@media (max-height:520px){
+  .cmp-root{padding:8px}
+  .cmp-panel{max-height:calc(100dvh - 16px);border-radius:20px;box-shadow:4px 4px 0 var(--ink)}
+  .cmp-top{padding:12px 18px 10px}
+  .cmp-top h2{font-size:22px}
+  .cmp-x{width:38px;height:38px}
+  .cmp-photo{aspect-ratio:21/9}
+  .cmp-table thead th{padding-top:10px}
+  .cmp-table th,.cmp-table td{padding-top:9px;padding-bottom:9px}
+  .cmp-table .cmp-actions td,.cmp-table .cmp-actions th{position:static;border-top:0}
+}

@@ -6,9 +6,12 @@ const orderSchema = new mongoose.Schema({
     amount:{type:Number,required:true},
     address:{type:Object,required:true},
     status:{type:String,default:"Processing"},
+    statusHistory:{type:Array,default:[]}, // [{status, at}] each time the status changed
     date:{type:Date,default:Date.now},
     payment:{type:Boolean,default:false},
-    stripeSessionId:{type:String}
+    stripeSessionId:{type:String},
+    promoCode:{type:String},
+    discount:{type:Number,default:0}
 })
 
 const orderModel = mongoose.models.order || mongoose.model("order",orderSchema);

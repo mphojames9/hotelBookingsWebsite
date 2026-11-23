@@ -1,5 +1,6 @@
 import foodModel from "../models/foodModel.js";
 import imageModel from "../models/imageModel.js";
+import reviewModel from "../models/reviewModel.js";
 import fs from 'fs';
 import mongoose from 'mongoose';
 
@@ -22,6 +23,13 @@ const sanitizeSpecs = (input) => {
     return specs;
 }
 
+// blank = not tracked (null); otherwise a whole number of 0 or more. Returns undefined when invalid.
+const parseStock = (input) => {
+    if (input === undefined || input === null || String(input).trim() === '') return null;
+    const n = Number(input);
+    return Number.isInteger(n) && n >= 0 && n <= 100000 ? n : undefined;
+}
+
 const addFood = async (req, res) =>{
     try {
         if (!req.file) {
@@ -30,6 +38,11 @@ const addFood = async (req, res) =>{
         const price = Number(req.body.price);
         if (!req.body.name || !req.body.description || !req.body.category || !(price > 0)) {
             return res.json({success:false,message:"Name, description, category and a valid price are required"})
+        }
+
+        const stock = parseStock(req.body.stock);
+        if (stock === undefined) {
+            return res.json({success:false,message:"Stock must be a whole number, or left empty"})
         }
 
         // the image goes into MongoDB (Render's disk does not survive a redeploy)
@@ -43,6 +56,7 @@ const addFood = async (req, res) =>{
                 price:price,
                 category:req.body.category,
                 specs:sanitizeSpecs(req.body.specs),
+                stock,
                 image:filename
             })
             await food.save();
@@ -78,6 +92,7 @@ const removeFood = async (req,res) => {
         fs.unlink(`uploads/${food.image}`,()=>{}) // old images that shipped inside the repo
 
         await foodModel.findByIdAndDelete(req.body.id);
+        await reviewModel.deleteMany({foodId:String(req.body.id)}).catch(()=>{}); // its reviews go with it
         res.json({success:true,message:"Product Removed"})
     } catch (error) {
         console.log(error);
@@ -105,6 +120,15 @@ const updateFood = async (req, res) => {
             return res.json({success:false,message:"Name, description, category and a valid price are required"})
         }
 
+        // older clients that send no stock leave it alone
+        let stock;
+        if (req.body.stock !== undefined) {
+            stock = parseStock(req.body.stock);
+            if (stock === undefined) {
+                return res.json({success:false,message:"Stock must be a whole number, or left empty"})
+            }
+        }
+
         // a new photo is optional; when sent it goes into MongoDB under a brand new filename,
         // so the old image can never be served from a stale cache
         const oldImage = food.image;
@@ -120,6 +144,7 @@ const updateFood = async (req, res) => {
             food.category = category;
             food.price = price;
             if (req.body.specs !== undefined) food.specs = sanitizeSpecs(req.body.specs); // older clients that send no specs leave them alone
+            if (stock !== undefined) food.stock = stock;
             if (newImage) food.image = newImage;
             await food.save();
         } catch (error) {

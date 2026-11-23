@@ -2,10 +2,11 @@ import 'dotenv/config'
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
-import roomRouter from "./routes/roomRoutes.js";
+import foodRouter from "./routes/foodRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
-import bookingRouter from "./routes/bookingRoutes.js";
+import orderRouter from "./routes/orderRoutes.js";
+import reviewRouter from "./routes/reviewRoutes.js";
 import imageModel from "./models/imageModel.js";
 
 // app config
@@ -20,7 +21,7 @@ app.use(cors())
 connectDB();
 
 // api endpoints
-app.use("/api/room",roomRouter)
+app.use("/api/food",foodRouter)
 // images: files that ship inside the repo (uploads/) first, then images uploaded through the admin panel (MongoDB)
 app.use("/images",express.static('uploads',{maxAge:"7d"}))
 app.get("/images/:name",async (req,res)=>{
@@ -37,7 +38,8 @@ app.get("/images/:name",async (req,res)=>{
 })
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
-app.use("/api/booking",bookingRouter)
+app.use("/api/order",orderRouter)
+app.use("/api/review",reviewRouter)
 
 app.get("/",(req,res)=>{
     res.send("API Working")
