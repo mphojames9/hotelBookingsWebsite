@@ -4,7 +4,7 @@ import api, { errorMessage } from '../../api';
 import { toast } from 'react-toastify';
 import { ImageIcon, CloseIcon, ChevronDownIcon } from '../../components/Icons';
 import { formatRand } from '../../utils/format';
-import { CATEGORIES } from '../../utils/categories';
+import { ROOM_TYPES } from '../../utils/categories';
 import { cleanSpecs } from '../../utils/specs';
 import SpecsEditor from '../../components/SpecsEditor/SpecsEditor';
 
@@ -12,8 +12,9 @@ const emptyData = {
     name:"",
     description:"",
     price:"",
-    stock:"",
-    category:"Accessories"
+    maxGuests:"2",
+    totalRooms:"1",
+    category:"Standard"
 };
 
 const Add = () => {
@@ -54,7 +55,7 @@ const Add = () => {
 
         const { specs, incomplete } = cleanSpecs(specRows);
         if (incomplete > 0) {
-            toast.error("Give every specification both a name and a value");
+            toast.error("Give every amenity both a name and a value");
             return;
         }
         const formData = new FormData();
@@ -62,13 +63,14 @@ const Add = () => {
         formData.append("description",data.description)
         formData.append("price",Number(data.price))
         formData.append("category",data.category)
-        formData.append("stock",data.stock)
+        formData.append("maxGuests",data.maxGuests)
+        formData.append("totalRooms",data.totalRooms)
         formData.append("specs",JSON.stringify(specs))
         formData.append("image",image)
 
         setLoading(true);
         try {
-            const response = await api.post("/api/food/add",formData);
+            const response = await api.post("/api/room/add",formData);
             if (response.data.success) {
                 setData(emptyData)
                 setSpecRows([])
@@ -90,8 +92,8 @@ const Add = () => {
 
         <div className="page-head">
             <div>
-                <h1>Add product</h1>
-                <p>Add a photo and the details shoppers will see.</p>
+                <h1>Add room</h1>
+                <p>Add a photo and the details guests will see when they book.</p>
             </div>
         </div>
 
@@ -117,7 +119,7 @@ const Add = () => {
                         />
                         {preview ? (
                             <>
-                                <img src={preview} alt="Selected product" />
+                                <img src={preview} alt="Selected room" />
                                 <span className="dropzone-change">Change photo</span>
                                 <button type="button" className="dropzone-clear" onClick={clearImage} aria-label="Remove photo">
                                     <CloseIcon size={16} />
@@ -137,21 +139,21 @@ const Add = () => {
                     <h2>Details</h2>
 
                     <div className="field-block">
-                        <label htmlFor="name">Product name</label>
-                        <input className="control" id="name" onChange={onChangeHandler} value={data.name} type='text' name='name' placeholder='Type here' autoComplete="off" required />
+                        <label htmlFor="name">Room name</label>
+                        <input className="control" id="name" onChange={onChangeHandler} value={data.name} type='text' name='name' placeholder='e.g. Deluxe Sea View' autoComplete="off" required />
                     </div>
 
                     <div className="field-block">
                         <label htmlFor="description">Description</label>
-                        <textarea className="control" id="description" onChange={onChangeHandler} value={data.description} name='description' rows='5' placeholder='Write content here' required></textarea>
+                        <textarea className="control" id="description" onChange={onChangeHandler} value={data.description} name='description' rows='5' placeholder='Describe the room, the bed and what makes it special' required></textarea>
                     </div>
 
                     <div className="add-row">
                         <div className="field-block">
-                            <label htmlFor="category">Category</label>
+                            <label htmlFor="category">Room type</label>
                             <div className="select-wrap">
                                 <select className="control" id="category" onChange={onChangeHandler} value={data.category} name="category">
-                                    {CATEGORIES.map((category)=>(
+                                    {ROOM_TYPES.map((category)=>(
                                         <option key={category} value={category}>{category}</option>
                                     ))}
                                 </select>
@@ -160,18 +162,25 @@ const Add = () => {
                         </div>
 
                         <div className="field-block">
-                            <label htmlFor="price">Price</label>
+                            <label htmlFor="price">Rate per night</label>
                             <div className="control-wrap">
                                 <span className="price-prefix">R</span>
-                                <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='200' required />
+                                <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='1800' required />
                             </div>
                         </div>
                     </div>
-                    <div className="field-block">
-                        <label htmlFor="stock">Stock <span className="optional">(optional)</span></label>
-                        <input className="control" id="stock" onChange={onChangeHandler} value={data.stock} type='number' inputMode="numeric" min='0' step='1' name='stock' placeholder='Leave empty to not track stock' />
-                        <small className="field-help">Shoppers see "Only N left" at 5 or fewer, and "Sold out" at 0.</small>
+
+                    <div className="add-row">
+                        <div className="field-block">
+                            <label htmlFor="maxGuests">Sleeps (guests per room)</label>
+                            <input className="control" id="maxGuests" onChange={onChangeHandler} value={data.maxGuests} type='number' inputMode="numeric" min='1' step='1' name='maxGuests' placeholder='2' required />
+                        </div>
+                        <div className="field-block">
+                            <label htmlFor="totalRooms">Rooms of this type</label>
+                            <input className="control" id="totalRooms" onChange={onChangeHandler} value={data.totalRooms} type='number' inputMode="numeric" min='1' step='1' name='totalRooms' placeholder='4' required />
+                        </div>
                     </div>
+                    <small className="field-help">Guests can book up to this many rooms of this type for the same nights.</small>
                 </section>
 
                 <section className="add-section">
@@ -180,11 +189,11 @@ const Add = () => {
 
                 <button className="btn btn-primary add-btn" type='submit' disabled={loading}>
                     {loading && <span className="spinner" aria-hidden="true" />}
-                    {loading ? "Adding..." : "Add product"}
+                    {loading ? "Adding..." : "Add room"}
                 </button>
             </form>
 
-            <aside className="add-preview" aria-label="Product preview">
+            <aside className="add-preview" aria-label="Room preview">
                 <p className="preview-title">Preview</p>
                 <article className="preview-card card">
                     <div className="preview-media">
@@ -192,7 +201,7 @@ const Add = () => {
                     </div>
                     <div className="preview-body">
                         <span className="chip">{data.category}</span>
-                        <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Product name"}</h3>
+                        <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Room name"}</h3>
                         <p className={data.description ? "" : "is-placeholder"}>{data.description || "Your description will appear here."}</p>
                         {previewSpecs.length > 0 &&
                             <ul className="preview-specs">
@@ -201,7 +210,8 @@ const Add = () => {
                             ))}
                             </ul>
                         }
-                        <strong>{data.price ? formatRand(data.price) : "R 0.00"}</strong>
+                        <p className="preview-meta">Sleeps {data.maxGuests || 2} · {data.totalRooms || 1} {Number(data.totalRooms) === 1 ? "room" : "rooms"}</p>
+                        <strong>{data.price ? formatRand(data.price) : "R 0.00"} <span className="preview-night">/ night</span></strong>
                     </div>
                 </article>
             </aside>

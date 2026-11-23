@@ -3,6 +3,7 @@ import reviewModel from "../models/reviewModel.js";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import foodModel from "../models/foodModel.js";
+import roomModel from "../models/roomModel.js";
 import { summarise, cleanRating, cleanComment } from "../utils/reviewStats.js";
 
 // public: average + count for every product that has reviews, as { [foodId]: {average,count} }
@@ -97,14 +98,18 @@ const adminListReviews = async (req,res) => {
     try {
         const reviews = await reviewModel.find({}).sort({date:-1}).limit(500);
         const ids = [...new Set(reviews.map(r => r.foodId))].filter(id => mongoose.isValidObjectId(id));
-        const foods = await foodModel.find({_id:{$in:ids}},"name");
-        const names = new Map(foods.map(f => [String(f._id),f.name]));
+        // reviews can belong to a room (hotel) or to an old shop product
+        const [rooms,foods] = await Promise.all([
+            roomModel.find({_id:{$in:ids}},"name"),
+            foodModel.find({_id:{$in:ids}},"name")
+        ]);
+        const names = new Map([...foods,...rooms].map(f => [String(f._id),f.name]));
         res.json({
             success:true,
             data:reviews.map(r => ({
                 _id:r._id,
                 foodId:r.foodId,
-                productName:names.get(r.foodId) || "Deleted product",
+                productName:names.get(r.foodId) || "Removed room",
                 userName:r.userName,
                 rating:r.rating,
                 comment:r.comment,

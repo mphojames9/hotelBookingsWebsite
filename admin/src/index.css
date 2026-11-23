@@ -1,23 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ------------------------------------------------------------------
    Design tokens
-   Brand blue comes from the "One stop" logo, neutrals lean slightly blue.
+   PrimeStay: deep teal brand, warm ivory neutrals, champagne-gold accent.
 ------------------------------------------------------------------- */
 :root{
-  --brand-50:#EAF6FD;
-  --brand-100:#D3EDFA;
-  --brand-300:#6CC4EE;
-  --brand-500:#1E9BD7;
-  --brand-600:#0A7DB5;
-  --brand-700:#086594;
+  --brand-50:#EBF5F3;
+  --brand-100:#D4EAE6;
+  --brand-300:#6DB8AE;
+  --brand-500:#1B8A7E;
+  --brand-600:#0E6F66;
+  --brand-700:#0A5650;
 
-  --ink:#0F1C2E;
-  --ink-2:#47576C;
-  --ink-3:#7B8AA0;
-  --line:#E3E9F0;
-  --line-strong:#CCD6E2;
-  --bg:#F3F6FA;
+  --gold:#B98B3E;
+  --gold-bg:#F8EFDD;
+  --gold-ink:#8A6420;
+
+  --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+
+  --ink:#14212B;
+  --ink-2:#4B5963;
+  --ink-3:#7E8A92;
+  --line:#E7E3DA;
+  --line-strong:#D6D0C4;
+  --bg:#F6F4EF;
   --surface:#FFFFFF;
 
   --ok:#12805C;     --ok-bg:#E3F6EE;
@@ -29,9 +35,9 @@
   --r-md:14px;
   --r-lg:20px;
 
-  --shadow-sm:0 1px 2px rgba(15,28,46,.05), 0 1px 1px rgba(15,28,46,.03);
-  --shadow-md:0 10px 28px -10px rgba(15,50,90,.18), 0 2px 6px rgba(15,28,46,.05);
-  --shadow-lg:0 28px 64px -22px rgba(10,40,70,.35), 0 10px 22px -10px rgba(10,40,70,.16);
+  --shadow-sm:0 1px 2px rgba(20,33,43,.05), 0 1px 1px rgba(20,33,43,.03);
+  --shadow-md:0 10px 28px -10px rgba(20,48,50,.16), 0 2px 6px rgba(20,33,43,.05);
+  --shadow-lg:0 28px 64px -22px rgba(12,44,48,.35), 0 10px 22px -10px rgba(12,44,48,.16);
 
   --ease-out:cubic-bezier(.22,1,.36,1);
   --ease-spring:cubic-bezier(.34,1.36,.64,1);
@@ -40,9 +46,9 @@
   --dock-h:68px;
 
   --toastify-font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-  --toastify-color-success:#17A673;
+  --toastify-color-success:#2C9A6B;
   --toastify-color-error:#E5484D;
-  --toastify-color-info:#1E9BD7;
+  --toastify-color-info:#1B8A7E;
 }
 
 /* ------------------------------------------------------------------
@@ -110,9 +116,10 @@ button:disabled{cursor:not-allowed}
   margin-bottom:24px;
 }
 .page-head h1{
-  font-size:clamp(1.6rem,1.25rem + 1.3vw,2.1rem);
-  font-weight:800;
-  letter-spacing:-.025em;
+  font-family:var(--font-display);
+  font-size:clamp(1.65rem,1.3rem + 1.3vw,2.2rem);
+  font-weight:600;
+  letter-spacing:-.015em;
   line-height:1.15;
 }
 .page-head p{margin-top:4px;color:var(--ink-2);font-size:.95rem}
@@ -153,8 +160,8 @@ button:disabled{cursor:not-allowed}
 
 .btn-primary{
   color:#fff;
-  background:linear-gradient(180deg,#0A81BA 0%,#09699A 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 10px 20px -10px rgba(10,125,181,.8);
+  background:linear-gradient(180deg,#128579 0%,#0B6159 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 10px 20px -10px rgba(14,111,102,.8);
 }
 .btn-ghost{
   background:var(--surface);
@@ -221,12 +228,12 @@ textarea.control{padding:14px 16px;min-height:132px;resize:vertical;line-height:
 select.control{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer}
 .control::placeholder,.control-bare::placeholder{color:var(--ink-3)}
 
-.control:hover,.control-wrap:hover{border-color:#B6C3D3}
+.control:hover,.control-wrap:hover{border-color:#C9C2B3}
 .control:focus,
 .control-wrap:focus-within{
   outline:none;
   border-color:var(--brand-500);
-  box-shadow:0 0 0 4px rgba(30,155,215,.16);
+  box-shadow:0 0 0 4px rgba(27,138,126,.16);
 }
 
 .control-wrap{

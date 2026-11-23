@@ -236,3 +236,41 @@ export const CalendarIcon = (p) => (
 );
 
 export const StarIcon = (p) => <Svg {...p}><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9 6.7 19.6l1-5.8-4.2-4.1 5.9-.9L12 3.5z" /></Svg>;
+
+export const BedIcon = (p) => (
+  <Svg {...p}>
+    <path d="M3 18V6" />
+    <path d="M3 14h18v4" />
+    <path d="M21 14v-2.5A2.5 2.5 0 0 0 18.5 9H11v5" />
+    <circle cx="7" cy="11" r="1.6" />
+  </Svg>
+);
+
+export const UsersIcon = (p) => (
+  <Svg {...p}>
+    <circle cx="9" cy="8" r="3.2" />
+    <path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5" />
+    <path d="M16 5.2a3.2 3.2 0 0 1 0 5.6M18.5 14.4c1.4.7 2.2 2.1 2.5 4.6" />
+  </Svg>
+);
+
+export const MoonIcon = (p) => (
+  <Svg {...p}>
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+  </Svg>
+);
+
+export const BuildingIcon = (p) => (
+  <Svg {...p}>
+    <path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h8A1.5 1.5 0 0 1 16 4.5V21" />
+    <path d="M16 10h2.5A1.5 1.5 0 0 1 20 11.5V21M3 21h18" />
+    <path d="M9 7h1M9 11h1M9 15h1M12 7h1M12 11h1M12 15h1" />
+  </Svg>
+);
+
+export const DoorIcon = (p) => (
+  <Svg {...p}>
+    <path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21M3 21h18" />
+    <circle cx="14.5" cy="12.5" r=".6" fill="currentColor" />
+  </Svg>
+);

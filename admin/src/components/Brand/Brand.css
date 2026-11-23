@@ -1,0 +1,41 @@
+.brand{
+    --brand-size: 38px;
+    --brand-ink: var(--ink);
+    --brand-mark-bg: var(--brand-600);
+    --brand-mark-fg: #F6E3B4;
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--brand-size) * .28);
+}
+.brand-mark{
+    width: var(--brand-size);
+    height: var(--brand-size);
+    flex: none;
+    filter: drop-shadow(0 6px 12px rgba(14,111,102,.28));
+}
+.brand-mark-bg{ fill: var(--brand-mark-bg); }
+.brand-mark-fg{ stroke: var(--brand-mark-fg); }
+
+.brand-text{
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+}
+.brand-name{
+    font-family: var(--font-display);
+    font-size: calc(var(--brand-size) * .56);
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: var(--brand-ink);
+}
+.brand-tag{
+    margin-top: calc(var(--brand-size) * .08);
+    font-size: calc(var(--brand-size) * .26);
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+@media (max-width: 380px){
+    .navbar .brand-tag{ display: none; }
+}

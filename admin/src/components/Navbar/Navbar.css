@@ -19,9 +19,8 @@
     border-radius: 10px;
 }
 
-.navbar .logo{
-    height: 30px;
-    width: auto;
+.navbar .brand{
+    --brand-size: 38px;
 }
 
 .navbar-right{
@@ -46,8 +45,8 @@
     height: 36px;
     border-radius: 50%;
     color: #fff;
-    background: linear-gradient(145deg, #2AA7E1, #0A6FA3);
-    box-shadow: 0 6px 14px -6px rgba(10,125,181,.8);
+    background: linear-gradient(145deg, #1B8A7E, #0A5650);
+    box-shadow: 0 6px 14px -6px rgba(14,111,102,.8);
 }
 
 .logout-btn{
@@ -75,7 +74,7 @@
 }
 
 @media (max-width: 560px){
-    .navbar .logo{ height: 26px; }
+    .navbar .brand{ --brand-size: 34px; }
     .navbar-role{ display: none; }
     .logout-btn{
         width: 44px;
@@ -91,7 +90,7 @@
         padding-left: 14px;
         padding-right: 14px;
     }
-    .navbar .logo{ height: 22px; }
+    .navbar .brand{ --brand-size: 30px; }
     .navbar-right{ gap: 10px; }
     .avatar{ width: 30px; height: 30px; }
     .avatar svg{ width: 16px; height: 16px; }

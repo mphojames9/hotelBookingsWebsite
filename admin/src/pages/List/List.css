@@ -21,13 +21,13 @@
 .list-row:last-child{ border-bottom: 0; }
 
 @media (hover:hover){
-    .list-row:not(.list-head):hover{ background: #F8FAFD; }
+    .list-row:not(.list-head):hover{ background: #FAF8F3; }
 }
 
 .list-head{
     padding-top: 14px;
     padding-bottom: 14px;
-    background: #F8FAFD;
+    background: #FAF8F3;
     font-size: .85rem;
     font-weight: 600;
     color: var(--ink-3);
@@ -83,6 +83,11 @@
 .list-price{
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+}
+.list-price small{
+    font-size: .78rem;
+    font-weight: 500;
+    color: var(--ink-3);
 }
 
 /* edit + remove buttons */

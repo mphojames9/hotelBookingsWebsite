@@ -7,6 +7,8 @@ import userRouter from "./routes/userRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import reviewRouter from "./routes/reviewRoutes.js";
+import roomRouter from "./routes/roomRoutes.js";
+import bookingRouter from "./routes/bookingRoutes.js";
 import imageModel from "./models/imageModel.js";
 
 // app config
@@ -40,6 +42,9 @@ app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
 app.use("/api/review",reviewRouter)
+// hotel: rooms and bookings (the admin panel and the storefront both use these)
+app.use("/api/room",roomRouter)
+app.use("/api/booking",bookingRouter)
 
 app.get("/",(req,res)=>{
     res.send("API Working")

@@ -1,2 +1,2 @@
-// Product categories shared by the Add and Edit pages.
-export const CATEGORIES = ["Accessories","Phones","Laptops","Smart TV","Monitor","Taplets","Office","Gaming"];
+// Room types shared by the Add and Edit pages (same set the seed data uses).
+export const ROOM_TYPES = ["Standard","Deluxe","Executive","Family","Suite","Studio","Accessible","Penthouse"];

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useElementWidth } from '../../utils/hooks';
 import { formatCompact, formatDayLong, formatDayShort, formatRand, formatRandWhole } from '../../utils/format';
 
-export const DONUT_COLORS = ['#1E9BD7', '#17A673', '#7C5CFA', '#E08A00', '#E5484D', '#7B8AA0'];
+export const DONUT_COLORS = ['#1B8A7E', '#B98B3E', '#3F6FA8', '#C9573F', '#8C6BB1', '#8A949A'];
 
 // Smooth curve through the points that never overshoots (monotone cubic interpolation),
 // so a quiet day never dips below zero.
@@ -191,7 +191,7 @@ export const RevenueChart = ({ current, previous, days, showPrevious }) => {
             <div className="tip" style={{ left: Math.min(Math.max(geo.x(hover), 78), width - 78) }}>
               <span className="tip-date">{formatDayLong(hovered.date)}</span>
               <strong>{formatRand(hovered.revenue)}</strong>
-              <span>{hovered.orders} {hovered.orders === 1 ? 'order' : 'orders'}</span>
+              <span>{hovered.bookings} {hovered.bookings === 1 ? 'booking' : 'bookings'}</span>
               {showPrevious &&
                 <span className="tip-prev">{formatRand(hoveredPrev.revenue)} on {formatDayShort(hoveredPrev.date)}</span>
               }
@@ -219,7 +219,7 @@ export const Donut = ({ data, total, active, onActive }) => {
 
   return (
     <div className="donut" onPointerLeave={() => onActive(null)}>
-      <svg viewBox="0 0 148 148" role="img" aria-label="Revenue by category">
+      <svg viewBox="0 0 148 148" role="img" aria-label="Revenue by room type">
         <circle className="donut-track" cx="74" cy="74" r={R} />
         <g transform="rotate(-90 74 74)">
           {segments.map((segment) => (

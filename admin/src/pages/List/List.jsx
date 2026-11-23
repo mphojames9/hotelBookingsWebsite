@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import api, { API_URL, errorMessage } from '../../api';
 import { toast } from 'react-toastify';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
-import { ImageIcon, PlusIcon, SearchIcon, TrashIcon, BoxIcon, PencilIcon } from '../../components/Icons';
+import { ImageIcon, PlusIcon, SearchIcon, TrashIcon, BedIcon, PencilIcon } from '../../components/Icons';
 import { formatRand, wait } from '../../utils/format';
 
 const List = () => {
@@ -12,34 +12,34 @@ const List = () => {
     const [list,setList] = useState([]);
     const [loading,setLoading] = useState(true);
     const [query,setQuery] = useState("");
-    const [target,setTarget] = useState(null);     // product waiting for delete confirmation
+    const [target,setTarget] = useState(null);     // room waiting for delete confirmation
     const [removing,setRemoving] = useState(false);
     const [leavingId,setLeavingId] = useState(null);
 
     const fetchList = async () => {
       try {
-        const response = await api.get("/api/food/list");
+        const response = await api.get("/api/room/list");
         if (response.data.success){
           setList(response.data.data)
         } else {
           toast.error("Error")
         }
       } catch (error) {
-        toast.error(errorMessage(error,"Could not load products"))
+        toast.error(errorMessage(error,"Could not load rooms"))
       } finally {
         setLoading(false);
       }
     }
 
-    const removeFood = async () => {
+    const removeRoom = async () => {
       if (!target) return;
-      const foodId = target._id;
+      const roomId = target._id;
       setRemoving(true);
       try {
-        const response = await api.post("/api/food/remove",{id:foodId});
+        const response = await api.post("/api/room/remove",{id:roomId});
         setTarget(null);
         if (response.data.success) {
-          setLeavingId(foodId);   // let the row animate out before the list refreshes
+          setLeavingId(roomId);   // let the row animate out before the list refreshes
           await wait(320);
         }
         await fetchList();
@@ -75,10 +75,10 @@ const List = () => {
 
       <div className="page-head">
         <div>
-          <h1>Products</h1>
-          <p>{loading ? "Loading products..." : `${list.length} ${list.length === 1 ? "product" : "products"} in your store`}</p>
+          <h1>Rooms</h1>
+          <p>{loading ? "Loading rooms..." : `${list.length} ${list.length === 1 ? "room type" : "room types"} in your hotel`}</p>
         </div>
-        <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add product</Link>
+        <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add room</Link>
       </div>
 
       {(loading || list.length > 0) &&
@@ -87,8 +87,8 @@ const List = () => {
           <input
             className="control-bare"
             type="search"
-            placeholder="Search by name or category"
-            aria-label="Search products"
+            placeholder="Search by name or room type"
+            aria-label="Search rooms"
             value={query}
             onChange={(e)=>setQuery(e.target.value)}
           />
@@ -113,10 +113,10 @@ const List = () => {
 
         {!loading && list.length === 0 &&
           <div className="empty">
-            <span className="empty-icon"><BoxIcon size={32} /></span>
-            <h3>No products yet</h3>
-            <p>Add your first product and it will show up here.</p>
-            <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add product</Link>
+            <span className="empty-icon"><BedIcon size={32} /></span>
+            <h3>No rooms yet</h3>
+            <p>Add your first room and it will show up here and on the booking site.</p>
+            <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add room</Link>
           </div>
         }
 
@@ -124,7 +124,7 @@ const List = () => {
           <div className="empty">
             <span className="empty-icon"><SearchIcon size={30} /></span>
             <h3>No matches</h3>
-            <p>Nothing matches “{query.trim()}”. Try a different name or category.</p>
+            <p>Nothing matches “{query.trim()}”. Try a different name or room type.</p>
           </div>
         }
 
@@ -133,8 +133,8 @@ const List = () => {
             <div className="list-row list-head" aria-hidden="true">
               <span/>
               <span>Name</span>
-              <span>Category</span>
-              <span>Price</span>
+              <span>Room type</span>
+              <span>Rate</span>
               <span/>
             </div>
             {visible.map((item,index)=>(
@@ -150,12 +150,12 @@ const List = () => {
                 </div>
                 <p className="list-name">
                   {item.name}
-                  {typeof item.stock === "number" && <small className={`list-stock${item.stock === 0 ? " is-out" : item.stock <= 5 ? " is-low" : ""}`}>{item.stock === 0 ? "Sold out" : `${item.stock} in stock`}</small>}
+                  <small className="list-stock">{item.totalRooms || 1} {(item.totalRooms || 1) === 1 ? "room" : "rooms"} · sleeps {item.maxGuests || 2}</small>
                 </p>
                 <div className="list-meta">
                   <span className="chip">{item.category}</span>
-                  {item.specs?.length > 0 && <span className="list-specs">{item.specs.length} {item.specs.length === 1 ? "spec" : "specs"}</span>}
-                  <p className="list-price">{formatRand(item.price)}</p>
+                  {item.specs?.length > 0 && <span className="list-specs">{item.specs.length} {item.specs.length === 1 ? "amenity" : "amenities"}</span>}
+                  <p className="list-price">{formatRand(item.price)}<small> / night</small></p>
                 </div>
                 <div className="list-actions">
                   <Link
@@ -182,11 +182,11 @@ const List = () => {
 
       <ConfirmDialog
         open={!!target}
-        title="Remove this product?"
-        message={target ? `“${target.name}” will be removed from your store.` : ""}
-        confirmLabel="Remove product"
+        title="Remove this room?"
+        message={target ? `“${target.name}” will be removed from your hotel and can no longer be booked.` : ""}
+        confirmLabel="Remove room"
         busy={removing}
-        onConfirm={removeFood}
+        onConfirm={removeRoom}
         onCancel={()=>setTarget(null)}
       />
 

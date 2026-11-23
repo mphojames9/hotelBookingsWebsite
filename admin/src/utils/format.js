@@ -49,3 +49,10 @@ export const timeAgo = (timestamp, now = Date.now()) => {
   if (seconds < 3600) return `${Math.max(1, Math.floor(seconds / 60))} min ago`;
   return `${Math.floor(seconds / 3600)} h ago`;
 };
+
+// stay dates are stored as UTC midnight: format them in UTC so the day never shifts with the viewer's time zone
+export const formatStayDate = (value) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+};

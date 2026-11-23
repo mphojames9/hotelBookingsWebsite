@@ -23,7 +23,18 @@ api.interceptors.response.use(
   }
 );
 
-export const errorMessage = (error, fallback = "Something went wrong") =>
-  error.response?.data?.message || fallback;
+// Turns a failed request into something you can act on.
+export const errorMessage = (error, fallback = "Something went wrong") => {
+  const serverMessage = error.response?.data?.message;
+  if (serverMessage) return serverMessage;
+  if (error.response?.status === 404) {
+    return "The server has no such endpoint (404). The backend may be out of date, or VITE_API_URL points at the wrong service.";
+  }
+  if (error.response?.status >= 500) return "The server hit an error. Try again in a moment.";
+  if (error.request && !error.response) {
+    return `Cannot reach the server at ${API_URL}. If this is a fresh deploy it may still be waking up.`;
+  }
+  return fallback;
+};
 
 export default api;

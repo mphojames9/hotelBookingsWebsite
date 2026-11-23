@@ -4,9 +4,9 @@ import '../Add/Add.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import api, { API_URL, errorMessage } from '../../api';
 import { toast } from 'react-toastify';
-import { ImageIcon, CloseIcon, ChevronDownIcon, ChevronLeftIcon, BoxIcon } from '../../components/Icons';
+import { ImageIcon, CloseIcon, ChevronDownIcon, ChevronLeftIcon, BedIcon } from '../../components/Icons';
 import { formatRand } from '../../utils/format';
-import { CATEGORIES } from '../../utils/categories';
+import { ROOM_TYPES } from '../../utils/categories';
 import { cleanSpecs, toRows } from '../../utils/specs';
 import SpecsEditor from '../../components/SpecsEditor/SpecsEditor';
 
@@ -16,7 +16,7 @@ const Edit = () => {
     const navigate = useNavigate();
 
     const [status,setStatus] = useState("loading");   // loading | ready | missing | error
-    const [product,setProduct] = useState(null);      // the product as it is saved right now
+    const [product,setProduct] = useState(null);      // the room as it is saved right now
     const [data,setData] = useState(null);            // the form values
     const [specRows,setSpecRows] = useState([]);       // the specifications editor rows
     const [image,setImage] = useState(null);          // a newly picked photo (null = keep the current one)
@@ -25,13 +25,13 @@ const Edit = () => {
     const [saving,setSaving] = useState(false);
     const inputRef = useRef(null);
 
-    // load the product (the list endpoint only returns text fields, so this is cheap)
+    // load the room (the list endpoint only returns text fields, so this is cheap)
     useEffect(()=>{
         let cancelled = false;
         setStatus("loading");
         (async ()=>{
             try {
-                const response = await api.get("/api/food/list");
+                const response = await api.get("/api/room/list");
                 if (cancelled) return;
                 if (!response.data.success) {
                     setStatus("error");
@@ -47,7 +47,8 @@ const Edit = () => {
                     name:found.name,
                     description:found.description,
                     price:String(found.price),
-                    stock:typeof found.stock === "number" ? String(found.stock) : "",
+                    maxGuests:String(found.maxGuests ?? 2),
+                    totalRooms:String(found.totalRooms ?? 1),
                     category:found.category
                 });
                 setSpecRows(toRows(found.specs));
@@ -56,7 +57,7 @@ const Edit = () => {
                 setStatus("ready");
             } catch (error) {
                 if (cancelled) return;
-                toast.error(errorMessage(error,"Could not load this product"));
+                toast.error(errorMessage(error,"Could not load this room"));
                 setStatus("error");
             }
         })();
@@ -77,7 +78,8 @@ const Edit = () => {
             data.name.trim() !== product.name ||
             data.description.trim() !== product.description ||
             Number(data.price) !== product.price ||
-            String(data.stock) !== (typeof product.stock === "number" ? String(product.stock) : "") ||
+            Number(data.maxGuests) !== (product.maxGuests ?? 2) ||
+            Number(data.totalRooms) !== (product.totalRooms ?? 1) ||
             data.category !== product.category ||
             JSON.stringify(cleanSpecs(specRows).specs) !== JSON.stringify(product.specs || [])
         );
@@ -109,7 +111,7 @@ const Edit = () => {
 
         const { specs, incomplete } = cleanSpecs(specRows);
         if (incomplete > 0) {
-            toast.error("Give every specification both a name and a value");
+            toast.error("Give every amenity both a name and a value");
             return;
         }
 
@@ -119,16 +121,17 @@ const Edit = () => {
         formData.append("description",data.description.trim());
         formData.append("price",Number(data.price));
         formData.append("category",data.category);
-        formData.append("stock",data.stock);
+        formData.append("maxGuests",data.maxGuests);
+        formData.append("totalRooms",data.totalRooms);
         formData.append("specs",JSON.stringify(specs));
         if (image) formData.append("image",image);
 
         setSaving(true);
         try {
-            const response = await api.post("/api/food/update",formData);
+            const response = await api.post("/api/room/update",formData);
             if (response.data.success) {
                 toast.success(response.data.message);
-                navigate("/list");
+                navigate("/rooms");
                 return;
             }
             toast.error(response.data.message);
@@ -142,9 +145,9 @@ const Edit = () => {
     const head = (
         <div className="page-head">
             <div>
-                <Link to="/list" className="edit-back"><ChevronLeftIcon size={18} />Products</Link>
-                <h1>Edit product</h1>
-                <p>Change the photo or details shoppers see.</p>
+                <Link to="/rooms" className="edit-back"><ChevronLeftIcon size={18} />Rooms</Link>
+                <h1>Edit room</h1>
+                <p>Change the photo or details guests see.</p>
             </div>
         </div>
     );
@@ -171,18 +174,18 @@ const Edit = () => {
                 {head}
                 <div className="card">
                     <div className="empty">
-                        <span className="empty-icon"><BoxIcon size={32} /></span>
-                        <h3>{status === "missing" ? "Product not found" : "Could not load this product"}</h3>
-                        <p>{status === "missing" ? "It may have been removed from your store." : "Check your connection and try again."}</p>
-                        <Link to="/list" className="btn btn-primary">Back to products</Link>
+                        <span className="empty-icon"><BedIcon size={32} /></span>
+                        <h3>{status === "missing" ? "Room not found" : "Could not load this room"}</h3>
+                        <p>{status === "missing" ? "It may have been removed from your hotel." : "Check your connection and try again."}</p>
+                        <Link to="/rooms" className="btn btn-primary">Back to rooms</Link>
                     </div>
                 </div>
             </div>
         );
     }
 
-    // keep a category that is no longer in the standard list, so saving never changes it silently
-    const categories = CATEGORIES.includes(product.category) ? CATEGORIES : [product.category,...CATEGORIES];
+    // keep a room type that is no longer in the standard list, so saving never changes it silently
+    const categories = ROOM_TYPES.includes(product.category) ? ROOM_TYPES : [product.category,...ROOM_TYPES];
 
     return (
         <div className="add edit">
@@ -213,7 +216,7 @@ const Edit = () => {
                                     <img
                                         key={shownImage}
                                         src={shownImage}
-                                        alt="Product"
+                                        alt="Room"
                                         onError={()=>{ if (!newPreview) setCurrentBroken(true); }}
                                     />
                                     <span className="dropzone-change">{newPreview ? "New photo selected" : "Change photo"}</span>
@@ -237,18 +240,18 @@ const Edit = () => {
                         <h2>Details</h2>
 
                         <div className="field-block">
-                            <label htmlFor="name">Product name</label>
-                            <input className="control" id="name" onChange={onChangeHandler} value={data.name} type='text' name='name' placeholder='Type here' autoComplete="off" required />
+                            <label htmlFor="name">Room name</label>
+                            <input className="control" id="name" onChange={onChangeHandler} value={data.name} type='text' name='name' placeholder='e.g. Deluxe Sea View' autoComplete="off" required />
                         </div>
 
                         <div className="field-block">
                             <label htmlFor="description">Description</label>
-                            <textarea className="control" id="description" onChange={onChangeHandler} value={data.description} name='description' rows='5' placeholder='Write content here' required></textarea>
+                            <textarea className="control" id="description" onChange={onChangeHandler} value={data.description} name='description' rows='5' placeholder='Describe the room, the bed and what makes it special' required></textarea>
                         </div>
 
                         <div className="add-row">
                             <div className="field-block">
-                                <label htmlFor="category">Category</label>
+                                <label htmlFor="category">Room type</label>
                                 <div className="select-wrap">
                                     <select className="control" id="category" onChange={onChangeHandler} value={data.category} name="category">
                                         {categories.map((category)=>(
@@ -260,18 +263,25 @@ const Edit = () => {
                             </div>
 
                             <div className="field-block">
-                                <label htmlFor="price">Price</label>
+                                <label htmlFor="price">Rate per night</label>
                                 <div className="control-wrap">
                                     <span className="price-prefix">R</span>
-                                    <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='200' required />
+                                    <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='1800' required />
                                 </div>
                             </div>
                         </div>
-                        <div className="field-block">
-                            <label htmlFor="stock">Stock <span className="optional">(optional)</span></label>
-                            <input className="control" id="stock" onChange={onChangeHandler} value={data.stock} type='number' inputMode="numeric" min='0' step='1' name='stock' placeholder='Leave empty to not track stock' />
-                            <small className="field-help">Shoppers see "Only N left" at 5 or fewer, and "Sold out" at 0.</small>
+
+                        <div className="add-row">
+                            <div className="field-block">
+                            <label htmlFor="maxGuests">Sleeps (guests per room)</label>
+                            <input className="control" id="maxGuests" onChange={onChangeHandler} value={data.maxGuests} type='number' inputMode="numeric" min='1' step='1' name='maxGuests' placeholder='2' required />
                         </div>
+                            <div className="field-block">
+                            <label htmlFor="totalRooms">Rooms of this type</label>
+                            <input className="control" id="totalRooms" onChange={onChangeHandler} value={data.totalRooms} type='number' inputMode="numeric" min='1' step='1' name='totalRooms' placeholder='4' required />
+                        </div>
+                    </div>
+                    <small className="field-help">Guests can book up to this many rooms of this type for the same nights.</small>
                     </section>
 
                     <section className="add-section">
@@ -283,11 +293,11 @@ const Edit = () => {
                             {saving && <span className="spinner" aria-hidden="true" />}
                             {saving ? "Saving..." : "Save changes"}
                         </button>
-                        <Link to="/list" className="btn btn-ghost edit-cancel" aria-disabled={saving}>Cancel</Link>
+                        <Link to="/rooms" className="btn btn-ghost edit-cancel" aria-disabled={saving}>Cancel</Link>
                     </div>
                 </form>
 
-                <aside className="add-preview" aria-label="Product preview">
+                <aside className="add-preview" aria-label="Room preview">
                     <p className="preview-title">Preview</p>
                     <article className="preview-card card">
                         <div className="preview-media">
@@ -295,7 +305,7 @@ const Edit = () => {
                         </div>
                         <div className="preview-body">
                             <span className="chip">{data.category}</span>
-                            <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Product name"}</h3>
+                            <h3 className={data.name ? "" : "is-placeholder"}>{data.name || "Room name"}</h3>
                             <p className={data.description ? "" : "is-placeholder"}>{data.description || "Your description will appear here."}</p>
                             {previewSpecs.length > 0 &&
                                 <ul className="preview-specs">
@@ -304,7 +314,8 @@ const Edit = () => {
                                     ))}
                                 </ul>
                             }
-                            <strong>{data.price ? formatRand(data.price) : "R 0.00"}</strong>
+                            <p className="preview-meta">Sleeps {data.maxGuests || 2} · {data.totalRooms || 1} {Number(data.totalRooms) === 1 ? "room" : "rooms"}</p>
+                            <strong>{data.price ? formatRand(data.price) : "R 0.00"} <span className="preview-night">/ night</span></strong>
                         </div>
                     </article>
                 </aside>

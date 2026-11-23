@@ -8,18 +8,18 @@ import { useCountUp } from '../../utils/hooks';
 import { formatRandWhole, timeAgo } from '../../utils/format';
 import { Donut, DONUT_COLORS, RevenueChart, Sparkline } from './charts';
 import {
-  ArrowRightIcon, BoxIcon, CalendarIcon, ImageIcon, PlusIcon, ReceiptIcon, RefreshIcon,
+  ArrowRightIcon, BedIcon, CalendarIcon, ImageIcon, MoonIcon, PlusIcon, ReceiptIcon, RefreshIcon,
   SparklesIcon, TagIcon, TrendDownIcon, TrendUpIcon, WalletIcon,
 } from '../../components/Icons';
 
 const RANGES = [7, 30, 90];
-const STATUS_TONES = { "Processing": "warn", "Out for delivery": "info", "Delivered": "ok" };
+const STATUS_TONES = { "Confirmed": "info", "Checked in": "warn", "Checked out": "ok", "Cancelled": "danger" };
 const INSIGHT_ICONS = {
   up: TrendUpIcon,
   down: TrendDownIcon,
   orders: ReceiptIcon,
   day: CalendarIcon,
-  products: BoxIcon,
+  products: BedIcon,
   quiet: SparklesIcon,
 };
 
@@ -87,18 +87,17 @@ export const DashboardView = ({
   const kpis = [
     { key: "revenue", label: "Revenue", Icon: WalletIcon, tone: "brand", value: totals.revenue, format: formatRandWhole,
       values: series.current.map((b) => b.revenue), delta: deltas.revenue },
-    { key: "orders", label: "Orders", Icon: ReceiptIcon, tone: "ok", value: totals.orders, format: formatCount,
-      values: series.current.map((b) => b.orders), delta: deltas.orders },
-    { key: "items", label: "Items sold", Icon: BoxIcon, tone: "violet", value: totals.items, format: formatCount,
-      values: series.current.map((b) => b.items), delta: deltas.items },
-    { key: "aov", label: "Avg. order", Icon: TagIcon, tone: "warn", value: totals.aov, format: formatRandWhole,
-      values: series.current.map((b) => (b.orders ? b.revenue / b.orders : 0)), delta: deltas.aov },
+    { key: "bookings", label: "Bookings", Icon: ReceiptIcon, tone: "ok", value: totals.bookings, format: formatCount,
+      values: series.current.map((b) => b.bookings), delta: deltas.bookings },
+    { key: "nights", label: "Room nights", Icon: MoonIcon, tone: "gold", value: totals.nights, format: formatCount,
+      values: series.current.map((b) => b.nights), delta: deltas.nights },
+    { key: "aov", label: "Avg. booking", Icon: TagIcon, tone: "warn", value: totals.aov, format: formatRandWhole,
+      values: series.current.map((b) => (b.bookings ? b.revenue / b.bookings : 0)), delta: deltas.aov },
   ];
 
   const maxRevenue = Math.max(...stats.top.map((p) => p.revenue), 1);
-  const pipelineTotal = stats.pipeline.total || 1;
-  const processing = stats.pipeline.counts.Processing;
-  const deliveredShare = Math.round((stats.pipeline.counts.Delivered / pipelineTotal) * 100);
+    const confirmed = stats.pipeline.counts.Confirmed;
+  const inHouse = stats.pipeline.counts["Checked in"];
 
   return (
     <div className="dash">
@@ -178,7 +177,7 @@ export const DashboardView = ({
           <header className="panel-head">
             <div>
               <h2>Revenue</h2>
-              <p className="panel-sub">Daily sales over the last {days} days</p>
+              <p className="panel-sub">Daily revenue over the last {days} days</p>
             </div>
             <ul className="legend" aria-label="Chart legend">
               <li><i className="key key-now" />This period</li>
@@ -197,12 +196,12 @@ export const DashboardView = ({
         <section className="card panel rise" style={{ '--i': 9 }}>
           <header className="panel-head">
             <div>
-              <h2>Order pipeline</h2>
-              <p className="panel-sub">{stats.pipeline.total} paid {stats.pipeline.total === 1 ? "order" : "orders"} in total</p>
+              <h2>Booking pipeline</h2>
+              <p className="panel-sub">{stats.pipeline.total} paid {stats.pipeline.total === 1 ? "booking" : "bookings"} in total</p>
             </div>
           </header>
 
-          <div className="pipe-bar" role="img" aria-label="Orders by status">
+          <div className="pipe-bar" role="img" aria-label="Bookings by status">
             {STATUSES.map((status) => (
               <span key={status} data-tone={STATUS_TONES[status]} style={{ flexGrow: stats.pipeline.counts[status] }} />
             ))}
@@ -219,10 +218,10 @@ export const DashboardView = ({
           </ul>
 
           <div className="pipe-foot">
-            <span><strong>{deliveredShare}%</strong> delivered</span>
-            {processing > 0 &&
-              <Link to="/orders?status=Processing" className="pipe-link">
-                Review {processing} processing <ArrowRightIcon size={15} />
+            <span><strong>{inHouse}</strong> in house now</span>
+            {confirmed > 0 &&
+              <Link to="/bookings?status=Confirmed" className="pipe-link">
+                Review {confirmed} confirmed <ArrowRightIcon size={15} />
               </Link>
             }
           </div>
@@ -234,13 +233,13 @@ export const DashboardView = ({
         <section className="card panel rise" style={{ '--i': 10 }}>
           <header className="panel-head">
             <div>
-              <h2>Top sellers</h2>
-              <p className="panel-sub">Best performing products, last {days} days</p>
+              <h2>Top rooms</h2>
+              <p className="panel-sub">Most booked room types, last {days} days</p>
             </div>
           </header>
 
           {stats.top.length === 0 ? (
-            <p className="panel-empty">No product sales in this period yet.</p>
+            <p className="panel-empty">No room bookings in this period yet.</p>
           ) : (
             <ol className="ts-list">
               {stats.top.map((product, index) => {
@@ -250,7 +249,7 @@ export const DashboardView = ({
                     <Thumb image={product.image} className="ts-thumb" />
                     <span className="ts-main">
                       <strong>{product.name}</strong>
-                      <span>{product.units} sold · {product.category}</span>
+                      <span>{product.units} {product.units === 1 ? "night" : "nights"} · {product.category}</span>
                       <span className="ts-bar"><i style={{ '--w': `${Math.max(4, (product.revenue / maxRevenue) * 100)}%`, '--i': index }} /></span>
                     </span>
                     <span className="ts-rev">{formatRandWhole(product.revenue)}</span>
@@ -259,7 +258,7 @@ export const DashboardView = ({
                 return (
                   <li key={product.key}>
                     {product.exists ? (
-                      <Link to={`/edit/${product.foodId}`} className="ts-row" aria-label={`Edit ${product.name}`}>{body}</Link>
+                      <Link to={`/edit/${product.roomId}`} className="ts-row" aria-label={`Edit ${product.name}`}>{body}</Link>
                     ) : (
                       <div className="ts-row">{body}</div>
                     )}
@@ -273,13 +272,13 @@ export const DashboardView = ({
         <section className="card panel rise" style={{ '--i': 11 }}>
           <header className="panel-head">
             <div>
-              <h2>Sales by category</h2>
-              <p className="panel-sub">Where the money comes from</p>
+              <h2>Revenue by room type</h2>
+              <p className="panel-sub">Which rooms earn the most</p>
             </div>
           </header>
 
           {stats.categories.length === 0 ? (
-            <p className="panel-empty">Category sales will show up here.</p>
+            <p className="panel-empty">Room type revenue will show up here.</p>
           ) : (
             <div className="cat">
               <Donut data={stats.categories} total={stats.categoryTotal} active={activeCategory} onActive={setActiveCategory} />
@@ -307,13 +306,14 @@ export const DashboardView = ({
 };
 
 /* ------------------------------------------------------------------
-   Container: loads orders + products, keeps them fresh
+   Container: loads bookings + rooms, keeps them fresh
 ------------------------------------------------------------------- */
 const Dashboard = () => {
 
-  const [orders, setOrders] = useState([]);
-  const [foods, setFoods] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [status, setStatus] = useState("loading");   // loading | ready | error
+  const [failure, setFailure] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [range, setRange] = useState(30);
   const [updatedAt, setUpdatedAt] = useState(null);
@@ -322,19 +322,22 @@ const Dashboard = () => {
   const load = useCallback(async ({ silent = false } = {}) => {
     if (!silent) setRefreshing(true);
     try {
-      const [ordersResponse, foodsResponse] = await Promise.all([
-        api.get("/api/order/list"),
-        api.get("/api/food/list"),
+      const [bookingsResponse, roomsResponse] = await Promise.all([
+        api.get("/api/booking/list"),
+        api.get("/api/room/list"),
       ]);
-      if (!ordersResponse.data.success) {
-        throw new Error(ordersResponse.data.message || "Could not load orders");
+      if (!bookingsResponse.data.success) {
+        throw new Error(bookingsResponse.data.message || "Could not load bookings");
       }
-      setOrders(ordersResponse.data.data);
-      setFoods(foodsResponse.data.success ? foodsResponse.data.data : []);
+      setBookings(bookingsResponse.data.data);
+      setRooms(roomsResponse.data.success ? roomsResponse.data.data : []);
       setUpdatedAt(Date.now());
+      setFailure("");
       setStatus("ready");
     } catch (error) {
-      if (!silent) toast.error(errorMessage(error, error.message || "Could not load the dashboard"));
+      const message = errorMessage(error, error.message || "Could not load the dashboard");
+      if (!silent) toast.error(message);
+      setFailure(message);
       setStatus((current) => (current === "ready" ? current : "error"));
     } finally {
       setRefreshing(false);
@@ -356,8 +359,8 @@ const Dashboard = () => {
   }, [load]);
 
   const stats = useMemo(
-    () => (status === "ready" ? buildStats(orders, foods, range) : null),
-    [status, orders, foods, range]
+    () => (status === "ready" ? buildStats(bookings, rooms, range) : null),
+    [status, bookings, rooms, range]
   );
 
   if (status === "loading") {
@@ -383,14 +386,14 @@ const Dashboard = () => {
         <div className="page-head">
           <div>
             <h1>Dashboard</h1>
-            <p>Your store at a glance.</p>
+            <p>Your hotel at a glance.</p>
           </div>
         </div>
         <div className="card">
           <div className="empty">
             <span className="empty-icon"><RefreshIcon size={30} /></span>
             <h3>Could not load the dashboard</h3>
-            <p>Check your connection and try again.</p>
+            <p>{failure || "Check your connection and try again."}</p>
             <button type="button" className="btn btn-primary" onClick={() => load()}>Try again</button>
           </div>
         </div>
@@ -398,21 +401,21 @@ const Dashboard = () => {
     );
   }
 
-  if (orders.length === 0) {
+  if (bookings.length === 0) {
     return (
       <div className="dash">
         <div className="page-head">
           <div>
             <h1>{greetingFor(new Date())}</h1>
-            <p>Your store at a glance.</p>
+            <p>Your hotel at a glance.</p>
           </div>
         </div>
         <div className="card">
           <div className="empty">
             <span className="empty-icon"><SparklesIcon size={32} /></span>
-            <h3>Your dashboard is waiting for its first sale</h3>
-            <p>As soon as a customer pays, revenue, top sellers and insights will appear here.</p>
-            <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add a product</Link>
+            <h3>Your dashboard is waiting for its first booking</h3>
+            <p>As soon as a guest pays, revenue, popular rooms and insights will appear here.</p>
+            <Link to="/add" className="btn btn-primary"><PlusIcon size={18} />Add a room</Link>
           </div>
         </div>
       </div>

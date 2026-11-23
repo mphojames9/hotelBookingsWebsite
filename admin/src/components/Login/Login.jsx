@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { assets } from '../../assets/assets';
+import Brand from '../Brand/Brand';
 import api, { errorMessage } from '../../api';
 import { toast } from 'react-toastify';
 import {
   EyeIcon, EyeOffIcon, MailIcon, LockIcon, UserIcon, KeyIcon,
-  SmartphoneIcon, LaptopIcon, MonitorIcon, HeadphonesIcon
+  BedIcon, BuildingIcon, CalendarIcon, DoorIcon
 } from '../Icons';
 
 const emptyForm = { name:"", email:"", password:"", confirmPassword:"", inviteCode:"" };
@@ -105,18 +105,18 @@ const Login = ({setToken}) => {
           <span className='orb o1'/><span className='orb o2'/><span className='orb o3'/>
         </div>
 
-        <img src={assets.logo} alt='One stop' className='auth-logo' />
+        <Brand className='auth-logo' />
 
         <div className='auth-copy'>
-          <h1>Run your store from anywhere.</h1>
-          <p>Add products, track orders and keep deliveries moving, from your phone or your desk.</p>
+          <h1>Run your hotel from anywhere.</h1>
+          <p>Manage rooms, track bookings and keep every arrival on schedule, from your phone or your desk.</p>
         </div>
 
         <div className='auth-tiles' aria-hidden='true'>
-          <span className='tile t1'><SmartphoneIcon size={30}/></span>
-          <span className='tile t2'><LaptopIcon size={38}/></span>
-          <span className='tile t3'><HeadphonesIcon size={28}/></span>
-          <span className='tile t4'><MonitorIcon size={32}/></span>
+          <span className='tile t1'><BedIcon size={30}/></span>
+          <span className='tile t2'><BuildingIcon size={38}/></span>
+          <span className='tile t3'><DoorIcon size={28}/></span>
+          <span className='tile t4'><CalendarIcon size={32}/></span>
         </div>
       </aside>
 
@@ -125,7 +125,7 @@ const Login = ({setToken}) => {
 
           <div className='auth-head' key={mode}>
             <h2>{isRegister ? "Create admin account" : "Admin sign in"}</h2>
-            <p>{isRegister ? "You will need the invite code from the site owner." : "Sign in to manage products and orders."}</p>
+            <p>{isRegister ? "You will need the invite code from the site owner." : "Sign in to manage rooms and bookings."}</p>
           </div>
 
           <div className='seg' role='tablist' aria-label='Sign in or create account' style={{'--i': isRegister ? 1 : 0}}>

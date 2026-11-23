@@ -1,44 +1,47 @@
-// Product specifications: a list of {label, value}, e.g. {label:"Screen size", value:"13 inch"}
+// Room amenities: a list of {label, value}, e.g. {label:"Bed", value:"King"}
 export const MAX_SPECS = 12;
 
-// quick-add suggestions per category
+const COMMON = ["Bed", "Size", "View", "Wi-Fi", "Breakfast", "Shower"];
+
+// quick-add suggestions per room type
 export const SPEC_PRESETS = {
-  "Phones": ["Screen size", "Storage", "RAM", "Camera", "Battery", "Colour"],
-  "Laptops": ["Screen size", "Processor", "RAM", "Storage", "Battery", "Weight"],
-  "Smart TV": ["Screen size", "Resolution", "Refresh rate", "Smart platform", "HDMI ports"],
-  "Monitor": ["Screen size", "Resolution", "Refresh rate", "Panel type", "Response time"],
-  "Taplets": ["Screen size", "Storage", "RAM", "Battery", "Connectivity"],
-  "Accessories": ["Compatibility", "Connectivity", "Colour", "Warranty", "Battery"],
-  "Office": ["Dimensions", "Material", "Weight", "Colour", "Warranty"],
-  "Gaming": ["Platform", "Connectivity", "Colour", "Warranty", "Battery"],
+  "Standard": ["Bed", "Size", "View", "Wi-Fi", "Breakfast", "Desk"],
+  "Deluxe": ["Bed", "Balcony", "View", "Size", "Minibar", "Shower"],
+  "Executive": ["Bed", "Lounge", "Breakfast", "Desk", "View", "Wi-Fi"],
+  "Family": ["Bedrooms", "Sleeps", "Living area", "Kitchenette", "Kitchen", "Breakfast"],
+  "Suite": ["Bed", "Lounge", "Living area", "Size", "Breakfast", "Shower"],
+  "Studio": ["Bed", "Kitchenette", "Desk", "Laundry", "Size", "Wi-Fi"],
+  "Accessible": ["Access", "Shower", "Bed", "Lounge", "Size", "Wi-Fi"],
+  "Penthouse": ["Bed", "Terrace", "Views", "Size", "Breakfast", "Minibar"],
 };
+export const presetsFor = (type) => SPEC_PRESETS[type] || COMMON;
 
 // what a typical value looks like (shown as the placeholder)
 const HINTS = {
-  "screen size": "13 inch",
-  "storage": "256GB",
-  "ram": "8GB",
-  "camera": "48MP",
-  "battery": "5000mAh",
-  "resolution": "1920 x 1080",
-  "refresh rate": "144Hz",
-  "weight": "1.3kg",
-  "colour": "Midnight black",
-  "warranty": "2 years",
-  "processor": "Intel Core i5",
-  "response time": "1ms",
-  "panel type": "IPS",
-  "connectivity": "Bluetooth 5.3",
-  "hdmi ports": "3",
-  "dimensions": "120 x 60 x 45 cm",
-  "material": "Mesh and aluminium",
-  "platform": "PlayStation 5",
-  "compatibility": "Windows and macOS",
-  "smart platform": "Google TV",
+  "bed": "King",
+  "beds": "2 x Twin",
+  "bedrooms": "2",
+  "sleeps": "4",
+  "size": "32 m²",
+  "view": "Sea",
+  "views": "180°",
+  "wi-fi": "Free",
+  "breakfast": "Included",
+  "shower": "Rain",
+  "balcony": "Private",
+  "terrace": "Private",
+  "minibar": "Yes",
+  "desk": "Yes",
+  "lounge": "Access",
+  "living area": "Yes",
+  "kitchenette": "Full",
+  "kitchen": "Yes",
+  "laundry": "On site",
+  "access": "Step-free",
 };
-export const hintFor = (label) => HINTS[String(label || "").trim().toLowerCase()] || "13 inch";
+export const hintFor = (label) => HINTS[String(label || "").trim().toLowerCase()] || "Yes";
 
-export const ALL_LABELS = [...new Set(Object.values(SPEC_PRESETS).flat())].sort();
+export const ALL_LABELS = [...new Set([...Object.values(SPEC_PRESETS).flat(), ...COMMON])].sort();
 
 let counter = 0;
 export const newRow = (label = "", value = "") => ({ id: `spec-${Date.now()}-${counter++}`, label, value });

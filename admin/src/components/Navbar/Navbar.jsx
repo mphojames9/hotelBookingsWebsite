@@ -1,14 +1,14 @@
 import React from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
-import { assets } from '../../assets/assets';
+import Brand from '../Brand/Brand';
 import { LogoutIcon, UserIcon } from '../Icons';
 
 const Navbar = ({logout}) => {
   return (
     <header className='navbar'>
-      <NavLink to='/dashboard' className='navbar-brand' aria-label='One stop, go to dashboard'>
-        <img src={assets.logo} alt="One stop" className="logo" />
+      <NavLink to='/dashboard' className='navbar-brand' aria-label='PrimeStay admin, go to dashboard'>
+        <Brand />
       </NavLink>
 
       <div className="navbar-right">

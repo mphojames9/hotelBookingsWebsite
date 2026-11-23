@@ -83,7 +83,7 @@
         background: rgba(255,255,255,.86);
         -webkit-backdrop-filter: blur(18px) saturate(1.6);
                 backdrop-filter: blur(18px) saturate(1.6);
-        box-shadow: 0 18px 40px -12px rgba(10,40,70,.4), 0 0 0 1px rgba(15,28,46,.06);
+        box-shadow: 0 18px 40px -12px rgba(12,44,48,.4), 0 0 0 1px rgba(20,33,43,.06);
         animation: dockIn .7s var(--ease-spring) .15s both;
     }
 

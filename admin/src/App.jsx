@@ -4,7 +4,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Login from './components/Login/Login';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
-import Orders from './pages/Orders/Orders';
+import Bookings from './pages/Bookings/Bookings';
 import Reviews from './pages/Reviews/Reviews';
 import List from './pages/List/List';
 import Add from './pages/Add/Add';
@@ -57,9 +57,12 @@ const App = () => {
               <Route path='/' element={<Navigate to='/dashboard' replace/>}/>
               <Route path='/dashboard' element={<Dashboard/>}/>
               <Route path='/add' element={<Add/>}/>
-              <Route path='/list' element={<List/>}/>
+              <Route path='/rooms' element={<List/>}/>
               <Route path='/edit/:id' element={<Edit/>}/>
-              <Route path='/orders' element={<Orders/>}/>
+              <Route path='/bookings' element={<Bookings/>}/>
+              {/* old shop links keep working */}
+              <Route path='/list' element={<Navigate to='/rooms' replace/>}/>
+              <Route path='/orders' element={<Navigate to='/bookings' replace/>}/>
               <Route path='/reviews' element={<Reviews/>}/>
               <Route path='*' element={<Navigate to='/dashboard' replace/>}/>
             </Routes>

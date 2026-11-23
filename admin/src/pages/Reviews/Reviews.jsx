@@ -91,7 +91,7 @@ const Reviews = () => {
       <div className="page-head">
         <div>
           <h1>Reviews</h1>
-          <p>{loading ? 'Loading reviews...' : `${reviews.length} ${reviews.length === 1 ? 'review' : 'reviews'} from shoppers`}</p>
+          <p>{loading ? 'Loading reviews...' : `${reviews.length} ${reviews.length === 1 ? 'review' : 'reviews'} from guests`}</p>
         </div>
       </div>
 
@@ -114,7 +114,7 @@ const Reviews = () => {
           </div>
           <label className="control-wrap rv-search">
             <SearchIcon size={19} />
-            <input className="control-bare" type="search" placeholder="Search product, shopper or comment" value={query} onChange={(e)=>setQuery(e.target.value)} aria-label="Search reviews" />
+            <input className="control-bare" type="search" placeholder="Search room, guest or comment" value={query} onChange={(e)=>setQuery(e.target.value)} aria-label="Search reviews" />
           </label>
         </div>
       }
@@ -130,7 +130,7 @@ const Reviews = () => {
           <div className="empty">
             <span className="empty-icon"><StarIcon size={32} /></span>
             <h3>No reviews yet</h3>
-            <p>Shopper reviews will show up here, ready to hide or delete.</p>
+            <p>Guest reviews will show up here, ready to hide or delete.</p>
           </div>
         </div>
       }
@@ -152,8 +152,8 @@ const Reviews = () => {
               <header className="rv-top">
                 <Rating value={review.rating} />
                 <strong className="rv-who">{review.userName}</strong>
-                {review.verified && <span className="rv-tag ok"><CheckIcon size={12} /> Verified purchase</span>}
-                {review.hidden && <span className="rv-tag muted"><EyeOffIcon size={13} /> Hidden from shoppers</span>}
+                {review.verified && <span className="rv-tag ok"><CheckIcon size={12} /> Verified stay</span>}
+                {review.hidden && <span className="rv-tag muted"><EyeOffIcon size={13} /> Hidden from guests</span>}
                 <time className="rv-date" dateTime={new Date(review.date).toISOString()}>{formatDate(review.date)}</time>
               </header>
 
@@ -181,7 +181,7 @@ const Reviews = () => {
       <ConfirmDialog
         open={!!target}
         title="Delete this review?"
-        message={target ? `${target.userName}'s ${target.rating}-star review of “${target.productName}” will be deleted for good. Hiding it instead keeps it but removes it from the shop.` : ''}
+        message={target ? `${target.userName}'s ${target.rating}-star review of “${target.productName}” will be deleted for good. Hiding it instead keeps it but removes it from the site.` : ''}
         confirmLabel="Delete review"
         busy={deleting}
         onConfirm={deleteReview}
