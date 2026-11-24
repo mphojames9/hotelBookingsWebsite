@@ -169,6 +169,7 @@ export const PencilIcon = (p) => (
 );
 
 export const ChevronLeftIcon = (p) => <Svg {...p}><path d="M15 6l-6 6 6 6" /></Svg>;
+export const ChevronRightIcon = (p) => <Svg {...p}><path d="M9 6l6 6-6 6" /></Svg>;
 
 export const DashboardIcon = (p) => (
   <Svg {...p}>

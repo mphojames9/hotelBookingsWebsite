@@ -39,7 +39,7 @@ for (const [key,name,category,description,price,maxGuests,totalRooms,specs] of R
   const filename = `seed-${key}.jpg`
   await imageModel.deleteOne({filename})
   await imageModel.create({filename,contentType:'image/jpeg',data:fs.readFileSync(`seed/images/${key}.jpg`)})
-  await roomModel.create({name,description,price,image:filename,category,maxGuests,totalRooms,specs:specs.map(([label,value])=>({label,value}))})
+  await roomModel.create({name,description,price,image:filename,images:[filename],category,maxGuests,totalRooms,specs:specs.map(([label,value])=>({label,value}))})
   console.log('Added', name)
 }
 await mongoose.disconnect()

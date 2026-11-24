@@ -1,12 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Add.css';
 import api, { errorMessage } from '../../api';
 import { toast } from 'react-toastify';
-import { ImageIcon, CloseIcon, ChevronDownIcon } from '../../components/Icons';
+import { ImageIcon, ChevronDownIcon } from '../../components/Icons';
 import { formatRand } from '../../utils/format';
 import { ROOM_TYPES } from '../../utils/categories';
 import { cleanSpecs } from '../../utils/specs';
+import { prepareImage } from '../../utils/images';
 import SpecsEditor from '../../components/SpecsEditor/SpecsEditor';
+import GalleryEditor from '../../components/GalleryEditor/GalleryEditor';
 
 const emptyData = {
     name:"",
@@ -19,17 +21,12 @@ const emptyData = {
 
 const Add = () => {
 
-    const [image,setImage] = useState(false);
-    const [dragging,setDragging] = useState(false);
+    const [photos,setPhotos] = useState([]);       // the gallery: first photo is the cover
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(emptyData);
     const [specRows,setSpecRows] = useState([]);
     const previewSpecs = useMemo(()=>cleanSpecs(specRows).specs,[specRows]);
-    const inputRef = useRef(null);
-
-    // one object URL per selected file, released when the file changes
-    const preview = useMemo(()=> image ? URL.createObjectURL(image) : null,[image]);
-    useEffect(()=>()=>{ if (preview) URL.revokeObjectURL(preview); },[preview]);
+    const cover = photos[0]?.url || null;
 
     const onChangeHandler = (event) => {
         const name = event.target.name;
@@ -37,45 +34,39 @@ const Add = () => {
         setData(data=>({...data,[name]:value}))
     }
 
-    const onFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) setImage(file);
-    }
-
-    const clearImage = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setImage(false);
-        if (inputRef.current) inputRef.current.value = "";
-    }
-
     const onsubmitHandler = async (event) => {
         event.preventDefault();
         if (loading) return;
 
+        if (photos.length === 0) {
+            toast.error("Add at least one photo");
+            return;
+        }
         const { specs, incomplete } = cleanSpecs(specRows);
         if (incomplete > 0) {
             toast.error("Give every amenity both a name and a value");
             return;
         }
-        const formData = new FormData();
-        formData.append("name",data.name)
-        formData.append("description",data.description)
-        formData.append("price",Number(data.price))
-        formData.append("category",data.category)
-        formData.append("maxGuests",data.maxGuests)
-        formData.append("totalRooms",data.totalRooms)
-        formData.append("specs",JSON.stringify(specs))
-        formData.append("image",image)
 
         setLoading(true);
         try {
+            // big camera photos are shrunk first, then sent in gallery order
+            const files = await Promise.all(photos.map((photo)=>prepareImage(photo.file)));
+            const formData = new FormData();
+            formData.append("name",data.name)
+            formData.append("description",data.description)
+            formData.append("price",Number(data.price))
+            formData.append("category",data.category)
+            formData.append("maxGuests",data.maxGuests)
+            formData.append("totalRooms",data.totalRooms)
+            formData.append("specs",JSON.stringify(specs))
+            files.forEach((file)=>formData.append("images",file))
+
             const response = await api.post("/api/room/add",formData);
             if (response.data.success) {
                 setData(emptyData)
                 setSpecRows([])
-                setImage(false)
-                if (inputRef.current) inputRef.current.value = "";
+                setPhotos([])
                 toast.success(response.data.message)
             }else{
                 toast.error(response.data.message)
@@ -93,7 +84,7 @@ const Add = () => {
         <div className="page-head">
             <div>
                 <h1>Add room</h1>
-                <p>Add a photo and the details guests will see when they book.</p>
+                <p>Add photos and the details guests will see when they book.</p>
             </div>
         </div>
 
@@ -101,38 +92,7 @@ const Add = () => {
             <form className="add-form card" onSubmit={onsubmitHandler}>
 
                 <section className="add-section">
-                    <h2>Photo</h2>
-                    <label
-                        className={`dropzone${dragging?" is-dragging":""}${preview?" has-image":""}`}
-                        onDragEnter={()=>setDragging(true)}
-                        onDragLeave={()=>setDragging(false)}
-                        onDrop={()=>setDragging(false)}
-                    >
-                        <input
-                            ref={inputRef}
-                            className="dropzone-input"
-                            onChange={onFileChange}
-                            type='file'
-                            id='image'
-                            accept='image/*'
-                            required={!image}
-                        />
-                        {preview ? (
-                            <>
-                                <img src={preview} alt="Selected room" />
-                                <span className="dropzone-change">Change photo</span>
-                                <button type="button" className="dropzone-clear" onClick={clearImage} aria-label="Remove photo">
-                                    <CloseIcon size={16} />
-                                </button>
-                            </>
-                        ) : (
-                            <span className="dropzone-empty">
-                                <span className="dropzone-icon"><ImageIcon size={28} /></span>
-                                <strong>Tap to upload a photo</strong>
-                                <span>or drag and drop an image here</span>
-                            </span>
-                        )}
-                    </label>
+                    <GalleryEditor items={photos} onChange={setPhotos} disabled={loading} />
                 </section>
 
                 <section className="add-section">
@@ -197,7 +157,8 @@ const Add = () => {
                 <p className="preview-title">Preview</p>
                 <article className="preview-card card">
                     <div className="preview-media">
-                        {preview ? <img src={preview} alt="" /> : <ImageIcon size={34} />}
+                        {cover ? <img src={cover} alt="" /> : <ImageIcon size={34} />}
+                        {photos.length > 1 && <span className="preview-count">{photos.length} photos</span>}
                     </div>
                     <div className="preview-body">
                         <span className="chip">{data.category}</span>

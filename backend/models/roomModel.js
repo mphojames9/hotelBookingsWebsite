@@ -4,7 +4,8 @@ const roomSchema = new mongoose.Schema({
     name: {type:String,required:true},
     description: {type:String,required:true},
     price:{type:Number,required:true},            // price per night
-    image:{type:String,required:true},
+    image:{type:String,required:true},            // cover photo (always the first of `images`)
+    images:{type:[String],default:[]},            // every photo, in slideshow order
     category:{type:String,required:true},         // room type, e.g. "Deluxe"
     maxGuests:{type:Number,default:2,min:1},      // guests per room
     totalRooms:{type:Number,default:1,min:1},     // how many rooms of this type the hotel has

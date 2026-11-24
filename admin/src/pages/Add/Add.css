@@ -228,6 +228,18 @@
 }
 .preview-body .is-placeholder{ color: var(--ink-3); }
 .preview-body .preview-meta{ font-size: .82rem; font-weight: 600; color: var(--ink-3); -webkit-line-clamp: 1; }
+.preview-media{ position: relative; }
+.preview-count{
+    position: absolute;
+    right: 8px; bottom: 8px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(10,26,30,.7);
+    backdrop-filter: blur(4px);
+}
 .preview-night{ font-size: .8rem; font-weight: 500; color: var(--ink-3); }
 .preview-body strong{
     margin-top: 4px;

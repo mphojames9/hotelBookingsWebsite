@@ -53,7 +53,10 @@ app.get("/",(req,res)=>{
 // upload / unexpected errors (e.g. wrong file type, file too large)
 app.use((err,req,res,next)=>{
     console.log(err.message);
-    res.status(400).json({success:false,message:err.message || "Error"})
+    const message = err.code === "LIMIT_FILE_SIZE" ? "Each photo must be 5 MB or smaller"
+        : err.code === "LIMIT_UNEXPECTED_FILE" || err.code === "LIMIT_FILE_COUNT" ? "A room can have up to 8 photos"
+        : err.message || "Error";
+    res.status(400).json({success:false,message})
 })
 
 app.listen(port,()=>{

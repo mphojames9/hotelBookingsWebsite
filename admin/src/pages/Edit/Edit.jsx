@@ -1,14 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './Edit.css';
 import '../Add/Add.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import api, { API_URL, errorMessage } from '../../api';
+import api, { errorMessage } from '../../api';
 import { toast } from 'react-toastify';
-import { ImageIcon, CloseIcon, ChevronDownIcon, ChevronLeftIcon, BedIcon } from '../../components/Icons';
+import { ImageIcon, ChevronDownIcon, ChevronLeftIcon, BedIcon } from '../../components/Icons';
 import { formatRand } from '../../utils/format';
 import { ROOM_TYPES } from '../../utils/categories';
 import { cleanSpecs, toRows } from '../../utils/specs';
+import { prepareImage } from '../../utils/images';
 import SpecsEditor from '../../components/SpecsEditor/SpecsEditor';
+import GalleryEditor, { fromSaved } from '../../components/GalleryEditor/GalleryEditor';
 
 const Edit = () => {
 
@@ -19,11 +21,8 @@ const Edit = () => {
     const [product,setProduct] = useState(null);      // the room as it is saved right now
     const [data,setData] = useState(null);            // the form values
     const [specRows,setSpecRows] = useState([]);       // the specifications editor rows
-    const [image,setImage] = useState(null);          // a newly picked photo (null = keep the current one)
-    const [currentBroken,setCurrentBroken] = useState(false);
-    const [dragging,setDragging] = useState(false);
+    const [photos,setPhotos] = useState([]);          // the gallery: saved photos + new ones, first is the cover
     const [saving,setSaving] = useState(false);
-    const inputRef = useRef(null);
 
     // load the room (the list endpoint only returns text fields, so this is cheap)
     useEffect(()=>{
@@ -52,8 +51,7 @@ const Edit = () => {
                     category:found.category
                 });
                 setSpecRows(toRows(found.specs));
-                setImage(null);
-                setCurrentBroken(false);
+                setPhotos(fromSaved(found.images?.length ? found.images : [found.image]));
                 setStatus("ready");
             } catch (error) {
                 if (cancelled) return;
@@ -64,17 +62,16 @@ const Edit = () => {
         return ()=>{ cancelled = true; };
     },[id]);
 
-    // one object URL per newly picked file, released when the file changes
-    const newPreview = useMemo(()=> image ? URL.createObjectURL(image) : null,[image]);
-    useEffect(()=>()=>{ if (newPreview) URL.revokeObjectURL(newPreview); },[newPreview]);
+    const cover = photos[0]?.url || null;
 
-    const currentUrl = product ? `${API_URL}/images/${product.image}` : null;
-    const shownImage = newPreview || (currentBroken ? null : currentUrl);
+    // changes to the gallery: a photo added, removed or moved
+    const photoSignature = photos.map((photo)=>photo.kind === "existing" ? photo.name : `new:${photo.key}`).join("|");
+    const savedSignature = product ? (product.images?.length ? product.images : [product.image]).join("|") : "";
 
     const dirty = useMemo(()=>{
         if (!product || !data) return false;
         return (
-            !!image ||
+            photoSignature !== savedSignature ||
             data.name.trim() !== product.name ||
             data.description.trim() !== product.description ||
             Number(data.price) !== product.price ||
@@ -83,7 +80,7 @@ const Edit = () => {
             data.category !== product.category ||
             JSON.stringify(cleanSpecs(specRows).specs) !== JSON.stringify(product.specs || [])
         );
-    },[product,data,image,specRows]);
+    },[product,data,photoSignature,savedSignature,specRows]);
 
     const previewSpecs = useMemo(()=>cleanSpecs(specRows).specs,[specRows]);
 
@@ -92,42 +89,39 @@ const Edit = () => {
         setData((current)=>({...current,[name]:value}));
     }
 
-    const onFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) setImage(file);
-    }
-
-    // drop the newly picked photo and go back to the saved one
-    const undoImage = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setImage(null);
-        if (inputRef.current) inputRef.current.value = "";
-    }
-
     const onsubmitHandler = async (event) => {
         event.preventDefault();
         if (saving || !dirty) return;
 
+        if (photos.length === 0) {
+            toast.error("A room needs at least one photo");
+            return;
+        }
         const { specs, incomplete } = cleanSpecs(specRows);
         if (incomplete > 0) {
             toast.error("Give every amenity both a name and a value");
             return;
         }
 
-        const formData = new FormData();
-        formData.append("id",product._id);
-        formData.append("name",data.name.trim());
-        formData.append("description",data.description.trim());
-        formData.append("price",Number(data.price));
-        formData.append("category",data.category);
-        formData.append("maxGuests",data.maxGuests);
-        formData.append("totalRooms",data.totalRooms);
-        formData.append("specs",JSON.stringify(specs));
-        if (image) formData.append("image",image);
-
         setSaving(true);
         try {
+            // saved photos are kept by name, new ones are uploaded (shrunk first); `layout` is the final order
+            const picked = photos.filter((photo)=>photo.kind === "new");
+            const files = await Promise.all(picked.map((photo)=>prepareImage(photo.file)));
+            const layout = photos.map((photo)=>photo.kind === "existing" ? {name:photo.name} : {upload:picked.indexOf(photo)});
+
+            const formData = new FormData();
+            formData.append("id",product._id);
+            formData.append("name",data.name.trim());
+            formData.append("description",data.description.trim());
+            formData.append("price",Number(data.price));
+            formData.append("category",data.category);
+            formData.append("maxGuests",data.maxGuests);
+            formData.append("totalRooms",data.totalRooms);
+            formData.append("specs",JSON.stringify(specs));
+            formData.append("layout",JSON.stringify(layout));
+            files.forEach((file)=>formData.append("images",file));
+
             const response = await api.post("/api/room/update",formData);
             if (response.data.success) {
                 toast.success(response.data.message);
@@ -147,7 +141,7 @@ const Edit = () => {
             <div>
                 <Link to="/rooms" className="edit-back"><ChevronLeftIcon size={18} />Rooms</Link>
                 <h1>Edit room</h1>
-                <p>Change the photo or details guests see.</p>
+                <p>Change the photos or details guests see.</p>
             </div>
         </div>
     );
@@ -196,44 +190,7 @@ const Edit = () => {
                 <form className="add-form card" onSubmit={onsubmitHandler}>
 
                     <section className="add-section">
-                        <h2>Photo</h2>
-                        <label
-                            className={`dropzone${dragging?" is-dragging":""}${shownImage?" has-image":""}`}
-                            onDragEnter={()=>setDragging(true)}
-                            onDragLeave={()=>setDragging(false)}
-                            onDrop={()=>setDragging(false)}
-                        >
-                            <input
-                                ref={inputRef}
-                                className="dropzone-input"
-                                onChange={onFileChange}
-                                type='file'
-                                id='image'
-                                accept='image/*'
-                            />
-                            {shownImage ? (
-                                <>
-                                    <img
-                                        key={shownImage}
-                                        src={shownImage}
-                                        alt="Room"
-                                        onError={()=>{ if (!newPreview) setCurrentBroken(true); }}
-                                    />
-                                    <span className="dropzone-change">{newPreview ? "New photo selected" : "Change photo"}</span>
-                                    {newPreview &&
-                                        <button type="button" className="dropzone-clear" onClick={undoImage} aria-label="Keep the current photo">
-                                            <CloseIcon size={16} />
-                                        </button>
-                                    }
-                                </>
-                            ) : (
-                                <span className="dropzone-empty">
-                                    <span className="dropzone-icon"><ImageIcon size={28} /></span>
-                                    <strong>{currentBroken ? "Current photo is missing" : "Tap to upload a photo"}</strong>
-                                    <span>{currentBroken ? "Upload a new photo to replace it" : "or drag and drop an image here"}</span>
-                                </span>
-                            )}
-                        </label>
+                        <GalleryEditor items={photos} onChange={setPhotos} disabled={saving} />
                     </section>
 
                     <section className="add-section">
@@ -301,7 +258,8 @@ const Edit = () => {
                     <p className="preview-title">Preview</p>
                     <article className="preview-card card">
                         <div className="preview-media">
-                            {shownImage ? <img src={shownImage} alt="" /> : <ImageIcon size={34} />}
+                            {cover ? <img src={cover} alt="" /> : <ImageIcon size={34} />}
+                            {photos.length > 1 && <span className="preview-count">{photos.length} photos</span>}
                         </div>
                         <div className="preview-body">
                             <span className="chip">{data.category}</span>
