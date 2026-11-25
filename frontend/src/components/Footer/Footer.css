@@ -1,0 +1,11 @@
+.ps-footer{background:#0f1c3a;color:#c9d1d9;font-family:var(--font-body);padding:48px 24px 24px;margin-top:0}
+.ps-footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.ps-footer h2{font:600 30px var(--font-display);color:#fff;letter-spacing:-.01em;margin:14px 0 8px}
+.ps-footer h3{font:700 13px var(--font-body);color:#f4b942;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}
+.ps-footer p{margin:0;font-size:14px;line-height:1.6;max-width:420px}
+.ps-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px}
+.ps-footer a{color:#c9d1d9;text-decoration:none}
+.ps-footer a:hover{color:#fff;text-decoration:underline}
+.ps-footer-brand img{height:42px;background:#fff;border-radius:10px;padding:6px 12px}
+.ps-footer .ps-footer-copy{max-width:1180px;margin:32px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:#8b949e}
+@media (max-width:760px){.ps-footer-inner{grid-template-columns:1fr}}

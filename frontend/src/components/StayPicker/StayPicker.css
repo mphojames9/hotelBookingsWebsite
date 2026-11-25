@@ -1,0 +1,6 @@
+.stay-picker{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:14px 16px;border:1px solid var(--line,#e3e6ea);border-radius:14px;background:var(--surface,#fff)}
+.stay-field{display:flex;flex-direction:column;gap:4px;font-size:.8rem;color:var(--muted,#5b6470);flex:1 1 140px}
+.stay-field input{font:inherit;font-size:1rem;padding:10px 12px;border:1px solid var(--line,#d5d9de);border-radius:10px;background:var(--surface,#fff);color:inherit}
+.stay-guests{flex:0 1 100px}
+.stay-nights{margin:0 0 10px;font-weight:600;white-space:nowrap}
+.stay-picker.in-cart{margin-bottom:20px}
