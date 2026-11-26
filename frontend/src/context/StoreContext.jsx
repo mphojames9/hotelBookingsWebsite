@@ -37,6 +37,7 @@ const StoreContextProvider = (props) => {
     const [ready,setReady] = useState(false);
     const [stay,setStayState] = useState(loadStay);
     const [availability,setAvailability] = useState({}); // {roomId: rooms free for the chosen dates}
+    const [ratings,setRatings] = useState({});           // {roomId: {average,count}} from guest reviews
 
     const nights = nightsBetween(stay.checkIn,stay.checkOut);
     const setStay = (patch) => setStayState((prev)=>{
@@ -106,10 +107,38 @@ const StoreContextProvider = (props) => {
     const fetchRooms = async () => {
         try {
             const response = await axios.get(url+"/api/room/list");
-            setFoodList(shuffle(response.data.data))
+            const rooms = response.data.data;
+            setFoodList(shuffle(rooms))
+            // rooms the admin has removed must not stay in a saved cart
+            const alive = new Set(rooms.map((r)=>r._id));
+            setCartItems((prev)=>{
+                const ids = Object.keys(prev);
+                return ids.every((id)=>alive.has(id)) ? prev : Object.fromEntries(Object.entries(prev).filter(([id])=>alive.has(id)));
+            });
         } catch (error) {
             console.log(error);
         }
+    }
+
+    // average stars + review count per room (hidden reviews are already left out by the server)
+    const fetchRatings = async () => {
+        try {
+            const response = await axios.get(url+"/api/review/summary");
+            if (response.data.success) setRatings(response.data.data || {});
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // overall figure for the whole hotel (null until somebody has left a review)
+    const hotelRating = () => {
+        let count = 0, total = 0;
+        for (const id in ratings) {
+            if (!food_list.some((r)=>r._id === id)) continue;
+            count += ratings[id].count;
+            total += ratings[id].average * ratings[id].count;
+        }
+        return count ? {average:Math.round(total/count*10)/10,count} : null;
     }
 
     // refresh availability whenever the dates change
@@ -143,7 +172,7 @@ const StoreContextProvider = (props) => {
 
     useEffect(()=>{
         async function loadData() {
-            await fetchRooms();
+            await Promise.all([fetchRooms(),fetchRatings()]);
             const stored = localStorage.getItem("token");
             if (stored) await loadCartData(stored);
             setReady(true);
@@ -155,6 +184,7 @@ const StoreContextProvider = (props) => {
         food_list, cartItems, setCartItems, addToCart, removeFromCart,
         getTotalCartAmount, getNightlyTotal, guestCapacity,
         stay, setStay, nights, roomsLeft,
+        ratings, fetchRatings, hotelRating, handleAuth: handleAuthError,
         url, token, setToken, login, logout, ready, authConfig
     }));
 

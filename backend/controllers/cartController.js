@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import userModel from "../models/userModel.js";
+import roomModel from "../models/roomModel.js";
 
 const addToCart = async (req,res) => {
     try {
@@ -39,7 +40,15 @@ const removeFromCart = async (req,res) => {
 const getCart = async (req,res) => {
     try {
         const user = await userModel.findById(req.userId);
-        res.json({success:true,cartData:user.cartData || {}})
+        const saved = user.cartData || {};
+        // rooms the admin has removed since the guest last visited must not linger in the cart
+        const ids = Object.keys(saved).filter(id => mongoose.isValidObjectId(id));
+        const alive = new Set((await roomModel.find({_id:{$in:ids}},"_id")).map(r => String(r._id)));
+        const cartData = Object.fromEntries(Object.entries(saved).filter(([id]) => alive.has(id)));
+        if (Object.keys(cartData).length !== Object.keys(saved).length) {
+            await userModel.findByIdAndUpdate(req.userId,{cartData});
+        }
+        res.json({success:true,cartData})
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
@@ -52,9 +61,12 @@ const mergeCart = async (req,res) => {
         const items = req.body.items || {};
         const user = await userModel.findById(req.userId);
         const cartData = {...(user.cartData || {})};
+        const ids = [...new Set([...Object.keys(cartData),...Object.keys(items)])].filter(id => mongoose.isValidObjectId(id));
+        const alive = new Set((await roomModel.find({_id:{$in:ids}},"_id totalRooms")).map(r => String(r._id)));
+        for (const id of Object.keys(cartData)) if (!alive.has(id)) delete cartData[id];
         for (const [id,qty] of Object.entries(items)) {
             const n = Number(qty);
-            if (!mongoose.isValidObjectId(id) || !Number.isInteger(n) || n < 1) continue;
+            if (!alive.has(id) || !Number.isInteger(n) || n < 1) continue;
             cartData[id] = (cartData[id] || 0) + n;
         }
         await userModel.findByIdAndUpdate(req.userId,{cartData});

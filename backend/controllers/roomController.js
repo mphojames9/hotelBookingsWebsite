@@ -1,5 +1,6 @@
 import roomModel from "../models/roomModel.js";
 import imageModel from "../models/imageModel.js";
+import reviewModel from "../models/reviewModel.js";
 import fs from 'fs';
 import mongoose from 'mongoose';
 
@@ -101,6 +102,7 @@ const removeRoom = async (req,res) => {
         const room = await roomModel.findById(req.body.id);
         if (!room) return res.json({success:false,message:"Room not found"})
         await roomModel.findByIdAndDelete(req.body.id);
+        await reviewModel.deleteMany({foodId:String(req.body.id)}).catch(()=>{});   // reviews of a removed room go with it
         await dropImages(photosOf(room));
         res.json({success:true,message:"Room Removed"})
     } catch (error) {

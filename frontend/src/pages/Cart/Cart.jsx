@@ -9,7 +9,7 @@ import { CartIcon, MinusIcon, PlusIcon } from '../../components/Icons';
 
 const Cart = ({setShowLogin}) => {
 
-  const { cartItems, food_list, addToCart, removeFromCart, getTotalCartAmount, guestCapacity, stay, nights, url, token, ready } = useContext(StoreContext)
+  const { cartItems, food_list, addToCart, removeFromCart, roomsLeft, getTotalCartAmount, guestCapacity, stay, nights, url, token, ready } = useContext(StoreContext)
 
   const navigate = useNavigate();
 
@@ -19,6 +19,12 @@ const Cart = ({setShowLogin}) => {
 
   const checkout = () => {
     if (subtotal === 0) return;
+    const short = items.find((item) => cartItems[item._id] > roomsLeft(item._id));
+    if (short) {
+      const free = Math.max(0, roomsLeft(short._id));
+      alert(`Only ${free} "${short.name}" room(s) are free for these dates. Please reduce the number of rooms or change your dates.`);
+      return;
+    }
     if (guestCapacity() < stay.guests) {
       alert(`The rooms you chose sleep ${guestCapacity()} guest(s). Add another room for ${stay.guests} guests.`);
       return;
@@ -61,6 +67,7 @@ const Cart = ({setShowLogin}) => {
               <div className="cart-name">
                 <h3>{item.name}</h3>
                 <p>{formatPrice(item.price)} per night &middot; sleeps {item.maxGuests || 2}</p>
+                {cartItems[item._id] > roomsLeft(item._id) && <p className="cart-warn" role="alert">{roomsLeft(item._id) <= 0 ? 'Sold out for these dates' : `Only ${roomsLeft(item._id)} left for these dates`}</p>}
               </div>
               <div className="stepper">
                 <button type="button" aria-label={`Remove one ${item.name} room`} onClick={() => removeFromCart(item._id)}><MinusIcon /></button>

@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { formatPrice } from '../../utils/format';
 import { PackageIcon } from '../../components/Icons';
+import { openProduct } from '../../components/ProductSheet/ProductSheet';
 
 const statusClass = (status) =>
-  status === 'Checked out' ? 'done' : status === 'Checked in' ? 'moving' : 'pending';
+  status === 'Checked out' ? 'done' : status === 'Checked in' ? 'moving' : status === 'Cancelled' ? 'cancelled' : 'pending';
 
 const formatDate = (date) =>
   new Date(date).toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
@@ -85,6 +86,14 @@ const MyOrders = ({setShowLogin}) => {
                   <p className="order-items">{b.items.map((item)=>`${item.name} × ${item.quantity}`).join(", ")}</p>
                   <strong className="order-amount">{formatPrice(b.amount)}</strong>
                   <span className={`status status-${statusClass(b.status)}`}>{b.status}</span>
+                  {b.guest?.requests && <p className="order-items">Your request: {b.guest.requests}</p>}
+                  {b.status === 'Checked out' && (
+                    <div className="order-review">
+                      {b.items.map((item)=>(
+                        <button key={item.roomId} type="button" className="btn btn-ghost btn-sm" onClick={()=>openProduct(item.roomId,{reviews:true})}>Review {item.name}</button>
+                      ))}
+                    </div>
+                  )}
                   {canCancel(b) && <button type="button" className="btn btn-ghost btn-sm" onClick={()=>cancel(b._id)}>Cancel</button>}
                 </li>
               ))}

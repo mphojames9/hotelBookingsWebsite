@@ -18,6 +18,13 @@ const App = () => {
   const { pathname, state } = useLocation()
 
   // new page -> start at the top (unless a link asked to scroll to a section)
+  // other components (e.g. the room sheet's review form) ask for the sign-in popup with this event
+  useEffect(()=>{
+    const open = () => setShowLogin(true);
+    window.addEventListener('login:open',open);
+    return ()=>window.removeEventListener('login:open',open);
+  },[])
+
   useEffect(()=>{
     if (!state?.scrollTo) window.scrollTo({top:0,left:0,behavior:'instant'});
   },[pathname])

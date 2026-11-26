@@ -58,26 +58,88 @@
 .ps-close:hover{ background: var(--panel); }
 .ps-close:active{ transform: scale(.9); }
 
-/* ---------- photo ---------- */
+/* ---------- photo gallery ---------- */
 .ps-media{
-    display: grid;
-    place-items: center;
+    position: relative;
+    display: block;
     margin: 10px 0 10px 10px;
-    padding: 9%;
+    min-height: 360px;
     border-radius: 22px;
-    background: #f4f8fb;
+    background: #1b2437;
+    overflow: hidden;
 }
-.ps-media img{
+.ps-media > img{
+    position: absolute;
+    inset: 0;
     width: 100%;
-    max-height: 520px;
-    object-fit: contain;
-    mix-blend-mode: multiply;
-    animation: psImg 600ms var(--ease) both;
+    height: 100%;
+    object-fit: cover;
+    animation: psImg 500ms var(--ease) both;
 }
 @keyframes psImg{
-    from{ opacity: 0; transform: scale(.94); }
+    from{ opacity: 0; transform: scale(1.03); }
     to{ opacity: 1; transform: none; }
 }
+.ps-nav{
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    margin-top: -40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .92);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: transform 200ms var(--spring);
+}
+.ps-nav:hover{ transform: scale(1.08); }
+.ps-prev{ left: 12px; }
+.ps-next{ right: 12px; }
+.ps-count{
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: rgba(15, 28, 58, .7);
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 700;
+}
+.ps-thumbs{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    gap: 6px;
+    padding: 30px 12px 12px;
+    overflow-x: auto;
+    background: linear-gradient(transparent, rgba(10, 18, 40, .6));
+    scrollbar-width: none;
+}
+.ps-thumbs::-webkit-scrollbar{ display: none; }
+.ps-thumbs button{
+    flex: none;
+    width: 52px;
+    height: 40px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 9px;
+    overflow: hidden;
+    opacity: .75;
+    cursor: pointer;
+    transition: opacity 150ms, border-color 150ms;
+}
+.ps-thumbs button.on{ opacity: 1; border-color: #fff; }
+.ps-thumbs img{ display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- details ---------- */
 .ps-body{
@@ -120,6 +182,19 @@
     letter-spacing: -.02em;
     font-variant-numeric: tabular-nums;
 }
+.ps-price small{ font-size: .85rem; font-weight: 600; color: var(--muted); }
+.ps-meta{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: .88rem;
+}
+.ps-warn{ color: var(--warn); font-weight: 700; }
+.ps-add:disabled{ opacity: .55; cursor: not-allowed; box-shadow: none; }
+.ps-stepper button:disabled{ opacity: .35; cursor: not-allowed; }
 .ps-desc{
     color: var(--muted);
     line-height: 1.55;
@@ -278,10 +353,11 @@
     .ps-root.is-closing .ps-panel{ animation: psSheetOut 180ms ease both; }
     .ps-media{
         margin: 8px 8px 0;
-        padding: 14px;
+        min-height: 0;
+        height: 230px;
         border-radius: 22px;
     }
-    .ps-media img{ max-height: 210px; }
+    .ps-nav{ width: 34px; height: 34px; margin-top: -34px; }
     .ps-scroll{ padding: 16px 16px 8px; }
     .ps-scroll h2{ font-size: 1.35rem; margin-right: 44px; }
     .ps-price{ font-size: 1.2rem; margin-bottom: 8px; }

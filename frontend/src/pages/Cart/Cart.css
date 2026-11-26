@@ -230,3 +230,5 @@
     .cart-row .stepper{ grid-area: step; }
     .cart-line{ grid-area: line; align-self: center; }
 }
+
+.cart-warn{ margin-top: 4px; color: var(--danger); font-weight: 700; font-size: .86rem; }

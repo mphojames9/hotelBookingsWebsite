@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import reviewModel from "../models/reviewModel.js";
 import orderModel from "../models/orderModel.js";
+import bookingModel from "../models/bookingModel.js";
 import userModel from "../models/userModel.js";
 import foodModel from "../models/foodModel.js";
 import roomModel from "../models/roomModel.js";
@@ -54,8 +55,9 @@ const myReview = async (req,res) => {
 const addReview = async (req,res) => {
     try {
         const {foodId} = req.body;
-        if (!mongoose.isValidObjectId(foodId) || !(await foodModel.exists({_id:foodId}))) {
-            return res.json({success:false,message:"Product not found"})
+        // reviews belong to a room (hotel) or, for older data, to a shop product
+        if (!mongoose.isValidObjectId(foodId) || !((await roomModel.exists({_id:foodId})) || (await foodModel.exists({_id:foodId})))) {
+            return res.json({success:false,message:"Room not found"})
         }
         const rating = cleanRating(req.body.rating);
         if (rating === undefined) return res.json({success:false,message:"Please choose a rating from 1 to 5 stars"})
@@ -63,8 +65,10 @@ const addReview = async (req,res) => {
 
         const user = await userModel.findById(req.userId);
         if (!user) return res.status(401).json({success:false,message:"Not authorised, please log in again"})
-        const firstName = String(user.name || "").trim().split(/\s+/)[0] || "Shopper";
-        const verified = !!(await orderModel.exists({userId:req.userId,payment:true,"items.foodId":String(foodId)}));
+        const firstName = String(user.name || "").trim().split(/\s+/)[0] || "Guest";
+        // verified = the guest has a paid, not cancelled booking for this room
+        const verified = !!(await bookingModel.exists({userId:req.userId,payment:true,status:{$ne:"Cancelled"},"items.roomId":String(foodId)}))
+            || !!(await orderModel.exists({userId:req.userId,payment:true,"items.foodId":String(foodId)}));
 
         await reviewModel.findOneAndUpdate(
             {foodId,userId:req.userId},

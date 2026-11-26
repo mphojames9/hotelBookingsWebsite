@@ -4,6 +4,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { StoreContext, toISO, addDaysISO } from '../../context/StoreContext';
 import { formatPrice } from '../../utils/format';
 import { openProduct } from '../../components/ProductSheet/ProductSheet';
+import { RatingBadge } from '../../components/Stars/Stars';
 import hero1 from '../../assets/hotel/hero1.jpg';
 import hero2 from '../../assets/hotel/hero2.jpg';
 import hero3 from '../../assets/hotel/hero3.jpg';
@@ -58,24 +59,25 @@ const SearchBar = ({ query, setQuery, onSearch }) => {
 };
 
 /* ---------- room card with the photo on top and the text underneath ---------- */
-const Tile = ({ room, url }) => (
+const Tile = ({ room, url, rating }) => (
   <button type="button" className="tile" onClick={() => openProduct(room._id)} aria-label={`View ${room.name}`}>
     <span className="tile-img"><img src={url + '/images/' + room.image} alt="" loading="lazy" /></span>
     <span className="tile-body">
       <small>{room.category} &middot; sleeps {room.maxGuests || 2}</small>
       <strong>{room.name}</strong>
+      <RatingBadge rating={rating} />
       <em>{formatPrice(room.price)} <span>/ night</span></em>
     </span>
   </button>
 );
 
 /* ---------- horizontal row with arrows ---------- */
-const Row = ({ rooms, url }) => {
+const Row = ({ rooms, url, ratings }) => {
   const ref = useRef(null);
   const by = (dir) => { const el = ref.current; el?.scrollBy({ left: dir * el.clientWidth * 0.9, behavior: 'smooth' }); };
   return (
     <div className="row-wrap">
-      <div className="row" ref={ref}>{rooms.map((room) => <Tile key={room._id} room={room} url={url} />)}</div>
+      <div className="row" ref={ref}>{rooms.map((room) => <Tile key={room._id} room={room} url={url} rating={ratings[room._id]} />)}</div>
       {rooms.length > 4 && <div className="row-btns">
         <button type="button" aria-label="Scroll left" onClick={() => by(-1)}>&larr;</button>
         <button type="button" aria-label="Scroll right" onClick={() => by(1)}>&rarr;</button>
@@ -86,7 +88,7 @@ const Row = ({ rooms, url }) => {
 
 /* ---------- listing card with select / stepper ---------- */
 const RoomCard = ({ room }) => {
-  const { cartItems, addToCart, removeFromCart, roomsLeft, nights, url } = useContext(StoreContext);
+  const { cartItems, addToCart, removeFromCart, roomsLeft, nights, url, ratings } = useContext(StoreContext);
   const qty = cartItems[room._id] || 0;
   const left = roomsLeft(room._id);
   const soldOut = left <= 0;
@@ -105,6 +107,7 @@ const RoomCard = ({ room }) => {
       </button>
       <div className="ps-card-body">
         <h3>{room.name}</h3>
+        <RatingBadge rating={ratings[room._id]} onClick={() => openProduct(room._id, { reviews: true })} />
         <p>{room.description}</p>
         <div className="ps-amen">
           <span>Sleeps {room.maxGuests || 2}</span>
@@ -131,7 +134,7 @@ const RoomCard = ({ room }) => {
 };
 
 const Home = () => {
-  const { food_list: rooms, ready, url, cartItems, getTotalCartAmount, nights, stay } = useContext(StoreContext);
+  const { food_list: rooms, ready, url, cartItems, getTotalCartAmount, nights, stay, ratings, hotelRating } = useContext(StoreContext);
   const { state } = useLocation();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
@@ -167,8 +170,12 @@ const Home = () => {
     (!order || order.has(r._id)));
   if (order) visible = [...visible].sort((a, b) => order.get(a._id) - order.get(b._id));
 
+  // guest favourites: best rated first (rooms without reviews follow)
+  const featured = useMemo(() => [...rooms].sort((a, b) => (ratings[b._id]?.average || 0) - (ratings[a._id]?.average || 0) || (ratings[b._id]?.count || 0) - (ratings[a._id]?.count || 0)).slice(0, 8), [rooms, ratings]);
+  const overall = hotelRating();
+
   const hero = SLIDES[slide % SLIDES.length];
-  const picked = Object.values(cartItems).reduce((a, b) => a + b, 0);
+  const picked = rooms.reduce((sum, r) => sum + (cartItems[r._id] || 0), 0);
   const viewAll = (name) => { setSmart(null); setExtra(null); setCategory(name); setTimeout(() => scrollToId('listings'), 50); };
   const search = () => { setSmart(null); setCategory('All'); scrollToId('listings'); };
 
@@ -184,7 +191,7 @@ const Home = () => {
           <p className="hx-lead">Handpicked rooms, honest prices and instant confirmation. Pick your dates and see exactly what is free.</p>
           <SearchBar query={query} setQuery={setQuery} onSearch={search} />
           <ul className="hx-proof">
-            <li><b>4.9</b> guest rating</li>
+            {overall ? <li><b>{overall.average.toFixed(1)}</b> from {overall.count} {overall.count === 1 ? 'review' : 'reviews'}</li> : <li><b>New</b> be our first review</li>}
             <li><b>{rooms.length || '15'}</b> rooms to choose from</li>
             <li><b>0</b> booking fees</li>
           </ul>
@@ -227,7 +234,7 @@ const Home = () => {
         <section className="sec" id="featured" aria-labelledby="feat-h">
           <header className="sec-head"><div><p className="eyebrow">Featured</p><h2 id="feat-h">Guest favourites</h2></div>
             <button type="button" className="link-btn" onClick={() => viewAll('All')}>View all rooms &rarr;</button></header>
-          <Row rooms={rooms.slice(0, 8)} url={url} />
+          <Row rooms={featured} url={url} ratings={ratings} />
         </section>
       )}
 

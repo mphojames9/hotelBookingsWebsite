@@ -1,0 +1,21 @@
+.stars{ display: inline-flex; gap: 2px; vertical-align: middle; }
+.star{ position: relative; display: inline-grid; color: #d9cfbd; }
+.star svg{ display: block; }
+.star.on{ color: #f0a21a; }
+
+.rating-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: .85rem;
+    line-height: 1;
+}
+.rating-badge b{ font-weight: 800; }
+.rating-badge span:last-child{ color: var(--muted); }
+button.rating-badge{ cursor: pointer; }
+button.rating-badge:hover span:last-child{ text-decoration: underline; }

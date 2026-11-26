@@ -120,6 +120,8 @@
 
 .status-pending{ color: var(--warn); background: #fdf3dc; }
 .status-moving{ color: var(--brand-deep); background: #e1f1fa; }
+.status-cancelled{ color: var(--danger); background: #fbe7e5; }
+.order-review{ grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
 .status-done{ color: var(--success); background: #e2f5ea; }
 
 /* a live pulse on orders that are on their way */

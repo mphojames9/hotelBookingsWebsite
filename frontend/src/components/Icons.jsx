@@ -102,3 +102,7 @@ export const SparklesIcon = icon(
 );
 
 export const EnterIcon = icon(<path d="M20 5v6a3 3 0 0 1-3 3H5m0 0 4-4m-4 4 4 4" />);
+
+export const StarIcon = icon(<path d="m12 3.6 2.5 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.9 19.6l1-5.8-4.2-4.1 5.8-.8L12 3.6Z" />, { fill: "currentColor", strokeWidth: 1.2 });
+export const ChevronLeftIcon = icon(<path d="m15 6-6 6 6 6" />);
+export const ChevronRightIcon = icon(<path d="m9 6 6 6-6 6" />);
