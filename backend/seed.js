@@ -4,6 +4,7 @@ import 'dotenv/config'
 import fs from 'fs'
 import mongoose from 'mongoose'
 import { connectDB } from './config/db.js'
+import { LOCATIONS } from './config/locations.js'
 import roomModel from './models/roomModel.js'
 import imageModel from './models/imageModel.js'
 
@@ -35,11 +36,11 @@ if (process.argv.includes('--reset')) {
   process.exit(0)
 }
 
-for (const [key,name,category,description,price,maxGuests,totalRooms,specs] of ROOMS) {
+for (const [index,[key,name,category,description,price,maxGuests,totalRooms,specs]] of ROOMS.entries()) {
   const filename = `seed-${key}.jpg`
   await imageModel.deleteOne({filename})
   await imageModel.create({filename,contentType:'image/jpeg',data:fs.readFileSync(`seed/images/${key}.jpg`)})
-  await roomModel.create({name,description,price,image:filename,images:[filename],category,maxGuests,totalRooms,specs:specs.map(([label,value])=>({label,value}))})
+  await roomModel.create({name,description,price,image:filename,images:[filename],category,location:LOCATIONS[index % LOCATIONS.length],maxGuests,totalRooms,specs:specs.map(([label,value])=>({label,value}))})
   console.log('Added', name)
 }
 await mongoose.disconnect()

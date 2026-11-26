@@ -6,7 +6,7 @@ import api, { errorMessage } from '../../api';
 import { toast } from 'react-toastify';
 import { ImageIcon, ChevronDownIcon, ChevronLeftIcon, BedIcon } from '../../components/Icons';
 import { formatRand } from '../../utils/format';
-import { ROOM_TYPES } from '../../utils/categories';
+import { ROOM_TYPES, LOCATIONS } from '../../utils/categories';
 import { cleanSpecs, toRows } from '../../utils/specs';
 import { prepareImage } from '../../utils/images';
 import SpecsEditor from '../../components/SpecsEditor/SpecsEditor';
@@ -48,7 +48,8 @@ const Edit = () => {
                     price:String(found.price),
                     maxGuests:String(found.maxGuests ?? 2),
                     totalRooms:String(found.totalRooms ?? 1),
-                    category:found.category
+                    category:found.category,
+                    location:found.location || ""
                 });
                 setSpecRows(toRows(found.specs));
                 setPhotos(fromSaved(found.images?.length ? found.images : [found.image]));
@@ -78,6 +79,7 @@ const Edit = () => {
             Number(data.maxGuests) !== (product.maxGuests ?? 2) ||
             Number(data.totalRooms) !== (product.totalRooms ?? 1) ||
             data.category !== product.category ||
+            data.location !== (product.location || "") ||
             JSON.stringify(cleanSpecs(specRows).specs) !== JSON.stringify(product.specs || [])
         );
     },[product,data,photoSignature,savedSignature,specRows]);
@@ -116,6 +118,7 @@ const Edit = () => {
             formData.append("description",data.description.trim());
             formData.append("price",Number(data.price));
             formData.append("category",data.category);
+            formData.append("location",data.location);
             formData.append("maxGuests",data.maxGuests);
             formData.append("totalRooms",data.totalRooms);
             formData.append("specs",JSON.stringify(specs));
@@ -224,6 +227,21 @@ const Edit = () => {
                                 <div className="control-wrap">
                                     <span className="price-prefix">R</span>
                                     <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='1800' required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="add-row">
+                            <div className="field-block">
+                                <label htmlFor="location">Hotel location</label>
+                                <div className="select-wrap">
+                                    <select className="control" id="location" onChange={onChangeHandler} value={data.location} name="location">
+                                        <option value="">Not assigned</option>
+                                        {LOCATIONS.map((place)=>(
+                                            <option key={place} value={place}>PrimeStay {place}</option>
+                                        ))}
+                                    </select>
+                                    <ChevronDownIcon size={18} />
                                 </div>
                             </div>
                         </div>

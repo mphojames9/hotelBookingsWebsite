@@ -5,6 +5,9 @@ import { StoreContext, toISO, addDaysISO } from '../../context/StoreContext';
 import { formatPrice } from '../../utils/format';
 import { openProduct } from '../../components/ProductSheet/ProductSheet';
 import { RatingBadge } from '../../components/Stars/Stars';
+import { AmenityIcon, ArrowRightIcon, PinIcon, UsersIcon, amenityText } from '../../components/Icons';
+import { Carousel, Faq, SectionHead, SiteIcon } from '../../components/Editorial/Editorial';
+import { FAQS, LOCATIONS } from '../../data/site';
 import hero1 from '../../assets/hotel/hero1.jpg';
 import hero2 from '../../assets/hotel/hero2.jpg';
 import hero3 from '../../assets/hotel/hero3.jpg';
@@ -107,11 +110,12 @@ const RoomCard = ({ room }) => {
       </button>
       <div className="ps-card-body">
         <h3>{room.name}</h3>
+        {room.location && <p className="ps-loc"><PinIcon aria-hidden="true" />PrimeStay {room.location}</p>}
         <RatingBadge rating={ratings[room._id]} onClick={() => openProduct(room._id, { reviews: true })} />
         <p>{room.description}</p>
         <div className="ps-amen">
-          <span>Sleeps {room.maxGuests || 2}</span>
-          {specs.slice(0, 3).map((s) => <span key={s.label}>{s.label}: {s.value}</span>)}
+          <span><UsersIcon aria-hidden="true" />Sleeps {room.maxGuests || 2}</span>
+          {specs.slice(0, 3).map((s) => <span key={s.label}><AmenityIcon label={s.label} aria-hidden="true" />{amenityText(s)}</span>)}
         </div>
         <div className="ps-card-foot">
           <div>
@@ -138,6 +142,7 @@ const Home = () => {
   const { state } = useLocation();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
+  const [place, setPlace] = useState('All');       // hotel filter: All | Sandton | Sea Point | Umhlanga
   const [smart, setSmart] = useState(null);
   const [extra, setExtra] = useState(null); // filter from the header menu: {label, categories, minPrice, maxPrice, minGuests}
   const [slide, setSlide] = useState(0);
@@ -148,6 +153,7 @@ const Home = () => {
   useEffect(() => {
     if (!state) return;
     setExtra(state.filter || null);
+    setPlace(state.location || 'All');
     if (state.filter) { setSmart(null); setCategory('All'); }
     if (state.category) { setSmart(null); setCategory(state.category); }
     if (state.smart) { setSmart(state.smart); setCategory('All'); }
@@ -166,6 +172,7 @@ const Home = () => {
   const order = smart ? new Map(smart.ids.map((id, i) => [id, i])) : null;
   let visible = rooms.filter((r) =>
     (category === 'All' || r.category === category) &&
+    (place === 'All' || r.location === place) &&
     (!extra || ((!extra.categories || extra.categories.includes(r.category)) && (extra.minPrice == null || r.price >= extra.minPrice) && (extra.maxPrice == null || r.price <= extra.maxPrice) && (extra.minGuests == null || (r.maxGuests || 2) >= extra.minGuests))) &&
     (!q || [r.name, r.description, r.category].some((t) => t?.toLowerCase().includes(q))) &&
     (!order || order.has(r._id)));
@@ -259,15 +266,46 @@ const Home = () => {
       <section className="sec" id="listings" aria-label="All rooms">
         <header className="sec-head"><div>
           <p className="eyebrow">{fmtDay(stay.checkIn)} &rarr; {fmtDay(stay.checkOut)} &middot; {nights} {nights === 1 ? 'night' : 'nights'}</p>
-          <h2>{extra ? extra.label : smart ? 'Search results' : category === 'All' ? 'Rooms available for your stay' : `${category} rooms`}</h2></div></header>
+          <h2>{extra ? extra.label : smart ? 'Search results' : category === 'All' ? (place === 'All' ? 'Rooms available for your stay' : `Rooms at PrimeStay ${place}`) : `${category} rooms${place === 'All' ? '' : ' in ' + place}`}</h2></div></header>
+        <div className="filters hotels" role="group" aria-label="Hotels">
+          <span className="filters-label"><PinIcon aria-hidden="true" /> Hotel</span>
+          <button type="button" className={place === 'All' ? 'on' : ''} onClick={() => setPlace('All')}>All hotels</button>
+          {LOCATIONS.map((l) => <button type="button" key={l.slug} className={place === l.name ? 'on' : ''} onClick={() => setPlace(l.name)}>{l.name}</button>)}
+        </div>
         <div className="filters" role="group" aria-label="Room types">
           <button type="button" className={category === 'All' && !smart ? 'on' : ''} onClick={() => { setSmart(null); setExtra(null); setCategory('All'); }}>All {ready && rooms.length}</button>
           {types.map((t) => <button type="button" key={t} className={category === t ? 'on' : ''} onClick={() => { setSmart(null); setExtra(null); setCategory(t); }}>{t}</button>)}
-          {(smart || q || extra) && <button type="button" className="clear" onClick={() => { setSmart(null); setQuery(''); setCategory('All'); setExtra(null); }}>Clear filters</button>}
+          {(smart || q || extra || place !== 'All') && <button type="button" className="clear" onClick={() => { setSmart(null); setQuery(''); setCategory('All'); setExtra(null); setPlace('All'); }}>Clear filters</button>}
         </div>
         {ready && visible.length === 0
           ? <p className="ps-loading">No rooms match your search.</p>
           : <div className="grid">{visible.map((r) => <RoomCard key={r._id} room={r} />)}</div>}
+      </section>
+
+      <section className="sec hm-places" id="hotels" aria-label="Our hotels">
+        <SectionHead eyebrow="Three hotels, one standard" title="Find your city" />
+        <div className="hm-places-grid">
+          {LOCATIONS.map((l) => (
+            <article className="hm-place" key={l.slug}>
+              <Carousel images={l.images} alt={l.title} ratio="4 / 3" />
+              <div className="hm-place-body">
+                <small>{l.city}, {l.province}</small>
+                <h3>{l.title}</h3>
+                <p><PinIcon aria-hidden="true" />{l.address.slice(0, 2).join(', ')}</p>
+                <div className="hm-place-links">
+                  <Link to={`/locations/${l.slug}`}>Explore <ArrowRightIcon aria-hidden="true" /></Link>
+                  <button type="button" onClick={() => { setPlace(l.name); setCategory('All'); setSmart(null); setExtra(null); setTimeout(() => scrollToId('listings'), 50); }}>See rooms</button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="sec hm-faq" id="faq" aria-label="Frequently asked questions">
+        <SectionHead eyebrow="Good to know" title="Frequently asked questions" />
+        <Faq items={FAQS.slice(0, 6)} />
+        <p className="hm-faq-more"><Link to="/faq">See all questions <ArrowRightIcon aria-hidden="true" /></Link></p>
       </section>
 
       {picked > 0 && barClosed !== picked &&

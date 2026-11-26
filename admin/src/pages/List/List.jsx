@@ -66,7 +66,8 @@ const List = () => {
       if (!q) return list;
       return list.filter((item)=>
         (item.name || "").toLowerCase().includes(q) ||
-        (item.category || "").toLowerCase().includes(q)
+        (item.category || "").toLowerCase().includes(q) ||
+        (item.location || "").toLowerCase().includes(q)
       );
     },[list,query]);
 
@@ -154,6 +155,7 @@ const List = () => {
                 </p>
                 <div className="list-meta">
                   <span className="chip">{item.category}</span>
+                  <span className="list-specs">{item.location ? `PrimeStay ${item.location}` : "No hotel set"}</span>
                   {item.specs?.length > 0 && <span className="list-specs">{item.specs.length} {item.specs.length === 1 ? "amenity" : "amenities"}</span>}
                   <p className="list-price">{formatRand(item.price)}<small> / night</small></p>
                 </div>

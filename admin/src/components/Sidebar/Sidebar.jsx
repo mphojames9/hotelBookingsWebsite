@@ -1,7 +1,7 @@
 import React from 'react';
 import './Sidebar.css';
 import { NavLink, useLocation } from 'react-router-dom';
-import { DashboardIcon, PlusIcon, BedIcon, CalendarIcon, StarIcon } from '../Icons';
+import { DashboardIcon, PlusIcon, BedIcon, CalendarIcon, StarIcon, MailIcon } from '../Icons';
 
 const items = [
   { to:'/dashboard', label:'Dashboard', Icon:DashboardIcon },
@@ -9,6 +9,7 @@ const items = [
   { to:'/rooms',    label:'Rooms',    Icon:BedIcon, also:['/edit'] },
   { to:'/bookings', label:'Bookings', Icon:CalendarIcon },
   { to:'/reviews',  label:'Reviews',  Icon:StarIcon },
+  { to:'/messages', label:'Messages', Icon:MailIcon },
 ];
 
 const Sidebar = () => {

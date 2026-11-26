@@ -4,7 +4,7 @@ import api, { errorMessage } from '../../api';
 import { toast } from 'react-toastify';
 import { ImageIcon, ChevronDownIcon } from '../../components/Icons';
 import { formatRand } from '../../utils/format';
-import { ROOM_TYPES } from '../../utils/categories';
+import { ROOM_TYPES, LOCATIONS } from '../../utils/categories';
 import { cleanSpecs } from '../../utils/specs';
 import { prepareImage } from '../../utils/images';
 import SpecsEditor from '../../components/SpecsEditor/SpecsEditor';
@@ -16,7 +16,8 @@ const emptyData = {
     price:"",
     maxGuests:"2",
     totalRooms:"1",
-    category:"Standard"
+    category:"Standard",
+    location:""
 };
 
 const Add = () => {
@@ -57,6 +58,7 @@ const Add = () => {
             formData.append("description",data.description)
             formData.append("price",Number(data.price))
             formData.append("category",data.category)
+            formData.append("location",data.location)
             formData.append("maxGuests",data.maxGuests)
             formData.append("totalRooms",data.totalRooms)
             formData.append("specs",JSON.stringify(specs))
@@ -126,6 +128,21 @@ const Add = () => {
                             <div className="control-wrap">
                                 <span className="price-prefix">R</span>
                                 <input className="control-bare" id="price" onChange={onChangeHandler} value={data.price} type='number' inputMode="decimal" min='1' step='0.01' name='price' placeholder='1800' required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="add-row">
+                        <div className="field-block">
+                            <label htmlFor="location">Hotel location</label>
+                            <div className="select-wrap">
+                                <select className="control" id="location" onChange={onChangeHandler} value={data.location} name="location">
+                                    <option value="">Not assigned</option>
+                                    {LOCATIONS.map((place)=>(
+                                        <option key={place} value={place}>PrimeStay {place}</option>
+                                    ))}
+                                </select>
+                                <ChevronDownIcon size={18} />
                             </div>
                         </div>
                     </div>

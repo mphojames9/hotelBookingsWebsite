@@ -1,0 +1,8 @@
+/* reuses the card/filter styles of the Reviews page */
+@import '../Reviews/Reviews.css';
+
+.messages-page .msg-contact{ display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 4px; font-size: .92rem; }
+.messages-page .msg-contact a{ display: inline-flex; align-items: center; gap: 6px; color: var(--ink, #1b2437); text-decoration: none; }
+.messages-page .msg-contact a:hover{ text-decoration: underline; }
+.messages-page .msg-new{ padding: 2px 9px; border-radius: 99px; background: #f4b942; color: #0f1c3a; font-size: .72rem; font-weight: 800; }
+.messages-page .is-read{ opacity: .78; }

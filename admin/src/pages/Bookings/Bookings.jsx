@@ -178,7 +178,7 @@ const Bookings = () => {
                   {items.map((item,i)=>(
                     <li key={i}>
                       <span className="qty">{item.quantity} ×</span>
-                      <span className="name">{item.name}</span>
+                      <span className="name">{item.name}{item.location ? ` · ${item.location}` : ""}</span>
                     </li>
                   ))}
                 </ul>

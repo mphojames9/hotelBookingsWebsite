@@ -24,7 +24,9 @@ const removeFromCart = async (req,res) => {
         }
         const user = await userModel.findById(req.userId);
         const cartData = {...(user.cartData || {})};
-        if (cartData[itemId] > 1) {
+        if (req.body.all === true) {
+            delete cartData[itemId];          // the guest closed the whole row
+        } else if (cartData[itemId] > 1) {
             cartData[itemId] -= 1;
         } else {
             delete cartData[itemId];

@@ -7,6 +7,7 @@ const roomSchema = new mongoose.Schema({
     image:{type:String,required:true},            // cover photo (always the first of `images`)
     images:{type:[String],default:[]},            // every photo, in slideshow order
     category:{type:String,required:true},         // room type, e.g. "Deluxe"
+    location:{type:String,default:""},            // which hotel: Sandton, Sea Point or Umhlanga ("" = not assigned yet)
     maxGuests:{type:Number,default:2,min:1},      // guests per room
     totalRooms:{type:Number,default:1,min:1},     // how many rooms of this type the hotel has
     // amenities shown on the room card, e.g. {label:"Bed", value:"King"}

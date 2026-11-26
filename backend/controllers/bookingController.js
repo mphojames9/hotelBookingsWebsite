@@ -92,7 +92,7 @@ const placeBooking = async (req,res) => {
             const free = room.totalRooms - await roomsTaken(room._id,checkIn,checkOut);
             if (quantity > free) return res.status(409).json({success:false,message:`Only ${Math.max(0,free)} "${room.name}" room(s) left for those dates`})
             capacity += room.maxGuests * quantity;
-            lines.push({roomId:String(room._id),name:room.name,price:room.price,quantity});
+            lines.push({roomId:String(room._id),name:room.name,location:room.location || "",price:room.price,quantity});
         }
         if (guests > capacity) return res.status(400).json({success:false,message:`The rooms you chose sleep ${capacity} guest(s) in total`})
 

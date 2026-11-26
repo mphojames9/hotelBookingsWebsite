@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import { categoryLabel, formatPrice } from '../../utils/format';
 import { addDaysISO, toISO } from '../../context/StoreContext';
-import { ArrowRightIcon, CartIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon, MinusIcon, PlusIcon } from '../Icons';
+import { AmenityIcon, ArrowRightIcon, CartIcon, PinIcon, UsersIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon, MinusIcon, PlusIcon } from '../Icons';
 import Reviews from '../Reviews/Reviews';
 import { RatingBadge } from '../Stars/Stars';
 
@@ -163,11 +163,12 @@ const ProductSheet = () => {
         <div className="ps-body">
           <div className="ps-scroll">
             <span className="ps-cat">{categoryLabel(product.category)}</span>
+            {product.location && <span className="ps-place"><PinIcon aria-hidden="true" />PrimeStay {product.location}</span>}
             <h2 id="ps-title">{product.name}</h2>
             <strong className="ps-price">{formatPrice(product.price)}<small> / night</small></strong>
             <div className="ps-meta">
               <RatingBadge rating={ratings[product._id]} onClick={() => document.getElementById('room-reviews')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
-              <span>Sleeps {product.maxGuests || 2}</span>
+              <span className="ps-sleeps"><UsersIcon aria-hidden="true" />Sleeps {product.maxGuests || 2}</span>
               <span>{formatPrice(product.price * nights)} for {nights} {nights === 1 ? 'night' : 'nights'}</span>
             </div>
             <p className="ps-desc">{product.description}</p>
@@ -178,7 +179,7 @@ const ProductSheet = () => {
                 <dl className="ps-specs">
                   {specs.map((spec) => (
                     <div key={spec.label}>
-                      <dt>{spec.label}</dt>
+                      <dt><AmenityIcon label={spec.label} aria-hidden="true" />{spec.label}</dt>
                       <dd>{spec.value}</dd>
                     </div>
                   ))}

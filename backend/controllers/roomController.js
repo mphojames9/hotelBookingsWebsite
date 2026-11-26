@@ -2,6 +2,7 @@ import roomModel from "../models/roomModel.js";
 import imageModel from "../models/imageModel.js";
 import reviewModel from "../models/reviewModel.js";
 import fs from 'fs';
+import { LOCATIONS } from "../config/locations.js";
 import mongoose from 'mongoose';
 
 // amenities arrive as a JSON string (multipart form); keep only complete, sensibly sized rows
@@ -28,6 +29,7 @@ const readFields = (body) => ({
     name:String(body.name || "").trim(),
     description:String(body.description || "").trim(),
     category:String(body.category || "").trim(),
+    location:LOCATIONS.includes(body.location) ? body.location : "",
     price:Number(body.price),
     maxGuests:Math.max(1,parseInt(body.maxGuests) || 2),
     totalRooms:Math.max(1,parseInt(body.totalRooms) || 1)

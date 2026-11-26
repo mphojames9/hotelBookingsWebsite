@@ -6,6 +6,8 @@ import { StoreContext } from '../../context/StoreContext';
 import { formatPrice } from '../../utils/format';
 import { openSpotlight } from '../Spotlight/Spotlight';
 
+import { CONTACT } from '../../data/site';
+
 const HOME = '/';
 
 const PATHS = {
@@ -25,6 +27,10 @@ const PATHS = {
   help: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01',
   search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM20 20l-4-4',
   check: 'm5 12 5 5 9-10',
+  pin: 'M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21ZM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+  food: 'M7 3v8M5 3v4a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 1.5-3 4-3 7h3v11',
+  compass: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM15.5 8.5l-2 5-5 2 2-5 5-2Z',
+  info: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 11v5M12 8h.01',
 };
 const Ico = ({ n, s = 18 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={PATHS[n]} /></svg>;
 const Chev = () => <svg className="nv-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>;
@@ -114,6 +120,7 @@ const NavBar = ({ setShowLogin }) => {
   };
 
   const go = (state) => (e) => { e?.preventDefault(); setOpen(null); setMobile(false); navigate(HOME, { state: { ...state, t: Date.now() } }); };
+  const goPage = (to) => (e) => { e?.preventDefault(); setOpen(null); setMobile(false); navigate(to); };
   const filter = (f) => go({ filter: f, scrollTo: 'listings' });
   const style = (st) => filter({ categories: st.cats, label: st.label });
 
@@ -133,8 +140,8 @@ const NavBar = ({ setShowLogin }) => {
               <button type="button" data-dd="help" className="nv-util-btn" aria-expanded={open === 'help'} aria-haspopup="true" onClick={() => toggle('help')} onKeyDown={trigKey('help')}>Help<Chev /></button>
               {open === 'help' && (
                 <div className="nv-drop nv-drop-r" data-panel="help" role="menu" onKeyDown={panelKey}>
-                  <Item icon="phone" title="Call us" desc="+27 11 233 1245" href="tel:+27112331245" role="menuitem" />
-                  <Item icon="mail" title="Email us" desc="demo@onestop.com" href="mailto:demo@onestop.com" role="menuitem" />
+                  <Item icon="phone" title="Call us" desc={CONTACT.phone} href={CONTACT.phoneHref} role="menuitem" />
+                  <Item icon="mail" title="Email us" desc={CONTACT.email} href={`mailto:${CONTACT.email}`} role="menuitem" />
                   <Item icon="help" title="How booking works" desc="Pick dates, choose rooms, pay" href="#why" role="menuitem" onClick={go({ scrollTo: 'why' })} />
                 </div>
               )}
@@ -191,19 +198,22 @@ const NavBar = ({ setShowLogin }) => {
             </li>
           )}
 
-          <li className="nv-item nv-rel" onMouseEnter={() => enter('plan')} onMouseLeave={leave}>
-            {trigger('plan', 'Plan')}
-            {open === 'plan' && (
-              <div className="nv-drop nv-drop-wide" data-panel="plan" role="menu" onKeyDown={panelKey}>
+          <li className="nv-item"><Link to="/locations" className={`nv-link${pathname.startsWith('/locations') ? ' on' : ''}`}>Hotels</Link></li>
+          <li className="nv-item"><Link to="/dining" className={`nv-link${pathname === '/dining' ? ' on' : ''}`}>Dining</Link></li>
+          <li className="nv-item"><Link to="/offers" className={`nv-link${pathname === '/offers' ? ' on' : ''}`}>Offers</Link></li>
+
+          <li className="nv-item nv-rel" onMouseEnter={() => enter('more')} onMouseLeave={leave}>
+            {trigger('more', 'Discover')}
+            {open === 'more' && (
+              <div className="nv-drop nv-drop-wide" data-panel="more" role="menu" onKeyDown={panelKey}>
+                <Item icon="compass" title="Experiences" desc="Tours, spa and local guides" href="#/experiences" role="menuitem" onClick={goPage('/experiences')} />
+                <Item icon="info" title="About us" desc="Our story and promise" href="#/about" role="menuitem" onClick={goPage('/about')} />
+                <Item icon="help" title="FAQ" desc="Quick answers" href="#/faq" role="menuitem" onClick={goPage('/faq')} />
                 <Item icon="cal" title="Check availability" desc="Set your dates and guests" href="#find" role="menuitem" onClick={go({ scrollTo: 'find' })} />
-                <Item icon="star" title="Guest favourites" desc="Our most-booked rooms" href="#featured" role="menuitem" onClick={go({ scrollTo: 'featured' })} />
-                <Item icon="grid" title="All rooms" desc="Every room, with live availability" href="#listings" role="menuitem" onClick={go({ category: 'All', scrollTo: 'listings' })} />
-                <Item icon="check" title="Why book direct" desc="Best rate, free cancellation" href="#why" role="menuitem" onClick={go({ scrollTo: 'why' })} />
+                <Item icon="mail" title="Contact" desc="Write to us or call" href="#/contact" role="menuitem" onClick={goPage('/contact')} />
               </div>
             )}
           </li>
-
-          <li className="nv-item"><a href="#footer" className="nv-link" onClick={go({ scrollTo: 'footer' })}>Contact</a></li>
         </ul>
 
         <div className="nv-right">
@@ -257,15 +267,20 @@ const NavBar = ({ setShowLogin }) => {
           </details>
           {styles.length > 0 && <details><summary>Travel style</summary>{styles.map((st) => <a key={st.label} href="#listings" onClick={style(st)}>{st.label}<em>{st.desc}</em></a>)}</details>}
           <details>
-            <summary>Plan</summary>
+            <summary>Explore</summary>
+            <Link to="/locations">Our hotels</Link>
+            <Link to="/dining">Dining</Link>
+            <Link to="/experiences">Experiences</Link>
+            <Link to="/offers">Offers</Link>
+            <Link to="/about">About us</Link>
+            <Link to="/faq">FAQ</Link>
+            <Link to="/contact">Contact</Link>
             <a href="#find" onClick={go({ scrollTo: 'find' })}>Check availability</a>
-            <a href="#featured" onClick={go({ scrollTo: 'featured' })}>Guest favourites</a>
-            <a href="#why" onClick={go({ scrollTo: 'why' })}>Why book direct</a>
           </details>
           <details>
             <summary>Help</summary>
-            <a href="tel:+27112331245">Call +27 11 233 1245</a>
-            <a href="mailto:demo@onestop.com">Email us</a>
+            <a href={CONTACT.phoneHref}>Call {CONTACT.phone}</a>
+            <a href={`mailto:${CONTACT.email}`}>Email us</a>
           </details>
           <Link to="/myorders" className="nv-d-link">My bookings</Link>
           <Link to="/cart" className="nv-d-link">Your stay{rooms > 0 ? ` (${rooms})` : ''}</Link>

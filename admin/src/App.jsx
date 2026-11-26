@@ -6,6 +6,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Bookings from './pages/Bookings/Bookings';
 import Reviews from './pages/Reviews/Reviews';
+import Messages from './pages/Messages/Messages';
 import List from './pages/List/List';
 import Add from './pages/Add/Add';
 import Edit from './pages/Edit/Edit';
@@ -64,6 +65,7 @@ const App = () => {
               <Route path='/list' element={<Navigate to='/rooms' replace/>}/>
               <Route path='/orders' element={<Navigate to='/bookings' replace/>}/>
               <Route path='/reviews' element={<Reviews/>}/>
+              <Route path='/messages' element={<Messages/>}/>
               <Route path='*' element={<Navigate to='/dashboard' replace/>}/>
             </Routes>
           </div>

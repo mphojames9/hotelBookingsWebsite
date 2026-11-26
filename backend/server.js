@@ -9,6 +9,7 @@ import orderRouter from "./routes/orderRoutes.js";
 import reviewRouter from "./routes/reviewRoutes.js";
 import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
+import contactRouter from "./routes/contactRoutes.js";
 import imageModel from "./models/imageModel.js";
 
 // app config
@@ -16,7 +17,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 //middleware
-app.use(express.json())
+app.use(express.json({limit:"100kb"}))
 app.use(cors())
 
 // db connection
@@ -45,6 +46,8 @@ app.use("/api/review",reviewRouter)
 // hotel: rooms and bookings (the admin panel and the storefront both use these)
 app.use("/api/room",roomRouter)
 app.use("/api/booking",bookingRouter)
+// website contact form + newsletter (read in the admin panel)
+app.use("/api/contact",contactRouter)
 
 app.get("/",(req,res)=>{
     res.send("API Working")

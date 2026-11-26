@@ -1,0 +1,62 @@
+/* page-specific layout for the content pages (shared pieces are in components/Editorial) */
+.st-split{ display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: start; }
+.st-copy{ margin: 0 0 26px; font: 400 21px/1.75 var(--ed-serif); color: #2c3650; }
+.st-high{ gap: 16px; }
+.st-info{ padding: 30px 30px 32px; border: 1px solid var(--ed-line); background: #fff; }
+.st-info h3{ margin: 0 0 18px; font: 700 13px var(--font-body); letter-spacing: .22em; text-transform: uppercase; }
+.st-info a:not(.ed-btn){ color: var(--ink); text-underline-offset: 3px; }
+.st-info address{ font-style: normal; }
+.st-info-btns{ display: grid; gap: 10px; margin-top: 26px; }
+.st-lines{ margin: 0 auto 20px; max-width: 320px; gap: 10px; }
+.st-lines li{ font-size: 16px; }
+.st-foot{ display: grid; gap: 10px; }
+.st-gallery{ display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
+.st-gallery img{ width: 100%; height: 100%; min-height: 220px; max-height: 420px; object-fit: cover; display: block; }
+.st-gallery img:first-child{ grid-row: span 1; }
+.st-price{ margin: 0 0 6px; font: 600 24px var(--font-display); }
+.st-price small{ font: 500 14px var(--font-body); color: var(--muted); }
+.st-empty{ text-align: center; font: 400 20px var(--ed-serif); }
+.st-others{ display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.st-other{ position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; color: #fff; text-decoration: none; }
+.st-other img{ width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.st-other:hover img{ transform: scale(1.06); }
+.st-other span{ position: absolute; inset: auto 0 0 0; display: grid; gap: 2px; padding: 40px 22px 20px; background: linear-gradient(transparent, rgba(8,16,40,.85)); }
+.st-other small{ font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.st-other strong{ font: 600 22px var(--font-display); }
+.st-center{ text-align: center; }
+.st-mapnote{ margin-top: 14px; font-size: 14px; }
+.st-mapnote a{ color: var(--ink); }
+.st-rule-left{ margin-left: 0 !important; }
+
+/* about: numbers */
+.st-stats{ display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); border-top: 1px solid var(--ed-line); border-bottom: 1px solid var(--ed-line); }
+.st-stats > div{ padding: 38px 16px; text-align: center; border-right: 1px solid var(--ed-line); }
+.st-stats > div:last-child{ border-right: 0; }
+.st-stats strong{ display: block; font: 500 clamp(36px, 4vw, 54px)/1 var(--font-display); color: var(--ink); }
+.st-stats span{ display: block; margin-top: 10px; font-size: 11.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+/* contact */
+.st-contact{ display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: start; }
+.st-form{ display: grid; gap: 18px; }
+.st-form h2{ margin: 0; font: 600 24px var(--font-body); letter-spacing: .14em; text-transform: uppercase; }
+.st-form label{ display: grid; gap: 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.st-form input, .st-form select, .st-form textarea{ width: 100%; padding: 14px 16px; border: 1px solid var(--ed-line); border-radius: 0; background: #fff; font: 400 16px var(--font-body); letter-spacing: 0; text-transform: none; color: var(--ink); }
+.st-form textarea{ resize: vertical; min-height: 140px; }
+.st-form input:focus, .st-form select:focus, .st-form textarea:focus{ outline: 2px solid var(--ink); outline-offset: -1px; }
+.st-form .ed-btn{ justify-self: start; }
+.st-two{ display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.st-status{ margin: 0; padding: 14px 16px; font-size: 15px; font-weight: 600; }
+.st-status.ok{ background: #e2f5ea; color: #17613a; }
+.st-status.err{ background: #fbe7e5; color: #a1281c; }
+.st-side{ display: grid; gap: 18px; }
+
+@media (max-width: 960px){
+  .st-split, .st-contact{ grid-template-columns: 1fr; gap: 36px; }
+  .st-gallery{ grid-template-columns: 1fr 1fr; }
+  .st-gallery img:first-child{ grid-column: 1 / -1; }
+  .st-stats > div{ border-right: 0; border-bottom: 1px solid var(--ed-line); }
+}
+@media (max-width: 560px){
+  .st-two{ grid-template-columns: 1fr; }
+  .st-form .ed-btn{ justify-self: stretch; }
+}
