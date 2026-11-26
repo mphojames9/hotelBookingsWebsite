@@ -3,6 +3,7 @@ import './ProductSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import { categoryLabel, formatPrice } from '../../utils/format';
+import { addDaysISO, toISO } from '../../context/StoreContext';
 import { ArrowRightIcon, CartIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon, MinusIcon, PlusIcon } from '../Icons';
 import Reviews from '../Reviews/Reviews';
 import { RatingBadge } from '../Stars/Stars';
@@ -15,7 +16,7 @@ export const openProduct = (id, options = {}) =>
 
 const ProductSheet = () => {
 
-  const { food_list, ready, cartItems, addToCart, removeFromCart, roomsLeft, ratings, nights, url } = useContext(StoreContext);
+  const { food_list, ready, cartItems, addToCart, removeFromCart, roomsLeft, ratings, nights, stay, setStay, url } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [id, setId] = useState(null);
@@ -124,23 +125,39 @@ const ProductSheet = () => {
 
         <button type="button" className="ps-close" aria-label="Close details" onClick={() => hide()}><CloseIcon /></button>
 
-        <div className={`ps-media${photos.length > 1 ? ' has-thumbs' : ''}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <img className="ps-bg" key={'bg' + photos[current]} src={url + '/images/' + photos[current]} alt="" aria-hidden="true" />
-          <img className="ps-main" key={photos[current]} src={url + '/images/' + photos[current]} alt={`${product.name}, photo ${current + 1} of ${photos.length}`} />
+        <div className="ps-left">
+          <div className="ps-media" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            <img className="ps-bg" key={'bg' + photos[current]} src={url + '/images/' + photos[current]} alt="" aria-hidden="true" />
+            <img className="ps-main" key={photos[current]} src={url + '/images/' + photos[current]} alt={`${product.name}, photo ${current + 1} of ${photos.length}`} />
+            {photos.length > 1 && (
+              <>
+                <button type="button" className="ps-nav ps-prev" aria-label="Previous photo" onClick={() => go(-1)}><ChevronLeftIcon /></button>
+                <button type="button" className="ps-nav ps-next" aria-label="Next photo" onClick={() => go(1)}><ChevronRightIcon /></button>
+                <span className="ps-count" aria-hidden="true">{current + 1} / {photos.length}</span>
+              </>
+            )}
+          </div>
+
           {photos.length > 1 && (
-            <>
-              <button type="button" className="ps-nav ps-prev" aria-label="Previous photo" onClick={() => go(-1)}><ChevronLeftIcon /></button>
-              <button type="button" className="ps-nav ps-next" aria-label="Next photo" onClick={() => go(1)}><ChevronRightIcon /></button>
-              <span className="ps-count" aria-hidden="true">{current + 1} / {photos.length}</span>
-              <div className="ps-thumbs" role="tablist" aria-label="Room photos">
-                {photos.map((name, i) => (
-                  <button key={name} type="button" role="tab" aria-selected={i === current} aria-label={`Show photo ${i + 1}`} className={i === current ? 'on' : ''} onClick={() => setPhoto(i)}>
-                    <img src={url + '/images/' + name} alt="" loading="lazy" />
-                  </button>
-                ))}
-              </div>
-            </>
+            <div className="ps-thumbs" role="tablist" aria-label="Room photos">
+              {photos.map((name, i) => (
+                <button key={name} type="button" role="tab" aria-selected={i === current} aria-label={`Show photo ${i + 1}`} className={i === current ? 'on' : ''} onClick={() => setPhoto(i)}>
+                  <img src={url + '/images/' + name} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
           )}
+
+          <div className="ps-dates">
+            <p className="ps-dates-title">Your dates</p>
+            <div className="ps-dates-row">
+              <label><span>Check-in</span><input type="date" min={toISO(new Date())} value={stay.checkIn} onChange={(e) => e.target.value && setStay({ checkIn: e.target.value })} /></label>
+              <label><span>Check-out</span><input type="date" min={addDaysISO(stay.checkIn, 1)} value={stay.checkOut} onChange={(e) => e.target.value && setStay({ checkOut: e.target.value })} /></label>
+            </div>
+            <p className={`ps-avail${soldOut ? ' is-out' : ''}`}>
+              {soldOut ? 'Sold out for these dates. Try different dates.' : left <= 3 ? `Only ${left} left for these dates` : 'Available for these dates'}
+            </p>
+          </div>
         </div>
 
         <div className="ps-body">
@@ -152,7 +169,6 @@ const ProductSheet = () => {
               <RatingBadge rating={ratings[product._id]} onClick={() => document.getElementById('room-reviews')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
               <span>Sleeps {product.maxGuests || 2}</span>
               <span>{formatPrice(product.price * nights)} for {nights} {nights === 1 ? 'night' : 'nights'}</span>
-              {soldOut ? <span className="ps-warn">Sold out for your dates</span> : left <= 3 && <span className="ps-warn">Only {left} left for your dates</span>}
             </div>
             <p className="ps-desc">{product.description}</p>
 

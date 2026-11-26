@@ -187,29 +187,23 @@ const Home = () => {
 
   return (
     <div className="ps">
-      <section className="hero" aria-label="Find your stay">
-        <div className="hero-bg" aria-hidden="true">
-          {SLIDES.map((s, i) => <img key={s.src} src={s.src} alt="" className={i === slide ? 'on' : ''} loading={i === 0 ? 'eager' : 'lazy'} />)}
-        </div>
-        <div className="hero-shade" aria-hidden="true" />
-        <div className="hero-in">
-          <p className="hero-kicker"><span aria-hidden="true">&#9733;</span> Book direct &middot; best rate guaranteed</p>
+      <section className="hx" aria-label="Find your stay">
+        <div className="hx-copy">
           <h1>Stay somewhere <em>you will talk about.</em></h1>
-          <p className="hero-lead">Handpicked rooms, honest prices and instant confirmation. Pick your dates and see exactly what is free.</p>
+          <p className="hx-lead">Handpicked rooms, honest prices and instant confirmation. Pick your dates and see exactly what is free.</p>
           <SearchBar query={query} setQuery={setQuery} onSearch={search} />
-          <ul className="hero-proof">
-            {overall ? <li><b>{overall.average.toFixed(1)}</b><span>from {overall.count} {overall.count === 1 ? 'review' : 'reviews'}</span></li> : <li><b>New</b><span>be our first review</span></li>}
-            <li><b>{rooms.length || '15'}</b><span>rooms to choose from</span></li>
-            <li><b>0</b><span>booking fees</span></li>
+          <ul className="hx-proof">
+            {overall ? <li><b>{overall.average.toFixed(1)}</b> from {overall.count} {overall.count === 1 ? 'review' : 'reviews'}</li> : <li><b>New</b> be our first review</li>}
+            <li><b>{rooms.length || '15'}</b> rooms to choose from</li>
+            <li><b>0</b> booking fees</li>
           </ul>
         </div>
-        <div className="hero-dots" role="tablist" aria-label="Hotel photos">
-          {SLIDES.map((s, i) => (
-            <button key={s.src} type="button" role="tab" aria-selected={i === slide} aria-label={s.alt} className={i === slide ? 'on' : ''} onClick={() => setSlide(i)} />
-          ))}
-          <span className="hero-cap">{hero.alt}</span>
+        <div className="hx-art" aria-hidden="false">
+          <img key={slide} className="hx-main" src={hero.src} alt={hero.alt} />
+          <button type="button" className="hx-side a" aria-label="Show next photo" onClick={() => setSlide((s) => (s + 1) % SLIDES.length)}><img src={sideA.src} alt="" /></button>
+          <button type="button" className="hx-side b" aria-label="Show another photo" onClick={() => setSlide((s) => (s + 2) % SLIDES.length)}><img src={sideB.src} alt="" /></button>
+          <span className="hx-badge"><b>Instant</b> confirmation</span>
         </div>
-        <span className="hero-badge"><b>Instant</b> confirmation</span>
       </section>
 
       <section className="trust" aria-label="Why guests book with us">
