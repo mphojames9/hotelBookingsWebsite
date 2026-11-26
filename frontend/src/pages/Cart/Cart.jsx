@@ -5,11 +5,11 @@ import StayPicker from '../../components/StayPicker/StayPicker';
 import { Link, useNavigate } from 'react-router-dom';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import { formatPrice } from '../../utils/format';
-import { CartIcon, MinusIcon, PlusIcon } from '../../components/Icons';
+import { CartIcon, CloseIcon, MinusIcon, PlusIcon } from '../../components/Icons';
 
 const Cart = ({setShowLogin}) => {
 
-  const { cartItems, food_list, addToCart, removeFromCart, roomsLeft, getTotalCartAmount, guestCapacity, stay, nights, url, token, ready } = useContext(StoreContext)
+  const { cartItems, food_list, addToCart, removeFromCart, clearFromCart, roomsLeft, getTotalCartAmount, guestCapacity, stay, nights, url, token, ready } = useContext(StoreContext)
 
   const navigate = useNavigate();
 
@@ -75,6 +75,7 @@ const Cart = ({setShowLogin}) => {
                 <button type="button" aria-label={`Add one more ${item.name} room`} onClick={() => addToCart(item._id)}><PlusIcon /></button>
               </div>
               <strong className="cart-line">{formatPrice(item.price * cartItems[item._id] * nights)}</strong>
+              <button type="button" className="cart-remove" aria-label={`Remove ${item.name} from your stay`} title="Remove" onClick={() => clearFromCart(item._id)}><CloseIcon /></button>
             </li>
           ))}
         </ul>

@@ -232,3 +232,23 @@
 }
 
 .cart-warn{ margin-top: 4px; color: var(--danger); font-weight: 700; font-size: .86rem; }
+
+.cart-row{ position: relative; }
+.cart-remove{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: var(--canvas);
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 150ms, color 150ms, transform 200ms var(--spring);
+}
+.cart-remove svg{ width: 15px; height: 15px; stroke-width: 2.4; }
+.cart-remove:hover{ background: #fbe7e5; color: var(--danger); transform: rotate(90deg); }
+.cart-row .cart-line{ margin-top: 14px; }

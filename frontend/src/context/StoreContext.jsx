@@ -91,6 +91,22 @@ const StoreContextProvider = (props) => {
         }
     }
 
+    // take a room out of the stay completely (the X on a cart row)
+    const clearFromCart = async (itemId) => {
+        setCartItems((prev)=>{
+            const next = {...prev};
+            delete next[itemId];
+            return next;
+        })
+        if (token) {
+            try {
+                await axios.post(url+"/api/cart/remove",{itemId,all:true},authConfig());
+            } catch (error) {
+                handleAuthError(error);
+            }
+        }
+    }
+
     // price of the selected rooms for ONE night
     const getNightlyTotal = () => {
         let total = 0;
@@ -181,7 +197,7 @@ const StoreContextProvider = (props) => {
     },[])
 
     const contextValue = useMemo(()=>({
-        food_list, cartItems, setCartItems, addToCart, removeFromCart,
+        food_list, cartItems, setCartItems, addToCart, removeFromCart, clearFromCart,
         getTotalCartAmount, getNightlyTotal, guestCapacity,
         stay, setStay, nights, roomsLeft,
         ratings, fetchRatings, hotelRating, handleAuth: handleAuthError,

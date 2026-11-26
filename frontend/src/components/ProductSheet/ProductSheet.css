@@ -378,3 +378,20 @@
     to{ opacity: 1; transform: none; }
 }
 @keyframes psSheetOut{ to{ opacity: 0; transform: translateY(40px); } }
+
+/* the whole photo is always visible: it sits uncropped on a blurred copy of itself */
+.ps-media > img.ps-bg{
+    inset: -24px;
+    width: calc(100% + 48px);
+    height: calc(100% + 48px);
+    object-fit: cover;
+    filter: blur(26px) brightness(.72) saturate(1.2);
+    animation: none;
+}
+.ps-media > img.ps-main{ object-fit: contain; }
+.ps-media.has-thumbs > img.ps-main{ inset: 0 0 66px 0; height: calc(100% - 66px); }
+.ps-media.has-thumbs .ps-nav{ margin-top: -66px; }
+@media (max-width: 760px){
+    .ps-media.has-thumbs > img.ps-main{ inset: 0 0 58px 0; height: calc(100% - 58px); }
+    .ps-media.has-thumbs .ps-nav{ margin-top: -58px; }
+}

@@ -124,8 +124,9 @@ const ProductSheet = () => {
 
         <button type="button" className="ps-close" aria-label="Close details" onClick={() => hide()}><CloseIcon /></button>
 
-        <div className="ps-media" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <img key={photos[current]} src={url + '/images/' + photos[current]} alt={`${product.name}, photo ${current + 1} of ${photos.length}`} />
+        <div className={`ps-media${photos.length > 1 ? ' has-thumbs' : ''}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <img className="ps-bg" key={'bg' + photos[current]} src={url + '/images/' + photos[current]} alt="" aria-hidden="true" />
+          <img className="ps-main" key={photos[current]} src={url + '/images/' + photos[current]} alt={`${product.name}, photo ${current + 1} of ${photos.length}`} />
           {photos.length > 1 && (
             <>
               <button type="button" className="ps-nav ps-prev" aria-label="Previous photo" onClick={() => go(-1)}><ChevronLeftIcon /></button>
