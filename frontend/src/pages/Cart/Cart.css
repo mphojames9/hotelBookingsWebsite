@@ -55,7 +55,7 @@
     aspect-ratio: 1 / 1;
     padding: 9px;
     border-radius: 16px;
-    background: #f4f8fb;
+    background: #f9f8f6;
 }
 
 .cart-thumb img{
@@ -124,7 +124,7 @@
     place-items: center;
     margin-bottom: 6px;
     border-radius: 50%;
-    background: #e3f2fb;
+    background: #f2f0ec;
     color: var(--brand-strong);
     animation: popIn 700ms var(--spring) both;
 }
@@ -179,7 +179,7 @@
 
     .cart-bar small{
         display: block;
-        color: #9fb6c9;
+        color: #c3b6a5;
         font-size: .78rem;
         font-weight: 600;
     }

@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Figtree:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
 
 :root{
     /* colour */
-    --ink: #0f1c3a;
-    --ink-soft: #24335a;
-    --muted: #5b6d80;
-    --line: #e3d9c8;
-    --panel: #ece3d4;
+    --ink: #231f20;
+    --ink-soft: #3a3330;
+    --muted: #6e665d;
+    --line: #e6dfd2;
+    --panel: #ebe4d8;
     --surface: var(--panel);
-    --canvas: #f5efe6;
+    --canvas: #f6f2eb;
     --paper: #ffffff;
-    --brand: #f4b942;          /* the blue in the One Stop logo */
-    --brand-strong: #0f1c3a;   /* buttons and text on white (AA contrast) */
-    --brand-deep: #08122b;
-    --mint: #ff6a3d;
+    --brand: #b8955f;          /* tan */
+    --brand-strong: #231f20;   /* buttons and text on white (AA contrast) */
+    --brand-deep: #151213;
+    --mint: #9a7a4a;
     --success: #0f8a4b;
     --warn: #8a5a00;
     --danger: #b3261e;
@@ -21,9 +21,9 @@
     /* shape + depth */
     --radius: 18px;
     --radius-lg: 26px;
-    --shadow-sm: 0 1px 2px rgba(10,31,51,.05), 0 2px 8px rgba(10,31,51,.04);
-    --shadow-md: 0 2px 4px rgba(10,31,51,.04), 0 14px 34px rgba(10,31,51,.10);
-    --shadow-lg: 0 30px 70px rgba(10,31,51,.22);
+    --shadow-sm: 0 1px 2px rgba(35,31,32,.05), 0 2px 8px rgba(35,31,32,.04);
+    --shadow-md: 0 2px 4px rgba(35,31,32,.04), 0 14px 34px rgba(35,31,32,.10);
+    --shadow-lg: 0 30px 70px rgba(35,31,32,.22);
 
     /* motion */
     --ease: cubic-bezier(.22, 1, .36, 1);
@@ -35,8 +35,11 @@
     --tabbar-h: 64px;
     --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-    --font-display: "Fraunces", Georgia, "Segoe UI", system-ui, sans-serif;
-    --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Cormorant Garamond", "Fanwood Text", Georgia, serif;
+    --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+    --font-cond: "Barlow Condensed", "Barlow", "Arial Narrow", sans-serif;
+    --tan: #a98b5e;            /* signature tan: buttons, prices, icons */
+    --tan-deep: #8f7248;
 }
 
 @media (min-width: 761px){
@@ -96,7 +99,7 @@ button{
 }
 
 :focus-visible{
-    outline: 3px solid rgba(42, 161, 217, .55);
+    outline: 3px solid rgba(169,139,94, .55);
     outline-offset: 2px;
 }
 
@@ -148,7 +151,7 @@ button{
 .btn-primary{
     background: var(--ink);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(10,31,51,.22);
+    box-shadow: 0 6px 18px rgba(35,31,32,.22);
 }
 
 .btn-primary:hover{
@@ -158,7 +161,7 @@ button{
 .btn-brand{
     background: var(--brand-strong);
     color: #fff;
-    box-shadow: 0 6px 18px rgba(10,106,161,.3);
+    box-shadow: 0 6px 18px rgba(143,114,72,.3);
 }
 
 .btn-brand:hover{
@@ -270,13 +273,13 @@ button{
 }
 
 .field input:hover{
-    border-color: #c9d4df;
+    border-color: #ddd5cb;
 }
 
 .field input:focus{
     outline: none;
     border-color: var(--brand-strong);
-    box-shadow: 0 0 0 4px rgba(42, 161, 217, .2);
+    box-shadow: 0 0 0 4px rgba(169,139,94, .2);
 }
 
 /* scroll reveal (toggled by an IntersectionObserver) */

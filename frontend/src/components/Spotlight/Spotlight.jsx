@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import './Spotlight.css';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
-import { menu_list } from '../../assets/assets';
 import { categoryLabel, formatPrice } from '../../utils/format';
 import {
   buildCategoryWords, buildIndex, buildSuggestions, highlight, parseQuery, removeChip, searchProducts,
@@ -324,12 +323,17 @@ const Spotlight = () => {
   const parsed = useMemo(() => parseQuery(query, categoryWords), [query, categoryWords]);
   const found = useMemo(() => searchProducts(index, parsed), [index, parsed]);
   const suggestions = useMemo(() => buildSuggestions(food_list, categoryWords), [food_list, categoryWords]);
-  const categories = useMemo(
-    () => menu_list
-      .map((m) => ({ name: m.menu_name, image: m.menu_image, count: food_list.filter((p) => p.category === m.menu_name).length }))
-      .filter((c) => c.count > 0),
-    [food_list]
-  );
+  // room types come from the rooms themselves (with the first room's photo), so new types added in the admin show up here
+  const categories = useMemo(() => {
+    const seen = new Map();
+    for (const room of food_list) {
+      if (!room.category) continue;
+      const entry = seen.get(room.category) || { name: room.category, image: `${url}/images/${room.image}`, count: 0 };
+      entry.count += 1;
+      seen.set(room.category, entry);
+    }
+    return [...seen.values()];
+  }, [food_list, url]);
 
   const cartCount = Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
   const cart = { count: cartCount, total: getTotalCartAmount() };

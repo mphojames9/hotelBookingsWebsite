@@ -8,7 +8,7 @@ const Offers = () => {
   useDocTitle('Offers');
   return (
     <div className="ed">
-      <PageHero eyebrow="Book direct" title="Offers" lead="Better rates, simpler booking and a real person when you need one." image={IMG.hero5} crumbs={[{ label: 'Offers' }]} />
+      <PageHero eyebrow="Book direct" title="Offers" lead="Better rates, simpler booking and a real person when you need one." image={IMG.heroTwin} crumbs={[{ label: 'Offers' }]} />
       <Intro heading="Why book with us">
         When you book on this website you get our best available rate, instant confirmation and free cancellation, with no booking fees on top.
       </Intro>

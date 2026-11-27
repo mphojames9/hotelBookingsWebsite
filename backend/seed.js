@@ -1,5 +1,5 @@
-// Fills the database with sample rooms (photos included). Run once:  npm run seed
-// Add --reset to delete the existing rooms first.
+// Fills the database with sample rooms (each with a photo gallery). Run once:  node seed.js
+// Add --reset to delete the existing rooms (and their photos) first:           node seed.js --reset
 import 'dotenv/config'
 import fs from 'fs'
 import mongoose from 'mongoose'
@@ -8,40 +8,47 @@ import { LOCATIONS } from './config/locations.js'
 import roomModel from './models/roomModel.js'
 import imageModel from './models/imageModel.js'
 
+// [key, name, type, description, price per night, sleeps, rooms available, amenities, number of photos]
+// Photos are seed/images/<key>-1.jpg, <key>-2.jpg ...
 const ROOMS = [
-  ['standard-queen','Standard Queen','Standard','Bright, quiet room with a queen bed, work desk and fast Wi-Fi.',1200,2,6,[['Bed','Queen'],['Size','24 m²'],['Wi-Fi','Free']]],
-  ['standard-city','Standard City View','Standard','Comfortable room with floor-to-ceiling windows and a city outlook.',1350,2,6,[['Bed','Queen'],['View','City'],['Wi-Fi','Free']]],
-  ['standard-garden','Garden Double','Standard','Colourful double room that opens onto the garden courtyard.',1280,2,4,[['Bed','Double'],['View','Garden'],['Breakfast','Optional']]],
-  ['deluxe-sea','Deluxe Sea View','Deluxe','Spacious room with a private balcony and a sweeping view of the sea.',2100,3,5,[['Bed','King'],['Balcony','Private'],['View','Sea']]],
-  ['deluxe-balcony','Deluxe Balcony King','Deluxe','King bed, lounge corner and a balcony made for sunrise coffee.',1950,2,5,[['Bed','King'],['Balcony','Yes'],['Shower','Rain']]],
-  ['deluxe-twin','Deluxe Twin','Deluxe','Two large beds and a bright seating area, perfect for friends or colleagues.',1850,3,4,[['Beds','2 x Twin'],['Size','32 m²'],['Minibar','Yes']]],
-  ['executive-city','Executive Studio','Executive','Work-friendly studio with a big desk, lounge access and skyline views.',2600,2,4,[['Bed','King'],['Lounge','Access'],['Breakfast','Included']]],
-  ['executive-lounge','Executive Suite','Executive','Separate living area, premium linen and complimentary breakfast.',2900,3,3,[['Bed','King'],['Living area','Yes'],['Breakfast','Included']]],
-  ['family-apartment','Family Apartment','Family','Four bedrooms of space with a full living area, ideal for big families.',4200,8,2,[['Bedrooms','4'],['Kitchen','Yes'],['Sleeps','8']]],
-  ['family-suite','Family Suite','Family','Two connected rooms with a living area and room for the whole family.',3100,4,3,[['Bedrooms','2'],['Living area','Yes'],['Kitchenette','Yes']]],
-  ['suite-living','Junior Suite','Suite','Elegant suite with a lounge, dining nook and a king bed.',3400,3,3,[['Bed','King'],['Lounge','Yes'],['Size','48 m²']]],
-  ['studio-corner','Corner Studio','Studio','Open-plan corner studio with a full kitchenette, built for longer stays.',1700,2,4,[['Bed','Double'],['Kitchenette','Full'],['Laundry','On site']]],
-  ['studio-king','King Studio','Studio','Modern studio with a king bed, dark wood finishes and a work nook.',1900,2,4,[['Bed','King'],['Desk','Yes'],['Kitchenette','Yes']]],
-  ['accessible-living','Accessible Suite','Accessible','Step-free suite with a wide bathroom, roll-in shower and a sunny lounge.',2200,3,2,[['Access','Step-free'],['Shower','Roll-in'],['Bed','King']]],
-  ['penthouse-sunset','Sunset Penthouse','Penthouse','Top-floor penthouse with a private terrace and the best sunset in the city.',5400,4,1,[['Bed','King'],['Terrace','Private'],['Views','180°']]],
+  ['standard-queen','Standard Queen','Standard','A bright, quiet room with a queen bed, a work desk and fast Wi-Fi. Everything you need for a restful night.',850,2,6,[['Bed','Queen'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Desk','Yes'],['Size','24 m²']],2],
+  ['standard-city','City View Room','Standard','Floor-to-ceiling windows, soft linen and a city outlook from your bed. A modern base for business or a short break.',980,2,6,[['Bed','Double'],['Wi-Fi','Free'],['View','City'],['Coffee machine','Yes'],['Mini fridge','Yes']],2],
+  ['standard-garden','Garden Double','Standard','A warm double room with wooden shutters and a calm, leafy outlook. Quiet, cosy and very good value.',920,2,4,[['Bed','Double'],['Wi-Fi','Free'],['Breakfast','Included'],['Coffee machine','Yes'],['Swimming pool','Yes']],2],
+  ['deluxe-queen','Deluxe Queen Room','Deluxe','Our Deluxe rooms come with a queen bed, working station, a coffee maker, a mini fridge and more.',1380,2,5,[['Coffee machine','Yes'],['Bed','Queen'],['Swimming pool','Yes'],['Wi-Fi','Free'],['Breakfast','Included']],2],
+  ['deluxe-triple','Deluxe Triple Room','Deluxe','Space for three, with a double and a single bed, a seating corner and a large desk. Ideal for friends or a small family.',1650,3,4,[['Beds','Double + single'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Mini fridge','Yes'],['Swimming pool','Yes']],1],
+  ['deluxe-twin','Deluxe Twin Room','Deluxe','Two generous single beds, warm lighting and a lounge nook by the window. Perfect for colleagues or friends.',1450,2,4,[['Beds','2 x Single'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Desk','Yes'],['Breakfast','Included']],1],
+  ['deluxe-balcony','Deluxe King with Bench','Deluxe','A king bed dressed in soft blues, a velvet bench and a bright working corner. Calm, elegant and spacious.',1750,2,5,[['Bed','King'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Breakfast','Included'],['Swimming pool','Yes']],2],
+  ['executive-studio','Executive Studio','Executive','An open-plan studio with a full kitchen counter, a lounge area and a king bed. Built for longer stays.',2300,2,4,[['Bed','King'],['Kitchenette','Full'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Breakfast','Included']],2],
+  ['executive-suite','Executive Suite','Executive','A separate bedroom and lounge with a large desk, premium linen and complimentary breakfast every morning.',2750,3,3,[['Bed','King'],['Living area','Yes'],['Desk','Yes'],['Breakfast','Included'],['Swimming pool','Yes']],1],
+  ['junior-suite','Junior Suite','Suite','A light-filled suite with a king bed, a living area and floor-to-ceiling windows, plus a spa-style stone bathroom.',3200,3,3,[['Bed','King'],['Living area','Yes'],['View','City'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Shower','Rain']],3],
+  ['suite-double','Deluxe Suite','Suite','Our Deluxe Suite offers a king bed, a working station, a lounge corner and sweeping views of the city.',3450,3,3,[['Bed','King'],['View','City'],['Living area','Yes'],['Coffee machine','Yes'],['Swimming pool','Yes'],['Breakfast','Included']],1],
+  ['family-suite','Family Suite','Family','A spacious suite with a double and a single bed plus a sofa lounge, made for a family of four.',3100,4,3,[['Beds','Double + 2 single'],['Living area','Yes'],['Wi-Fi','Free'],['Mini fridge','Yes'],['Breakfast','Included']],1],
+  ['family-double','Family Twin Suite','Family','Two large beds, a dining table and a deep seating area in a warm, golden suite. Space for everyone to spread out.',3600,4,2,[['Beds','2 x Double'],['Living area','Yes'],['Wi-Fi','Free'],['Coffee machine','Yes'],['Swimming pool','Yes']],1],
 ]
 
 await connectDB()
 if (process.argv.includes('--reset')) {
+  const old = await roomModel.find({}, 'images image')
+  const files = new Set(old.flatMap(r => [...(r.images || []), r.image].filter(Boolean)))
   await roomModel.deleteMany({})
-  console.log('Existing rooms removed')
+  if (files.size) await imageModel.deleteMany({filename:{$in:[...files]}})
+  console.log('Existing rooms and their photos removed')
 } else if (await roomModel.countDocuments() > 0) {
-  console.log('Rooms already exist. Use "npm run seed -- --reset" to replace them.')
+  console.log('Rooms already exist. Run "node seed.js --reset" to replace them.')
   await mongoose.disconnect()
   process.exit(0)
 }
 
-for (const [index,[key,name,category,description,price,maxGuests,totalRooms,specs]] of ROOMS.entries()) {
-  const filename = `seed-${key}.jpg`
-  await imageModel.deleteOne({filename})
-  await imageModel.create({filename,contentType:'image/jpeg',data:fs.readFileSync(`seed/images/${key}.jpg`)})
-  await roomModel.create({name,description,price,image:filename,images:[filename],category,location:LOCATIONS[index % LOCATIONS.length],maxGuests,totalRooms,specs:specs.map(([label,value])=>({label,value}))})
-  console.log('Added', name)
+for (const [index,[key,name,category,description,price,maxGuests,totalRooms,specs,photos]] of ROOMS.entries()) {
+  const filenames = []
+  for (let n = 1; n <= photos; n++) {
+    const filename = `seed-${key}-${n}.jpg`
+    await imageModel.deleteOne({filename})
+    await imageModel.create({filename,contentType:'image/jpeg',data:fs.readFileSync(`seed/images/${key}-${n}.jpg`)})
+    filenames.push(filename)
+  }
+  await roomModel.create({name,description,price,image:filenames[0],images:filenames,category,location:LOCATIONS[index % LOCATIONS.length],maxGuests,totalRooms,specs:specs.map(([label,value])=>({label,value}))})
+  console.log('Added', name, `(${filenames.length} photo${filenames.length === 1 ? '' : 's'})`)
 }
 await mongoose.disconnect()
 console.log('Done.')

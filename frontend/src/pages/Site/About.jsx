@@ -25,7 +25,7 @@ const About = () => {
 
   return (
     <div className="ed">
-      <PageHero eyebrow="Our story" title="About PrimeStay" lead="Thoughtful hotels, honest prices and a warm welcome in three of South Africa’s favourite cities." image={IMG.feature} crumbs={[{ label: 'About us' }]} />
+      <PageHero eyebrow="Our story" title="About PrimeStay" lead="Thoughtful hotels, honest prices and a warm welcome in three of South Africa’s favourite cities." image={IMG.heroLiving} crumbs={[{ label: 'About us' }]} />
       <Intro heading="Hospitality, made simple">
         We started PrimeStay with a simple idea: booking a good hotel should be clear, fair and quick. You choose your dates, see what is really available, pay securely and get your confirmation straight away.
       </Intro>
@@ -39,7 +39,7 @@ const About = () => {
       <section className="ed-sec">
         <div className="ed-rows">
           <div className="ed-row">
-            <div className="ed-row-img"><img src={IMG.hero1} alt="PrimeStay pool at sunset" loading="lazy" /></div>
+            <div className="ed-row-img"><img src={IMG.fourPoster} alt="A PrimeStay bedroom with a four-poster bed" loading="lazy" /></div>
             <div className="ed-row-text">
               <h3>Made for real stays</h3>
               <span className="ed-rule st-rule-left" aria-hidden="true" />
@@ -48,7 +48,7 @@ const About = () => {
             </div>
           </div>
           <div className="ed-row">
-            <div className="ed-row-img"><img src={IMG.hero3} alt="Seaside promenade at golden hour" loading="lazy" /></div>
+            <div className="ed-row-img"><img src={IMG.roomSkyline} alt="A PrimeStay room with skyline views" loading="lazy" /></div>
             <div className="ed-row-text">
               <h3>Rooted in place</h3>
               <span className="ed-rule st-rule-left" aria-hidden="true" />

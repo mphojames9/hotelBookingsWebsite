@@ -12,7 +12,7 @@
 .sp-backdrop{
     position: absolute;
     inset: 0;
-    background: rgba(10, 31, 51, .46);
+    background: rgba(35,31,32, .46);
     backdrop-filter: blur(7px) saturate(1.2);
     -webkit-backdrop-filter: blur(7px) saturate(1.2);
     animation: spFade 200ms ease both;
@@ -27,7 +27,7 @@
     overflow: hidden;
     border-radius: 26px;
     background: var(--paper);
-    box-shadow: 0 0 0 1px rgba(10, 31, 51, .06), 0 40px 90px rgba(10, 31, 51, .35);
+    box-shadow: 0 0 0 1px rgba(35,31,32, .06), 0 40px 90px rgba(35,31,32, .35);
     animation: spPanel 280ms var(--spring) both;
     transform-origin: 50% 0;
 }
@@ -46,7 +46,7 @@
 
 /* a soft light sweeps around the panel while the mic is listening */
 .sp-panel.is-listening{
-    box-shadow: 0 0 0 2px rgba(42, 161, 217, .75), 0 0 0 8px rgba(42, 161, 217, .18), 0 40px 90px rgba(10, 31, 51, .35);
+    box-shadow: 0 0 0 2px rgba(169,139,94, .75), 0 0 0 8px rgba(169,139,94, .18), 0 40px 90px rgba(35,31,32, .35);
 }
 
 /* ---------- input row ---------- */
@@ -93,7 +93,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #8a9bad;
+    color: #ad9e8a;
     font-size: 18px;
     font-weight: 500;
     pointer-events: none;
@@ -128,8 +128,8 @@
     animation: spPulse 1.4s ease-out infinite;
 }
 @keyframes spPulse{
-    0%{ box-shadow: 0 0 0 0 rgba(10, 106, 161, .5); }
-    100%{ box-shadow: 0 0 0 14px rgba(10, 106, 161, 0); }
+    0%{ box-shadow: 0 0 0 0 rgba(143,114,72, .5); }
+    100%{ box-shadow: 0 0 0 14px rgba(143,114,72, 0); }
 }
 
 .sp-esc{
@@ -194,15 +194,15 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     height: 14px;
     padding: 2px;
     border-radius: 50%;
-    background: rgba(10, 31, 51, .1);
+    background: rgba(35,31,32, .1);
     stroke-width: 2.6;
 }
 .sp-chip:hover{ filter: brightness(.96); }
-.sp-chip:hover svg{ background: rgba(10, 31, 51, .2); }
+.sp-chip:hover svg{ background: rgba(35,31,32, .2); }
 .sp-chip:active{ transform: scale(.95); }
-.sp-chip-category{ background: rgba(42, 161, 217, .14); color: var(--brand-deep); }
+.sp-chip-category{ background: rgba(169,139,94, .14); color: var(--brand-deep); }
 .sp-chip-price{ background: rgba(52, 211, 165, .2); color: #0b6b4a; }
-.sp-chip-sort{ background: #fff1d6; color: var(--warn); }
+.sp-chip-sort{ background: #f3ece0; color: var(--warn); }
 
 /* ---------- list ---------- */
 .sp-list{
@@ -276,7 +276,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     padding: 5px;
     overflow: hidden;
     border-radius: 14px;
-    background: #f4f8fb;
+    background: #f9f8f6;
 }
 .sp-thumb img{
     width: 100%;
@@ -301,7 +301,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     color: var(--muted);
 }
 .sp-glyph svg{ width: 20px; height: 20px; }
-.sp-glyph-brand{ background: rgba(42, 161, 217, .15); color: var(--brand-strong); }
+.sp-glyph-brand{ background: rgba(169,139,94, .15); color: var(--brand-strong); }
 .sp-row.is-active .sp-glyph{ background: var(--paper); }
 
 .sp-main{
@@ -323,7 +323,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     padding: 0 2px;
     margin: 0 -2px;
     border-radius: 5px;
-    background: rgba(42, 161, 217, .22);
+    background: rgba(169,139,94, .22);
     color: var(--brand-deep);
 }
 .sp-meta{
@@ -355,7 +355,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     flex: none;
     width: 18px;
     height: 18px;
-    color: #9aabbc;
+    color: #bcae9a;
     transition: transform 200ms var(--ease), color 200ms;
 }
 .sp-row.is-active .sp-go{ color: var(--brand-strong); transform: translateX(2px); }
@@ -375,7 +375,7 @@ kbd svg{ width: 12px; height: 12px; stroke-width: 2.4; }
     background: var(--brand-strong);
     color: #fff;
     font-weight: 700;
-    box-shadow: 0 5px 14px rgba(10, 106, 161, .28);
+    box-shadow: 0 5px 14px rgba(143,114,72, .28);
     transition: background-color 150ms, transform 200ms var(--spring);
 }
 .sp-add svg{ width: 17px; height: 17px; stroke-width: 2.4; }

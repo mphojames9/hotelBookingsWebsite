@@ -38,7 +38,7 @@
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: #e3f2fb;
+    background: #f2f0ec;
     color: var(--brand-strong);
     animation: popIn 700ms var(--spring) both;
 }
@@ -118,8 +118,8 @@
     background: currentColor;
 }
 
-.status-pending{ color: var(--warn); background: #fdf3dc; }
-.status-moving{ color: var(--brand-deep); background: #e1f1fa; }
+.status-pending{ color: var(--warn); background: #f3ece0; }
+.status-moving{ color: var(--brand-deep); background: #f1eeea; }
 .status-cancelled{ color: var(--danger); background: #fbe7e5; }
 .order-review{ grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
 .status-done{ color: var(--success); background: #e2f5ea; }
@@ -130,8 +130,8 @@
 }
 
 @keyframes pulseDot{
-    0%{ box-shadow: 0 0 0 0 rgba(8, 80, 122, .5); }
-    100%{ box-shadow: 0 0 0 9px rgba(8, 80, 122, 0); }
+    0%{ box-shadow: 0 0 0 0 rgba(143,114,72, .5); }
+    100%{ box-shadow: 0 0 0 9px rgba(143,114,72, 0); }
 }
 
 @media (max-width: 760px){

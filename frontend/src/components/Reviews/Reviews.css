@@ -38,7 +38,7 @@
 .rv-form{ margin-top: 14px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 18px; display: grid; gap: 10px; }
 .rv-form-title{ font-weight: 800; }
 .rv-pick{ display: flex; align-items: center; gap: 2px; }
-.rv-pick button{ padding: 2px; border: none; background: none; color: #d9cfbd; cursor: pointer; transition: transform 150ms var(--spring), color 120ms; }
+.rv-pick button{ padding: 2px; border: none; background: none; color: #ddd3c2; cursor: pointer; transition: transform 150ms var(--spring), color 120ms; }
 .rv-pick button.on{ color: #f0a21a; }
 .rv-pick button:hover{ transform: scale(1.15); }
 .rv-label{ margin-left: 10px; color: var(--muted); font-size: .9rem; }

@@ -33,7 +33,7 @@ const Contact = () => {
 
   return (
     <div className="ed">
-      <PageHero eyebrow="We would love to hear from you" title="Contact us" lead="Questions, special requests or a plan you would like help with. Write to us or call the hotel directly." image={IMG.hero4} crumbs={[{ label: 'Contact' }]} />
+      <PageHero eyebrow="We would love to hear from you" title="Contact us" lead="Questions, special requests or a plan you would like help with. Write to us or call the hotel directly." image={IMG.fourPoster} crumbs={[{ label: 'Contact' }]} />
 
       <section className="ed-sec st-contact">
         <form className="st-form" onSubmit={submit} noValidate>

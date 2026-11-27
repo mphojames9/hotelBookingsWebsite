@@ -10,7 +10,7 @@
 .ps-backdrop{
     position: absolute;
     inset: 0;
-    background: rgba(10, 31, 51, .5);
+    background: rgba(35,31,32, .5);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     animation: psFade 200ms ease both;
@@ -26,7 +26,7 @@
     overflow: hidden;
     border-radius: 30px;
     background: var(--paper);
-    box-shadow: 0 0 0 1px rgba(10, 31, 51, .06), 0 40px 90px rgba(10, 31, 51, .38);
+    box-shadow: 0 0 0 1px rgba(35,31,32, .06), 0 40px 90px rgba(35,31,32, .38);
     animation: psIn 320ms var(--spring) both;
 }
 
@@ -77,7 +77,7 @@
     display: inline-block;
     padding: 4px 12px;
     border-radius: 999px;
-    background: rgba(42, 161, 217, .14);
+    background: rgba(169,139,94, .14);
     color: var(--brand-deep);
     font-size: .8rem;
     font-weight: 700;
@@ -153,7 +153,7 @@
     color: #fff;
     font-size: 1.02rem;
     font-weight: 700;
-    box-shadow: 0 10px 24px rgba(10, 106, 161, .32);
+    box-shadow: 0 10px 24px rgba(143,114,72, .32);
     transition: background-color 150ms, transform 200ms var(--spring);
 }
 .ps-add svg{ width: 20px; height: 20px; stroke-width: 2.4; }
@@ -269,7 +269,7 @@
     aspect-ratio: 4 / 3;
     border-radius: 20px;
     overflow: hidden;
-    background: #1b2437;
+    background: #312a21;
 }
 /* the whole photo is always visible: uncropped, centred, on a blurred copy of itself */
 .ps-media > img{ position: absolute; display: block; }
@@ -315,7 +315,7 @@
     z-index: 2;
     padding: 3px 10px;
     border-radius: 99px;
-    background: rgba(15, 28, 58, .72);
+    background: rgba(35,31,32, .72);
     color: #fff;
     font-size: .76rem;
     font-weight: 700;
@@ -398,3 +398,8 @@
 .ps-sleeps{ display: inline-flex; align-items: center; gap: 6px; }
 .ps-specs dt{ display: flex; align-items: center; gap: 7px; }
 .ps-specs dt svg{ width: 16px; height: 16px; flex: none; color: var(--coral); }
+
+.ps-media > img.ps-main{ cursor: zoom-in; }
+.ps-expand{ position: absolute; top: 10px; right: 10px; z-index: 2; display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.94); color: var(--ink); box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .2s var(--spring); }
+.ps-expand:hover{ transform: scale(1.1); }
+.ps-expand svg{ width: 18px; height: 18px; }

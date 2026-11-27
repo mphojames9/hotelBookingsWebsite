@@ -17,7 +17,7 @@ const Locations = () => {
 
   return (
     <div className="ed">
-      <PageHero eyebrow="Three cities, one standard" title="Our hotels" lead="From the Johannesburg skyline to the Atlantic and the Indian Ocean, PrimeStay has a place waiting for you." image={IMG.hero1} crumbs={[{ label: 'Hotels' }]} />
+      <PageHero eyebrow="Three cities, one standard" title="Our hotels" lead="From the Johannesburg skyline to the Atlantic and the Indian Ocean, PrimeStay has a place waiting for you." image={IMG.heroRooms} crumbs={[{ label: 'Hotels' }]} />
       <Intro heading="Choose your destination">
         Every PrimeStay hotel is run by a local team who know their city well, with the same honest prices, instant confirmation and free cancellation up to 48 hours before check-in.
       </Intro>

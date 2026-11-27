@@ -1,6 +1,6 @@
 /* page-specific layout for the content pages (shared pieces are in components/Editorial) */
 .st-split{ display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: start; }
-.st-copy{ margin: 0 0 26px; font: 400 21px/1.75 var(--ed-serif); color: #2c3650; }
+.st-copy{ margin: 0 0 26px; font: 400 21px/1.75 var(--ed-serif); color: #3d3733; }
 .st-high{ gap: 16px; }
 .st-info{ padding: 30px 30px 32px; border: 1px solid var(--ed-line); background: #fff; }
 .st-info h3{ margin: 0 0 18px; font: 700 13px var(--font-body); letter-spacing: .22em; text-transform: uppercase; }
@@ -20,7 +20,7 @@
 .st-other{ position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; color: #fff; text-decoration: none; }
 .st-other img{ width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
 .st-other:hover img{ transform: scale(1.06); }
-.st-other span{ position: absolute; inset: auto 0 0 0; display: grid; gap: 2px; padding: 40px 22px 20px; background: linear-gradient(transparent, rgba(8,16,40,.85)); }
+.st-other span{ position: absolute; inset: auto 0 0 0; display: grid; gap: 2px; padding: 40px 22px 20px; background: linear-gradient(transparent, rgba(21,18,19,.85)); }
 .st-other small{ font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
 .st-other strong{ font: 600 22px var(--font-display); }
 .st-center{ text-align: center; }
@@ -60,3 +60,15 @@
   .st-two{ grid-template-columns: 1fr; }
   .st-form .ed-btn{ justify-self: stretch; }
 }
+
+/* spa */
+.st-spa{ display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; }
+.st-spa-text .ed-row-ico{ margin-bottom: 8px; }
+.st-spa-text .ed-sechead{ margin-bottom: 26px; }
+.st-spa-gallery{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.st-spa-gallery button{ all: unset; box-sizing: border-box; display: block; overflow: hidden; cursor: zoom-in; background: var(--panel); aspect-ratio: 1 / 1; }
+.st-spa-gallery button:first-child{ grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+.st-spa-gallery button:focus-visible{ outline: 3px solid var(--tan); outline-offset: 3px; }
+.st-spa-gallery img{ width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s var(--ease); }
+.st-spa-gallery button:hover img{ transform: scale(1.05); }
+@media (max-width: 960px){ .st-spa{ grid-template-columns: 1fr; gap: 32px; } }

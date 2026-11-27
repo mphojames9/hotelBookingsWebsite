@@ -1,0 +1,33 @@
+.lb{ position: fixed; inset: 0; z-index: 90; display: grid; background: rgba(46,51,52,.95); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: lbIn .25s ease both; }
+.lb.is-closing{ animation: lbOut .18s ease both; }
+@keyframes lbIn{ from{ opacity: 0; } to{ opacity: 1; } }
+@keyframes lbOut{ to{ opacity: 0; } }
+
+.lb-stage{ position: relative; overflow: hidden; display: block; }
+/* the track is as wide as one slide; --i slides it so the current photo is centred */
+.lb-track{ --w: min(1000px, 72vw); --gap: clamp(20px, 3.4vw, 48px); position: absolute; top: 50%; left: 50%; display: flex; gap: var(--gap); height: min(70vh, 640px); transform: translate(calc(var(--w) / -2 - var(--i) * (var(--w) + var(--gap))), -50%); transition: transform .55s var(--ease); }
+.lb-slide{ flex: none; width: var(--w); height: 100%; margin: 0; display: grid; place-items: center; opacity: .3; filter: blur(1.5px); transform: scale(.94); transition: opacity .45s, filter .45s, transform .45s var(--ease); cursor: pointer; }
+.lb-slide.is-current{ opacity: 1; filter: none; transform: none; cursor: default; }
+.lb-slide img{ max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; box-shadow: 0 30px 80px rgba(0,0,0,.4); user-select: none; }
+
+.lb-close{ position: absolute; top: 18px; right: 22px; z-index: 3; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 0; background: none; color: #fff; cursor: pointer; transition: transform .25s var(--spring), opacity .2s; }
+.lb-close svg{ width: 40px; height: 40px; stroke-width: 1.6; }
+.lb-close:hover{ transform: rotate(90deg); }
+
+.lb-arrow{ position: absolute; top: 50%; z-index: 3; display: grid; place-items: center; width: 54px; height: 54px; margin-top: -27px; padding: 0; border: 2px solid #fff; border-radius: 50%; background: #fff; color: var(--tan-deep); cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,.3); transition: transform .25s var(--spring), background-color .2s; }
+.lb-arrow svg{ width: 24px; height: 24px; stroke-width: 2; }
+.lb-arrow:hover{ transform: scale(1.1); background: var(--sand); }
+.lb-prev{ left: clamp(10px, 2vw, 24px); }
+.lb-next{ right: clamp(10px, 2vw, 24px); }
+.lb-close:focus-visible, .lb-arrow:focus-visible{ outline: 3px solid var(--gold); outline-offset: 3px; }
+
+.lb-cap{ position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; align-items: baseline; gap: 16px; color: #fff; text-align: center; pointer-events: none; }
+.lb-cap strong{ font: 500 22px var(--font-display); letter-spacing: .04em; }
+.lb-cap span{ font: 500 14px var(--font-cond); letter-spacing: .2em; opacity: .85; }
+
+@media (max-width: 700px){
+  .lb-track{ --w: 86vw; height: min(60vh, 520px); }
+  .lb-arrow{ width: 44px; height: 44px; margin-top: -22px; }
+  .lb-close{ top: 10px; right: 10px; }
+}
+@media (prefers-reduced-motion: reduce){ .lb, .lb-track, .lb-slide{ animation: none; transition: none; } }

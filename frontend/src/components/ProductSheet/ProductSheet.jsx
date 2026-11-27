@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import { categoryLabel, formatPrice } from '../../utils/format';
 import { addDaysISO, toISO } from '../../context/StoreContext';
-import { AmenityIcon, ArrowRightIcon, CartIcon, PinIcon, UsersIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon, MinusIcon, PlusIcon } from '../Icons';
+import { AmenityIcon, ArrowRightIcon, CartIcon, PinIcon, UsersIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon, ExpandIcon, MinusIcon, PlusIcon } from '../Icons';
 import Reviews from '../Reviews/Reviews';
+import { openLightbox } from '../Lightbox/Lightbox';
 import { RatingBadge } from '../Stars/Stars';
 
 const CART = '/cart';
@@ -84,6 +85,7 @@ const ProductSheet = () => {
   const photos = product.images?.length ? product.images : [product.image];
   const current = Math.min(photo, photos.length - 1);
   const go = (step) => setPhoto((current + step + photos.length) % photos.length);
+  const expand = () => openLightbox({ images: photos.map((name) => url + '/images/' + name), index: current, title: product.name });
   const askLogin = () => {
     hide({ restoreFocus: false });
     setTimeout(() => window.dispatchEvent(new CustomEvent('login:open')), 200);
@@ -128,7 +130,8 @@ const ProductSheet = () => {
         <div className="ps-left">
           <div className="ps-media" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
             <img className="ps-bg" key={'bg' + photos[current]} src={url + '/images/' + photos[current]} alt="" aria-hidden="true" />
-            <img className="ps-main" key={photos[current]} src={url + '/images/' + photos[current]} alt={`${product.name}, photo ${current + 1} of ${photos.length}`} />
+            <img className="ps-main" key={photos[current]} src={url + '/images/' + photos[current]} alt={`${product.name}, photo ${current + 1} of ${photos.length}`} onClick={expand} />
+            <button type="button" className="ps-expand" aria-label="View photos full screen" onClick={expand}><ExpandIcon /></button>
             {photos.length > 1 && (
               <>
                 <button type="button" className="ps-nav ps-prev" aria-label="Previous photo" onClick={() => go(-1)}><ChevronLeftIcon /></button>

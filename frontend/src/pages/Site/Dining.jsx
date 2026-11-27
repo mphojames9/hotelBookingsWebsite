@@ -9,7 +9,7 @@ const Dining = () => {
   useDocTitle('Dining');
   return (
     <div className="ed">
-      <PageHero eyebrow="Taste of South Africa" title="Dining" lead="Wood-fired grills, fresh seafood and long lazy lunches, made with local ingredients." image={IMG.hero2} crumbs={[{ label: 'Dining' }]} />
+      <PageHero eyebrow="Taste of South Africa" title="Dining" lead="Wood-fired grills, fresh seafood and long lazy lunches, made with local ingredients." image={IMG.heroDining} crumbs={[{ label: 'Dining' }]} />
       <Intro heading="All food and drink">
         Each PrimeStay hotel has its own kitchen with its own personality. Book a table for dinner, linger over afternoon tea or simply order a sundowner and watch the light change.
       </Intro>

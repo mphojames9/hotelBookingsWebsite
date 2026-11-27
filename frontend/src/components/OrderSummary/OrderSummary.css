@@ -22,7 +22,7 @@
     flex-direction: column;
     gap: 10px;
     padding-bottom: 16px;
-    border-bottom: 1px dashed #cfdae5;
+    border-bottom: 1px dashed #e1dbd3;
     font-size: .95rem;
 }
 
@@ -61,7 +61,7 @@
 .summary-lines .summary-total{
     margin-top: 6px;
     padding-top: 16px;
-    border-top: 1px dashed #cfdae5;
+    border-top: 1px dashed #e1dbd3;
     color: var(--ink);
     font-family: var(--font-display);
     font-size: 1.5rem;

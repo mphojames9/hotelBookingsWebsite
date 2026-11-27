@@ -11,6 +11,7 @@ import LoginPopup from './components/LoginPopup/LoginPopup';
 import Toast from './components/Toast/Toast';
 import Spotlight from './components/Spotlight/Spotlight';
 import ProductSheet from './components/ProductSheet/ProductSheet';
+import Lightbox from './components/Lightbox/Lightbox';
 import Locations from './pages/Site/Locations';
 import LocationDetail from './pages/Site/LocationDetail';
 import Dining from './pages/Site/Dining';
@@ -62,6 +63,7 @@ const App = () => {
       <Footer />
       <Toast />
       <ProductSheet />
+      <Lightbox />
       <Spotlight />
     </>
   );

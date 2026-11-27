@@ -149,7 +149,7 @@ export const PlusSmallIcon = P('M12 5v14M5 12h14');
 // the right icon for an amenity row from the admin ({label, value})
 const AMENITY_ICONS = [
   [/^(bed|beds|bedrooms?)$/i, BedIcon], [/^(sleeps|guests)$/i, UsersIcon], [/^size$/i, RulerIcon],
-  [/^views?$/i, EyeIcon], [/wi-?fi|internet/i, WifiIcon], [/breakfast/i, CoffeeIcon], [/desk|work/i, DeskIcon],
+  [/^views?$/i, EyeIcon], [/wi-?fi|internet/i, WifiIcon], [/breakfast/i, CoffeeIcon], [/coffee|tea|kettle/i, CoffeeIcon], [/pool|swim/i, WavesIcon], [/fridge/i, SnowIcon], [/desk|work/i, DeskIcon],
   [/shower|bath/i, ShowerIcon], [/balcony|terrace/i, BalconyIcon], [/lounge|living/i, SofaIcon],
   [/kitchen/i, UtensilsIcon], [/minibar|bar/i, GlassIcon], [/laundry|washer/i, WashIcon],
   [/access|wheelchair/i, AccessIcon], [/parking/i, ParkingIcon], [/air|a\/c|aircon|cooling/i, SnowIcon],
@@ -166,6 +166,11 @@ export const amenityText = ({ label = '', value = '' }) => {
   if (/^bed$/i.test(l)) return `${v} bed`;
   if (/^views?$/i.test(l)) return `${v} ${/^views$/i.test(l) ? 'views' : 'view'}`;
   if (/^(beds|size)$/i.test(l)) return v;
-  if (/^yes$/i.test(v)) return l;
+  if (/^(yes|included)$/i.test(v)) return l;
+  if (/^free$/i.test(v)) return `Free ${l}`;
   return `${l}: ${v}`;
 };
+
+export const ExpandIcon = P('M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5');
+export const ArrowLeftIcon = P('M20 12H4M10 6l-6 6 6 6');
+export const ImagesIcon = P('M3 5h14v12H3zM7 21h14V9M3 14l4-4 4 4 3-3 3 3');

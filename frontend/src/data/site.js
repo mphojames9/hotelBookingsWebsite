@@ -1,23 +1,31 @@
 // All the written content of the website lives here, so it is easy to change in one place.
 // PLACEHOLDERS: the addresses, phone numbers, e-mail addresses, prices, dates and policies below are
 // sample content. Replace them with your real details before you go live.
-import hero1 from '../assets/hotel/hero1.jpg';
-import hero2 from '../assets/hotel/hero2.jpg';
-import hero3 from '../assets/hotel/hero3.jpg';
-import hero4 from '../assets/hotel/hero4.jpg';
-import hero5 from '../assets/hotel/hero5.jpg';
-import feature from '../assets/hotel/feature.jpg';
-import executiveCity from '../assets/hotel/executive-city.jpg';
-import executiveLounge from '../assets/hotel/executive-lounge.jpg';
-import deluxeSea from '../assets/hotel/deluxe-sea.jpg';
-import deluxeBalcony from '../assets/hotel/deluxe-balcony.jpg';
-import penthouse from '../assets/hotel/penthouse-sunset.jpg';
-import suiteLiving from '../assets/hotel/suite-living.jpg';
-import familySuite from '../assets/hotel/family-suite.jpg';
-import standardGarden from '../assets/hotel/standard-garden.jpg';
-import studioKing from '../assets/hotel/studio-king.jpg';
+import heroLiving from '../assets/photos/hero-living.jpg';
+import heroTwin from '../assets/photos/hero-twin.jpg';
+import heroRooms from '../assets/photos/hero-rooms.jpg';
+import heroDining from '../assets/photos/hero-dining.jpg';
+import suiteKitchen from '../assets/photos/suite-kitchen.jpg';
+import suiteDesk from '../assets/photos/suite-desk.jpg';
+import twinSuite from '../assets/photos/twin-suite.jpg';
+import bedroomBench from '../assets/photos/bedroom-bench.jpg';
+import roomSkyline from '../assets/photos/room-skyline.jpg';
+import roomModern from '../assets/photos/room-modern.jpg';
+import fourPoster from '../assets/photos/four-poster.jpg';
+import bedroomChandelier from '../assets/photos/bedroom-chandelier.jpg';
+import suiteDouble from '../assets/photos/suite-double.jpg';
+import suiteTriple from '../assets/photos/suite-triple.jpg';
+import diningSalad from '../assets/photos/dining-salad.jpg';
+import diningRoom from '../assets/photos/dining-room.jpg';
+import diningSeafood from '../assets/photos/dining-seafood.jpg';
+import diningPlate from '../assets/photos/dining-plate.jpg';
+import diningDessert from '../assets/photos/dining-dessert.jpg';
+import spaMassage from '../assets/photos/spa-massage.jpg';
+import spaRoom from '../assets/photos/spa-room.jpg';
+import spaPool from '../assets/photos/spa-pool.jpg';
+import spaSuite from '../assets/photos/spa-suite.jpg';
 
-export const IMG = { hero1, hero2, hero3, hero4, hero5, feature, executiveCity, executiveLounge, deluxeSea, deluxeBalcony, penthouse, suiteLiving, familySuite, standardGarden, studioKing };
+export const IMG = { heroLiving, heroTwin, heroRooms, heroDining, suiteKitchen, suiteDesk, twinSuite, bedroomBench, roomSkyline, roomModern, fourPoster, bedroomChandelier, suiteDouble, suiteTriple, diningSalad, diningRoom, diningSeafood, diningPlate, diningDessert, spaMassage, spaRoom, spaPool, spaSuite };
 
 export const CONTACT = {
   phone: '+27 11 233 1245',
@@ -41,7 +49,7 @@ export const LOCATIONS = [
       { icon: 'plane', text: 'About 30 minutes from OR Tambo International' },
       { icon: 'briefcase', text: 'Work lounge, fast Wi-Fi and meeting nooks' },
     ],
-    images: [IMG.hero5, IMG.executiveCity, IMG.executiveLounge],
+    images: [IMG.roomSkyline, IMG.suiteKitchen, IMG.suiteDesk],
   },
   {
     slug: 'sea-point', name: 'Sea Point', city: 'Cape Town', province: 'Western Cape', tag: 'Ocean & mountain',
@@ -56,7 +64,7 @@ export const LOCATIONS = [
       { icon: 'mountain', text: 'Table Mountain and Lion’s Head views' },
       { icon: 'plane', text: 'About 25 minutes from Cape Town International' },
     ],
-    images: [IMG.hero3, IMG.deluxeSea, IMG.deluxeBalcony],
+    images: [IMG.bedroomBench, IMG.roomModern, IMG.fourPoster],
   },
   {
     slug: 'umhlanga', name: 'Umhlanga', city: 'Durban', province: 'KwaZulu-Natal', tag: 'Beach & sunshine',
@@ -71,7 +79,7 @@ export const LOCATIONS = [
       { icon: 'bag', text: 'Close to Gateway shopping and restaurants' },
       { icon: 'plane', text: 'About 15 minutes from King Shaka International' },
     ],
-    images: [IMG.hero4, IMG.penthouse, IMG.suiteLiving],
+    images: [IMG.spaPool, IMG.twinSuite, IMG.suiteDouble],
   },
 ];
 
@@ -102,20 +110,20 @@ export const FAQS = [
 ];
 
 export const VENUES = [
-  { name: 'Ember Rooftop Grill', location: 'Sandton', icon: 'utensils', image: IMG.hero5, cuisine: 'Open-flame grill and wine', hours: 'Dinner daily, 18:00 to 22:30',
+  { name: 'Ember Rooftop Grill', location: 'Sandton', icon: 'utensils', image: IMG.heroDining, cuisine: 'Open-flame grill and wine', hours: 'Dinner daily, 18:00 to 22:30',
     text: 'South African grilling at its best, served on a rooftop with the Sandton skyline behind you. Slow-cooked cuts, fresh seafood and a wine list that favours the Cape winelands.' },
-  { name: 'The Tide Kitchen', location: 'Sea Point', icon: 'waves', image: IMG.hero3, cuisine: 'Seafood and sea views', hours: 'Breakfast, lunch and dinner daily',
+  { name: 'The Tide Kitchen', location: 'Sea Point', icon: 'waves', image: IMG.diningSeafood, cuisine: 'Seafood and sea views', hours: 'Breakfast, lunch and dinner daily',
     text: 'Light, bright cooking built around the day’s catch. Sit on the terrace, watch the ocean change colour and let the kitchen do the rest.' },
-  { name: 'Lantern Terrace', location: 'Umhlanga', icon: 'sun', image: IMG.hero4, cuisine: 'Coastal bistro and cocktails', hours: 'Breakfast to late, daily',
+  { name: 'Lantern Terrace', location: 'Umhlanga', icon: 'sun', image: IMG.diningRoom, cuisine: 'Coastal bistro and cocktails', hours: 'Breakfast to late, daily',
     text: 'A relaxed poolside bistro with Durban spice in the details. Start with a long breakfast, finish with a cocktail as the sun goes down.' },
 ];
 
 export const DINING_EXPERIENCES = [
-  { icon: 'coffee', title: 'Afternoon tea', when: 'Every day, 14:00 to 17:00', image: IMG.hero2,
+  { icon: 'coffee', title: 'Afternoon tea', when: 'Every day, 14:00 to 17:00', image: IMG.diningDessert,
     text: 'A slow, elegant ritual: freshly baked scones, delicate pastries and finger sandwiches, served with a pot of loose-leaf tea or a glass of sparkling wine.' },
-  { icon: 'utensils', title: 'Sunday brunch', when: 'Sundays, 12:00 to 15:30', image: IMG.hero1,
+  { icon: 'utensils', title: 'Sunday brunch', when: 'Sundays, 12:00 to 15:30', image: IMG.diningSalad,
     text: 'A generous buffet of cured meats, cheeses, hot dishes and desserts, with live stations and plenty of reasons to stay for a second round.' },
-  { icon: 'glass', title: 'Sundowners', when: 'Daily, from 16:00', image: IMG.hero4,
+  { icon: 'glass', title: 'Sundowners', when: 'Daily, from 16:00', image: IMG.diningPlate,
     text: 'Small plates made for sharing, paired with local wines and signature cocktails while the light turns gold.' },
 ];
 
@@ -144,12 +152,14 @@ export const BENEFITS = [
 ];
 
 export const OFFERS = [
-  { icon: 'calendar', title: 'Long stays', tag: 'Stays of 7+ nights', image: IMG.studioKing, topic: 'Long-stay rate',
+  { icon: 'calendar', title: 'Long stays', tag: 'Stays of 7+ nights', image: IMG.suiteKitchen, topic: 'Long-stay rate',
     text: 'Moving for work or taking a longer break? Our studios come with a full kitchenette and laundry. Ask for a long-stay rate tailored to your dates.' },
-  { icon: 'users', title: 'Family holidays', tag: 'Family rooms & apartments', image: IMG.familySuite, topic: 'Family holiday',
+  { icon: 'users', title: 'Family holidays', tag: 'Family rooms & apartments', image: IMG.suiteTriple, topic: 'Family holiday',
     text: 'Space for everyone, from connecting suites to four-bedroom apartments. Tell us how many of you are travelling and we will plan the best layout.' },
-  { icon: 'cake', title: 'Celebrations', tag: 'Birthdays, honeymoons, anniversaries', image: IMG.penthouse, topic: 'Celebration package',
+  { icon: 'cake', title: 'Celebrations', tag: 'Birthdays, honeymoons, anniversaries', image: IMG.bedroomChandelier, topic: 'Celebration package',
     text: 'Flowers, sparkling wine and a late check-out can make a special occasion feel even more special. Let us know what you are celebrating.' },
-  { icon: 'briefcase', title: 'Groups & meetings', tag: '5 or more rooms', image: IMG.executiveLounge, topic: 'Group booking',
+  { icon: 'briefcase', title: 'Groups & meetings', tag: '5 or more rooms', image: IMG.suiteDesk, topic: 'Group booking',
     text: 'Team trips, weddings and meetings. Group rates, meeting space and catering, arranged with one point of contact.' },
 ];
+
+export const SPA_PHOTOS = [IMG.spaMassage, IMG.spaRoom, IMG.spaSuite, IMG.spaPool];

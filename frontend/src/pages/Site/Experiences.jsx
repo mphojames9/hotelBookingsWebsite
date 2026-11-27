@@ -2,7 +2,9 @@ import './Site.css';
 import React, { useState } from 'react';
 import { CtaBand, Intro, PageHero, SectionHead, SiteIcon, useDocTitle } from '../../components/Editorial/Editorial';
 import { Link } from 'react-router-dom';
-import { EXPERIENCES, IMG, LOCATIONS } from '../../data/site';
+import { openLightbox } from '../../components/Lightbox/Lightbox';
+import { LeafIcon } from '../../components/Icons';
+import { EXPERIENCES, IMG, LOCATIONS, SPA_PHOTOS } from '../../data/site';
 
 const Experiences = () => {
   useDocTitle('Experiences');
@@ -12,10 +14,27 @@ const Experiences = () => {
 
   return (
     <div className="ed">
-      <PageHero eyebrow="Beyond the hotel" title="Experiences" lead="Local guides, hidden corners and the best of each city, arranged for you by people who live there." image={IMG.hero3} crumbs={[{ label: 'Experiences' }]} />
+      <PageHero eyebrow="Beyond the hotel" title="Experiences" lead="Local guides, hidden corners and the best of each city, arranged for you by people who live there." image={IMG.spaPool} crumbs={[{ label: 'Experiences' }]} />
       <Intro heading="Things to do">
         Tell the front desk what you enjoy and we will take care of the rest: tickets, drivers, guides and tables at the right restaurants.
       </Intro>
+
+      <section className="ed-sec">
+        <div className="st-spa">
+          <div className="st-spa-text">
+            <span className="ed-row-ico"><LeafIcon aria-hidden="true" /></span>
+            <SectionHead align="left" eyebrow="Spa & wellness" title="Slow down, properly" text="Warm stone, soft light and quiet hands. Choose a massage, a facial or a long soak, then finish by the pool. Treatments are available at all three hotels and are best booked ahead." />
+            <Link className="ed-btn" to="/contact" state={{ topic: 'Experiences & concierge' }}>Book a treatment</Link>
+          </div>
+          <div className="st-spa-gallery">
+            {SPA_PHOTOS.map((src, i) => (
+              <button key={src} type="button" onClick={() => openLightbox({ images: SPA_PHOTOS, index: i, title: 'Spa & wellness' })} aria-label={`Open spa photo ${i + 1} of ${SPA_PHOTOS.length}`}>
+                <img src={src} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="ed-sec">
         <div className="ed-filters" role="tablist" aria-label="Filter by hotel">

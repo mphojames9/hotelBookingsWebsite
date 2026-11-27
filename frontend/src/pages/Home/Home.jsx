@@ -5,22 +5,16 @@ import { StoreContext, toISO, addDaysISO } from '../../context/StoreContext';
 import { formatPrice } from '../../utils/format';
 import { openProduct } from '../../components/ProductSheet/ProductSheet';
 import { RatingBadge } from '../../components/Stars/Stars';
-import { AmenityIcon, ArrowRightIcon, PinIcon, UsersIcon, amenityText } from '../../components/Icons';
+import { ArrowRightIcon, PinIcon } from '../../components/Icons';
+import RoomRow from '../../components/RoomRow/RoomRow';
 import { Carousel, Faq, SectionHead, SiteIcon } from '../../components/Editorial/Editorial';
-import { FAQS, LOCATIONS } from '../../data/site';
-import hero1 from '../../assets/hotel/hero1.jpg';
-import hero2 from '../../assets/hotel/hero2.jpg';
-import hero3 from '../../assets/hotel/hero3.jpg';
-import hero4 from '../../assets/hotel/hero4.jpg';
-import hero5 from '../../assets/hotel/hero5.jpg';
-import featureImg from '../../assets/hotel/feature.jpg';
+import { FAQS, IMG, LOCATIONS } from '../../data/site';
 
 const SLIDES = [
-  { src: hero1, alt: 'Resort pool at sunset' },
-  { src: hero2, alt: 'Hotel pool and garden' },
-  { src: hero3, alt: 'Seaside promenade at golden hour' },
-  { src: hero4, alt: 'Pool terrace by the water' },
-  { src: hero5, alt: 'Pool and hotel at dusk' },
+  { src: IMG.heroLiving, alt: 'Junior suite living area' },
+  { src: IMG.heroTwin, alt: 'Twin room with a city view' },
+  { src: IMG.heroRooms, alt: 'Executive room' },
+  { src: IMG.bedroomBench, alt: 'King room with a velvet bench' },
 ];
 
 const fmtDay = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -90,52 +84,6 @@ const Row = ({ rooms, url, ratings }) => {
 };
 
 /* ---------- listing card with select / stepper ---------- */
-const RoomCard = ({ room }) => {
-  const { cartItems, addToCart, removeFromCart, roomsLeft, nights, url, ratings } = useContext(StoreContext);
-  const qty = cartItems[room._id] || 0;
-  const left = roomsLeft(room._id);
-  const soldOut = left <= 0;
-  const specs = Array.isArray(room.specs) ? room.specs : [];
-
-  const select = () => {
-    addToCart(room._id);
-    window.dispatchEvent(new CustomEvent('cart:added', { detail: { name: room.name } }));
-  };
-
-  return (
-    <article id={`product-${room._id}`} className={`ps-card${qty > 0 ? ' is-selected' : ''}`}>
-      <button type="button" className="ps-card-img" onClick={() => openProduct(room._id)} aria-label={`View details for ${room.name}`}>
-        <img src={url + '/images/' + room.image} alt="" loading="lazy" />
-        <span className="ps-card-tag">{room.category}</span>
-      </button>
-      <div className="ps-card-body">
-        <h3>{room.name}</h3>
-        {room.location && <p className="ps-loc"><PinIcon aria-hidden="true" />PrimeStay {room.location}</p>}
-        <RatingBadge rating={ratings[room._id]} onClick={() => openProduct(room._id, { reviews: true })} />
-        <p>{room.description}</p>
-        <div className="ps-amen">
-          <span><UsersIcon aria-hidden="true" />Sleeps {room.maxGuests || 2}</span>
-          {specs.slice(0, 3).map((s) => <span key={s.label}><AmenityIcon label={s.label} aria-hidden="true" />{amenityText(s)}</span>)}
-        </div>
-        <div className="ps-card-foot">
-          <div>
-            <strong>{formatPrice(room.price)}</strong><small> / night</small>
-            <div className="ps-total">{formatPrice(room.price * nights)} for {nights} {nights === 1 ? 'night' : 'nights'}</div>
-          </div>
-          {soldOut ? <span className="ps-sold">Sold out</span>
-            : qty === 0
-              ? <button type="button" className="ps-select" onClick={select}>Select</button>
-              : <div className="ps-stepper">
-                  <button type="button" aria-label={`Remove one ${room.name}`} onClick={() => removeFromCart(room._id)}>&minus;</button>
-                  <span>{qty}</span>
-                  <button type="button" aria-label={`Add one more ${room.name}`} disabled={qty >= left} onClick={() => addToCart(room._id)}>+</button>
-                </div>}
-        </div>
-        {!soldOut && left <= 3 && <div className="ps-left">Only {left} left for your dates</div>}
-      </div>
-    </article>
-  );
-};
 
 const Home = () => {
   const { food_list: rooms, ready, url, cartItems, getTotalCartAmount, nights, stay, ratings, hotelRating } = useContext(StoreContext);
@@ -259,7 +207,7 @@ const Home = () => {
             </ol>
             <button type="button" className="btn-gold" onClick={() => scrollToId('listings')}>Explore rooms</button>
           </div>
-          <div className="why-img"><img src={featureImg} alt="Sea view room with a balcony" loading="lazy" /></div>
+          <div className="why-img"><img src={IMG.suiteDouble} alt="A PrimeStay suite with a king bed and lounge" loading="lazy" /></div>
         </div>
       </section>
 
@@ -279,7 +227,7 @@ const Home = () => {
         </div>
         {ready && visible.length === 0
           ? <p className="ps-loading">No rooms match your search.</p>
-          : <div className="grid">{visible.map((r) => <RoomCard key={r._id} room={r} />)}</div>}
+          : <div className="rr-list">{visible.map((r, i) => <RoomRow key={r._id} room={r} index={i} />)}</div>}
       </section>
 
       <section className="sec hm-places" id="hotels" aria-label="Our hotels">

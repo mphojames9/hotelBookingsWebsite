@@ -2,17 +2,15 @@ import './Site.css';
 import React, { useContext } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
-import { formatPrice } from '../../utils/format';
 import { CtaBand, Faq, MapEmbed, PageHero, SectionHead, SiteIcon, mapsLink, useDocTitle } from '../../components/Editorial/Editorial';
-import { RatingBadge } from '../../components/Stars/Stars';
-import { openProduct } from '../../components/ProductSheet/ProductSheet';
+import RoomRow from '../../components/RoomRow/RoomRow';
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from '../../components/Icons';
 import { FAQS, LOCATIONS } from '../../data/site';
 
 const LocationDetail = () => {
   const { slug } = useParams();
   const loc = LOCATIONS.find((l) => l.slug === slug);
-  const { food_list, url, ratings } = useContext(StoreContext);
+  const { food_list } = useContext(StoreContext);
   useDocTitle(loc?.title);
   if (!loc) return <Navigate to="/locations" replace />;
 
@@ -58,22 +56,7 @@ const LocationDetail = () => {
         {rooms.length === 0 ? (
           <p className="st-empty">Rooms for this hotel are being added. <Link to="/" state={{ category: 'All', scrollTo: 'listings', t: Date.now() }}>Browse every room</Link> in the meantime.</p>
         ) : (
-          <div className="ed-grid">
-            {rooms.map((r) => (
-              <article className="ed-card" key={r._id}>
-                <div className="ed-card-img"><img src={`${url}/images/${r.image}`} alt={r.name} loading="lazy" /></div>
-                <div className="ed-card-body">
-                  <span className="ed-tag">{r.category}</span>
-                  <h3>{r.name}</h3>
-                  <span className="ed-rule" aria-hidden="true" />
-                  <RatingBadge rating={ratings[r._id]} />
-                  <p className="ed-card-text">{r.description}</p>
-                  <p className="st-price">{formatPrice(r.price)} <small>/ night &middot; sleeps {r.maxGuests || 2}</small></p>
-                </div>
-                <div className="ed-card-foot"><button type="button" className="ed-btn block" onClick={() => openProduct(r._id)}>View room</button></div>
-              </article>
-            ))}
-          </div>
+          <div className="rr-list">{rooms.map((r, i) => <RoomRow key={r._id} room={r} index={i} />)}</div>
         )}
       </section>
 

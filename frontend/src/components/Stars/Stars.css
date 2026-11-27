@@ -1,5 +1,5 @@
 .stars{ display: inline-flex; gap: 2px; vertical-align: middle; }
-.star{ position: relative; display: inline-grid; color: #d9cfbd; }
+.star{ position: relative; display: inline-grid; color: #ddd3c2; }
 .star svg{ display: block; }
 .star.on{ color: #f0a21a; }
 
