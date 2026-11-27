@@ -5,7 +5,7 @@ import { StoreContext, toISO, addDaysISO } from '../../context/StoreContext';
 import { formatPrice } from '../../utils/format';
 import { openProduct } from '../../components/ProductSheet/ProductSheet';
 import { RatingBadge } from '../../components/Stars/Stars';
-import { ArrowRightIcon, PinIcon } from '../../components/Icons';
+import { ArrowRightIcon, BedIcon, PinIcon } from '../../components/Icons';
 import RoomRow from '../../components/RoomRow/RoomRow';
 import { Carousel, Faq, SectionHead, SiteIcon } from '../../components/Editorial/Editorial';
 import { FAQS, IMG, LOCATIONS } from '../../data/site';
@@ -60,7 +60,7 @@ const Tile = ({ room, url, rating }) => (
   <button type="button" className="tile" onClick={() => openProduct(room._id)} aria-label={`View ${room.name}`}>
     <span className="tile-img"><img src={url + '/images/' + room.image} alt="" loading="lazy" /></span>
     <span className="tile-body">
-      <small>{room.category} &middot; sleeps {room.maxGuests || 2}</small>
+      <small>{room.category} &middot; Sleeps {room.maxGuests || 2}</small>
       <strong>{room.name}</strong>
       <RatingBadge rating={rating} />
       <em>{formatPrice(room.price)} <span>/ night</span></em>
@@ -180,7 +180,7 @@ const Home = () => {
             {typeTiles.map(({ name, rooms: rs }) => (
               <button type="button" key={name} className="type" onClick={() => viewAll(name)}>
                 <span className="type-img"><img src={url + '/images/' + rs[0].image} alt="" loading="lazy" /></span>
-                <span className="type-body"><strong>{name}</strong><small>from {formatPrice(Math.min(...rs.map((r) => r.price)))}</small></span>
+                <span className="type-body"><strong>{name}</strong><small>From {formatPrice(Math.min(...rs.map((r) => r.price)))}<ArrowRightIcon aria-hidden="true" /></small></span>
               </button>
             ))}
           </div>
@@ -190,7 +190,7 @@ const Home = () => {
       {rooms.length > 0 && (
         <section className="sec" id="featured" aria-labelledby="feat-h">
           <header className="sec-head"><div><p className="eyebrow">Featured</p><h2 id="feat-h">Guest favourites</h2></div>
-            <button type="button" className="link-btn" onClick={() => viewAll('All')}>View all rooms &rarr;</button></header>
+            <button type="button" className="link-btn" onClick={() => viewAll('All')}>View all rooms<ArrowRightIcon aria-hidden="true" /></button></header>
           <Row rooms={featured} url={url} ratings={ratings} />
         </section>
       )}
@@ -215,15 +215,25 @@ const Home = () => {
         <header className="sec-head"><div>
           <p className="eyebrow">{fmtDay(stay.checkIn)} &rarr; {fmtDay(stay.checkOut)} &middot; {nights} {nights === 1 ? 'night' : 'nights'}</p>
           <h2>{extra ? extra.label : smart ? 'Search results' : category === 'All' ? (place === 'All' ? 'Rooms available for your stay' : `Rooms at PrimeStay ${place}`) : `${category} rooms${place === 'All' ? '' : ' in ' + place}`}</h2></div></header>
-        <div className="filters hotels" role="group" aria-label="Hotels">
-          <span className="filters-label"><PinIcon aria-hidden="true" /> Hotel</span>
-          <button type="button" className={place === 'All' ? 'on' : ''} onClick={() => setPlace('All')}>All hotels</button>
-          {LOCATIONS.map((l) => <button type="button" key={l.slug} className={place === l.name ? 'on' : ''} onClick={() => setPlace(l.name)}>{l.name}</button>)}
-        </div>
-        <div className="filters" role="group" aria-label="Room types">
-          <button type="button" className={category === 'All' && !smart ? 'on' : ''} onClick={() => { setSmart(null); setExtra(null); setCategory('All'); }}>All {ready && rooms.length}</button>
-          {types.map((t) => <button type="button" key={t} className={category === t ? 'on' : ''} onClick={() => { setSmart(null); setExtra(null); setCategory(t); }}>{t}</button>)}
-          {(smart || q || extra || place !== 'All') && <button type="button" className="clear" onClick={() => { setSmart(null); setQuery(''); setCategory('All'); setExtra(null); setPlace('All'); }}>Clear filters</button>}
+        <div className="fbar">
+          <div className="fgroup" role="group" aria-label="Hotels">
+            <span className="fgroup-label"><PinIcon aria-hidden="true" />Hotel</span>
+            <div className="ftabs">
+              <button type="button" className={place === 'All' ? 'on' : ''} aria-pressed={place === 'All'} onClick={() => setPlace('All')}>All hotels</button>
+              {LOCATIONS.map((l) => <button type="button" key={l.slug} className={place === l.name ? 'on' : ''} aria-pressed={place === l.name} onClick={() => setPlace(l.name)}>{l.name}</button>)}
+            </div>
+          </div>
+          <div className="fgroup" role="group" aria-label="Room types">
+            <span className="fgroup-label"><BedIcon aria-hidden="true" />Room type</span>
+            <div className="ftabs">
+              <button type="button" className={category === 'All' && !smart ? 'on' : ''} aria-pressed={category === 'All' && !smart} onClick={() => { setSmart(null); setExtra(null); setCategory('All'); }}>All types</button>
+              {types.map((t) => <button type="button" key={t} className={category === t ? 'on' : ''} aria-pressed={category === t} onClick={() => { setSmart(null); setExtra(null); setCategory(t); }}>{t}</button>)}
+            </div>
+          </div>
+          <div className="fmeta">
+            <span aria-live="polite">{ready ? `${visible.length} ${visible.length === 1 ? 'room' : 'rooms'} available` : 'Loading rooms…'}</span>
+            {(smart || q || extra || place !== 'All' || category !== 'All') && <button type="button" className="fclear" onClick={() => { setSmart(null); setQuery(''); setCategory('All'); setExtra(null); setPlace('All'); }}>Clear filters</button>}
+          </div>
         </div>
         {ready && visible.length === 0
           ? <p className="ps-loading">No rooms match your search.</p>
